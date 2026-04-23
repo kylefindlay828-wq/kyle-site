@@ -1,0 +1,102 @@
+---
+import { entries, chapters } from '../../content/off-the-record';
+---
+<div class="pt-6 md:pt-12">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Off the Record</p>
+  <h2 class="font-serif text-3xl mb-3">Photos, places, and the texture you don't see on a résumé.</h2>
+  <p class="text-muted mb-8">Click any tile for the story behind it.</p>
+
+  <div class="flex flex-wrap gap-2 mb-6">
+    {chapters.map((c) => (
+      <button
+        data-chapter={c}
+        class="chapter-pill text-[10px] uppercase tracking-[0.12em] px-3 py-1 border border-rule rounded-full text-muted hover:text-ink hover:border-ink transition"
+      >{c}</button>
+    ))}
+  </div>
+
+  {entries.length === 0 ? (
+    <p class="text-muted italic py-10 border-t border-rule">Photos coming — this section fills out through the week.</p>
+  ) : (
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
+      {entries.map((entry, i) => (
+        <button
+          data-index={i}
+          data-chapter-match={entry.chapter}
+          class="otr-tile aspect-square overflow-hidden bg-rule"
+        >
+          <img src={`/src/assets/photos/${entry.src}`} alt={entry.caption.slice(0, 80)} class="w-full h-full object-cover transition hover:scale-105" loading="lazy" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<!-- Lightbox -->
+<div id="otr-lightbox" class="hidden fixed inset-0 bg-ink/85 z-50 flex items-center justify-center p-6">
+  <button id="otr-close" class="absolute top-6 right-6 text-paper text-2xl">✕</button>
+  <div class="max-w-3xl w-full">
+    <img id="otr-img" class="w-full max-h-[70vh] object-contain mb-4 bg-ink" />
+    <video id="otr-video" class="w-full max-h-[70vh] hidden" controls></video>
+    <p id="otr-caption" class="font-serif text-paper text-lg leading-relaxed"></p>
+  </div>
+</div>
+
+<script define:vars={{ entries }}>
+  const lightbox = document.getElementById('otr-lightbox');
+  const img = document.getElementById('otr-img');
+  const video = document.getElementById('otr-video');
+  const caption = document.getElementById('otr-caption');
+  const close = document.getElementById('otr-close');
+
+  document.querySelectorAll('.otr-tile').forEach((tile) => {
+    tile.addEventListener('click', () => {
+      const i = Number(tile.getAttribute('data-index'));
+      const entry = entries[i];
+      if (entry.video) {
+        video.src = `/src/assets/videos/${entry.video}`;
+        video.classList.remove('hidden');
+        img.classList.add('hidden');
+      } else {
+        img.src = `/src/assets/photos/${entry.src}`;
+        img.classList.remove('hidden');
+        video.classList.add('hidden');
+      }
+      caption.textContent = entry.caption;
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    document.body.style.overflow = '';
+    video.pause();
+  }
+  close.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Chapter filter
+  const pills = document.querySelectorAll('.chapter-pill');
+  const tiles = document.querySelectorAll('.otr-tile');
+  let activeChapter = 'All';
+  function applyFilter() {
+    tiles.forEach((t) => {
+      const match = activeChapter === 'All' || t.getAttribute('data-chapter-match') === activeChapter;
+      t.classList.toggle('hidden', !match);
+    });
+    pills.forEach((p) => {
+      const isActive = p.getAttribute('data-chapter') === activeChapter;
+      p.classList.toggle('text-ink', isActive);
+      p.classList.toggle('border-ink', isActive);
+    });
+  }
+  pills.forEach((p) => {
+    p.addEventListener('click', () => {
+      activeChapter = p.getAttribute('data-chapter');
+      applyFilter();
+    });
+  });
+  applyFilter();
+</script>
