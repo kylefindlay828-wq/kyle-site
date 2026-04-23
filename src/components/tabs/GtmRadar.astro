@@ -1,0 +1,38 @@
+---
+import { briefings, loomEmbedUrl, memo } from '../../content/briefings';
+---
+<div class="pt-6 md:pt-12">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
+  <h2 class="font-serif text-3xl mb-4">A weekly intelligence briefing on AI-reshaped GTM.</h2>
+  <p class="font-serif text-lg text-ink/85 leading-relaxed max-w-[640px]">
+    Built for GTM recruiters who need to know which companies just raised, who's moving, and what to say in outreach — before the search brief is written. Human-in-the-loop research, not an automated feed.
+  </p>
+
+  <div class="mt-8 aspect-video bg-ink rounded">
+    <iframe src={loomEmbedUrl} frameborder="0" allowfullscreen class="w-full h-full rounded"></iframe>
+  </div>
+
+  <h3 class="font-serif text-xl mt-12 mb-4">Recent editions</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {briefings.map((b) => (
+      <a href={b.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+        <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Week {b.week} · {b.year} · {b.dateRange}</p>
+        <p class="font-serif text-lg leading-snug">{b.summary}</p>
+        <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
+      </a>
+    ))}
+  </div>
+
+  <h3 class="font-serif text-xl mt-12 mb-4">Memo</h3>
+  <a href={memo.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+    <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">One-pager</p>
+    <p class="font-serif text-lg leading-snug">{memo.title}</p>
+    <p class="text-sm text-ink/75 mt-2">{memo.summary}</p>
+    <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
+  </a>
+
+  <h3 class="font-serif text-xl mt-12 mb-4">How I built it</h3>
+  <p class="font-serif text-lg text-ink/85 leading-relaxed max-w-[640px]">
+    GTM Radar is human-in-the-loop by design. I use Claude as a research partner — scanning the watchlist, scoring signals against a hiring-likelihood rubric, and drafting the recruiter angle for each one. I edit every briefing myself so the voice stays mine. The rendering is a small Python script; the real product is the workflow.
+  </p>
+</div>
