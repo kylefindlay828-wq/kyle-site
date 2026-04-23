@@ -8,12 +8,17 @@ const tabs = [
 ];
 ---
 <nav class="sticky top-0 bg-paper border-b border-rule z-10">
-  <div class="max-w-content mx-auto px-6 py-4 flex items-center gap-6">
+  <div class="max-w-content mx-auto px-6 py-4 flex items-center gap-6 relative">
     <a href="#home" class="font-serif font-bold text-lg tracking-tight text-ink">Kyle Findlay</a>
-    <ul class="ml-auto flex gap-6 text-[10px] uppercase tracking-[0.15em] text-muted">
+
+    <button id="nav-toggle" class="ml-auto sm:hidden text-ink text-xl" aria-label="Toggle menu">☰</button>
+
+    <ul id="nav-list" class="hidden sm:flex ml-auto gap-6 text-[10px] uppercase tracking-[0.15em] text-muted
+                             absolute sm:static top-full left-0 right-0 bg-paper border-b sm:border-0 border-rule
+                             flex-col sm:flex-row p-6 sm:p-0">
       {tabs.map((t) => (
         <li>
-          <a href={`#${t.id}`} data-tab={t.id} class="nav-link pb-1 border-b-2 border-transparent hover:text-ink">
+          <a href={`#${t.id}`} data-tab={t.id} class="nav-link pb-1 border-b-2 border-transparent hover:text-ink block">
             {t.label}
           </a>
         </li>
@@ -42,4 +47,19 @@ const tabs = [
 
   window.addEventListener('hashchange', syncTabs);
   syncTabs();
+
+  const toggle = document.getElementById('nav-toggle');
+  const list = document.getElementById('nav-list');
+  toggle?.addEventListener('click', () => {
+    list.classList.toggle('hidden');
+    list.classList.toggle('flex');
+  });
+  document.querySelectorAll('a[data-tab]').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 640) {
+        list.classList.add('hidden');
+        list.classList.remove('flex');
+      }
+    });
+  });
 </script>
