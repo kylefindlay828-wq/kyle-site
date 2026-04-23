@@ -25,7 +25,7 @@ import { entries, chapters } from '../../content/off-the-record';
           data-chapter-match={entry.chapter}
           class="otr-tile aspect-square overflow-hidden bg-rule"
         >
-          <img src={`/src/assets/photos/${entry.src}`} alt={entry.caption.slice(0, 80)} class="w-full h-full object-cover transition hover:scale-105" loading="lazy" />
+          <img src={`/photos/${entry.src}`} alt={entry.caption.slice(0, 80)} class="w-full h-full object-cover transition hover:scale-105" loading="lazy" />
         </button>
       ))}
     </div>
@@ -54,11 +54,11 @@ import { entries, chapters } from '../../content/off-the-record';
       const i = Number(tile.getAttribute('data-index'));
       const entry = entries[i];
       if (entry.video) {
-        video.src = `/src/assets/videos/${entry.video}`;
+        video.src = `/videos/${entry.video}`;
         video.classList.remove('hidden');
         img.classList.add('hidden');
       } else {
-        img.src = `/src/assets/photos/${entry.src}`;
+        img.src = `/photos/${entry.src}`;
         img.classList.remove('hidden');
         video.classList.add('hidden');
       }
