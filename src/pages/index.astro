@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
+import Home from '../components/tabs/Home.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -13,7 +14,7 @@ import Nav from '../components/Nav.astro';
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
     <main class="max-w-content mx-auto px-6 py-12">
-      <section data-section="home"><h2>Home</h2></section>
+      <section data-section="home"><Home /></section>
       <section data-section="work"><h2>Work</h2></section>
       <section data-section="off-the-record"><h2>Off the Record</h2></section>
       <section data-section="gtm-radar"><h2>GTM Radar</h2></section>
