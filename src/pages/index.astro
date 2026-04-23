@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -9,10 +10,14 @@ import '../styles/global.css';
     <title>Kyle Findlay</title>
     <meta name="description" content="Customer Success, Partnerships, and GTM for early-stage tech." />
   </head>
-  <body class="bg-paper text-ink">
-    <main class="max-w-content mx-auto px-6 py-10">
-      <h1 class="text-3xl">Kyle Findlay</h1>
-      <p class="text-muted mt-2">Scaffold wired up.</p>
+  <body class="bg-paper text-ink min-h-screen">
+    <Nav />
+    <main class="max-w-content mx-auto px-6 py-12">
+      <section data-section="home"><h2>Home</h2></section>
+      <section data-section="work"><h2>Work</h2></section>
+      <section data-section="off-the-record"><h2>Off the Record</h2></section>
+      <section data-section="gtm-radar"><h2>GTM Radar</h2></section>
+      <section data-section="contact"><h2>Contact</h2></section>
     </main>
   </body>
 </html>
