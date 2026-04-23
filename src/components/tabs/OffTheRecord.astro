@@ -36,7 +36,7 @@ import { entries, chapters } from '../../content/off-the-record';
 <div id="otr-lightbox" class="hidden fixed inset-0 bg-ink/85 z-50 flex items-center justify-center p-6">
   <button id="otr-close" class="absolute top-6 right-6 text-paper text-2xl">✕</button>
   <div class="max-w-3xl w-full">
-    <img id="otr-img" class="w-full max-h-[70vh] object-contain mb-4 bg-ink" />
+    <img id="otr-img" alt="" class="w-full max-h-[70vh] object-contain mb-4 bg-ink" />
     <video id="otr-video" class="w-full max-h-[70vh] hidden" controls></video>
     <p id="otr-caption" class="font-serif text-paper text-lg leading-relaxed"></p>
   </div>
@@ -59,6 +59,7 @@ import { entries, chapters } from '../../content/off-the-record';
         img.classList.add('hidden');
       } else {
         img.src = `/photos/${entry.src}`;
+        img.alt = entry.caption.slice(0, 120);
         img.classList.remove('hidden');
         video.classList.add('hidden');
       }
