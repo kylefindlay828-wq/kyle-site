@@ -1,0 +1,30 @@
+---
+interface Props {
+  photos: string[];
+  groupId: string;
+}
+const { photos, groupId } = Astro.props;
+const [lead, ...rest] = photos;
+---
+<div class="photo-gallery" data-gallery={groupId}>
+  {lead && (
+    <img
+      src={lead}
+      alt=""
+      loading="lazy"
+      class="gallery-photo w-full h-auto block rounded-sm mb-3 md:mb-4 cursor-zoom-in transition hover:opacity-90"
+    />
+  )}
+  {rest.length > 0 && (
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4">
+      {rest.map((src) => (
+        <img
+          src={src}
+          alt=""
+          loading="lazy"
+          class="gallery-photo w-full h-auto block rounded-sm mb-3 md:mb-4 break-inside-avoid cursor-zoom-in transition hover:opacity-90"
+        />
+      ))}
+    </div>
+  )}
+</div>
