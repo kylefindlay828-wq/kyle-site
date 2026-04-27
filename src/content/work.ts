@@ -39,8 +39,6 @@ export const roles: Role[] = [
       { src: '/photos/work/experiential-2.png' },
       { src: '/photos/work/experiential-3.jpeg' },
       { src: '/photos/work/experiential-5.jpeg' },
-      { src: '/photos/work/experiential-6.jpeg' },
-      { src: '/photos/work/experiential-7.jpeg' },
       { src: '/photos/work/experiential-8.jpeg' },
       { src: '/photos/work/experiential-9.jpeg' },
     ],
@@ -67,11 +65,11 @@ export const roles: Role[] = [
     body:
       'Directly managed $3M+ per year in CPG campaigns (~$6–7M total across tenure), plus $5–6M more as second or third on the account. Clients: Beyond Meat, FIJI, POM, Wonderful Pistachios, GoodRx, Ripple, Sapporo, Halo Top, Hormel, Lakers.',
     photos: [
-      { src: '/photos/work/neptune-1.jpg' },
       { src: '/photos/work/neptune-2.JPG' },
       { src: '/photos/work/neptune-3.JPG' },
       { src: '/photos/work/neptune-4.JPG' },
       { src: '/photos/work/neptune-5.JPG' },
+      { src: '/photos/work/neptune-6.JPG' },
     ],
     links: [
       { label: 'neptuneretailsolutions.com', url: 'https://neptuneretailsolutions.com/', kind: 'web' },
