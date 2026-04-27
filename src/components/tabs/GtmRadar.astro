@@ -1,5 +1,5 @@
 ---
-import { briefings, memo } from '../../content/briefings';
+import { briefings, memo, methodology } from '../../content/briefings';
 ---
 <div class="pt-6 md:pt-12">
   <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
@@ -19,13 +19,21 @@ import { briefings, memo } from '../../content/briefings';
     ))}
   </div>
 
-  <h3 class="font-serif text-xl mt-12 mb-4">Memo</h3>
-  <a href={memo.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
-    <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">One-pager</p>
-    <p class="font-serif text-lg leading-snug">{memo.title}</p>
-    <p class="text-sm text-ink/75 mt-2">{memo.summary}</p>
-    <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
-  </a>
+  <h3 class="font-serif text-xl mt-12 mb-4">Memo &amp; methodology</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <a href={memo.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+      <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">One-pager</p>
+      <p class="font-serif text-lg leading-snug">{memo.title}</p>
+      <p class="text-sm text-ink/75 mt-2">{memo.summary}</p>
+      <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
+    </a>
+    <a href={methodology.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+      <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">How it's built</p>
+      <p class="font-serif text-lg leading-snug">{methodology.title}</p>
+      <p class="text-sm text-ink/75 mt-2">{methodology.summary}</p>
+      <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
+    </a>
+  </div>
 
   <h3 class="font-serif text-xl mt-12 mb-4">How I built it</h3>
   <p class="font-serif text-lg text-ink/85 leading-relaxed max-w-[640px]">

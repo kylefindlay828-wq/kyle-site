@@ -44,3 +44,9 @@ export const memo = {
   summary: 'A one-page memo on how GTM Radar could scale inside a retained search firm.',
   pdf: '/briefings/gtm-radar-memo.pdf',
 };
+
+export const methodology = {
+  title: 'Methodology & Decision Log',
+  summary: 'How the watchlist was built — five buckets, three filters, the scoring rubric, and every pivotal scope call made during the build.',
+  pdf: '/briefings/gtm-radar-methodology.pdf',
+};
