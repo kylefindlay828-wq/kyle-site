@@ -1,5 +1,6 @@
 ---
 import { briefings, memo, methodology } from '../../content/briefings';
+import { watchlist, watchlistTotal } from '../../content/watchlist';
 ---
 <div class="pt-6 md:pt-12">
   <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
@@ -33,6 +34,37 @@ import { briefings, memo, methodology } from '../../content/briefings';
       <p class="text-sm text-ink/75 mt-2">{methodology.summary}</p>
       <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
     </a>
+  </div>
+
+  <h3 class="font-serif text-xl mt-12 mb-4">The watchlist</h3>
+  <p class="font-serif text-base text-ink/85 leading-relaxed max-w-[640px] mb-6">
+    {watchlistTotal} companies across five buckets — selected for active GTM hiring, no internal recruiting army, and a pattern that matches Betts's documented book.
+  </p>
+
+  <div class="border border-rule rounded bg-white p-5 mb-8">
+    <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-x-4 gap-y-5 items-center">
+      {watchlist.flatMap((b) => b.companies).map((c) => (
+        <img
+          src={`https://logo.clearbit.com/${c.domain}`}
+          alt={c.name}
+          title={c.name}
+          loading="lazy"
+          class="h-7 w-auto max-w-full object-contain mx-auto opacity-75 hover:opacity-100 transition"
+          onerror="this.style.display='none'"
+        />
+      ))}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 mb-12">
+    {watchlist.map((b) => (
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.18em] text-accent mb-2 font-semibold">{b.label} · {b.companies.length}</p>
+        <p class="font-serif text-base text-ink/85 leading-relaxed">
+          {b.companies.map((c) => c.name).join(' · ')}
+        </p>
+      </div>
+    ))}
   </div>
 
   <h3 class="font-serif text-xl mt-12 mb-4">How I built it</h3>
