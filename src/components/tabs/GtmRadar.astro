@@ -9,6 +9,30 @@ import { watchlist, watchlistTotal } from '../../content/watchlist';
     Built for GTM recruiters who need to know which companies just raised, who's moving, and what to say in outreach — before the search brief is written. Human-in-the-loop research, not an automated feed.
   </p>
 
+  <h3 class="font-serif text-xl mt-12 mb-3">The watchlist</h3>
+  <p class="font-serif text-base text-ink/85 leading-relaxed max-w-[640px] mb-2">
+    {watchlistTotal} companies across five buckets — selected for active GTM hiring, no internal recruiting army, and a pattern that matches Betts's documented book.
+  </p>
+  <p class="text-xs text-muted leading-relaxed max-w-[640px] mb-6">
+    Current as of April 27, 2026. Twelve companies (in <span class="italic">italic</span>) were added for Week 17 to expand AI-native customer-experience coverage; earlier briefings ran against the prior 43-company list.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 mb-12">
+    {watchlist.map((b) => (
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.18em] text-accent mb-2 font-semibold">{b.label} · {b.companies.length}</p>
+        <p class="font-serif text-base text-ink/85 leading-relaxed">
+          {b.companies.map((c, i) => (
+            <>
+              {i > 0 && ' · '}
+              <span class={c.addedW17 ? 'italic text-ink/60' : ''}>{c.name}</span>
+            </>
+          ))}
+        </p>
+      </div>
+    ))}
+  </div>
+
   <h3 class="font-serif text-xl mt-12 mb-4">Recent editions</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     {briefings.map((b) => (
@@ -34,22 +58,6 @@ import { watchlist, watchlistTotal } from '../../content/watchlist';
       <p class="text-sm text-ink/75 mt-2">{methodology.summary}</p>
       <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
     </a>
-  </div>
-
-  <h3 class="font-serif text-xl mt-12 mb-4">The watchlist</h3>
-  <p class="font-serif text-base text-ink/85 leading-relaxed max-w-[640px] mb-6">
-    {watchlistTotal} companies across five buckets — selected for active GTM hiring, no internal recruiting army, and a pattern that matches Betts's documented book.
-  </p>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 mb-12">
-    {watchlist.map((b) => (
-      <div>
-        <p class="text-[10px] uppercase tracking-[0.18em] text-accent mb-2 font-semibold">{b.label} · {b.companies.length}</p>
-        <p class="font-serif text-base text-ink/85 leading-relaxed">
-          {b.companies.map((c) => c.name).join(' · ')}
-        </p>
-      </div>
-    ))}
   </div>
 
   <h3 class="font-serif text-xl mt-12 mb-4">How I built it</h3>

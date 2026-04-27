@@ -1,4 +1,4 @@
-export type Company = { name: string; domain: string };
+export type Company = { name: string; domain: string; addedW17?: boolean };
 
 export type Bucket = {
   key: string;
@@ -19,13 +19,13 @@ export const watchlist: Bucket[] = [
       { name: 'Electric', domain: 'electric.ai' },
       { name: 'Gong', domain: 'gong.io' },
       { name: 'Notion', domain: 'notion.so' },
-      { name: 'Sierra', domain: 'sierra.ai' },
-      { name: 'Decagon', domain: 'decagon.ai' },
-      { name: 'Hebbia', domain: 'hebbia.com' },
-      { name: 'Forethought', domain: 'forethought.ai' },
-      { name: 'Maven AGI', domain: 'mavenagi.com' },
-      { name: 'Crescendo', domain: 'crescendo.ai' },
-      { name: 'EvenUp', domain: 'evenuplaw.com' },
+      { name: 'Sierra', domain: 'sierra.ai', addedW17: true },
+      { name: 'Decagon', domain: 'decagon.ai', addedW17: true },
+      { name: 'Hebbia', domain: 'hebbia.com', addedW17: true },
+      { name: 'Forethought', domain: 'forethought.ai', addedW17: true },
+      { name: 'Maven AGI', domain: 'mavenagi.com', addedW17: true },
+      { name: 'Crescendo', domain: 'crescendo.ai', addedW17: true },
+      { name: 'EvenUp', domain: 'evenuplaw.com', addedW17: true },
     ],
   },
   {
@@ -41,9 +41,9 @@ export const watchlist: Bucket[] = [
       { name: 'ZoomInfo', domain: 'zoominfo.com' },
       { name: 'Common Room', domain: 'commonroom.io' },
       { name: 'UserGems', domain: 'usergems.com' },
-      { name: 'Clay', domain: 'clay.com' },
-      { name: 'Sybill', domain: 'sybill.ai' },
-      { name: 'Lavender', domain: 'lavender.ai' },
+      { name: 'Clay', domain: 'clay.com', addedW17: true },
+      { name: 'Sybill', domain: 'sybill.ai', addedW17: true },
+      { name: 'Lavender', domain: 'lavender.ai', addedW17: true },
     ],
   },
   {
@@ -80,8 +80,8 @@ export const watchlist: Bucket[] = [
       { name: 'Zoom', domain: 'zoom.us' },
       { name: 'Samsara', domain: 'samsara.com' },
       { name: 'Klaviyo', domain: 'klaviyo.com' },
-      { name: 'PagerDuty', domain: 'pagerduty.com' },
-      { name: 'Procore', domain: 'procore.com' },
+      { name: 'PagerDuty', domain: 'pagerduty.com', addedW17: true },
+      { name: 'Procore', domain: 'procore.com', addedW17: true },
     ],
   },
   {
