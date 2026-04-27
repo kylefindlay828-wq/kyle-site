@@ -1,5 +1,6 @@
 ---
 const tabs = [
+  { id: 'home', label: 'Home' },
   { id: 'work', label: 'Work' },
   { id: 'gtm-radar', label: 'GTM Radar' },
   { id: 'contact', label: 'Contact' },
@@ -7,7 +8,7 @@ const tabs = [
 ---
 <nav class="sticky top-0 bg-paper border-b border-rule z-10">
   <div class="max-w-content mx-auto px-6 py-4 flex items-center gap-6 relative">
-    <a href="#work" class="font-serif font-bold text-lg tracking-tight text-ink">Kyle Findlay</a>
+    <a href="#home" class="font-serif font-bold text-lg tracking-tight text-ink">Kyle Findlay</a>
 
     <button id="nav-toggle" class="ml-auto sm:hidden text-ink text-xl" aria-label="Toggle menu">☰</button>
 
@@ -30,7 +31,7 @@ const tabs = [
   const sections = document.querySelectorAll('section[data-section]');
 
   function syncTabs() {
-    const hash = window.location.hash.replace('#', '') || 'work';
+    const hash = window.location.hash.replace('#', '') || 'home';
     links.forEach((link) => {
       const isActive = link.getAttribute('data-tab') === hash;
       link.classList.toggle('text-ink', isActive);

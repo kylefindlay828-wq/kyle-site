@@ -8,9 +8,11 @@ import { briefings, loomEmbedUrl, memo } from '../../content/briefings';
     Built for GTM recruiters who need to know which companies just raised, who's moving, and what to say in outreach — before the search brief is written. Human-in-the-loop research, not an automated feed.
   </p>
 
-  <div class="mt-8 aspect-video bg-ink rounded">
-    <iframe src={loomEmbedUrl} frameborder="0" allowfullscreen class="w-full h-full rounded"></iframe>
-  </div>
+  {loomEmbedUrl && (
+    <div class="mt-8 aspect-video bg-ink rounded">
+      <iframe src={loomEmbedUrl} frameborder="0" allowfullscreen class="w-full h-full rounded"></iframe>
+    </div>
+  )}
 
   <h3 class="font-serif text-xl mt-12 mb-4">Recent editions</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

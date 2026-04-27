@@ -28,14 +28,16 @@ export const briefings: Briefing[] = [
     summary: 'Atlassian AI governance release, Ramp valuation reset, Salesloft, and playbook.',
     pdf: '/briefings/gtm-radar-2026-w16.pdf',
   },
-  // Week 17 added post-rescan on 2026-04-27:
-  // {
-  //   week: 17, year: 2026, dateRange: 'Apr 20 – Apr 26',
-  //   summary: '...', pdf: '/briefings/gtm-radar-2026-w17.pdf',
-  // },
+  {
+    week: 17,
+    year: 2026,
+    dateRange: 'Apr 20 – Apr 26',
+    summary: 'Quiet week on the watchlist. Honest-zero briefing with the cross-week pattern read on Clari + Salesloft.',
+    pdf: '/briefings/gtm-radar-2026-w17.pdf',
+  },
 ];
 
-export const loomEmbedUrl = 'https://www.loom.com/embed/REPLACE_WITH_LOOM_ID';
+export const loomEmbedUrl = '';
 
 export const memo = {
   title: 'What this could be inside Betts',
