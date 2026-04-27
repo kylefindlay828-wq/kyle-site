@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import Home from '../components/tabs/Home.astro';
 import Work from '../components/tabs/Work.astro';
 import OffTheRecord from '../components/tabs/OffTheRecord.astro';
 import GtmRadar from '../components/tabs/GtmRadar.astro';
@@ -23,7 +22,6 @@ import Contact from '../components/tabs/Contact.astro';
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
     <main class="max-w-content mx-auto px-6 py-12">
-      <section data-section="home"><Home /></section>
       <section data-section="work"><Work /></section>
       <section data-section="off-the-record"><OffTheRecord /></section>
       <section data-section="gtm-radar"><GtmRadar /></section>

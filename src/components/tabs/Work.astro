@@ -1,8 +1,33 @@
 ---
+import { Image } from 'astro:assets';
+import headshot from '../../assets/photos/headshot.jpg';
 import { roles, education } from '../../content/work';
 import PhotoGallery from '../PhotoGallery.astro';
 ---
 <div class="pt-6 md:pt-12">
+  {/* Hero (migrated from Home) */}
+  <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-8 items-start mb-14 md:mb-16">
+    <Image
+      src={headshot}
+      alt="Kyle Findlay"
+      width={280}
+      height={280}
+      class="rounded-full w-[140px] h-[140px] object-cover"
+    />
+    <div>
+      <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Kyle Findlay</p>
+      <h2 class="font-serif text-3xl md:text-4xl leading-tight mb-4">
+        Customer Success, Partnerships, and GTM for early-stage tech.
+      </h2>
+      <p class="font-serif text-lg text-ink/80 leading-relaxed">
+        Seven years building the operator layer behind high-stakes client programs. Now focused on the same craft applied inside early-stage tech.
+      </p>
+      <p class="text-sm text-muted mt-4">
+        Based in Los Angeles, relocating to San Francisco June 1. Open to GTM, customer success, and partnerships roles at early-stage startups.
+      </p>
+    </div>
+  </div>
+
   <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Work</p>
   <h2 class="font-serif text-3xl mb-10">The places that taught me.</h2>
 
