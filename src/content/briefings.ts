@@ -32,7 +32,7 @@ export const briefings: Briefing[] = [
     week: 17,
     year: 2026,
     dateRange: 'Apr 20 – Apr 26',
-    summary: 'Quiet week on the watchlist. Honest-zero briefing with the cross-week pattern read on Clari + Salesloft.',
+    summary: 'Watchlist expansion surfaces 4 launches at AI-native CX cohort: Sierra (Paris), Crescendo ($100M ARR + UK), Clay (MCP), Decagon (GCP).',
     pdf: '/briefings/gtm-radar-2026-w17.pdf',
   },
 ];
