@@ -26,21 +26,24 @@ export const roles: Role[] = [
     title: 'Experiential Production',
     subtitle: 'Producer / Artist Liaison · Stichting Tenclub · Wildeburg · Landjuweel · Into the Woods · ADE · Lightning in a Bottle · Insider Expeditions',
     body:
-      "Producing across venues, festivals, and expeditions — Stichting Tenclub in Amsterdam, the Dutch festival circuit (Wildeburg, Landjuweel, Into the Woods, ADE), California's Lightning in a Bottle, and luxury trips through Antarctica, the Bahamas, Egypt, and Brazil with Insider Expeditions. Calm-under-pressure work — translating creative vision into live reality.",
+      "Producing across venues, festivals, and expeditions — Stichting Tenclub in Amsterdam, the Dutch festival circuit (Wildeburg, Landjuweel, Into the Woods, ADE), and California's Lightning in a Bottle. With Insider Expeditions, onboard producer for Antarctica and Bahamas voyages, and trip design and sales for Egypt and Brazil. Calm-under-pressure work — translating creative vision into live reality.",
     photos: [
-      { src: '/photos/work/experiential-1.jpg' },
-      { src: '/photos/work/experiential-4.jpeg', featured: true },
+      { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Wildeburg' },
+      {
+        src: '/photos/work/experiential-4.jpeg',
+        caption: 'On-site · Lightning in a Bottle',
+        featured: true,
+      },
       {
         src: '/photos/work/experiential-10.jpeg',
         alt: 'Site map review at Lightning in a Bottle, produced by Do LaB, 2025',
         caption: 'Site map review · Lightning in a Bottle · Do LaB · 2025',
         featured: true,
       },
-      { src: '/photos/work/experiential-2.png' },
-      { src: '/photos/work/experiential-3.jpeg' },
-      { src: '/photos/work/experiential-5.jpeg' },
-      { src: '/photos/work/experiential-8.jpeg' },
-      { src: '/photos/work/experiential-9.jpeg' },
+      { src: '/photos/work/experiential-2.png', caption: 'Site build · Dutch festival circuit' },
+      { src: '/photos/work/experiential-3.jpeg', caption: 'Landjuweel · Ruigoord, NL' },
+      { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions' },
+      { src: '/photos/work/experiential-8.jpeg', caption: 'Departure · Insider Expeditions' },
     ],
     links: [
       { label: 'Stichting Tenclub', url: 'https://tenclub.nl/', kind: 'web' },
@@ -78,6 +81,12 @@ export const roles: Role[] = [
 ];
 
 export const education = [
-  { school: 'University of Colorado Boulder', detail: 'BA Strategic Communications' },
-  { school: 'Santa Monica College', detail: '' },
+  {
+    school: 'University of Colorado Boulder',
+    detail: 'BA Strategic Communications, Minor in Leadership Studies · 2019',
+  },
+  {
+    school: 'Santa Monica College',
+    detail: 'AA · 2016 (transferred to CU Boulder)',
+  },
 ];

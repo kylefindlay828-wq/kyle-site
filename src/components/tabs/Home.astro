@@ -1,26 +1,19 @@
 ---
 import { Image } from 'astro:assets';
 import headshot from '../../assets/photos/headshot.jpg';
+import { briefings, memo } from '../../content/briefings';
 
-const selectedWork = [
-  {
-    image: '/photos/work/experiential-4.jpeg',
-    title: 'Experiential Production',
-    desc: 'Stage and artist liaison across Dutch festivals, Lightning in a Bottle, and luxury expeditions.',
-    href: '/#work',
-  },
-  {
-    image: '/photos/work/experiential-8.jpeg',
-    title: 'Insider Expeditions',
-    desc: 'Onboard producer for Antarctica and Bahamas voyages. Trip design for Egypt and Brazil.',
-    href: '/#work',
-  },
-  {
-    image: '/photos/work/neptune-5.JPG',
-    title: 'Neptune Retail Solutions',
-    desc: '$6M+ in CPG go-to-market campaigns across 60,000 retail locations.',
-    href: '/#work',
-  },
+const heroSelected = {
+  src: '/photos/work/experiential-4.jpeg',
+  label: 'Experiential Production',
+  href: '/#work',
+};
+
+const selectedRest = [
+  { src: '/photos/work/experiential-10.jpeg', label: 'Experiential Production', href: '/#work' },
+  { src: '/photos/work/experiential-8.jpeg', label: 'Insider Expeditions', href: '/#work' },
+  { src: '/photos/work/neptune-5.JPG', label: 'Neptune Retail Solutions', href: '/#work' },
+  { src: '/photos/work/experiential-3.jpeg', label: 'Experiential Production', href: '/#work' },
 ];
 ---
 <div class="pt-6 md:pt-12">
@@ -44,22 +37,81 @@ const selectedWork = [
     </div>
   </div>
 
-  {/* Selected Work */}
-  <section class="mt-16 md:mt-20">
-    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Selected Work</p>
-    <h3 class="font-serif text-2xl md:text-3xl mb-8">A few of the rooms.</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5">
-      {selectedWork.map((w) => (
-        <a href={w.href} class="group block">
-          <div
-            class="aspect-[4/3] bg-cover bg-center bg-ink rounded-sm mb-4 transition group-hover:opacity-90"
-            style={`background-image: url('${w.image}'), linear-gradient(135deg, #1a1613 0%, #5d554a 100%);`}
-          />
-          <p class="font-serif text-lg mb-1">{w.title}</p>
-          <p class="text-sm text-ink/75 leading-relaxed mb-2">{w.desc}</p>
-          <p class="text-[12px] uppercase tracking-[0.18em] text-accent group-hover:underline">View →</p>
+  {/* GTM Radar — featured block */}
+  <section class="mt-16 md:mt-20 pt-10 border-t border-rule">
+    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
+    <h3 class="font-serif text-2xl md:text-3xl mb-4">A weekly intelligence briefing on AI-reshaped GTM.</h3>
+    <p class="font-serif text-lg text-ink/85 leading-relaxed max-w-[640px]">
+      Built for GTM recruiters who need to know which companies just raised, who's moving, and what to say in outreach — before the search brief is written. Human-in-the-loop research, not an automated feed.
+    </p>
+
+    <h4 class="font-serif text-xl mt-10 mb-4">Recent editions</h4>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {briefings.map((b) => (
+        <a href={b.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+          <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">Week {b.week} · {b.year} · {b.dateRange}</p>
+          <p class="font-serif text-base leading-snug">{b.summary}</p>
+          <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
         </a>
       ))}
+    </div>
+
+    <h4 class="font-serif text-xl mt-10 mb-4">Memo</h4>
+    <a href={memo.pdf} target="_blank" rel="noopener" class="block border border-rule rounded p-5 hover:border-accent transition bg-white">
+      <p class="text-[10px] uppercase tracking-[0.15em] text-muted mb-2">One-pager</p>
+      <p class="font-serif text-lg leading-snug">{memo.title}</p>
+      <p class="text-sm text-ink/75 mt-2">{memo.summary}</p>
+      <p class="text-xs text-accent mt-3 uppercase tracking-[0.12em]">Open PDF →</p>
+    </a>
+
+    <p class="mt-6">
+      <a href="/#gtm-radar" class="text-[12px] uppercase tracking-[0.18em] text-accent hover:underline">See the workflow →</a>
+    </p>
+  </section>
+
+  {/* Selected Work — agency-portfolio grid */}
+  <section class="mt-16 md:mt-20 pt-10 border-t border-rule">
+    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Selected Work</p>
+    <h3 class="font-serif text-2xl md:text-3xl mb-8">A few of the rooms.</h3>
+
+    <div class="grid grid-cols-1 gap-1 md:gap-2">
+      {/* Hero */}
+      <a
+        href={heroSelected.href}
+        class="selected-tile group relative block overflow-hidden bg-ink"
+        aria-label={heroSelected.label}
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
+          style={`background-image: url('${heroSelected.src}'), linear-gradient(135deg, #1a1613 0%, #5d554a 100%);`}
+        />
+        <div class="aspect-[16/9]" />
+        <div class="absolute inset-0 bg-ink/40 md:bg-ink/0 md:group-hover:bg-ink/55 transition" />
+        <div class="absolute bottom-0 left-0 right-0 p-5 md:p-6 text-paper md:opacity-0 md:group-hover:opacity-100 transition duration-300">
+          <p class="font-serif text-xl leading-tight">{heroSelected.label} →</p>
+        </div>
+      </a>
+
+      {/* 2x2 below */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
+        {selectedRest.map((s) => (
+          <a
+            href={s.href}
+            class="selected-tile group relative block overflow-hidden bg-ink"
+            aria-label={s.label}
+          >
+            <div
+              class="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
+              style={`background-image: url('${s.src}'), linear-gradient(135deg, #1a1613 0%, #5d554a 100%);`}
+            />
+            <div class="aspect-[4/3]" />
+            <div class="absolute inset-0 bg-ink/40 md:bg-ink/0 md:group-hover:bg-ink/55 transition" />
+            <div class="absolute bottom-0 left-0 right-0 p-4 md:p-5 text-paper md:opacity-0 md:group-hover:opacity-100 transition duration-300">
+              <p class="font-serif text-lg leading-tight">{s.label} →</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -69,12 +121,5 @@ const selectedWork = [
     <p class="font-serif text-lg text-ink/85 leading-relaxed">
       Publishing GTM Radar — a weekly briefing on go-to-market motion in early-stage tech. Based in Los Angeles, relocating to San Francisco June 1. Open to GTM, customer success, and partnerships roles at early-stage startups.
     </p>
-  </section>
-
-  {/* GTM Radar callout */}
-  <section class="mt-16 md:mt-20 pt-10 border-t border-rule">
-    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
-    <h3 class="font-serif text-2xl md:text-3xl mb-4 max-w-2xl">A weekly briefing on go-to-market in early-stage tech.</h3>
-    <a href="/#gtm-radar" class="text-[13px] uppercase tracking-[0.18em] text-accent hover:underline">Read the latest →</a>
   </section>
 </div>
