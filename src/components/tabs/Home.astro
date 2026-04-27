@@ -1,23 +1,80 @@
 ---
 import { Image } from 'astro:assets';
 import headshot from '../../assets/photos/headshot.jpg';
+
+const selectedWork = [
+  {
+    image: '/photos/work/experiential-4.jpeg',
+    title: 'Experiential Production',
+    desc: 'Stage and artist liaison across Dutch festivals, Lightning in a Bottle, and luxury expeditions.',
+    href: '/#work',
+  },
+  {
+    image: '/photos/work/experiential-8.jpeg',
+    title: 'Insider Expeditions',
+    desc: 'Onboard producer for Antarctica and Bahamas voyages. Trip design for Egypt and Brazil.',
+    href: '/#work',
+  },
+  {
+    image: '/photos/work/neptune-5.JPG',
+    title: 'Neptune Retail Solutions',
+    desc: '$6M+ in CPG go-to-market campaigns across 60,000 retail locations.',
+    href: '/#work',
+  },
+];
 ---
-<div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-8 items-start pt-6 md:pt-12">
-  <Image
-    src={headshot}
-    alt="Kyle Findlay"
-    width={280}
-    height={280}
-    class="rounded-full w-[140px] h-[140px] object-cover"
-  />
-  <div>
-    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Kyle Findlay</p>
-    <h2 class="font-serif text-3xl md:text-4xl leading-tight mb-4">
-      Customer Success, Partnerships, and GTM for early-stage tech.
-    </h2>
-    <p class="font-serif text-lg text-ink/80 leading-relaxed">
-      Seven years building the operator layer behind high-stakes client programs. Now focused on the same craft applied inside early-stage tech.
-    </p>
-    <p class="text-sm text-muted mt-6">Los Angeles · open to SF / Austin</p>
+<div class="pt-6 md:pt-12">
+  {/* Hero */}
+  <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-8 items-start">
+    <Image
+      src={headshot}
+      alt="Kyle Findlay"
+      width={280}
+      height={280}
+      class="rounded-full w-[140px] h-[140px] object-cover"
+    />
+    <div>
+      <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Kyle Findlay</p>
+      <h2 class="font-serif text-3xl md:text-4xl leading-tight mb-4">
+        Customer Success, Partnerships, and GTM for early-stage tech.
+      </h2>
+      <p class="font-serif text-lg text-ink/80 leading-relaxed">
+        Seven years building the operator layer behind high-stakes client programs. Now focused on the same craft applied inside early-stage tech.
+      </p>
+    </div>
   </div>
+
+  {/* Selected Work */}
+  <section class="mt-16 md:mt-20">
+    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Selected Work</p>
+    <h3 class="font-serif text-2xl md:text-3xl mb-8">A few of the rooms.</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5">
+      {selectedWork.map((w) => (
+        <a href={w.href} class="group block">
+          <div
+            class="aspect-[4/3] bg-cover bg-center bg-ink rounded-sm mb-4 transition group-hover:opacity-90"
+            style={`background-image: url('${w.image}'), linear-gradient(135deg, #1a1613 0%, #5d554a 100%);`}
+          />
+          <p class="font-serif text-lg mb-1">{w.title}</p>
+          <p class="text-sm text-ink/75 leading-relaxed mb-2">{w.desc}</p>
+          <p class="text-[12px] uppercase tracking-[0.18em] text-accent group-hover:underline">View →</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {/* Currently */}
+  <section class="mt-16 md:mt-20 max-w-2xl">
+    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Currently</p>
+    <p class="font-serif text-lg text-ink/85 leading-relaxed">
+      Publishing GTM Radar — a weekly briefing on go-to-market motion in early-stage tech. Based in Los Angeles, relocating to San Francisco June 1. Open to GTM, customer success, and partnerships roles at early-stage startups.
+    </p>
+  </section>
+
+  {/* GTM Radar callout */}
+  <section class="mt-16 md:mt-20 pt-10 border-t border-rule">
+    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">GTM Radar</p>
+    <h3 class="font-serif text-2xl md:text-3xl mb-4 max-w-2xl">A weekly briefing on go-to-market in early-stage tech.</h3>
+    <a href="/#gtm-radar" class="text-[13px] uppercase tracking-[0.18em] text-accent hover:underline">Read the latest →</a>
+  </section>
 </div>

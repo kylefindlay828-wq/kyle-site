@@ -4,12 +4,19 @@ export type Link = {
   kind: 'web' | 'instagram';
 };
 
+export type Photo = {
+  src: string;
+  alt?: string;
+  caption?: string;
+  featured?: boolean;
+};
+
 export type Role = {
   id: string;
   title: string;
   subtitle: string;
   body: string;
-  photos?: string[];
+  photos?: Photo[];
   links?: Link[];
 };
 
@@ -21,15 +28,21 @@ export const roles: Role[] = [
     body:
       "Producing across venues, festivals, and expeditions — Stichting Tenclub in Amsterdam, the Dutch festival circuit (Wildeburg, Landjuweel, Into the Woods, ADE), California's Lightning in a Bottle, and luxury trips through Antarctica, the Bahamas, Egypt, and Brazil with Insider Expeditions. Calm-under-pressure work — translating creative vision into live reality.",
     photos: [
-      '/photos/work/experiential-1.jpg',
-      '/photos/work/experiential-2.png',
-      '/photos/work/experiential-3.jpeg',
-      '/photos/work/experiential-4.jpeg',
-      '/photos/work/experiential-5.jpeg',
-      '/photos/work/experiential-6.jpeg',
-      '/photos/work/experiential-7.jpeg',
-      '/photos/work/experiential-8.jpeg',
-      '/photos/work/experiential-9.jpeg',
+      { src: '/photos/work/experiential-1.jpg' },
+      { src: '/photos/work/experiential-4.jpeg', featured: true },
+      {
+        src: '/photos/work/experiential-10.jpeg',
+        alt: 'Site map review at Lightning in a Bottle, produced by Do LaB, 2025',
+        caption: 'Site map review · Lightning in a Bottle · Do LaB · 2025',
+        featured: true,
+      },
+      { src: '/photos/work/experiential-2.png' },
+      { src: '/photos/work/experiential-3.jpeg' },
+      { src: '/photos/work/experiential-5.jpeg' },
+      { src: '/photos/work/experiential-6.jpeg' },
+      { src: '/photos/work/experiential-7.jpeg' },
+      { src: '/photos/work/experiential-8.jpeg' },
+      { src: '/photos/work/experiential-9.jpeg' },
     ],
     links: [
       { label: 'Stichting Tenclub', url: 'https://tenclub.nl/', kind: 'web' },
@@ -54,11 +67,11 @@ export const roles: Role[] = [
     body:
       'Directly managed $3M+ per year in CPG campaigns (~$6–7M total across tenure), plus $5–6M more as second or third on the account. Clients: Beyond Meat, FIJI, POM, Wonderful Pistachios, GoodRx, Ripple, Sapporo, Halo Top, Hormel, Lakers.',
     photos: [
-      '/photos/work/neptune-1.jpg',
-      '/photos/work/neptune-2.JPG',
-      '/photos/work/neptune-3.JPG',
-      '/photos/work/neptune-4.JPG',
-      '/photos/work/neptune-5.JPG',
+      { src: '/photos/work/neptune-1.jpg' },
+      { src: '/photos/work/neptune-2.JPG' },
+      { src: '/photos/work/neptune-3.JPG' },
+      { src: '/photos/work/neptune-4.JPG' },
+      { src: '/photos/work/neptune-5.JPG' },
     ],
     links: [
       { label: 'neptuneretailsolutions.com', url: 'https://neptuneretailsolutions.com/', kind: 'web' },

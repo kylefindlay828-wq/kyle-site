@@ -1,29 +1,62 @@
 ---
+import type { Photo } from '../content/work';
+
 interface Props {
-  photos: string[];
+  photos: Photo[];
   groupId: string;
 }
 const { photos, groupId } = Astro.props;
 const [lead, ...rest] = photos;
+const featured = rest.filter((p) => p.featured);
+const masonry = rest.filter((p) => !p.featured);
 ---
 <div class="photo-gallery" data-gallery={groupId}>
   {lead && (
-    <img
-      src={lead}
-      alt=""
-      loading="lazy"
-      class="gallery-photo w-full h-auto block rounded-sm mb-3 md:mb-4 cursor-zoom-in transition hover:opacity-90"
-    />
+    <figure class="mb-3 md:mb-4">
+      <img
+        src={lead.src}
+        alt={lead.alt ?? ''}
+        loading="lazy"
+        class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+      />
+      {lead.caption && (
+        <figcaption class="text-[11px] text-muted italic mt-2">{lead.caption}</figcaption>
+      )}
+    </figure>
   )}
-  {rest.length > 0 && (
+
+  {featured.length > 0 && (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-3 md:mb-4">
+      {featured.map((p) => (
+        <figure>
+          <img
+            src={p.src}
+            alt={p.alt ?? ''}
+            loading="lazy"
+            class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+          />
+          {p.caption && (
+            <figcaption class="text-[11px] text-muted italic mt-2">{p.caption}</figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  )}
+
+  {masonry.length > 0 && (
     <div class="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4">
-      {rest.map((src) => (
-        <img
-          src={src}
-          alt=""
-          loading="lazy"
-          class="gallery-photo w-full h-auto block rounded-sm mb-3 md:mb-4 break-inside-avoid cursor-zoom-in transition hover:opacity-90"
-        />
+      {masonry.map((p) => (
+        <figure class="break-inside-avoid mb-3 md:mb-4">
+          <img
+            src={p.src}
+            alt={p.alt ?? ''}
+            loading="lazy"
+            class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+          />
+          {p.caption && (
+            <figcaption class="text-[11px] text-muted italic mt-2">{p.caption}</figcaption>
+          )}
+        </figure>
       ))}
     </div>
   )}
