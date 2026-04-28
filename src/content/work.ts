@@ -8,6 +8,7 @@ export type Photo = {
   src: string;
   alt?: string;
   caption?: string;
+  body?: string;
   featured?: boolean;
 };
 
@@ -28,22 +29,24 @@ export const roles: Role[] = [
     body:
       "Owned the customer experience end-to-end on programs where the stakes were live and the room was full. Artist liaison and producer at Tenclub (Amsterdam), the Dutch festival circuit (Wildeburg, Landjuweel, Into the Woods, ADE), and Lightning in a Bottle in California — the seat where artist contracts, sponsor activations, ops vendors, and creative direction collide and someone has to make the call in real time. Onboard producer for Insider Expeditions in Antarctica and the Bahamas; trip design and sales for Egypt and Brazil. The thread under all of it: translate a creative vision into operational reality, manage stakeholders with conflicting incentives, and deliver under conditions that don't tolerate a second take. The same operator skill that scales inside an early-stage GTM team.",
     photos: [
-      { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Wildeburg' },
+      {
+        src: '/photos/work/experiential-10.jpeg',
+        alt: 'Site map review at Lightning in a Bottle, produced by Do LaB, 2025',
+        caption: 'Site map review · Lightning in a Bottle · Do LaB · 2025',
+      },
       {
         src: '/photos/work/experiential-4.jpeg',
         caption: 'On-site · Lightning in a Bottle',
         featured: true,
       },
       {
-        src: '/photos/work/experiential-10.jpeg',
-        alt: 'Site map review at Lightning in a Bottle, produced by Do LaB, 2025',
-        caption: 'Site map review · Lightning in a Bottle · Do LaB · 2025',
+        src: '/photos/work/experiential-2.png',
+        caption: 'Site build · Lightning in a Bottle · Do LaB · CA',
         featured: true,
       },
-      { src: '/photos/work/experiential-2.png', caption: 'Site build · Dutch festival circuit' },
-      { src: '/photos/work/experiential-3.jpeg', caption: 'Landjuweel · Ruigoord, NL' },
-      { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions' },
-      { src: '/photos/work/experiential-8.jpeg', caption: 'Departure · Insider Expeditions' },
+      { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
+      { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Into the Woods' },
+      { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions · Bahamas' },
     ],
     links: [
       { label: 'Stichting Tenclub', url: 'https://tenclub.nl/', kind: 'web' },

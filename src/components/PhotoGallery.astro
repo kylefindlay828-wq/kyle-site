@@ -9,18 +9,34 @@ const { photos, groupId } = Astro.props;
 const [lead, ...rest] = photos;
 const featured = rest.filter((p) => p.featured);
 const masonry = rest.filter((p) => !p.featured);
+
+const isVideo = (src: string) => /\.(mp4|webm|mov)$/i.test(src);
 ---
 <div class="photo-gallery" data-gallery={groupId}>
   {lead && (
     <figure class="mb-3 md:mb-4">
-      <img
-        src={lead.src}
-        alt={lead.alt ?? ''}
-        loading="lazy"
-        class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
-      />
+      {isVideo(lead.src) ? (
+        <video
+          src={lead.src}
+          autoplay
+          muted
+          loop
+          playsinline
+          class="w-full h-auto block rounded-sm"
+        />
+      ) : (
+        <img
+          src={lead.src}
+          alt={lead.alt ?? ''}
+          loading="lazy"
+          class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+        />
+      )}
       {lead.caption && (
         <figcaption class="text-[11px] text-muted italic mt-2">{lead.caption}</figcaption>
+      )}
+      {lead.body && (
+        <p class="font-serif text-sm text-ink/80 leading-relaxed mt-2 max-w-[640px]">{lead.body}</p>
       )}
     </figure>
   )}
@@ -29,14 +45,28 @@ const masonry = rest.filter((p) => !p.featured);
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-3 md:mb-4">
       {featured.map((p) => (
         <figure>
-          <img
-            src={p.src}
-            alt={p.alt ?? ''}
-            loading="lazy"
-            class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
-          />
+          {isVideo(p.src) ? (
+            <video
+              src={p.src}
+              autoplay
+              muted
+              loop
+              playsinline
+              class="w-full h-auto block rounded-sm"
+            />
+          ) : (
+            <img
+              src={p.src}
+              alt={p.alt ?? ''}
+              loading="lazy"
+              class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+            />
+          )}
           {p.caption && (
             <figcaption class="text-[11px] text-muted italic mt-2">{p.caption}</figcaption>
+          )}
+          {p.body && (
+            <p class="font-serif text-sm text-ink/80 leading-relaxed mt-2">{p.body}</p>
           )}
         </figure>
       ))}
@@ -47,14 +77,28 @@ const masonry = rest.filter((p) => !p.featured);
     <div class="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4">
       {masonry.map((p) => (
         <figure class="break-inside-avoid mb-3 md:mb-4">
-          <img
-            src={p.src}
-            alt={p.alt ?? ''}
-            loading="lazy"
-            class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
-          />
+          {isVideo(p.src) ? (
+            <video
+              src={p.src}
+              autoplay
+              muted
+              loop
+              playsinline
+              class="w-full h-auto block rounded-sm"
+            />
+          ) : (
+            <img
+              src={p.src}
+              alt={p.alt ?? ''}
+              loading="lazy"
+              class="gallery-photo w-full h-auto block rounded-sm cursor-zoom-in transition hover:opacity-90"
+            />
+          )}
           {p.caption && (
             <figcaption class="text-[11px] text-muted italic mt-2">{p.caption}</figcaption>
+          )}
+          {p.body && (
+            <p class="font-serif text-sm text-ink/80 leading-relaxed mt-2">{p.body}</p>
           )}
         </figure>
       ))}
