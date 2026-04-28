@@ -33,31 +33,23 @@ export const roles: Role[] = [
       "The thread under all of it: translate a creative vision into operational reality, manage stakeholders with conflicting incentives, and deliver under conditions that don't tolerate a second take. The same operator skill that scales inside an early-stage GTM team.",
     ].join('\n\n'),
     photos: [
-      {
-        src: '/photos/work/experiential-10.jpeg',
-        alt: 'Site map review at Lightning in a Bottle, produced by Do LaB, 2025',
-        caption: 'Site map review · Lightning in a Bottle · Do LaB · 2025',
-      },
-      {
-        src: '/photos/work/experiential-4.jpeg',
-        caption: 'On-site · Lightning in a Bottle',
-        featured: true,
-      },
+      { src: '/photos/work/experiential-4.jpeg', caption: 'On-site · Lightning in a Bottle' },
       {
         src: '/photos/work/experiential-2.png',
         caption: 'Site build · Lightning in a Bottle · Do LaB · CA',
         featured: true,
       },
-      { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
-      { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
-      { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
       {
         src: '/photos/work/Landjuweel-6.jpg',
         alt: 'Kyle looking at art at Landjuweel festival, Ruigoord, Amsterdam',
         caption: 'Landjuweel · Ruigoord, NL · 📸 @cassadycreationsc',
         body:
           "A legendary arts, culture, and music festival rooted in Amsterdam's free-spirited community. Born in the 1970s from a squatter movement resisting port expansion, the area was legalized in 2000 and now thrives as a hub for creativity and self-expression. Landjuweel is its largest annual gathering, radiating art, music, and loving energy. Every year feels like a once-in-a-lifetime experience. 💼🔊 @houseofchicollective @landjuweel.festival",
+        featured: true,
       },
+      { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
+      { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
+      { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
       { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Into the Woods' },
       { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions · Bahamas' },
     ],
