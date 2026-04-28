@@ -11,7 +11,9 @@ import PhotoGallery from '../PhotoGallery.astro';
       <header class="mb-6">
         <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-2">{role.subtitle}</p>
         <h3 class="font-serif text-2xl md:text-3xl mb-3">{role.title}</h3>
-        <p class="text-[15px] leading-relaxed text-ink/90 max-w-3xl">{role.body}</p>
+        {role.body.split(/\n{2,}/).map((para) => (
+          <p class="text-[15px] leading-relaxed text-ink/90 max-w-3xl mb-3 last:mb-0">{para}</p>
+        ))}
         {role.links && role.links.length > 0 && (
           <div class="flex flex-wrap gap-2 mt-5">
             {role.links.map((l) => (

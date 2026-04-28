@@ -26,8 +26,12 @@ export const roles: Role[] = [
     id: 'experiential',
     title: 'Experiential Production',
     subtitle: 'Producer / Artist Liaison · Stichting Tenclub · Wildeburg · Landjuweel · Into the Woods · ADE · Lightning in a Bottle · Insider Expeditions',
-    body:
-      "Owned the customer experience end-to-end on programs where the stakes were live and the room was full. Artist liaison and producer at Tenclub (Amsterdam), the Dutch festival circuit (Wildeburg, Landjuweel, Into the Woods, ADE), and Lightning in a Bottle in California — the seat where artist contracts, sponsor activations, ops vendors, and creative direction collide and someone has to make the call in real time. Onboard producer for Insider Expeditions in Antarctica and the Bahamas; trip design and sales for Egypt and Brazil. The thread under all of it: translate a creative vision into operational reality, manage stakeholders with conflicting incentives, and deliver under conditions that don't tolerate a second take. The same operator skill that scales inside an early-stage GTM team.",
+    body: [
+      'Owned the customer experience end-to-end on programs where the stakes were live and the room was full.',
+      'Artist liaison and producer at Tenclub (Amsterdam), the Dutch festival circuit — Wildeburg, Landjuweel, Into the Woods, ADE — and Lightning in a Bottle in California. The seat where artist contracts, sponsor activations, ops vendors, and creative direction collide, and someone has to make the call in real time.',
+      'Onboard producer for Insider Expeditions in Antarctica and the Bahamas; trip design and sales for Egypt and Brazil.',
+      "The thread under all of it: translate a creative vision into operational reality, manage stakeholders with conflicting incentives, and deliver under conditions that don't tolerate a second take. The same operator skill that scales inside an early-stage GTM team.",
+    ].join('\n\n'),
     photos: [
       {
         src: '/photos/work/experiential-10.jpeg',
