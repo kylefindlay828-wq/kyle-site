@@ -36,7 +36,7 @@ export const roles: Role[] = [
       { src: '/photos/work/experiential-4.jpeg', caption: 'On-site · Lightning in a Bottle' },
       {
         src: '/photos/work/experiential-2.png',
-        caption: 'Site build · Lightning in a Bottle · Do LaB · CA',
+        caption: 'Site build with Willem Jan de Graaff, stage & art producer · Lightning in a Bottle · Do LaB',
         featured: true,
       },
       {
@@ -50,7 +50,7 @@ export const roles: Role[] = [
       { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
       { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
       { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
-      { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Into the Woods' },
+      { src: '/photos/work/experiential-1.jpg', caption: 'With Annemieke Jonas, head of pre-production · Into the Woods' },
       { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions · Bahamas' },
     ],
     links: [
