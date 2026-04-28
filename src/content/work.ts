@@ -51,7 +51,7 @@ export const roles: Role[] = [
       { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
       { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
       { src: '/photos/work/experiential-1.jpg', caption: 'With Annemieke Jonas, head of pre-production · Into the Woods' },
-      { src: '/photos/work/experiential-5.jpeg', caption: 'With Willem Jan de Graaff, stage & art producer (Tenclub) · Onboard Insider Expeditions · Bahamas' },
+      { src: '/photos/work/experiential-5.jpeg', caption: 'With Willem Jan de Graaff, stage & art producer · Into the Woods' },
     ],
     links: [
       { label: 'Stichting Tenclub', url: 'https://tenclub.nl/', kind: 'web' },
