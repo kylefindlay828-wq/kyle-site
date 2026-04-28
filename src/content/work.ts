@@ -36,7 +36,7 @@ export const roles: Role[] = [
       { src: '/photos/work/experiential-4.jpeg', caption: 'On-site · Lightning in a Bottle' },
       {
         src: '/photos/work/experiential-2.png',
-        caption: 'Site build with Willem Jan de Graaff, stage & art producer · Lightning in a Bottle · Do LaB',
+        caption: 'Site build · Lightning in a Bottle · Do LaB · CA',
         featured: true,
       },
       {
@@ -51,7 +51,7 @@ export const roles: Role[] = [
       { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
       { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
       { src: '/photos/work/experiential-1.jpg', caption: 'With Annemieke Jonas, head of pre-production · Into the Woods' },
-      { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions · Bahamas' },
+      { src: '/photos/work/experiential-5.jpeg', caption: 'With Willem Jan de Graaff, stage & art producer (Tenclub) · Onboard Insider Expeditions · Bahamas' },
     ],
     links: [
       { label: 'Stichting Tenclub', url: 'https://tenclub.nl/', kind: 'web' },
