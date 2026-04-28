@@ -45,6 +45,8 @@ export const roles: Role[] = [
         featured: true,
       },
       { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
+      { src: '/photos/work/tenclub.jpg', caption: 'Stichting Tenclub · Amsterdam' },
+      { src: '/photos/work/Landjuweel-5.jpg', caption: 'Landjuweel · Ruigoord, NL' },
       {
         src: '/photos/work/Landjuweel-6.jpg',
         alt: 'Kyle looking at art at Landjuweel festival, Ruigoord, Amsterdam',
