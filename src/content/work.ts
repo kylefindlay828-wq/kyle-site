@@ -45,6 +45,13 @@ export const roles: Role[] = [
         featured: true,
       },
       { src: '/photos/work/experiential-3.jpeg', caption: 'Soundcheck · Lightning in a Bottle' },
+      {
+        src: '/photos/work/Landjuweel-6.jpg',
+        alt: 'Kyle looking at art at Landjuweel festival, Ruigoord, Amsterdam',
+        caption: 'Landjuweel · Ruigoord, NL · 📸 @cassadycreationsc',
+        body:
+          "A legendary arts, culture, and music festival rooted in Amsterdam's free-spirited community. Born in the 1970s from a squatter movement resisting port expansion, the area was legalized in 2000 and now thrives as a hub for creativity and self-expression. Landjuweel is its largest annual gathering, radiating art, music, and loving energy. Every year feels like a once-in-a-lifetime experience. 💼🔊 @houseofchicollective @landjuweel.festival",
+      },
       { src: '/photos/work/experiential-1.jpg', caption: 'Festival team · Into the Woods' },
       { src: '/photos/work/experiential-5.jpeg', caption: 'Onboard · Insider Expeditions · Bahamas' },
     ],
