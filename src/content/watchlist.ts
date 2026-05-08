@@ -92,6 +92,20 @@ export const watchlist: Bucket[] = [
       { name: 'Gainsight', domain: 'gainsight.com' },
     ],
   },
+  {
+    key: 'pre_discovery',
+    label: 'Pre-Discovery',
+    companies: [
+      { name: 'Trunk Tools', domain: 'trunk.tools' },
+      { name: 'Mendel.ai', domain: 'mendel.ai' },
+      { name: 'Sixfold', domain: 'sixfold.ai' },
+      { name: 'Cleric', domain: 'cleric.io' },
+      { name: '11x', domain: '11x.ai' },
+      { name: 'Nooks', domain: 'nooks.ai' },
+      { name: 'Tessl', domain: 'tessl.io' },
+      { name: 'Speak', domain: 'speak.com' },
+    ],
+  },
 ];
 
 export const watchlistTotal = watchlist.reduce((n, b) => n + b.companies.length, 0);

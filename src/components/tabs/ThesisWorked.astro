@@ -1,0 +1,73 @@
+---
+const examples = [
+  {
+    company: 'Sierra',
+    context: 'Series C · AI customer service',
+    role: 'VP Sales → CRO transition (then AE wave)',
+    confidence: '4 / 5',
+    why: 'Series C closed Week 17. Rubric pattern: at this stage, AI-native cos typically promote VP Sales → CRO within 90 days, then add 5-15 AEs over the following six months.',
+    move: 'Outbound now to the current VP Sales for warm intel on the next chapter. Pre-build a pipeline of mid-market AEs from comparable RevTech for the wave that follows.',
+  },
+  {
+    company: 'Crescendo',
+    context: 'AI customer experience',
+    role: 'VP Marketing',
+    confidence: '4 / 5',
+    why: 'Funding announcement Week 17. Rubric pattern: AI-CX cos at growth stage where marketing reqs accelerate ahead of sales reqs typically signal a marketing leader hire incoming within 60 days.',
+    move: 'Build a shortlist of demand-gen leaders from comparable AI-CX cos (Decagon, Forethought, Maven AGI) ready to pitch within 7 days.',
+  },
+  {
+    company: 'Mendel.ai',
+    context: 'Clinical AI · pharma + health systems',
+    role: 'VP Sales (pharma vertical) + Regional Directors',
+    confidence: '3 / 5',
+    why: 'Growth-stage funding momentum + enterprise pilot expansion. Rubric pattern: clinical AI cos crossing the ~$10M ARR threshold typically split GTM into a pharma vertical (high-comp, long sales cycle) and a health-system vertical, requiring two distinct sales leader profiles within 90 days.',
+    move: "Pre-build pipeline of pharma-vertical sales leaders from comparable clinical SaaS — different DNA from generic enterprise sales. This is the deal Betts most likely doesn't know is coming.",
+  },
+];
+---
+<div class="pt-6 md:pt-12">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">The thesis · worked example</p>
+  <h2 class="font-serif text-3xl mb-4">What the v2 output actually looks like.</h2>
+
+  <p class="font-serif text-lg text-ink/85 leading-relaxed max-w-[640px] mb-3">
+    Below is a mockup of one signal type — departure-prediction — applied to the watchlist. The companies are pulled from the live list. The personnel signals are illustrative of the rubric's <span class="italic">form</span>, not backtested results.
+  </p>
+
+  <p class="font-serif text-base text-ink/80 leading-relaxed max-w-[640px] mb-10 italic">
+    The product isn't the briefing PDF. It's this — a ranked list a recruiter receives Monday morning with the trigger event named.
+  </p>
+
+  <h3 class="font-serif text-xl mb-5">Sample output · Departure-prediction · Week 17, 2026</h3>
+
+  <div class="space-y-5 max-w-[720px]">
+    {examples.map((e, i) => (
+      <div class="border border-rule rounded p-5 bg-white">
+        <div class="flex items-baseline gap-3 mb-4 flex-wrap">
+          <span class="text-[10px] uppercase tracking-[0.18em] text-muted font-semibold">#{i + 1}</span>
+          <span class="font-serif text-xl text-ink font-semibold">{e.company}</span>
+          <span class="font-serif text-sm text-ink/60 italic">{e.context}</span>
+          <span class="ml-auto text-[10px] uppercase tracking-[0.18em] text-accent font-semibold">{e.confidence}</span>
+        </div>
+
+        <p class="text-[10px] uppercase tracking-[0.18em] text-muted font-semibold mb-1">Role to watch</p>
+        <p class="font-serif text-base text-ink/90 mb-4">{e.role}</p>
+
+        <p class="text-[10px] uppercase tracking-[0.18em] text-muted font-semibold mb-1">Why this signal fires</p>
+        <p class="font-serif text-base text-ink/85 leading-relaxed mb-4">{e.why}</p>
+
+        <p class="text-[10px] uppercase tracking-[0.18em] text-muted font-semibold mb-1">Recruiter move</p>
+        <p class="font-serif text-base text-ink/85 leading-relaxed">{e.move}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-12 pt-6 border-t border-rule max-w-[640px]">
+    <p class="font-serif text-base text-ink/85 leading-relaxed mb-3">
+      The rubric runs from public LinkedIn alumni data, SEC filings, and job posting deltas — vendored where possible, computed where not. The briefings are how it gets sharp. v1 = data collection. v2 = the ranked Monday-morning intel above.
+    </p>
+    <p class="font-serif text-base text-ink leading-relaxed font-semibold">
+      The real shift isn't faster intel on names you already know. It's surfacing the names you don't — three weeks before they know they're hiring.
+    </p>
+  </div>
+</div>
