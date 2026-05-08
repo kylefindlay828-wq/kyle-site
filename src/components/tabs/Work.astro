@@ -1,12 +1,17 @@
 ---
 import { roles, education } from '../../content/work';
 import PhotoGallery from '../PhotoGallery.astro';
+
+const orderedRoles = [
+  roles.find((r) => r.id === 'neptune')!,
+  roles.find((r) => r.id === 'experiential')!,
+];
 ---
 <div class="pt-6 md:pt-12">
-  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Work</p>
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Relevant Experience</p>
   <h2 class="font-serif text-3xl mb-10">The places that taught me.</h2>
 
-  {roles.map((role, idx) => (
+  {orderedRoles.map((role, idx) => (
     <section class={idx > 0 ? 'mt-14 pt-10 border-t border-rule' : ''}>
       <header class="mb-6">
         <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-2">{role.subtitle}</p>

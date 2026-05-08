@@ -1,0 +1,28 @@
+---
+const fits = [
+  {
+    label: 'Stage',
+    body: 'Series A through C, AI-native or AI-adopting. The window where the operator layer matters and the search brief still gets written in real time.',
+  },
+  {
+    label: 'Roles',
+    body: 'Founding/early CS, partnerships, GTM operator, RevOps-adjacent. Anywhere customer relationship and operational reality are the same job.',
+  },
+  {
+    label: 'Profile',
+    body: 'Non-technical by trade, AI-fluent in practice. Comfortable as the human in the loop on automated workflows. Direct CPG operator background ($3M+/yr managed). Live event production at festival/expedition scale.',
+  },
+];
+---
+<div class="pt-6 md:pt-12">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-3">Where I fit</p>
+  <h2 class="font-serif text-3xl mb-8">The shape of the role.</h2>
+  <div class="space-y-5 max-w-[640px]">
+    {fits.map((f) => (
+      <div class="border-l-2 border-accent pl-5">
+        <p class="text-[10px] uppercase tracking-[0.18em] text-accent font-semibold mb-1">{f.label}</p>
+        <p class="font-serif text-base text-ink/85 leading-relaxed">{f.body}</p>
+      </div>
+    ))}
+  </div>
+</div>
