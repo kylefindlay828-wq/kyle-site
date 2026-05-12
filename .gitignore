@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local-only pages (not deployed to live site)
+src/pages/experience.astro
+src/pages/photo-editor.astro
+src/pages/thinking.astro
