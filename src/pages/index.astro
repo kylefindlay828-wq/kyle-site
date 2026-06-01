@@ -11,11 +11,11 @@ import Contact from '../components/tabs/Contact.astro';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kyle Findlay</title>
-    <meta name="description" content="Customer Success, Partnerships, and GTM for early-stage tech." />
+    <title>GTM Radar · Kyle Findlay</title>
+    <meta name="description" content="GTM Radar — weekly intelligence briefing on AI-reshaped hiring. Built by Kyle Findlay." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:title" content="Kyle Findlay" />
-    <meta property="og:description" content="Customer Success, Partnerships, and GTM for early-stage tech." />
+    <meta property="og:title" content="GTM Radar · Kyle Findlay" />
+    <meta property="og:description" content="Weekly intelligence briefing on AI-reshaped hiring — built for GTM recruiters." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <style>
@@ -25,9 +25,11 @@ import Contact from '../components/tabs/Contact.astro';
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
     <main class="max-w-content mx-auto px-6 py-12">
-      <section><Home /></section>
-      <section id="gtm-radar" class="mt-20"><GtmRadar /></section>
-      <section id="where-i-fit" class="mt-20"><WhereIFit /></section>
+      <section id="gtm-radar"><GtmRadar /></section>
+      <section id="about" class="mt-20">
+        <Home />
+        <div class="mt-16"><WhereIFit /></div>
+      </section>
       <section id="contact" class="mt-20"><Contact /></section>
     </main>
   </body>
