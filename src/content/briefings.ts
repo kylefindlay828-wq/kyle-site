@@ -40,7 +40,7 @@ export const briefings: Briefing[] = [
 export const loomEmbedUrl = '';
 
 export const memo = {
-  title: 'What this could be inside Betts',
+  title: 'How GTM Radar scales inside a retained search firm',
   summary: 'A one-page memo on how GTM Radar could scale inside a retained search firm.',
   pdf: '/briefings/gtm-radar-memo.pdf',
 };
