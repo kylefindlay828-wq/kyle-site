@@ -25,12 +25,12 @@ import Contact from '../components/tabs/Contact.astro';
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
     <main class="max-w-content mx-auto px-6 py-12">
-      <section id="gtm-radar"><GtmRadar /></section>
-      <section id="about" class="mt-20">
+      <section data-section="gtm-radar"><GtmRadar /></section>
+      <section data-section="profile">
         <Home />
         <div class="mt-16"><WhereIFit /></div>
+        <div class="mt-16"><Contact /></div>
       </section>
-      <section id="contact" class="mt-20"><Contact /></section>
     </main>
   </body>
 </html>
