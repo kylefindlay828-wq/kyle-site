@@ -40,8 +40,8 @@ export const briefings: Briefing[] = [
 export const loomEmbedUrl = '';
 
 export const memo = {
-  title: 'How GTM Radar scales inside a retained search firm',
-  summary: 'A one-page memo on how GTM Radar could scale inside a retained search firm.',
+  title: 'How GTM Radar scales inside a GTM recruiting firm',
+  summary: 'A one-page memo on how GTM Radar could scale inside a GTM recruiting firm.',
   pdf: '/briefings/gtm-radar-memo.pdf',
 };
 
