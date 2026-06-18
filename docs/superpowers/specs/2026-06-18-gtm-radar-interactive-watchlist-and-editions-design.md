@@ -1,18 +1,21 @@
-# GTM Radar — interactive watchlist web + editions picker
+# GTM Radar — interactive homepage enhancements
 
 **Date:** 2026-06-18
-**Scope:** Two related interactions added to the **GTM Radar** section (`src/components/RadarProof.astro`) of the homepage. No changes to information architecture, routing, or copy intent.
+**Scope:** Three interactions on the homepage: two on the **GTM Radar** section (`src/components/RadarProof.astro`), and one **page-wide** (sticky section rubrics across all content sections + a nav contact CTA, touching `Nav.astro`, every section component, and `global.css`). No changes to information architecture, routing, or copy intent.
+
+> Note: filename retains the original `…watchlist-and-editions` slug; this doc now also covers the sticky section rubrics (Feature 3).
 
 ---
 
 ## Goal
 
-Make the two strongest stat tiles in the GTM Radar section interactive, to turn flat numbers into proof you can explore:
+Turn flat numbers and a static page into something explorable and guided:
 
 1. **"63 companies tracked"** → a click-to-expand **branching-tree web** of the full watchlist (all 63 companies across 6 sectors), shown in-page with the rest of the section dimmed for focus. Purpose is **scope/showpiece**, not a filtering tool.
 2. **"4 editions published"** → an **obviously-interactive picker** that lists the four weekly editions and opens the chosen PDF directly.
+3. **Sticky numbered section rubrics** → each content section gets a big, artistic "01 / Proof of work" header that **pins to the top while reading and is pushed out by the next section's header** — giving the page a guided case-study feel and doubling as the "where am I" indicator. Plus a persistent **nav contact CTA**.
 
-Both reuse real data already in the repo. No fabricated content.
+All reuse real data already in the repo. No fabricated content.
 
 ---
 
@@ -71,12 +74,53 @@ Sector colors reuse the `--color-cat-1…6` tokens already added to `src/styles/
 
 ---
 
+## Feature 3 — Sticky section rubrics + nav contact CTA
+
+### The rubric (V1 "index rule" treatment, chosen)
+Each of the six content sections gets a header, all on **one line**:
+- Mono number in terracotta (`var(--color-accent)`, ~0.6 opacity), tabular figures.
+- Section label in the site serif (`--font-serif`), ~30px.
+- A hairline rule that runs to the right edge, ending with a small `NN—06` progress marker.
+
+The six sections and their numbers:
+
+| # | Label | Section id |
+|---|-------|-----------|
+| 01 | Proof of work | `#gtm-radar` (RadarProof) |
+| 02 | Signal examples | `#signals` (SignalExamples) |
+| 03 | Workflows I can build | `#workflows` (Workflows) |
+| 04 | How it works | `#how` (HowItWorks) |
+| 05 | Proof & archive | `#proof` (ProofArchive) |
+| 06 | About Kyle | `#about` (About) |
+
+Hero and Contact (FinalCta) are **not** numbered (intro and close).
+
+### Pin behavior
+- Each rubric is `position: sticky` and pins just **below the sticky nav** (offset = nav height). As the next section scrolls up, its rubric pushes the previous one out of the pinned slot (native sticky stacking — no JS).
+- The rubric background is opaque paper so body content scrolls cleanly beneath it; no layout shift, no horizontal scroll.
+- The pinned rubric **is** the "where am I" indicator — the separate nav section-pill idea is **dropped** to avoid redundancy.
+- Replaces the per-section eyebrows that were removed in the earlier Hallmark pass. This is a deliberate, ordinal, page-as-case-study device — number stacked/inline with the label, **never** the banned skinny tag-left/header-right two-column pattern.
+
+### Nav contact CTA
+- Add a persistent **"Contact"** button in the nav top-right (the slot the dropped section-pill would have used), styled as a terracotta pill matching the hero CTA voice.
+- Smooth-scrolls to `#contact` (the FinalCta section). Reuses existing `scroll-behavior: smooth` + `scroll-padding-top`.
+- Remove the now-duplicate "Contact" entry from the inline nav link list; remaining inline links: GTM Radar · Signals · Workflows · How it works · About.
+
+### Accessibility & motion
+- Sticky pinning is layout, not animation — unaffected by reduced-motion. Anchor links + `scroll-margin-top` on sections must account for both nav and pinned-rubric height so deep links land correctly.
+- The existing in-nav active-link highlight (IntersectionObserver in `Nav.astro`) stays and continues to reflect the current section.
+
+---
+
 ## Implementation notes
 
 - **Astro components** (no new runtime deps; pure CSS/SVG + small inline `<script>` for open/close + keyboard, consistent with the existing Nav/SignalCard scripts):
   - New `src/components/WatchlistTree.astro` — renders the tile button + the tree panel from `watchlist`.
   - New `src/components/EditionsPicker.astro` — renders the tile button + popover from `briefings`.
   - `src/components/RadarProof.astro` — swap the two static tiles for these components; keep the other two tiles and the coverage bar unchanged.
+  - New `src/components/SectionRubric.astro` — renders the V1 sticky numbered header (props: number, label, total). Placed at the top of each of the six content sections.
+  - `src/components/Nav.astro` — drop the dropped section-pill idea (never built); add the "Contact" pill CTA top-right; remove "Contact" from the inline link array.
+  - The six section components (`RadarProof`, `SignalExamples`, `Workflows`, `HowItWorks`, `ProofArchive`, `About`) — add the `SectionRubric` at the top and adjust `scroll-margin-top` for the nav + pinned-rubric height.
   - Shared styles in `src/styles/global.css` (reuse tokens; add only named tokens if needed, per the project's token discipline).
 - **Dim mechanism:** a class toggled on the section (or a lightweight overlay within the section) that fades sibling content to ~18% and blocks pointer events while the tree is open. Must not cause horizontal scroll or layout shift.
 - **Honest content:** all names/weeks/dates come from the data files; counts derive from the data (no hardcoded totals that can drift).
@@ -96,5 +140,7 @@ Sector colors reuse the `--color-cat-1…6` tokens already added to `src/styles/
 
 - `npm run build` clean; local preview via `astro dev`.
 - Manual checks: tree opens/closes via click, `Esc`, click-outside, `✕`; focus returns to tile; page dims and restores. Editions popover opens on hover (desktop) and tap (mobile); each row opens the correct PDF.
-- Responsive at 320 / 375 / 768 / desktop — no horizontal scroll; mobile shows coverage bar, not the tree.
-- `prefers-reduced-motion: reduce` disables the line-draw and tick pulse.
+- Sticky rubrics pin under the nav and push each other out on scroll; backgrounds opaque (no bleed-through); no layout shift or horizontal scroll. Anchor links land correctly under nav + rubric.
+- Nav "Contact" pill smooth-scrolls to `#contact`; "Contact" no longer duplicated in inline links.
+- Responsive at 320 / 375 / 768 / desktop — no horizontal scroll; mobile shows coverage bar, not the tree; rubrics remain legible/one-line.
+- `prefers-reduced-motion: reduce` disables the line-draw and tick pulse (sticky pinning unaffected).
