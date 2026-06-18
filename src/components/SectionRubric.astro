@@ -1,0 +1,15 @@
+---
+interface Props {
+  num: string;   // "01"
+  label: string; // "Proof of work"
+  total?: number;
+}
+const { num, label, total = 6 } = Astro.props;
+const totalStr = String(total).padStart(2, '0');
+---
+<div class="rubric">
+  <span class="rubric-num">{num}</span>
+  <span class="rubric-label">{label}</span>
+  <span class="rubric-rule" aria-hidden="true"></span>
+  <span class="rubric-of">{num}—{totalStr}</span>
+</div>
