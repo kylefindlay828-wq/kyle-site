@@ -1,0 +1,45 @@
+---
+const workflows = [
+  {
+    n: '01',
+    title: 'Hiring-intent monitoring',
+    body: 'Track funding, exec moves, and layoffs to forecast GTM hiring 30–90 days out.',
+  },
+  {
+    n: '02',
+    title: 'Signal scoring & triage',
+    body: 'Score raw signals against a rubric so the team works the highest-intent accounts first.',
+  },
+  {
+    n: '03',
+    title: 'Watchlist enrichment',
+    body: 'Turn a flat company list into a sectioned, scored watchlist with the angle on each.',
+  },
+  {
+    n: '04',
+    title: 'Human-on-the-loop drafting',
+    body: 'AI drafts the research and the angle; I review every line so it stays accurate and in-voice.',
+  },
+];
+const tools = ['Python', 'Claude', 'scoring rubrics', 'cited sources', 'config-driven'];
+---
+<section id="workflows" class="py-20 border-b border-rule scroll-mt-20" data-reveal>
+  <p class="kicker">Workflows I can build</p>
+  <h2 class="font-serif text-3xl md:text-4xl mt-4 max-w-[640px]">Repeatable systems, not one-off reports.</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
+    {workflows.map((w) => (
+      <div class="border border-rule rounded-lg bg-card p-6 transition hover:border-accent/60">
+        <p class="font-mono text-[12px] text-accent tracking-[0.1em]">{w.n}</p>
+        <h3 class="font-serif text-xl mt-2">{w.title}</h3>
+        <p class="text-[15px] text-ink/85 leading-relaxed mt-2">{w.body}</p>
+      </div>
+    ))}
+  </div>
+
+  <ul class="flex flex-wrap items-center gap-2.5 mt-7">
+    {tools.map((t) => (
+      <li class="chip chip-mono">{t}</li>
+    ))}
+  </ul>
+</section>

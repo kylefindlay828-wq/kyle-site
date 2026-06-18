@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import headshot from '../assets/photos/headshot.jpg';
+
+const chips = [
+  '$3M+/yr CPG accounts (Beyond Meat · FIJI · POM · Wonderful Pistachios)',
+  'AI-fluent, non-technical by trade',
+  'Comfortable as the human in the loop',
+];
+const fits = [
+  { label: 'Stage', body: 'Series A–C, AI-native or AI-adopting — where the operator layer matters and the brief is still being written in real time.' },
+  { label: 'Roles', body: 'AI-adjacent GTM, recruiting intelligence, RevOps, solutions / implementation, and operator seats.' },
+  { label: 'Profile', body: 'Seven years owning customer experience end-to-end on high-stakes programs. CPG operator background; live event production at scale.' },
+];
+---
+<section id="about" class="py-20 border-b border-rule scroll-mt-20" data-reveal>
+  <p class="kicker">About Kyle</p>
+  <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-8 md:gap-10 items-start mt-6">
+    <Image src={headshot} alt="Kyle Findlay" width={320} height={320} class="rounded-xl w-[140px] h-[140px] md:w-[160px] md:h-[160px] object-cover border border-rule" />
+    <div>
+      <h2 class="font-serif text-2xl md:text-3xl leading-tight max-w-[640px]">
+        Seven years owning the operator layer behind high-stakes programs — now building AI
+        workflows that turn messy signals into systems a GTM team can use.
+      </h2>
+      <ul class="flex flex-wrap gap-2.5 mt-6">
+        {chips.map((c) => (
+          <li class="chip">{c}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+    {fits.map((f) => (
+      <div class="border-l-2 border-accent pl-4">
+        <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-2">{f.label}</p>
+        <p class="text-[15px] text-ink/85 leading-relaxed">{f.body}</p>
+      </div>
+    ))}
+  </div>
+</section>

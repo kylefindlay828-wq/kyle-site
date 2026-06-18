@@ -1,23 +1,27 @@
 ---
-const tabs = [
+const links = [
   { id: 'gtm-radar', label: 'GTM Radar' },
-  { id: 'profile', label: 'Profile' },
+  { id: 'signals', label: 'Signals' },
+  { id: 'workflows', label: 'Workflows' },
+  { id: 'how', label: 'How it works' },
+  { id: 'about', label: 'About' },
+  { id: 'contact', label: 'Contact' },
 ];
 ---
-<nav class="sticky top-0 bg-paper border-b border-rule z-10">
-  <div class="max-w-content mx-auto px-6 py-4 flex items-center gap-6 relative">
-    <a href="#" class="font-serif font-bold text-lg tracking-tight text-ink">Kyle Findlay</a>
+<nav class="sticky top-0 z-30 bg-paper/85 backdrop-blur border-b border-rule">
+  <div class="max-w-content mx-auto px-6 py-3.5 flex items-center gap-6 relative">
+    <a href="#top" class="font-serif font-bold text-lg tracking-tight text-ink shrink-0">Kyle Findlay</a>
 
-    <button id="nav-toggle" class="ml-auto sm:hidden text-ink text-xl" aria-label="Toggle menu">☰</button>
+    <button id="nav-toggle" class="ml-auto sm:hidden text-ink text-xl" aria-label="Toggle menu" aria-expanded="false">☰</button>
 
-    <ul id="nav-list" class="hidden sm:flex ml-auto gap-6 text-[10px] uppercase tracking-[0.15em] text-muted
-                             absolute sm:static top-full left-0 right-0 bg-paper border-b sm:border-0 border-rule
+    <ul id="nav-list" class="hidden sm:flex ml-auto gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted
+                             absolute sm:static top-full left-0 right-0 bg-paper sm:bg-transparent border-b sm:border-0 border-rule
                              flex-col sm:flex-row p-6 sm:p-0">
-      {tabs.map((t) => (
+      {links.map((l) => (
         <li>
-          <button data-tab={t.id} class="nav-tab pb-1 border-b-2 border-transparent hover:text-ink hover:border-accent transition block">
-            {t.label}
-          </button>
+          <a href={`#${l.id}`} data-nav={l.id} class="nav-link block pb-0.5 border-b-2 border-transparent hover:text-ink hover:border-accent transition">
+            {l.label}
+          </a>
         </li>
       ))}
     </ul>
@@ -28,34 +32,41 @@ const tabs = [
   const toggle = document.getElementById('nav-toggle');
   const list = document.getElementById('nav-list');
 
-  function activateTab(id: string) {
-    document.querySelectorAll('[data-section]').forEach((el) => {
-      (el as HTMLElement).style.display = el.getAttribute('data-section') === id ? '' : 'none';
-    });
-    document.querySelectorAll('.nav-tab').forEach((btn) => {
-      const active = btn.getAttribute('data-tab') === id;
-      btn.classList.toggle('text-ink', active);
-      btn.classList.toggle('border-accent', active);
-      btn.classList.toggle('text-muted', !active);
-      btn.classList.toggle('border-transparent', !active);
-    });
+  function closeMenu() {
+    list?.classList.add('hidden');
+    list?.classList.remove('flex');
+    toggle?.setAttribute('aria-expanded', 'false');
   }
 
-  document.querySelectorAll('.nav-tab').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-tab')!;
-      activateTab(id);
-      if (window.innerWidth < 640) {
-        list?.classList.add('hidden');
-        list?.classList.remove('flex');
-      }
-    });
-  });
-
   toggle?.addEventListener('click', () => {
-    list?.classList.toggle('hidden');
-    list?.classList.toggle('flex');
+    const open = list?.classList.toggle('hidden') === false;
+    list?.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', String(open));
   });
 
-  activateTab('gtm-radar');
+  list?.querySelectorAll('a[data-nav]').forEach((a) => {
+    a.addEventListener('click', () => { if (window.innerWidth < 640) closeMenu(); });
+  });
+
+  // active-section highlight
+  const links = Array.from(document.querySelectorAll('a[data-nav]')) as HTMLAnchorElement[];
+  const setActive = (id: string) => {
+    links.forEach((a) => {
+      const on = a.getAttribute('data-nav') === id;
+      a.classList.toggle('text-ink', on);
+      a.classList.toggle('border-accent', on);
+      a.classList.toggle('text-muted', !on);
+      a.classList.toggle('border-transparent', !on);
+    });
+  };
+  const sections = links
+    .map((a) => document.getElementById(a.getAttribute('data-nav')!))
+    .filter(Boolean) as HTMLElement[];
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+    },
+    { rootMargin: '-45% 0px -50% 0px' }
+  );
+  sections.forEach((s) => obs.observe(s));
 </script>

@@ -1,0 +1,57 @@
+---
+import { watchlist, watchlistTotal } from '../content/watchlist';
+
+const tiles = [
+  { n: '4', label: 'editions published' },
+  { n: '63', label: 'companies tracked' },
+  { n: '6', label: 'sectors covered' },
+  { n: '30–90d', label: 'scoring window' },
+];
+
+// bright, varied categorical palette (tuned to sit on the cream background)
+const segColors = ['#e2563b', '#f0a31f', '#13a594', '#3b7cc4', '#73af36', '#9360b8'];
+const sectors = watchlist.map((b, i) => ({
+  label: b.label,
+  count: b.companies.length,
+  pct: (b.companies.length / watchlistTotal) * 100,
+  color: segColors[i % segColors.length],
+}));
+---
+<section id="gtm-radar" class="py-20 border-b border-rule scroll-mt-20" data-reveal>
+  <p class="kicker">Proof of work · GTM Radar</p>
+  <h2 class="font-serif text-3xl md:text-4xl mt-4 max-w-[640px]">A working intelligence system, not a slide.</h2>
+  <p class="text-lg text-ink/75 leading-relaxed mt-5 max-w-[680px]">
+    It watches AI-adopting companies for the signals that precede a GTM hiring wave —
+    funding, exec moves, layoffs, launches — and scores each for hiring likelihood in
+    the next 30–90 days.
+  </p>
+
+  <!-- dashboard tiles -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-hidden mt-10">
+    {tiles.map((t) => (
+      <div class="bg-card px-5 py-6">
+        <p class="font-serif text-3xl md:text-4xl text-ink">{t.n}</p>
+        <p class="font-mono text-[11.5px] uppercase tracking-[0.05em] text-ink/60 mt-1.5">{t.label}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- coverage bar -->
+  <div class="mt-12">
+    <p class="font-mono text-[12px] uppercase tracking-[0.06em] text-ink/65 mb-3">Watchlist coverage · {watchlistTotal} companies across 6 sectors</p>
+    <div class="flex h-4 w-full rounded-full overflow-hidden border border-rule">
+      {sectors.map((s) => (
+        <div style={`width:${s.pct}%;background-color:${s.color}`} title={`${s.label}: ${s.count}`}></div>
+      ))}
+    </div>
+    <ul class="flex flex-wrap gap-x-5 gap-y-2.5 mt-5">
+      {sectors.map((s) => (
+        <li class="flex items-center gap-2 font-mono text-[12.5px]">
+          <span class="h-3 w-3 rounded" style={`background-color:${s.color}`}></span>
+          <span class="text-ink/90 font-medium">{s.label}</span>
+          <span class="text-ink/50">{s.count}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

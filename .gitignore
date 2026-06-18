@@ -23,6 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# local Superpowers agent/session state
+.superpowers/
+
 # local-only pages (not deployed to live site)
 src/pages/experience.astro
 src/pages/photo-editor.astro

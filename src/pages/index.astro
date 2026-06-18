@@ -1,36 +1,61 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import Home from '../components/tabs/Home.astro';
-import GtmRadar from '../components/tabs/GtmRadar.astro';
-import WhereIFit from '../components/tabs/WhereIFit.astro';
-import Contact from '../components/tabs/Contact.astro';
+import Hero from '../components/Hero.astro';
+import RadarProof from '../components/RadarProof.astro';
+import SignalExamples from '../components/SignalExamples.astro';
+import Workflows from '../components/Workflows.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import ProofArchive from '../components/ProofArchive.astro';
+import About from '../components/About.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const title = 'Kyle Findlay — AI-assisted GTM intelligence workflows';
+const description = 'Kyle Findlay builds AI-assisted GTM intelligence workflows. GTM Radar turns messy company signals into ranked hiring, market, and GTM insights — with sources, judgment, and human review.';
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>GTM Radar · Kyle Findlay</title>
-    <meta name="description" content="GTM Radar — weekly intelligence briefing on AI-reshaped hiring. Built by Kyle Findlay." />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:title" content="GTM Radar · Kyle Findlay" />
-    <meta property="og:description" content="Weekly intelligence briefing on AI-reshaped hiring — built for GTM recruiters." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <style>
-      html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+      html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     </style>
   </head>
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
-    <main class="max-w-content mx-auto px-6 py-12">
-      <section data-section="gtm-radar"><GtmRadar /></section>
-      <section data-section="profile">
-        <Home />
-        <div class="mt-16"><WhereIFit /></div>
-        <div class="mt-16"><Contact /></div>
-      </section>
+    <main class="max-w-content mx-auto px-6">
+      <Hero />
+      <RadarProof />
+      <SignalExamples />
+      <Workflows />
+      <HowItWorks />
+      <ProofArchive />
+      <About />
+      <FinalCta />
     </main>
+
+    <script>
+      // scroll-reveal (respects prefers-reduced-motion via CSS fallback)
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('[data-reveal]');
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+        els.forEach((el) => obs.observe(el));
+      }
+    </script>
   </body>
 </html>

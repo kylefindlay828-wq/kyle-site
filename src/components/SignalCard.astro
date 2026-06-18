@@ -1,0 +1,85 @@
+---
+import type { Signal } from '../data/signals';
+const { signal } = Astro.props as { signal: Signal };
+
+const strengthColor: Record<string, string> = {
+  HOT: 'text-accent border-accent/40 bg-accent/5',
+  WARM: 'text-warm border-warm/40 bg-warm/5',
+  WATCH: 'text-muted border-rule bg-paper',
+};
+const barColor: Record<string, string> = {
+  HOT: 'bg-accent',
+  WARM: 'bg-warm',
+  WATCH: 'bg-muted',
+};
+const s = signal;
+// avoid showing the same role twice if a list overlaps
+const alsoRoles = s.roles.filter((r) => !s.hiddenHires.includes(r));
+---
+<article class="group flex flex-col border border-rule rounded-xl bg-card overflow-hidden transition hover:border-accent/60 hover:shadow-[0_1px_0_rgba(184,67,31,0.4),0_12px_28px_-18px_rgba(26,22,19,0.45)]">
+  <div class="p-6 flex flex-col gap-3.5 flex-1">
+    <!-- header -->
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-serif text-2xl leading-tight">{s.company}</h3>
+        <p class="font-mono text-[12px] uppercase tracking-[0.06em] text-ink/55 mt-1.5">{s.type}</p>
+      </div>
+      <span class={`shrink-0 font-mono text-[11px] font-semibold tracking-[0.1em] px-2.5 py-1.5 rounded-md border ${strengthColor[s.strength]}`}>
+        {s.strength}
+      </span>
+    </div>
+
+    <!-- signal -->
+    <p class="text-[16px] text-ink/90 leading-snug">{s.signal}</p>
+
+    <!-- score meter -->
+    <div class="flex items-center gap-2.5 mt-auto pt-1">
+      <span class="font-mono text-[11px] uppercase tracking-[0.06em] text-ink/55">Signal</span>
+      <div class="flex gap-1" aria-label={`Signal strength ${s.score} of 5`}>
+        {[1,2,3,4,5].map((n) => (
+          <span class={`h-2 w-6 rounded-full ${n <= s.score ? barColor[s.strength] : 'bg-rule'}`}></span>
+        ))}
+      </div>
+      <span class="font-mono text-[11px] text-ink/55 ml-auto">Week {s.edition.week}</span>
+    </div>
+  </div>
+
+  <!-- the read + hidden hires, expandable -->
+  <details class="border-t border-rule">
+    <summary class="cursor-pointer list-none px-6 py-4 flex items-center justify-between gap-2 select-none hover:bg-paper/60 transition">
+      <span class="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">The read + hidden hires</span>
+      <span class="text-accent text-base transition group-open:rotate-180">↓</span>
+    </summary>
+    <div class="px-6 pb-6 pt-1 flex flex-col gap-5">
+      <p class="text-[15px] text-ink/85 leading-relaxed border-l-2 border-accent pl-4">{s.read}</p>
+
+      <div>
+        <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-2.5">Hidden hires · they probably don't know yet</p>
+        <ul class="flex flex-wrap gap-2">
+          {s.hiddenHires.map((r) => (
+            <li class="chip chip-accent">{r}</li>
+          ))}
+        </ul>
+      </div>
+
+      {alsoRoles.length > 0 && (
+        <div>
+          <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-ink/55 mb-2.5">Roles likely to open · 60–90 days</p>
+          <ul class="flex flex-wrap gap-2">
+            {alsoRoles.map((r) => (
+              <li class="chip">{r}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <a href={s.edition.pdf} target="_blank" rel="noopener" class="font-mono text-[12px] uppercase tracking-[0.06em] text-accent hover:underline underline-offset-4">
+        Source: {s.source} · Week {s.edition.week} →
+      </a>
+    </div>
+  </details>
+</article>
+<style>
+  details > summary span:last-child { transform: rotate(0); }
+  details[open] > summary span:last-child { transform: rotate(180deg); }
+</style>
