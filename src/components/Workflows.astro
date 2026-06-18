@@ -23,13 +23,12 @@ const workflows = [
 ];
 const tools = ['Python', 'Claude', 'scoring rubrics', 'cited sources', 'config-driven'];
 ---
-<section id="workflows" class="py-20 border-b border-rule scroll-mt-20" data-reveal>
-  <p class="kicker">Workflows I can build</p>
-  <h2 class="font-serif text-3xl md:text-4xl mt-4 max-w-[640px]">Repeatable systems, not one-off reports.</h2>
+<section id="workflows" class="py-20 border-b border-rule scroll-mt-20">
+  <h2 class="font-serif text-3xl md:text-4xl max-w-[640px]">Repeatable systems, not one-off reports.</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
     {workflows.map((w) => (
-      <div class="border border-rule rounded-lg bg-card p-6 transition hover:border-accent/60">
+      <div class="lift border border-rule rounded-lg bg-card p-6">
         <p class="font-mono text-[12px] text-accent tracking-[0.1em]">{w.n}</p>
         <h3 class="font-serif text-xl mt-2">{w.title}</h3>
         <p class="text-[15px] text-ink/85 leading-relaxed mt-2">{w.body}</p>

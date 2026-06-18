@@ -8,8 +8,11 @@ const tiles = [
   { n: '30–90d', label: 'scoring window' },
 ];
 
-// bright, varied categorical palette (tuned to sit on the cream background)
-const segColors = ['#e2563b', '#f0a31f', '#13a594', '#3b7cc4', '#73af36', '#9360b8'];
+// categorical palette — tokens defined in global.css, referenced by var()
+const segColors = [
+  'var(--color-cat-1)', 'var(--color-cat-2)', 'var(--color-cat-3)',
+  'var(--color-cat-4)', 'var(--color-cat-5)', 'var(--color-cat-6)',
+];
 const sectors = watchlist.map((b, i) => ({
   label: b.label,
   count: b.companies.length,
@@ -17,9 +20,9 @@ const sectors = watchlist.map((b, i) => ({
   color: segColors[i % segColors.length],
 }));
 ---
-<section id="gtm-radar" class="py-20 border-b border-rule scroll-mt-20" data-reveal>
+<section id="gtm-radar" class="py-24 border-b border-rule scroll-mt-20">
   <p class="kicker">Proof of work · GTM Radar</p>
-  <h2 class="font-serif text-3xl md:text-4xl mt-4 max-w-[640px]">A working intelligence system, not a slide.</h2>
+  <h2 class="font-serif text-4xl md:text-5xl leading-[1.06] mt-4 max-w-[720px]">A working intelligence system, not a slide.</h2>
   <p class="text-lg text-ink/75 leading-relaxed mt-5 max-w-[680px]">
     It watches AI-adopting companies for the signals that precede a GTM hiring wave —
     funding, exec moves, layoffs, launches — and scores each for hiring likelihood in

@@ -1,21 +1,32 @@
+/* Hallmark · genre: editorial · macrostructure: Long Document · tone: editorial · anchor hue: terracotta ~37° */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #f7f3ec;
-  --color-card: #fffdf8;
-  --color-ink: #1a1613;
-  --color-accent: #b8431f;
-  --color-warm: #bd842f;
-  --color-muted: #5d554a;
-  --color-rule: #d9d2c8;
+  --color-paper: oklch(96.5% 0.008 85);
+  --color-card: oklch(99.2% 0.005 90);
+  --color-ink: oklch(19% 0.006 55);
+  --color-accent: oklch(54% 0.158 37);
+  --color-warm: oklch(64% 0.11 72);
+  --color-muted: oklch(42% 0.013 75);
+  --color-rule: oklch(86% 0.008 82);
+
+  /* categorical palette for the watchlist coverage viz — referenced by var() */
+  --color-cat-1: oklch(62% 0.16 35);
+  --color-cat-2: oklch(76% 0.15 70);
+  --color-cat-3: oklch(63% 0.11 180);
+  --color-cat-4: oklch(56% 0.12 250);
+  --color-cat-5: oklch(70% 0.15 130);
+  --color-cat-6: oklch(55% 0.14 305);
 
   --font-serif: "Source Serif 4", Georgia, serif;
   --font-sans: Inter, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
 
   --container-content: 1040px;
+
+  --ease-out: cubic-bezier(.2, .6, .2, 1);
 }
 
 html, body {
@@ -65,6 +76,15 @@ a:hover { color: var(--color-accent); }
   border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
 }
 .chip-mono { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.02em; }
+
+/* hover-lift for cards — token-based, no inline rgba */
+.lift { transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+.lift:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-rule));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--color-accent) 40%, transparent),
+    0 12px 28px -18px color-mix(in srgb, var(--color-ink) 45%, transparent);
+}
 
 /* staggered load + scroll reveal */
 @keyframes riseIn {
