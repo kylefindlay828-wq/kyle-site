@@ -1,5 +1,6 @@
 ---
 import { briefings, methodology, memo } from '../content/briefings';
+import SectionRubric from './SectionRubric.astro';
 
 // Memo relabeled to broaden beyond a single recruiting firm (the PDF itself is unchanged).
 const memoCard = {
@@ -9,8 +10,9 @@ const memoCard = {
 };
 const editions = [...briefings].sort((a, b) => b.week - a.week);
 ---
-<section id="proof" class="py-16 scroll-mt-20">
-  <h2 class="font-serif text-3xl md:text-4xl">The receipts.</h2>
+<section id="proof" class="py-16 scroll-mt-[var(--nav-h)]">
+  <SectionRubric num="05" label="Proof & archive" />
+  <h2 class="font-serif text-3xl md:text-4xl mt-8">The receipts.</h2>
   <p class="text-lg text-ink/75 leading-relaxed mt-5 max-w-[680px]">
     Full briefings and the thinking behind them — the long-form proof under the cards
     above. Open if you want depth; the page already tells the story.

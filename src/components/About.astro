@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.jpg';
+import SectionRubric from './SectionRubric.astro';
 
 const chips = [
   '$3M+/yr CPG accounts (Beyond Meat · FIJI · POM · Wonderful Pistachios)',
@@ -13,8 +14,9 @@ const fits = [
   { label: 'Profile', body: 'Seven years owning customer experience end-to-end on high-stakes programs. CPG operator background; live event production at scale.' },
 ];
 ---
-<section id="about" class="py-20 border-b border-rule scroll-mt-20">
-  <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-8 md:gap-10 items-start">
+<section id="about" class="py-20 border-b border-rule scroll-mt-[var(--nav-h)]">
+  <SectionRubric num="06" label="About Kyle" />
+  <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-8 md:gap-10 items-start mt-8">
     <Image src={headshot} alt="Kyle Findlay" width={320} height={320} class="rounded-xl w-[140px] h-[140px] md:w-[160px] md:h-[160px] object-cover border border-rule" />
     <div>
       <h2 class="font-serif text-2xl md:text-3xl leading-tight max-w-[640px]">

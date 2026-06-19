@@ -1,4 +1,6 @@
 ---
+import SectionRubric from './SectionRubric.astro';
+
 const workflows = [
   {
     n: '01',
@@ -23,8 +25,9 @@ const workflows = [
 ];
 const tools = ['Python', 'Claude', 'scoring rubrics', 'cited sources', 'config-driven'];
 ---
-<section id="workflows" class="py-20 border-b border-rule scroll-mt-20">
-  <h2 class="font-serif text-3xl md:text-4xl max-w-[640px]">Repeatable systems, not one-off reports.</h2>
+<section id="workflows" class="py-20 border-b border-rule scroll-mt-[var(--nav-h)]">
+  <SectionRubric num="03" label="Workflows I can build" />
+  <h2 class="font-serif text-3xl md:text-4xl mt-8 max-w-[640px]">Repeatable systems, not one-off reports.</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
     {workflows.map((w) => (
