@@ -188,14 +188,14 @@ a:hover { color: var(--color-accent); }
 .wl-hub-l { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: .1em; margin-top: 3px; }
 .wl-spine { flex: 0 0 28px; border-left: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent); margin: 18px 0; }
 .wl-branches { flex: 1; min-width: 0; }
-.wl-branch { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-rule) 55%, transparent); }
+.wl-branch { display: flex; align-items: flex-start; gap: 14px; padding: 13px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-rule) 55%, transparent); }
 .wl-branch:last-child { border-bottom: 0; }
-.wl-sector { flex: 0 0 150px; display: flex; align-items: center; gap: 7px; padding-top: 2px; }
-.wl-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
-.wl-sn { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--color-ink); }
-.wl-sc { font-family: var(--font-mono); font-size: 10px; color: var(--color-muted); margin-left: auto; padding-right: 6px; }
-.wl-cos { display: flex; flex-wrap: wrap; gap: 5px 6px; flex: 1; min-width: 0; border-left: 1px solid color-mix(in srgb, var(--color-rule) 55%, transparent); padding-left: 14px; }
-.wl-co { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-ink); background: var(--color-paper); border: 1px solid var(--color-rule); border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+.wl-sector { flex: 0 0 168px; display: flex; align-items: center; gap: 8px; padding-top: 6px; }
+.wl-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+.wl-sn { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; letter-spacing: .01em; color: var(--color-ink); }
+.wl-sc { font-family: var(--font-mono); font-size: 11px; color: var(--color-muted); margin-left: auto; padding-right: 6px; }
+.wl-cos { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; min-width: 0; border-left: 1px solid color-mix(in srgb, var(--color-rule) 55%, transparent); padding-left: 18px; }
+.wl-co { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 500; color: var(--color-ink); background: var(--color-paper); border: 1px solid color-mix(in srgb, var(--color-ink) 16%, var(--color-rule)); border-radius: 6px; padding: 4px 11px; white-space: nowrap; }
 
 /* line-draw reveal on open (staggered branches) */
 .wl-open .wl-branch { animation: wlrise .5s var(--ease-out) backwards; }
