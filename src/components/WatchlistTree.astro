@@ -1,0 +1,81 @@
+---
+import { watchlist, watchlistTotal } from '../content/watchlist';
+const segColors = [
+  'var(--color-cat-1)', 'var(--color-cat-2)', 'var(--color-cat-3)',
+  'var(--color-cat-4)', 'var(--color-cat-5)', 'var(--color-cat-6)',
+];
+const branches = watchlist.map((b, i) => ({
+  label: b.label,
+  count: b.companies.length,
+  color: segColors[i % segColors.length],
+  companies: b.companies.map((c) => c.name),
+}));
+---
+<div class="wl-scrim" id="wl-scrim" hidden></div>
+<div class="wl-panel" id="wl-panel" role="dialog" aria-modal="true" aria-label={`The full watchlist — ${watchlistTotal} companies across ${branches.length} sectors`} hidden>
+  <button class="wl-close" id="wl-close" type="button" aria-label="Close watchlist">esc ✕</button>
+  <p class="wl-ptitle">{watchlistTotal} companies · {branches.length} sectors · the full watchlist</p>
+  <div class="wl-tree">
+    <div class="wl-hub"><span class="wl-hub-n">{watchlistTotal}</span><span class="wl-hub-l">COMPANIES</span></div>
+    <div class="wl-spine" aria-hidden="true"></div>
+    <div class="wl-branches">
+      {branches.map((b) => (
+        <div class="wl-branch">
+          <div class="wl-sector">
+            <span class="wl-dot" style={`background:${b.color}`}></span>
+            <span class="wl-sn">{b.label}</span>
+            <span class="wl-sc">{b.count}</span>
+          </div>
+          <div class="wl-cos">
+            {b.companies.map((n) => <span class="wl-co">{n}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const trigger = document.getElementById('wl-trigger');
+  const panel = document.getElementById('wl-panel');
+  const scrim = document.getElementById('wl-scrim');
+  const closeBtn = document.getElementById('wl-close');
+  const mq = window.matchMedia('(min-width: 768px)');
+  let open = false;
+
+  function openPanel() {
+    if (!mq.matches) return; // desktop-only
+    open = true;
+    panel?.removeAttribute('hidden');
+    scrim?.removeAttribute('hidden');
+    document.body.classList.add('wl-open');
+    trigger?.setAttribute('aria-expanded', 'true');
+    closeBtn?.focus();
+  }
+  function closePanel() {
+    open = false;
+    panel?.setAttribute('hidden', '');
+    scrim?.setAttribute('hidden', '');
+    document.body.classList.remove('wl-open');
+    trigger?.setAttribute('aria-expanded', 'false');
+    trigger?.focus();
+  }
+
+  trigger?.addEventListener('click', () => (open ? closePanel() : openPanel()));
+  scrim?.addEventListener('click', closePanel);
+  closeBtn?.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && open) closePanel();
+  });
+  // minimal focus trap: keep Tab within the panel while open
+  panel?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !open) return;
+    const f = panel.querySelectorAll<HTMLElement>('button, a[href]');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  // if shrunk to mobile while open, close
+  mq.addEventListener('change', () => { if (!mq.matches && open) closePanel(); });
+</script>
