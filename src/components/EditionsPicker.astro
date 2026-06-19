@@ -1,0 +1,44 @@
+---
+import { briefings } from '../content/briefings';
+const editions = [...briefings].sort((a, b) => b.week - a.week);
+---
+<div class="stat-tile ed-tile">
+  <button class="ed-trigger" id="ed-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="ed-pop">
+    <span class="tile-n">{briefings.length}</span>
+    <span class="tile-l">editions published</span>
+    <span class="ed-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="ed-hint" aria-hidden="true">browse →</span>
+  </button>
+  <div class="ed-pop" id="ed-pop" role="menu" aria-label="GTM Radar editions" hidden>
+    <p class="ed-ph">GTM Radar · open an edition</p>
+    {editions.map((e) => (
+      <a class="ed-row" role="menuitem" href={e.pdf} target="_blank" rel="noopener">
+        <span class="ed-wk">Week {e.week}</span>
+        <span class="ed-dt">{e.dateRange}</span>
+        <span class="ed-go">Open PDF →</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  const trigger = document.getElementById('ed-trigger');
+  const pop = document.getElementById('ed-pop');
+  const wrap = trigger?.closest('.ed-tile') as HTMLElement | null;
+  let open = false;
+  const show = () => { open = true; pop?.removeAttribute('hidden'); trigger?.setAttribute('aria-expanded', 'true'); };
+  const hide = () => { open = false; pop?.setAttribute('hidden', ''); trigger?.setAttribute('aria-expanded', 'false'); };
+
+  trigger?.addEventListener('click', () => (open ? hide() : show()));
+  document.addEventListener('click', (e) => {
+    if (open && wrap && !wrap.contains(e.target as Node)) hide();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && open) { hide(); trigger?.focus(); }
+  });
+  // desktop: also open on hover
+  if (window.matchMedia('(hover: hover)').matches && wrap) {
+    wrap.addEventListener('mouseenter', show);
+    wrap.addEventListener('mouseleave', hide);
+  }
+</script>

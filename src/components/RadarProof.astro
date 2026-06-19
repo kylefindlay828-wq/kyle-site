@@ -1,10 +1,9 @@
 ---
 import { watchlist, watchlistTotal } from '../content/watchlist';
 import SectionRubric from './SectionRubric.astro';
+import EditionsPicker from './EditionsPicker.astro';
 
 const tiles = [
-  { n: '4', label: 'editions published' },
-  { n: '63', label: 'companies tracked' },
   { n: '6', label: 'sectors covered' },
   { n: '30–90d', label: 'scoring window' },
 ];
@@ -31,7 +30,12 @@ const sectors = watchlist.map((b, i) => ({
   </p>
 
   <!-- dashboard tiles -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-hidden mt-10">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-visible mt-10">
+    <EditionsPicker />
+    <div class="bg-card px-5 py-6">
+      <p class="font-serif text-3xl md:text-4xl text-ink">63</p>
+      <p class="font-mono text-[11.5px] uppercase tracking-[0.05em] text-ink/60 mt-1.5">companies tracked</p>
+    </div>
     {tiles.map((t) => (
       <div class="bg-card px-5 py-6">
         <p class="font-serif text-3xl md:text-4xl text-ink">{t.n}</p>
