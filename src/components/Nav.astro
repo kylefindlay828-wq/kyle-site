@@ -5,26 +5,29 @@ const links = [
   { id: 'workflows', label: 'Workflows' },
   { id: 'how', label: 'How it works' },
   { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
 ];
 ---
 <nav class="sticky top-0 z-30 bg-paper border-t-2 border-accent border-b border-rule">
   <div class="max-w-content mx-auto px-6 py-3 flex items-baseline gap-6 relative">
     <a href="#top" class="font-serif font-bold text-xl md:text-2xl tracking-tight text-ink shrink-0">Kyle Findlay</a>
 
-    <button id="nav-toggle" class="ml-auto sm:hidden text-ink text-xl self-center" aria-label="Toggle menu" aria-expanded="false">☰</button>
-
-    <ul id="nav-list" class="hidden sm:flex ml-auto gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted self-center
-                             absolute sm:static top-full left-0 right-0 bg-paper sm:bg-transparent border-b sm:border-0 border-rule
-                             flex-col sm:flex-row p-6 sm:p-0">
-      {links.map((l) => (
-        <li>
-          <a href={`#${l.id}`} data-nav={l.id} class="nav-link block pb-0.5 border-b-2 border-transparent hover:text-ink hover:border-accent transition">
-            {l.label}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="ml-auto flex items-center gap-4 sm:gap-5 self-center">
+      <ul id="nav-list" class="hidden sm:flex gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted
+                               absolute sm:static top-full left-0 right-0 bg-paper sm:bg-transparent border-b sm:border-0 border-rule
+                               flex-col sm:flex-row p-6 sm:p-0">
+        {links.map((l) => (
+          <li>
+            <a href={`#${l.id}`} data-nav={l.id} class="nav-link block pb-0.5 border-b-2 border-transparent hover:text-ink hover:border-accent transition">
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href="#contact" class="inline-flex items-center px-4 py-2 bg-accent text-paper text-[10.5px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition shrink-0">
+        Contact
+      </a>
+      <button id="nav-toggle" class="sm:hidden text-ink text-xl shrink-0" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
   </div>
 </nav>
 
