@@ -9,6 +9,20 @@ import SignalCard from './SignalCard.astro';
     hiring, and translated into a specific GTM move — with the source attached.
   </p>
 
+  <!-- sourcing credibility strip -->
+  <div class="mt-7 border border-rule rounded-lg bg-card px-5 py-4 max-w-[680px]">
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
+      <span class="kicker">Sourcing</span>
+      <span class="text-[13.5px] text-ink/75">Primary sources only — rumors are flagged, never scored as fact.</span>
+    </div>
+    <ul class="flex flex-wrap gap-2">
+      <li class="chip chip-mono">Company newsrooms</li>
+      <li class="chip chip-mono">BusinessWire</li>
+      <li class="chip chip-mono">Official press releases</li>
+      <li class="chip chip-mono">Trade press · flagged</li>
+    </ul>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
     {signals.map((signal) => <SignalCard signal={signal} />)}
   </div>
