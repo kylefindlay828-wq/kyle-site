@@ -27,6 +27,8 @@
   --container-content: 1040px;
 
   --ease-out: cubic-bezier(.2, .6, .2, 1);
+
+  --color-on-accent: oklch(100% 0 0);
 }
 
 html, body {
@@ -47,6 +49,9 @@ h1, h2, h3, h4 {
 
 a { color: var(--color-ink); text-decoration: none; }
 a:hover { color: var(--color-accent); }
+
+/* CTA pills: white text on the accent fill (overrides the global link color, incl. hover) */
+.cta-pill, .cta-pill:hover { color: var(--color-on-accent); }
 
 /* mono micro-label used for eyebrows, tags, data */
 .kicker {
