@@ -27,8 +27,6 @@
   --container-content: 1040px;
 
   --ease-out: cubic-bezier(.2, .6, .2, 1);
-
-  --nav-h: 56px;
 }
 
 html, body {
@@ -117,54 +115,6 @@ a:hover { color: var(--color-accent); }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], .hero-rise > * { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   html { scroll-behavior: auto !important; }
-}
-
-/* sticky numbered section rubric (V1 index-rule) */
-.rubric {
-  position: sticky;
-  top: var(--nav-h);
-  z-index: 20;
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  background: var(--color-paper);
-  padding: 16px 0 11px;
-}
-.rubric-num {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 1.3rem;
-  line-height: 1;
-  color: var(--color-accent);
-  opacity: .6;
-  font-variant-numeric: tabular-nums;
-}
-.rubric-label {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.9rem;
-  line-height: 1.1;
-  letter-spacing: -.015em;
-  white-space: nowrap;
-}
-.rubric-rule {
-  flex: 1;
-  min-width: 24px;
-  align-self: center;
-  height: 0;
-  border-bottom: 1px solid var(--color-rule);
-}
-.rubric-of {
-  font-family: var(--font-mono);
-  font-size: .7rem;
-  color: var(--color-muted);
-  opacity: .7;
-  white-space: nowrap;
-}
-@media (max-width: 640px) {
-  .rubric-label { font-size: 1.35rem; }
-  .rubric-num { font-size: 1.05rem; }
-  .rubric-of { display: none; }
 }
 
 /* shared stat-tile button look (matches the static tiles in RadarProof) */

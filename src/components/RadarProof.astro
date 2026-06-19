@@ -1,6 +1,5 @@
 ---
 import { watchlist, watchlistTotal } from '../content/watchlist';
-import SectionRubric from './SectionRubric.astro';
 import EditionsPicker from './EditionsPicker.astro';
 import WatchlistTree from './WatchlistTree.astro';
 
@@ -21,9 +20,9 @@ const sectors = watchlist.map((b, i) => ({
   color: segColors[i % segColors.length],
 }));
 ---
-<section id="gtm-radar" class="py-24 border-b border-rule scroll-mt-[var(--nav-h)]">
-  <SectionRubric num="01" label="Proof of work" />
-  <h2 class="font-serif text-4xl md:text-5xl leading-[1.06] mt-8 max-w-[720px]">A working intelligence system, not a slide.</h2>
+<section id="gtm-radar" class="py-24 border-b border-rule scroll-mt-20">
+  <p class="kicker">Proof of work · GTM Radar</p>
+  <h2 class="font-serif text-4xl md:text-5xl leading-[1.06] mt-4 max-w-[720px]">A working intelligence system, not a slide.</h2>
   <p class="text-lg text-ink/75 leading-relaxed mt-5 max-w-[680px]">
     It watches AI-adopting companies for the signals that precede a GTM hiring wave —
     funding, exec moves, layoffs, launches — and scores each for hiring likelihood in
