@@ -8,6 +8,14 @@ const tiles = [
   { n: '30–90d', label: 'scoring window' },
 ];
 
+// 63 companies as a tally — six tens + a three — with an accent pulse sweeping
+// left→right, so the count is unmistakable AND the tile feels alive.
+const wlGroups = [10, 10, 10, 10, 10, 10, 3];
+let _b = 0;
+const wlTally = wlGroups.map((count) =>
+  Array.from({ length: count }, () => ({ d: (_b++ * 0.035).toFixed(3) }))
+);
+
 // categorical palette — tokens defined in global.css, referenced by var()
 const segColors = [
   'var(--color-cat-1)', 'var(--color-cat-2)', 'var(--color-cat-3)',
@@ -30,12 +38,17 @@ const sectors = watchlist.map((b, i) => ({
   </p>
 
   <!-- dashboard tiles -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-visible mt-10">
+  <div class="tiles-grid grid grid-cols-2 md:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-visible mt-10">
     <EditionsPicker />
     <button id="wl-trigger" type="button" class="stat-tile ed-trigger" aria-expanded="false" aria-controls="wl-panel">
       <span class="tile-n">{watchlistTotal}</span>
       <span class="tile-l">companies tracked</span>
-      <span class="wl-cue" aria-hidden="true">explore →</span>
+      <span class="wl-tally" aria-hidden="true">
+        {wlTally.map((group) => (
+          <span class="wl-tg">{group.map((b) => <i style={`animation-delay:${b.d}s`}></i>)}</span>
+        ))}
+      </span>
+      <span class="wl-cue" aria-hidden="true">Explore companies →</span>
     </button>
     {tiles.map((t) => (
       <div class="bg-card px-5 py-6">

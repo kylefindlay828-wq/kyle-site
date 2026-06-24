@@ -10,17 +10,34 @@ import SignalCard from './SignalCard.astro';
   </p>
 
   <!-- sourcing credibility strip -->
-  <div class="mt-7 border border-rule rounded-lg bg-card px-5 py-4 max-w-[680px]">
-    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
+  <div class="mt-7 border border-rule rounded-lg bg-card px-6 py-5 max-w-[760px]">
+    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-5">
       <span class="kicker">Sourcing</span>
-      <span class="text-[13.5px] text-ink/75">Primary sources only — rumors are flagged, never scored as fact.</span>
+      <span class="text-[13.5px] text-ink/75">Every signal traces to a primary source. Rumors are flagged, never scored as fact.</span>
     </div>
-    <ul class="flex flex-wrap gap-2">
-      <li class="chip chip-mono">Company newsrooms</li>
-      <li class="chip chip-mono">BusinessWire</li>
-      <li class="chip chip-mono">Official press releases</li>
-      <li class="chip chip-mono">Trade press · flagged</li>
-    </ul>
+    <div class="grid gap-5 sm:grid-cols-3">
+      <div>
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.12em] text-accent mb-2.5">Primary record</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="chip chip-mono">Company newsrooms &amp; blogs</li>
+          <li class="chip chip-mono">Official press / BusinessWire</li>
+          <li class="chip chip-mono">SEC / EDGAR filings</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.12em] text-accent mb-2.5">Corroborating</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="chip chip-mono">Bloomberg · Reuters</li>
+          <li class="chip chip-mono">TechCrunch · The Information</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted mb-2.5">Flagged, not scored</p>
+        <ul class="flex flex-wrap gap-2">
+          <li class="chip chip-mono">Trade press — corroborated</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">

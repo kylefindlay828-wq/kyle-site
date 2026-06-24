@@ -142,7 +142,7 @@ a:hover { color: var(--color-accent); }
 .ed-ticks i:nth-child(3) { animation-delay: .4s; }
 .ed-ticks i:nth-child(4) { animation-delay: .6s; }
 @keyframes edpulse { 0%, 100% { background: var(--color-rule); } 40% { background: var(--color-accent); } }
-.ed-hint { font-family: var(--font-mono); font-size: 9px; letter-spacing: .04em; color: var(--color-muted); opacity: .75; margin-top: 8px; display: block; }
+.ed-hint { font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; color: var(--color-muted); opacity: .85; margin-top: 8px; display: block; }
 
 /* editions popover */
 .ed-pop {
@@ -163,11 +163,21 @@ a:hover { color: var(--color-accent); }
   .ed-ticks i { animation: none; }
 }
 
-/* watchlist trigger cue (on the 63 tile) — desktop only */
-.wl-cue { display: none; }
-@media (min-width: 768px) and (hover: hover) {
-  .wl-cue { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: .04em; color: var(--color-muted); opacity: .75; margin-top: 8px; }
+/* watchlist trigger cue (on the 63 tile) — always-visible accent button */
+.wl-cue {
+  display: inline-flex; align-items: center; align-self: flex-start;
+  margin-top: 12px;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--color-on-accent); background: var(--color-accent);
+  padding: 7px 13px; border-radius: 9999px;
+  transition: opacity .2s var(--ease-out), transform .2s var(--ease-out);
 }
+#wl-trigger:hover .wl-cue { transform: translateY(-1px); opacity: .92; }
+
+/* watchlist trigger tile — match the cream card fill of the sibling tiles */
+#wl-trigger { background: var(--color-card); display: flex; flex-direction: column; align-items: flex-start; }
+#wl-trigger:hover { background: var(--color-card); }
 
 /* dim scrim */
 .wl-scrim {
@@ -223,4 +233,34 @@ a:hover { color: var(--color-accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .wl-open .wl-branch { animation: none; }
+}
+
+/* 63-company tally on the "companies tracked" tile — six tens + a three,
+   grouped, with an accent pulse sweeping left→right */
+.wl-tally { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 7px; margin-top: 12px; }
+.wl-tg { display: inline-flex; gap: 2px; }
+.wl-tally i {
+  width: 2px; height: 16px; border-radius: 1px;
+  background: var(--color-rule);
+  animation: wltally 2.6s linear infinite;
+}
+@keyframes wltally {
+  0%, 16%, 100% { background: var(--color-rule); }
+  6%            { background: var(--color-accent); }
+}
+
+/* subtle shimmer traveling left→right through the tile divider gaps */
+.tiles-grid {
+  background: linear-gradient(90deg,
+    var(--color-rule) 0%,
+    color-mix(in srgb, var(--color-accent) 26%, var(--color-rule)) 45%,
+    var(--color-rule) 90%);
+  background-size: 240% 100%;
+  animation: gridsheen 7s linear infinite;
+}
+@keyframes gridsheen { from { background-position: 200% 0; } to { background-position: -40% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-tally i { animation: none; }
+  .tiles-grid { animation: none; background: var(--color-rule); }
 }
