@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 
 const brings = [
-  { head: '$3M+/yr CPG accounts', support: 'Beyond Meat · Hormel · FIJI · POM · Wonderful Pistachios' },
+  { head: '$8M+/yr CPG book of business', support: '$3M+ owned outright, $5–6M supported · FIJI · Hormel · Wonderful · Beyond Meat' },
   { head: 'Ships autonomous workflows', support: 'Owns the judgment calls, not just the demo' },
   { head: 'Translator between builders and revenue', support: 'Gets good ideas heard by leadership — and shipped' },
   { head: 'Builds at the application layer', support: 'Agentic systems inside your existing stack — your data stays yours' },
@@ -15,15 +15,22 @@ const fits = [
 ];
 ---
 <section id="about" class="py-20 border-t border-b border-rule scroll-mt-20">
-  <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-8 md:gap-10 items-start">
-    <Image src={headshot} alt="Kyle Findlay" width={320} height={320} class="rounded-xl w-[140px] h-[140px] md:w-[160px] md:h-[160px] object-cover border border-rule" />
-    <div>
-      <h2 class="font-serif text-2xl md:text-3xl leading-tight max-w-[720px]">
+  <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-start">
+    <div class="rounded-xl overflow-hidden border border-rule w-[220px] h-[290px] md:w-[280px] md:h-[360px]">
+      <Image src={headshot} alt="Kyle Findlay" width={600} height={750} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+    </div>
+    <div class="max-w-[720px]">
+      <h2 class="font-serif text-2xl md:text-3xl leading-tight">
         Models are becoming commodity cognition. The durable value is the application layer —
-        AI deployed into real workflows, inside your stack, where your data stays yours. Seven
-        years owning the operator layer behind high-stakes programs taught me how the work
-        actually gets done. Now I build that layer.
+        AI deployed into real workflows, inside your stack, where your data stays yours.
       </h2>
+      <p class="font-serif text-2xl md:text-3xl leading-tight mt-4">
+        Seven years owning the operator layer behind high-stakes programs taught me how the
+        work actually gets done.
+      </p>
+      <p class="font-serif text-2xl md:text-3xl leading-tight mt-4 text-ink">
+        Now I build that layer.
+      </p>
     </div>
   </div>
 

@@ -1,12 +1,15 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import About from '../components/About.astro';
-import FinalCta from '../components/FinalCta.astro';
+import Hero from '../components/Hero.astro';
+import RadarProof from '../components/RadarProof.astro';
+import SignalExamples from '../components/SignalExamples.astro';
+import Workflows from '../components/Workflows.astro';
+import ProofArchive from '../components/ProofArchive.astro';
 import Analytics from '@vercel/analytics/astro';
 
-const title = 'Kyle Findlay — Enablement · GTM systems · Agentic workflows';
-const description = 'Kyle Findlay builds at the application layer — agentic systems deployed into real workflows, inside your stack, where your data stays yours. Enablement, GTM systems, and recruiting intelligence.';
+const title = 'GTM Radar — AI-assisted GTM intelligence | Kyle Findlay';
+const description = 'GTM Radar turns messy company signals into ranked hiring, market, and GTM insights — with sources, judgment, and human review. Built by Kyle Findlay.';
 ---
 <!doctype html>
 <html lang="en">
@@ -19,11 +22,11 @@ const description = 'Kyle Findlay builds at the application layer — agentic sy
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kylefindlay.xyz/" />
+    <meta property="og:url" content="https://kylefindlay.xyz/gtm-radar" />
     <meta property="og:image" content="https://kylefindlay.xyz/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Kyle Findlay — builds agentic systems at the application layer. kylefindlay.xyz" />
+    <meta property="og:image:alt" content="GTM Radar — I built a GTM market intelligence tool. kylefindlay.xyz" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://kylefindlay.xyz/og.png" />
     <style>
@@ -34,18 +37,24 @@ const description = 'Kyle Findlay builds at the application layer — agentic sy
   <body class="bg-paper text-ink min-h-screen">
     <Nav />
     <main class="max-w-content mx-auto px-6">
-      <About />
-      <FinalCta />
+      <Hero />
+      <RadarProof />
+      <SignalExamples />
+      <Workflows />
+      <ProofArchive />
     </main>
 
     <script>
+      // scroll-reveal (respects prefers-reduced-motion via CSS fallback)
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const els = document.querySelectorAll('[data-reveal]');
       if (reduce || !('IntersectionObserver' in window)) {
         els.forEach((el) => el.classList.add('in'));
       } else {
         const obs = new IntersectionObserver((entries, o) => {
-          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); }
+          });
         }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
         els.forEach((el) => obs.observe(el));
       }
