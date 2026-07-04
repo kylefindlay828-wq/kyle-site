@@ -1,35 +1,46 @@
 ---
 import { Image } from 'astro:assets';
-import headshot from '../assets/photos/headshot.jpg';
+import headshot from '../assets/photos/headshot.png';
 
-const chips = [
-  '$3M+/yr CPG accounts (Beyond Meat · Hormel · FIJI · POM · Wonderful Pistachios)',
-  'AI workflow builder',
-  'Comfortable as the human in the loop',
+const brings = [
+  { head: '$3M+/yr CPG accounts', support: 'Beyond Meat · Hormel · FIJI · POM · Wonderful Pistachios' },
+  { head: 'Ships autonomous workflows', support: 'Owns the judgment calls, not just the demo' },
+  { head: 'Translator between builders and revenue', support: 'Gets good ideas heard by leadership — and shipped' },
+  { head: 'Builds at the application layer', support: 'Agentic systems inside your existing stack — your data stays yours' },
 ];
 const fits = [
-  { label: 'Stage', body: 'Pre-seed to Series C, AI-native or AI-adopting — full-time or contract, wherever the operator layer is still being built and the brief is still being written.' },
-  { label: 'Roles', body: 'AI workflow builder · GTM intelligence · Recruiting intelligence · Implementation · Founder-led special projects' },
-  { label: 'Profile', body: 'Seven years owning customer experience end-to-end on high-stakes programs — CPG accounts and live event production at scale.' },
+  { label: 'Stage', body: 'Pre-seed to Series C, AI-native or AI-adopting — full-time or contract, wherever the application layer is still being built and the brief is still being written.' },
+  { label: 'Roles', body: 'Enablement & GTM systems · Agentic workflow builder · Recruiting intelligence' },
+  { label: 'Profile', body: 'Seven years running customer experience end-to-end on high-stakes programs — CPG accounts and live event production at scale. Now building agentic systems at the application layer.' },
 ];
 ---
 <section id="about" class="py-20 border-t border-b border-rule scroll-mt-20">
   <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-8 md:gap-10 items-start">
     <Image src={headshot} alt="Kyle Findlay" width={320} height={320} class="rounded-xl w-[140px] h-[140px] md:w-[160px] md:h-[160px] object-cover border border-rule" />
     <div>
-      <h2 class="font-serif text-2xl md:text-3xl leading-tight max-w-[640px]">
-        Seven years owning the operator layer behind high-stakes programs — now building AI
-        workflows that turn messy signals into systems a GTM team can use.
+      <h2 class="font-serif text-2xl md:text-3xl leading-tight max-w-[720px]">
+        Models are becoming commodity cognition. The durable value is the application layer —
+        AI deployed into real workflows, inside your stack, where your data stays yours. Seven
+        years owning the operator layer behind high-stakes programs taught me how the work
+        actually gets done. Now I build that layer.
       </h2>
-      <ul class="flex flex-wrap gap-2.5 mt-6">
-        {chips.map((c) => (
-          <li class="chip">{c}</li>
-        ))}
-      </ul>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+  <!-- WHAT I BRING -->
+  <div class="mt-14">
+    <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-7">What I bring</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-9">
+      {brings.map((b) => (
+        <div class="border-l-2 border-accent pl-5">
+          <h3 class="font-serif text-2xl md:text-[1.6rem] leading-snug text-ink">{b.head}</h3>
+          <p class="text-[15px] text-ink/70 leading-relaxed mt-2.5">{b.support}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14">
     {fits.map((f) => (
       <div class="border-l-2 border-accent pl-4">
         <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-2">{f.label}</p>
