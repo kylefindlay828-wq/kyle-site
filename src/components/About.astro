@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 
 const brings = [
-  { head: '$8M+/yr CPG book of business', support: '$3M+ owned outright, $5–6M supported · FIJI · Hormel · Wonderful · Beyond Meat' },
+  { head: '$8M+/yr book of brand accounts', support: 'Beyond Meat · Hormel · FIJI · POM · Wonderful Pistachios · GoodRx · Green Dot · Sapporo' },
   { head: 'Ships autonomous workflows', support: 'Owns the judgment calls, not just the demo' },
   { head: 'Translator between builders and revenue', support: 'Gets good ideas heard by leadership — and shipped' },
   { head: 'Builds at the application layer', support: 'Agentic systems inside your existing stack — your data stays yours' },
@@ -11,24 +11,36 @@ const brings = [
 const fits = [
   { label: 'Stage', body: 'Pre-seed to Series C, AI-native or AI-adopting — full-time or contract, wherever the application layer is still being built and the brief is still being written.' },
   { label: 'Roles', body: 'Enablement & GTM systems · Agentic workflow builder · Recruiting intelligence' },
-  { label: 'Profile', body: 'Seven years running customer experience end-to-end on high-stakes programs — CPG accounts and live event production at scale. Now building agentic systems at the application layer.' },
+  { label: 'Profile', body: 'Seven years of end-to-end execution on high-stakes programs — an $8M+/yr book of brand accounts and live event production at scale. Now building at the application layer.' },
 ];
 ---
 <section id="about" class="py-20 border-t border-b border-rule scroll-mt-20">
   <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-start">
-    <div class="rounded-xl overflow-hidden border border-rule w-[220px] h-[290px] md:w-[280px] md:h-[360px]">
-      <Image src={headshot} alt="Kyle Findlay" width={600} height={750} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+    <div class="flex flex-col gap-3 w-[220px] md:w-[280px] items-start">
+      <div class="rounded-xl overflow-hidden border border-rule w-full h-[290px] md:h-[360px]">
+        <Image src={headshot} alt="Kyle Findlay" width={600} height={750} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+      </div>
+      <button id="copy-email" type="button" data-email="kylefindlay828@gmail.com" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-[12px] font-mono font-semibold rounded-full hover:opacity-90 transition cursor-pointer mt-1">
+        <span class="ce-text">kylefindlay828@gmail.com</span>
+        <span aria-hidden="true">⧉</span>
+      </button>
+      <a href="https://linkedin.com/in/kylefindlay828" target="_blank" rel="noopener" class="text-[14px] text-ink/70 hover:text-accent underline decoration-rule underline-offset-2 transition">
+        LinkedIn ↗
+      </a>
     </div>
     <div class="max-w-[720px]">
-      <h2 class="font-serif text-2xl md:text-3xl leading-tight">
-        Models are becoming commodity cognition. The durable value is the application layer —
-        AI deployed into real workflows, inside your stack, where your data stays yours.
+      <h2 class="font-serif font-bold text-2xl md:text-3xl leading-tight">
+        Models are becoming commodity cognition.
       </h2>
-      <p class="font-serif text-2xl md:text-3xl leading-tight mt-4">
+      <p class="font-serif font-bold text-2xl md:text-3xl leading-tight mt-3">
+        The durable value is the application layer — AI deployed into real workflows, inside
+        your stack, where your data stays yours.
+      </p>
+      <p class="font-serif text-2xl md:text-3xl leading-tight text-ink/80 mt-6">
         Seven years owning the operator layer behind high-stakes programs taught me how the
         work actually gets done.
       </p>
-      <p class="font-serif text-2xl md:text-3xl leading-tight mt-4 text-ink">
+      <p class="font-serif text-2xl md:text-3xl leading-tight text-ink mt-6">
         Now I build that layer.
       </p>
     </div>
@@ -56,3 +68,24 @@ const fits = [
     ))}
   </div>
 </section>
+
+<script>
+  // "Copy email" button — copies the address to the clipboard, no mail app needed
+  const btn = document.getElementById('copy-email');
+  const label = btn?.querySelector('.ce-text');
+  const original = label?.textContent ?? '';
+  btn?.addEventListener('click', async () => {
+    const email = btn.getAttribute('data-email') ?? '';
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      const t = document.createElement('textarea');
+      t.value = email; document.body.appendChild(t); t.select();
+      document.execCommand('copy'); t.remove();
+    }
+    if (label) {
+      label.textContent = 'Copied ✓';
+      setTimeout(() => { label.textContent = original; }, 1800);
+    }
+  });
+</script>

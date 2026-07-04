@@ -1,4 +1,4 @@
-// European / international layer for GTM Radar — Betts-fit, AI-reshaped GTM.
+// European / international layer for GTM Radar — recruiting-fit, AI-reshaped GTM.
 // Same three filters as the US watchlist: active GTM hiring need, no internal
 // recruiting army / brand magnet, matches the firm's documented pattern.
 // NOTE: stage/funding specifics to be re-verified before anything goes public.

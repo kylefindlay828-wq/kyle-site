@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import { watchlist } from '../content/watchlist';
-import { watchlistEu, watchlistEuExcluded } from '../content/watchlist-eu';
+import { watchlistEu } from '../content/watchlist-eu';
 
 // combined US + Europe coverage, grouped by sector, for the glowy bar
 const catColors = ['var(--color-cat-1)', 'var(--color-cat-2)', 'var(--color-cat-3)', 'var(--color-cat-4)', 'var(--color-cat-5)', 'var(--color-cat-6)'];
@@ -33,6 +33,15 @@ const description = 'GTM Radar v2: an agentic hiring-intelligence build. It scan
 
 const email = 'kylefindlay828@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
+
+// companies considered but cut — the filter is the point
+const excluded = [
+  { name: 'Anthropic · OpenAI', why: 'Brand magnets — tens of thousands of inbound applicants; they don\'t need search.' },
+  { name: 'Salesforce · ServiceNow', why: 'Internal TA armies at scale — no external mandate to win.' },
+  { name: 'Mistral', why: 'EU brand-magnet foundation model — an inbound talent magnet.' },
+  { name: 'SAP', why: 'Too big; a large internal recruiting org already owns the pipeline.' },
+  { name: 'Helsing', why: 'Defense AI — different recruiter network, clearance-driven hiring.' },
+];
 
 // scored signals — real, web-verified data · Q2 2026 edition (Apr–Jun)
 const signals = [
@@ -112,7 +121,7 @@ const signals = [
       { role: 'MSSP / Channel Partnerships', why: 'Cyber scales through managed-security providers; the channel motion needs a dedicated owner as they grow.' },
       { role: 'Public-Sector / FedRAMP GTM', why: 'Cyber growth usually triggers a federal push needing cleared sellers and a compliance-aware motion.' },
     ],
-    src: 'Crunchbase / Tracxn, 2026-05', href: 'https://www.crunchbase.com/organization/abnormal-security',
+    src: 'Crunchbase company profile · May 2026', href: 'https://www.crunchbase.com/organization/abnormal-security',
   },
   {
     co: 'Cresta', meta: 'AI CX · North America', tone: 'watch', score: 'Score 3 · Watch · ≤90d',
@@ -125,7 +134,7 @@ const signals = [
       { role: 'BPO / Telco Channel Partnerships', why: 'The TELUS deal is a channel signal — someone has to own partner-led distribution.' },
       { role: 'CX Data Analyst', why: 'Proving ROI on named-brand deployments needs an analyst the sales team doesn\'t have.' },
     ],
-    src: 'Cresta newsroom, June 2026', href: 'https://cresta.com/',
+    src: 'Cresta company site · June 2026', href: 'https://cresta.com/',
   },
 ];
 ---
@@ -140,6 +149,13 @@ const signals = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kylefindlay.xyz/radar-v2" />
+    <meta property="og:image" content="https://kylefindlay.xyz/og-v2.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GTM Radar v2 — an agentic hiring-intelligence system, built solo. kylefindlay.xyz" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kylefindlay.xyz/og-v2.png" />
     <style>
       html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     </style>
@@ -153,6 +169,7 @@ const signals = [
         <p class="r2-run">◆ watchlist-agent · Q2 2026 · <span class="live">built to order</span></p>
         <h1 class="r2-h1">GTM Radar <span class="r2-accent">v2</span></h1>
         <p class="r2-sub">The agent does the legwork. I make the judgment calls.</p>
+        <p class="r2-cadence">Built for a weekly cadence · human-approved before publish</p>
         <button id="wlv-trigger" type="button" class="wlv-hero" aria-expanded="false" aria-controls="wlv-panel">
           <span class="wlv-hn">{grandTotal}</span>
           <span class="wlv-hl">companies tracked</span>
@@ -166,24 +183,39 @@ const signals = [
 
     <main class="max-w-content mx-auto px-6">
 
-      <!-- SHOWPIECE: SAMPLE BRIEFING · first thing after the hero -->
-      <section id="sample" class="pt-8 pb-12 scroll-mt-20" data-reveal>
+      <!-- HOW THE AGENT RUNS -->
+      <section class="pt-8 pb-2" data-reveal>
+        <div class="border-l-2 border-accent pl-5">
+          <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-3">How the agent runs</p>
+          <ul class="how-runs">
+            <li>Config-driven — point it at any watchlist; a firm can seed its own companies, 40 or 4,000</li>
+            <li>One batched query per company — no wasteful per-signal fan-out</li>
+            <li>Cheap model scans the signals; the strong model writes synthesis only</li>
+            <li>Primary sources only — no platform scraping</li>
+            <li>Agent drafts; I review and approve before anything publishes</li>
+            <li>Cost-efficient by design — batched queries keep every run cheap</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SHOWPIECE: SAMPLE BRIEFING -->
+      <section id="sample" class="pt-6 pb-12 scroll-mt-20" data-reveal>
         <div class="brief">
           <div class="brief-ribbon">
             <span class="dot"></span>
             <span><b>Agent-generated</b> · on request</span>
             <span class="rsep">|</span><span>Q2 2026 edition</span>
-            <span class="rsep">|</span><span>status: <b>needs review</b> — not published</span>
+            <span class="rsep">|</span><span>Agent draft → human review → published · <b>Approved 2026-07-01</b></span>
           </div>
 
           <div class="brief-head">
-            <p class="kicker">Betts-fit Radar · AI-reshaped GTM</p>
+            <p class="kicker">Recruiting intelligence · AI-reshaped GTM</p>
             <h3 class="font-serif text-2xl md:text-3xl mt-2">Q2 2026 Pre-Search Briefing</h3>
             <p class="font-mono text-[12px] text-muted mt-2">Window: Q2 2026 (Apr–Jun) · 7 of 75 tracked companies crossed the bar · every signal sourced</p>
           </div>
 
           <div class="feebar">
-            <div><span class="fn"><span class="fac">$6.8M</span></span><span class="fl">Fee ceiling this edition</span></div>
+            <div><span class="fn"><span class="fac">~$6.8M</span></span><span class="fl">est. fee ceiling</span></div>
             <div><span class="fn">45+</span><span class="fl">Roles surfaced</span></div>
             <div><span class="fn">30–90d</span><span class="fl">Predicted window</span></div>
           </div>
@@ -229,6 +261,17 @@ const signals = [
         </p>
       </section>
 
+      <!-- THE FILTER IS THE POINT -->
+      <section class="pb-10" data-reveal>
+        <div class="border-l-2 border-accent pl-5">
+          <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-3">The filter is the point</p>
+          <p class="text-[14px] text-ink/70 leading-relaxed mb-4 max-w-[680px]">Tracked, considered, and cut. A watchlist is only as sharp as what it leaves off.</p>
+          <ul class="filter-list">
+            {excluded.map((e) => (<li><b>{e.name}</b> — {e.why}</li>))}
+          </ul>
+        </div>
+      </section>
+
       <!-- lens line -->
       <section class="pb-12" data-reveal>
         <p class="cov-lens">AI-reshaped GTM is the lens, not the limit — <span>the engine runs on any watchlist, AI or not.</span></p>
@@ -257,7 +300,6 @@ const signals = [
             ))}
           </div>
         </div>
-        <p class="wl-excl"><b>Considered, excluded:</b> {watchlistEuExcluded.map((e) => e.name).join(' · ')} — brand magnets, too-big-with-internal-TA, or the wrong recruiter network. The filter is the point.</p>
       </div>
 
     </main>
@@ -299,6 +341,7 @@ const signals = [
       .r2-h1 { font-family: var(--font-serif); font-weight: 700; font-size: clamp(1.9rem, 3.8vw, 2.6rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--color-paper); margin: 10px 0 0; }
       .r2-accent { color: var(--color-accent); }
       .r2-sub { font-size: 1rem; line-height: 1.5; color: color-mix(in srgb, var(--color-paper) 78%, transparent); margin: 12px 0 0; max-width: 620px; }
+      .r2-cadence { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; color: oklch(74% 0.15 150); margin: 10px 0 0; }
 
       /* ===== BRIEFING ===== */
       .brief { border: 1px solid var(--color-rule); border-radius: 14px; background: var(--color-paper); padding: 6px 20px 22px; box-shadow: 0 20px 50px -30px color-mix(in srgb, var(--color-ink) 40%, transparent); }
@@ -392,6 +435,11 @@ const signals = [
       .cov-excl b { color: var(--color-ink); }
       .cov-lens { font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-ink); line-height: 1.4; margin-top: 18px; padding-left: 14px; border-left: 3px solid var(--color-accent); }
       .cov-lens span { color: var(--color-muted); }
+      /* editorial lists — HOW THE AGENT RUNS + THE FILTER IS THE POINT */
+      .how-runs, .filter-list { list-style: none; margin: 0; padding: 0; }
+      .how-runs li, .filter-list li { position: relative; padding: 5px 0 5px 18px; font-size: 14.5px; line-height: 1.5; color: color-mix(in srgb, var(--color-ink) 82%, transparent); }
+      .how-runs li::before, .filter-list li::before { content: "—"; position: absolute; left: 0; color: var(--color-accent); }
+      .filter-list li b { color: var(--color-ink); font-weight: 700; }
 
       /* ===== 75-COMPANIES TALLY (full-width, in the dark hero) ===== */
       .wlv-hero { display: flex; align-items: center; gap: 18px; width: 100%; margin-top: 10px; background: color-mix(in srgb, var(--color-paper) 6%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent); border-radius: 12px; padding: 14px 20px; cursor: pointer; transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out); }
