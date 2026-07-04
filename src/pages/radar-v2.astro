@@ -1,0 +1,422 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import { watchlist } from '../content/watchlist';
+import { watchlistEu, watchlistEuExcluded } from '../content/watchlist-eu';
+
+// combined US + Europe coverage, grouped by sector, for the glowy bar
+const catColors = ['var(--color-cat-1)', 'var(--color-cat-2)', 'var(--color-cat-3)', 'var(--color-cat-4)', 'var(--color-cat-5)', 'var(--color-cat-6)'];
+const euToUs: Record<string, string> = {
+  'AI-Native': 'AI-Native', 'RevTech': 'RevTech', 'Fintech + Cyber': 'Fintech + Cyber', 'Incumbent / AI-Late': 'AI-Late Adopter',
+};
+const sectors = watchlist.map((b, i) => {
+  const eu = watchlistEu
+    .filter((e) => euToUs[e.label] === b.label)
+    .flatMap((e) => e.companies.map((c) => ({ name: c.name, hq: c.hq })));
+  const us = b.companies.map((c) => ({ name: c.name, hq: '' }));
+  const companies = [...us, ...eu];
+  return { label: b.label, color: catColors[i % 6], companies, count: companies.length };
+});
+const grandTotal = sectors.reduce((n, s) => n + s.count, 0);
+
+// tally — groups of ten (so you can count up to the number), with a sweeping pulse
+let _ti = 0;
+const tallyGroups = (() => {
+  const sizes: number[] = [];
+  let n = grandTotal;
+  while (n > 0) { sizes.push(Math.min(10, n)); n -= 10; }
+  return sizes.map((count) => Array.from({ length: count }, () => ({ d: (_ti++ * 0.03).toFixed(2) })));
+})();
+
+const title = 'GTM Radar v2 — the agentic version | Kyle Findlay';
+const description = 'GTM Radar v2: an agentic hiring-intelligence build. It scans AI-reshaped GTM signals, scores them, and drafts a recruiter briefing with fee ceilings and roles likely to open — with human review before anything ships.';
+
+const email = 'kylefindlay828@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
+
+// scored signals — real, web-verified data · Q2 2026 edition (Apr–Jun)
+const signals = [
+  {
+    co: 'Ramp', meta: 'Fintech · $44B · US → UK/EU', tone: 'hot', score: 'Score 5 · Hot · ≤30d',
+    headline: 'Raises $750M at a $44B valuation, launches an AI accounting operating system, and brings its card + spend platform to the UK and Europe this summer.',
+    angle: 'A $44B fintech opening a brand-new UK/EU geo has no bench there. The AI-accounting launch is a whole new product line to sell. Expect a UK/EU GTM leader now, with the AE + partnerships cohort right behind it.',
+    fee: '$1.6M', split: 'exec $600K · volume $1.0M+',
+    posted: ['VP Sales / GM, UK & Europe', 'UK/EU Enterprise AEs', 'Partnerships Lead, EU', 'Product Marketing — Accounting'],
+    hidden: [
+      { role: 'Regulatory / Licensing GTM, EU', why: 'Shipping cards and lending into Europe means a compliance-aware GTM hire US fintechs never needed at home.' },
+      { role: 'Accounting-firm Channel Lead', why: 'An AI accounting OS sells with — and against — accountants; a channel motion Ramp hasn\'t run before.' },
+      { role: 'Finance / Localization Ops, EU', why: 'Multi-currency, multi-entity European rollout needs an ops owner behind the sales team.' },
+    ],
+    src: 'TechCrunch, 2026-06-04', href: 'https://techcrunch.com/2026/06/04/ramp-raises-750m-at-44b-valuation-as-investors-hunger-for-fintechs-with-an-ai-story/',
+  },
+  {
+    co: 'Harvey', meta: 'Legal AI · $11B · US → Singapore + Chicago', tone: 'warm', score: 'Score 4 · Warm · ≤60d',
+    headline: 'Off its $11B raise, opens a Singapore office in June and Chicago in July — four new offices in 2026 (Dublin, Paris, Singapore, Chicago).',
+    angle: 'Each new office is a net-new GTM org with no local bench. Singapore (APAC) and Chicago (central US) both need enterprise sellers and embedded legal engineers now. The international build is the placement.',
+    fee: '$1.0M', split: 'exec $400K · volume $600K+',
+    posted: ['Country Lead, Singapore', 'Enterprise AE, APAC', 'Enterprise AE, Central US', 'Legal Engineer (embedded)'],
+    hidden: [
+      { role: 'Law-firm Alliances, APAC', why: 'Harvey sells through and alongside law firms; the APAC partner motion needs a local owner from day one.' },
+      { role: 'Trust & Compliance seller, APAC', why: 'Legal AI in a new jurisdiction means a region-specific, compliance-aware seller.' },
+      { role: 'Field Marketing, APAC', why: 'A new region with no demand engine needs a local field-marketing hire the HQ team can\'t cover.' },
+    ],
+    src: 'Harvey blog, June 2026', href: 'https://www.harvey.ai/blog/harvey-raises-at-dollar11-billion-valuation-to-scale-agents-across-law-firms-and-enterprises',
+  },
+  {
+    co: 'Glean', meta: 'Enterprise AI search · $7.2B · scaling', tone: 'warm', score: 'Score 4 · Warm · ≤60d',
+    headline: 'Crosses $300M ARR (3× in 15 months) and ships agentic "Skills" — codified workflows delegated across enterprise apps.',
+    angle: 'A 3× ARR jump is a sales engine on fire, and that growth is carried by quota headcount. The new agentic product opens an enterprise tier that needs deployment muscle behind the AEs.',
+    fee: '$1.2M', split: 'exec $500K · volume $700K+',
+    posted: ['Enterprise AEs (mid-market → enterprise)', 'Sales Engineers', 'CS Directors', 'Enterprise Marketing'],
+    hidden: [
+      { role: 'AI Agent Deployment Lead', why: 'The new "Skills / workstreams" product only lands with someone owning agentic rollout inside the customer — a role that didn\'t exist last quarter.' },
+      { role: 'Value Engineering / ROI Lead', why: 'Glean now sells on "AI budget cutting" — proving that number needs a value-engineering hire, not a rep.' },
+      { role: 'Competitive Lead vs. Copilot', why: 'The Microsoft Copilot fight needs a dedicated positioning owner the day it becomes the deal-blocker.' },
+    ],
+    src: 'TechCrunch, 2026-05-28', href: 'https://techcrunch.com/2026/05/28/gleans-top-line-crosses-300m-as-ai-budget-cutting-becomes-its-major-selling-point/',
+  },
+  {
+    co: 'Mercury', meta: 'Fintech banking · $5.2B · bank charter', tone: 'warm', score: 'Score 4 · Warm · ≤60d',
+    headline: 'Raises $200M at a $5.2B valuation and wins conditional OCC approval to become a federally regulated bank — unlocking lending and Zelle.',
+    angle: 'A bank charter is a whole new product line (lending) and a new compliance reality. That means sellers who understand credit, plus a regulated-GTM function Mercury has never had to staff.',
+    fee: '$900K', split: 'exec $400K · volume $500K+',
+    posted: ['Lending / Credit Sales', 'Enterprise AEs', 'RevOps', 'CS Directors'],
+    hidden: [
+      { role: 'Lending GTM Lead', why: 'The charter unlocks lending — a product Mercury couldn\'t sell before; it needs sellers who speak credit, not just deposits.' },
+      { role: 'Regulatory / Compliance GTM', why: 'Becoming a regulated bank means compliance-aware selling and a BSA/AML-adjacent GTM function that didn\'t exist.' },
+      { role: 'Payments Network Partnerships', why: 'Joining Zelle and cutting partner-bank reliance is a partnerships motion needing a dedicated owner.' },
+    ],
+    src: 'CNBC, 2026-05-20', href: 'https://www.cnbc.com/2026/05/20/fintech-mercury-valuation-fundraise-bank-charter.html',
+  },
+  {
+    co: 'Sierra', meta: 'AI agents · $15.8B · US → Paris/EU', tone: 'warm', score: 'Score 4 · Warm · ≤60d',
+    headline: 'Raises $950M at a $15.8B valuation, crosses $150M ARR, and acquires Paris-based Fragment — its first EU footprint.',
+    angle: 'A mega-raise plus a Paris office means EU enterprise GTM is the open gap. Shipping into European enterprise with no EMEA bench — the cohort under the senior hires is the placement.',
+    fee: '$700K', split: 'exec $300K · volume $400K+',
+    posted: ['VP Sales EMEA', 'Director CS EMEA', '4–6 Enterprise AE EMEA', 'Solutions Engineer EMEA'],
+    hidden: [
+      { role: 'Forward-Deployed Engineer, EMEA', why: 'Agent deployment is high-touch; a US SE team can\'t cover European rollouts on European hours.' },
+      { role: 'EU AI Act / Trust & Compliance GTM', why: 'Selling AI agents into EU enterprise now means a compliance-aware seller US-first companies never staffed.' },
+      { role: 'Product Marketing, EMEA', why: 'A Paris office selling to European buyers needs local positioning the US team can\'t write.' },
+    ],
+    src: 'TechCrunch, 2026-05-04', href: 'https://techcrunch.com/2026/05/04/sierra-raises-950m-as-the-race-to-own-enterprise-ai-gets-serious/',
+  },
+  {
+    co: 'Abnormal', meta: 'AI cybersecurity · $250M raise', tone: 'watch', score: 'Score 3 · Watch · ≤90d',
+    headline: 'Raises $250M and ships Attune 1.0 — a behavioral foundation model trained on 1B+ signals that catches 150k+ more attacks weekly.',
+    angle: 'Fresh capital plus a category-defining model launch = an enterprise sales push. Behavioral-AI security scales through channel and needs sellers who can prove detection efficacy.',
+    fee: '$800K', split: 'exec $350K · volume $450K+',
+    posted: ['Enterprise AEs', 'Sales Engineers', 'Channel / Partner Managers', 'CS Directors'],
+    hidden: [
+      { role: 'Detection-to-GTM Liaison', why: 'The new model\'s efficacy is the pitch; someone has to translate threat-research proof into sales collateral — a research-adjacent GTM role.' },
+      { role: 'MSSP / Channel Partnerships', why: 'Cyber scales through managed-security providers; the channel motion needs a dedicated owner as they grow.' },
+      { role: 'Public-Sector / FedRAMP GTM', why: 'Cyber growth usually triggers a federal push needing cleared sellers and a compliance-aware motion.' },
+    ],
+    src: 'Crunchbase / Tracxn, 2026-05', href: 'https://www.crunchbase.com/organization/abnormal-security',
+  },
+  {
+    co: 'Cresta', meta: 'AI CX · North America', tone: 'watch', score: 'Score 3 · Watch · ≤90d',
+    headline: 'Signs TELUS Digital (Jun 15) and the New York Mets (Jun 25) — two marquee logos in ten days for its contact-center AI.',
+    angle: 'Back-to-back enterprise + brand-name logos mean live deployments that need CS and solutions coverage. Watch for CS Director + Solutions Engineer expansion as these go live.',
+    fee: '$600K', split: 'exec $250K · volume $350K+',
+    posted: ['CS Director', 'Solutions Engineer', 'Enterprise AE'],
+    hidden: [
+      { role: 'Deployment / Implementation Lead', why: 'Contact-center rollouts are heavy; marquee logos going live need a delivery owner, not just an AE.' },
+      { role: 'BPO / Telco Channel Partnerships', why: 'The TELUS deal is a channel signal — someone has to own partner-led distribution.' },
+      { role: 'CX Data Analyst', why: 'Proving ROI on named-brand deployments needs an analyst the sales team doesn\'t have.' },
+    ],
+    src: 'Cresta newsroom, June 2026', href: 'https://cresta.com/',
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    </style>
+  </head>
+  <body class="bg-paper text-ink min-h-screen">
+    <Nav />
+
+    <!-- COMPACT DARK AGENTIC HERO -->
+    <header class="r2-hero">
+      <div class="max-w-content mx-auto px-6 py-7 md:py-8">
+        <p class="r2-run">◆ watchlist-agent · Q2 2026 · <span class="live">built to order</span></p>
+        <h1 class="r2-h1">GTM Radar <span class="r2-accent">v2</span></h1>
+        <p class="r2-flex">A self-running, sourced, agentic system — <span class="r2-accent">built solo, when this normally takes an engineering team.</span></p>
+        <p class="r2-sub">The agent does the legwork. I make the judgment calls.</p>
+        <button id="wlv-trigger" type="button" class="wlv-hero" aria-expanded="false" aria-controls="wlv-panel">
+          <span class="wlv-hn">{grandTotal}</span>
+          <span class="wlv-hl">companies tracked</span>
+          <span class="wlv-tally" aria-hidden="true">
+            {tallyGroups.map((g) => (<span class="wlv-tg">{g.map((b) => <i style={`animation-delay:${b.d}s`}></i>)}</span>))}
+          </span>
+          <span class="wlv-cue">explore ›</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="max-w-content mx-auto px-6">
+
+      <!-- SHOWPIECE: SAMPLE BRIEFING · first thing after the hero -->
+      <section id="sample" class="pt-8 pb-12 scroll-mt-20" data-reveal>
+        <div class="brief">
+          <div class="brief-ribbon">
+            <span class="dot"></span>
+            <span><b>Agent-generated</b> · on request</span>
+            <span class="rsep">|</span><span>Q2 2026 edition</span>
+            <span class="rsep">|</span><span>status: <b>needs review</b> — not published</span>
+          </div>
+
+          <div class="brief-head">
+            <p class="kicker">Betts-fit Radar · AI-reshaped GTM</p>
+            <h3 class="font-serif text-2xl md:text-3xl mt-2">Q2 2026 Pre-Search Briefing</h3>
+            <p class="font-mono text-[12px] text-muted mt-2">Window: Q2 2026 (Apr–Jun) · 7 of 75 tracked companies crossed the bar · every signal sourced</p>
+          </div>
+
+          <div class="feebar">
+            <div><span class="fn"><span class="fac">$6.8M</span></span><span class="fl">Fee ceiling this edition</span></div>
+            <div><span class="fn">45+</span><span class="fl">Roles surfaced</span></div>
+            <div><span class="fn">30–90d</span><span class="fl">Predicted window</span></div>
+          </div>
+
+          {signals.map((s) => (
+            <article class={`scard ${s.tone}`}>
+              <div class="scard-top">
+                <span class="sco">{s.co} <small>{s.meta}</small></span>
+                <span class={`score ${s.tone === 'hot' ? 's-hot' : s.tone === 'watch' ? 's-watch' : 's-warm'}`}>{s.score}</span>
+              </div>
+              <p class="shead">{s.headline}</p>
+              <p class="sangle"><b>Recruiter angle</b>{s.angle}</p>
+              <div class="feebox">
+                <span><span class="fbl">Fee ceiling</span><span class="fbig">{s.fee}</span></span>
+                <span class="fsplit"><span class="fbl">Split</span>{s.split}</span>
+              </div>
+              <details class="sdetails">
+                <summary>
+                  <span class="sd-chevron" aria-hidden="true">▸</span>
+                  <span class="sd-open">Roles they'll post &amp; the hidden hires</span>
+                  <span class="sd-close">Hide details</span>
+                </summary>
+                <div class="sd-body">
+                  <div class="sd-block">
+                    <p class="fbl">Roles they'll post</p>
+                    <div class="rchips">{s.posted.map((r) => <span class="rchip">{r}</span>)}</div>
+                  </div>
+                  <div class="sd-block">
+                    <p class="fbl">Hidden hires — the non-obvious ones</p>
+                    <ul class="hh">{s.hidden.map((h) => <li><b>{h.role}</b> — {h.why}</li>)}</ul>
+                  </div>
+                </div>
+              </details>
+              <p class="ssrc">Source · <a href={s.href} target="_blank" rel="noopener">{s.src}</a></p>
+            </article>
+          ))}
+
+        </div>
+
+        <p class="font-mono text-[12px] text-muted mt-5 max-w-[680px] leading-relaxed">
+          Fee ceilings are exec + volume estimates, not guarantees. Every signal carries a public source.
+          The design matches this site because the agent renders self-contained HTML in the same system.
+        </p>
+      </section>
+
+      <!-- lens line -->
+      <section class="pb-12" data-reveal>
+        <p class="cov-lens">AI-reshaped GTM is the lens, not the limit — <span>the engine runs on any watchlist, AI or not.</span></p>
+      </section>
+
+      <!-- white-out scrim + company modal (reuses v1's wl-* styling) -->
+      <div class="wl-scrim" id="wlv-scrim" hidden></div>
+      <div class="wl-panel" id="wlv-panel" role="dialog" aria-modal="true" aria-label="The full watchlist" hidden>
+        <button class="wl-close" id="wlv-close" type="button" aria-label="Close watchlist">esc ✕</button>
+        <p class="wl-ptitle">{grandTotal} companies · {sectors.length} sectors · US + Europe · the full watchlist</p>
+        <div class="wl-tree">
+          <div class="wl-hub"><span class="wl-hub-n">{grandTotal}</span><span class="wl-hub-l">COMPANIES</span></div>
+          <div class="wl-spine" aria-hidden="true"></div>
+          <div class="wl-branches">
+            {sectors.map((s) => (
+              <div class="wl-branch">
+                <div class="wl-sector">
+                  <span class="wl-dot" style={`background:${s.color}`}></span>
+                  <span class="wl-sn">{s.label}</span>
+                  <span class="wl-sc">{s.count}</span>
+                </div>
+                <div class="wl-cos">
+                  {s.companies.map((c) => <span class={`wl-co ${c.hq ? 'eu' : ''}`}>{c.name}{c.hq && <em>{c.hq}</em>}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p class="wl-excl"><b>Considered, excluded:</b> {watchlistEuExcluded.map((e) => e.name).join(' · ')} — brand magnets, too-big-with-internal-TA, or the wrong recruiter network. The filter is the point.</p>
+      </div>
+
+    </main>
+
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('[data-reveal]');
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+        els.forEach((el) => obs.observe(el));
+      }
+    </script>
+
+    <script>
+      // 75-companies watchlist modal (white-out scrim), mirrors v1
+      const wt = document.getElementById('wlv-trigger');
+      const wpanel = document.getElementById('wlv-panel');
+      const wscrim = document.getElementById('wlv-scrim');
+      const wclose = document.getElementById('wlv-close');
+      let wopen = false;
+      const wOpen = () => { wopen = true; wpanel?.removeAttribute('hidden'); wscrim?.removeAttribute('hidden'); document.body.classList.add('wl-open'); wt?.setAttribute('aria-expanded', 'true'); wclose?.focus(); };
+      const wClose = () => { wopen = false; wpanel?.setAttribute('hidden', ''); wscrim?.setAttribute('hidden', ''); document.body.classList.remove('wl-open'); wt?.setAttribute('aria-expanded', 'false'); wt?.focus(); };
+      wt?.addEventListener('click', () => (wopen ? wClose() : wOpen()));
+      wscrim?.addEventListener('click', wClose);
+      wclose?.addEventListener('click', wClose);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && wopen) wClose(); });
+    </script>
+
+
+    <style>
+      /* ===== COMPACT DARK AGENTIC HERO ===== */
+      .r2-hero { background: var(--color-ink); color: var(--color-paper); border-bottom: 3px solid var(--color-accent); }
+      .r2-run { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: color-mix(in srgb, var(--color-paper) 58%, transparent); }
+      .r2-run .live { color: oklch(74% 0.15 150); font-weight: 600; }
+      .r2-h1 { font-family: var(--font-serif); font-weight: 700; font-size: clamp(1.9rem, 3.8vw, 2.6rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--color-paper); margin: 10px 0 0; }
+      .r2-accent { color: var(--color-accent); }
+      .r2-flex { font-family: var(--font-serif); font-weight: 700; font-size: clamp(1.3rem, 2.5vw, 1.85rem); line-height: 1.2; color: var(--color-paper); margin: 12px 0 0; max-width: 800px; }
+      .r2-sub { font-size: 1rem; line-height: 1.5; color: color-mix(in srgb, var(--color-paper) 78%, transparent); margin: 8px 0 0; max-width: 620px; }
+
+      /* ===== BRIEFING ===== */
+      .brief { border: 1px solid var(--color-rule); border-radius: 14px; background: var(--color-paper); padding: 6px 20px 22px; box-shadow: 0 20px 50px -30px color-mix(in srgb, var(--color-ink) 40%, transparent); }
+      .brief-ribbon { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; color: var(--color-muted); border-bottom: 1px solid var(--color-rule); padding: 13px 2px; }
+      .brief-ribbon b { color: var(--color-ink); }
+      .brief-ribbon .rsep { color: var(--color-rule); }
+      .dot { width: 7px; height: 7px; border-radius: 50%; background: oklch(63% 0.13 150); display: inline-block; }
+      .brief-head { padding: 18px 0 4px; }
+
+      .feebar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-rule); border: 1px solid var(--color-rule); border-radius: 11px; overflow: hidden; margin: 16px 0 6px; }
+      .feebar > div { background: var(--color-card); padding: 15px 16px; }
+      .fn { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1; color: var(--color-ink); }
+      .fac { color: var(--color-accent); }
+      .fl { display: block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-muted); margin-top: 7px; }
+
+      .scard { background: var(--color-card); border: 1px solid var(--color-rule); border-left-width: 4px; border-radius: 11px; padding: 16px 18px; margin: 12px 0; }
+      .scard.hot { border-left-color: oklch(54% 0.158 37); }
+      .scard.warm { border-left-color: oklch(64% 0.11 72); }
+      .scard.watch { border-left-color: oklch(58% 0.11 150); }
+      .scard-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .sco { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; }
+      .sco small { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--color-muted); margin-left: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+      .score { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap; color: #fff; }
+      .s-hot { background: oklch(54% 0.158 37); }
+      .s-warm { background: oklch(60% 0.12 72); }
+      .s-watch { background: oklch(50% 0.11 150); }
+      .shead { font-weight: 600; color: var(--color-ink); margin: 10px 0 6px; }
+      .sangle { font-size: 14.5px; color: var(--color-ink); opacity: 0.85; margin: 6px 0 0; }
+      .sangle b { color: var(--color-accent); font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+      .feebox { display: flex; flex-wrap: wrap; gap: 18px; align-items: baseline; margin: 13px 0 4px; padding: 11px 14px; background: color-mix(in srgb, var(--color-accent) 6%, var(--color-card)); border-radius: 9px; }
+      .fbig { font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-accent); line-height: 1; }
+      .fbl { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-muted); display: block; margin-bottom: 1px; }
+      .fsplit { font-family: var(--font-mono); font-size: 12px; color: var(--color-ink); opacity: 0.8; }
+      .sroles { margin-top: 11px; }
+      .rchips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+      .rchip { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--color-ink); background: var(--color-paper); border: 1px solid color-mix(in srgb, var(--color-ink) 15%, var(--color-rule)); border-radius: 6px; padding: 3px 10px; }
+      .ssrc { font-family: var(--font-mono); font-size: 11px; margin-top: 11px; color: var(--color-muted); }
+      .ssrc a { color: var(--color-accent); text-decoration: none; }
+      .ssrc a:hover { text-decoration: underline; }
+
+      /* ===== EXPANDABLE CARD DETAILS ===== */
+      .sdetails { margin-top: 12px; border-top: 1px dotted var(--color-rule); }
+      .sdetails > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 11px 0 3px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent); }
+      .sdetails > summary::-webkit-details-marker { display: none; }
+      .sd-chevron { transition: transform 0.2s var(--ease-out); display: inline-block; }
+      .sdetails[open] .sd-chevron { transform: rotate(90deg); }
+      .sdetails .sd-close { display: none; }
+      .sdetails[open] .sd-open { display: none; }
+      .sdetails[open] .sd-close { display: inline; }
+      .sd-body { padding: 12px 0 4px; display: flex; flex-direction: column; gap: 14px; }
+      .sd-block .fbl { margin-bottom: 7px; }
+      .hh { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+      .hh li { font-size: 13.5px; color: var(--color-ink); opacity: 0.85; line-height: 1.45; padding-left: 15px; position: relative; }
+      .hh li::before { content: "·"; position: absolute; left: 3px; color: var(--color-accent); font-weight: 700; }
+      .hh b { font-weight: 700; opacity: 1; }
+      .sd-math { font-size: 13.5px; color: var(--color-ink); opacity: 0.85; line-height: 1.5; }
+
+      /* ===== COVERAGE BAR ===== */
+      .cov-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+      .cov-stat { font-family: var(--font-mono); font-size: 13px; color: var(--color-muted); }
+      .cov-stat b { font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-ink); font-weight: 700; }
+      .cov-bar { display: flex; height: 22px; width: 100%; margin-top: 14px; border-radius: 999px; overflow: hidden; border: 1px solid var(--color-rule); position: relative; box-shadow: 0 3px 24px -6px color-mix(in srgb, var(--color-accent) 45%, transparent); }
+      .cov-seg { height: 100%; box-shadow: 0 0 15px -2px currentColor; }
+      .cov-bar::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,0.42) 50%, transparent 65%); transform: translateX(-100%); animation: covshine 4.5s ease-in-out infinite; pointer-events: none; }
+      @keyframes covshine { 0% { transform: translateX(-100%); } 55%, 100% { transform: translateX(100%); } }
+      .cov-legend { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+      .cov-leg { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 12.5px; }
+      .cov-leg .dot { width: 11px; height: 11px; border-radius: 3px; box-shadow: 0 0 8px -1px currentColor; }
+      .cov-leg .lbl { color: var(--color-ink); font-weight: 600; }
+      .cov-leg .ct { color: var(--color-muted); }
+      .cov-expand { margin-top: 18px; }
+      .cov-expand > summary { list-style: none; cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent); display: inline-flex; align-items: center; gap: 6px; }
+      .cov-expand > summary::-webkit-details-marker { display: none; }
+      .cx-chevron { transition: transform 0.2s var(--ease-out); display: inline-block; }
+      .cov-expand[open] .cx-chevron { transform: rotate(90deg); }
+      .cov-expand .cx-close { display: none; }
+      .cov-expand[open] .cx-open { display: none; }
+      .cov-expand[open] .cx-close { display: inline; }
+      .cx-body { padding: 16px 0 2px; }
+      .cov-vert { margin-top: 15px; }
+      .cov-vert:first-child { margin-top: 0; }
+      .cov-vlabel { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: baseline; gap: 8px; }
+      .cov-vlabel span { color: var(--color-muted); font-size: 10.5px; }
+      .cov-cos { display: flex; flex-wrap: wrap; gap: 6px; }
+      .cov-co { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--color-ink); background: var(--color-card); border: 1px solid var(--color-rule); border-radius: 6px; padding: 3px 10px; }
+      .cov-co.eu { background: color-mix(in srgb, var(--color-accent) 10%, var(--color-card)); border-color: color-mix(in srgb, var(--color-accent) 42%, transparent); }
+      .cov-co em { font-style: normal; font-family: var(--font-mono); font-size: 10px; color: var(--color-muted); margin-left: 5px; }
+      .cov-co.eu em { color: var(--color-accent); }
+      .cov-excl { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-muted); margin-top: 18px; line-height: 1.55; max-width: 640px; }
+      .cov-excl b { color: var(--color-ink); }
+      .cov-lens { font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-ink); line-height: 1.4; margin-top: 18px; padding-left: 14px; border-left: 3px solid var(--color-accent); }
+      .cov-lens span { color: var(--color-muted); }
+
+      /* ===== 75-COMPANIES TALLY (full-width, in the dark hero) ===== */
+      .wlv-hero { display: flex; align-items: center; gap: 18px; width: 100%; margin-top: 10px; background: color-mix(in srgb, var(--color-paper) 6%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent); border-radius: 12px; padding: 14px 20px; cursor: pointer; transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out); }
+      .wlv-hero:hover { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+      .wlv-hero:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+      .wlv-hn { font-family: var(--font-serif); font-weight: 700; font-size: 2.6rem; line-height: 1; color: var(--color-paper); }
+      .wlv-hl { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: color-mix(in srgb, var(--color-paper) 70%, transparent); white-space: nowrap; }
+      .wlv-tally { display: flex; flex: 1; flex-wrap: wrap; gap: 5px 9px; justify-content: center; }
+      .wlv-tg { display: inline-flex; gap: 3px; }
+      .wlv-tally i { width: 3px; height: 20px; border-radius: 2px; background: color-mix(in srgb, var(--color-accent) 50%, var(--color-paper)); animation: wlvpulse 3.2s ease-in-out infinite; }
+      @keyframes wlvpulse { 0%, 100% { background: color-mix(in srgb, var(--color-accent) 42%, var(--color-paper)); } 45% { background: var(--color-accent); } }
+      .wlv-cue { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent); white-space: nowrap; }
+      @media (max-width: 640px) { .wlv-hero { flex-wrap: wrap; gap: 12px; } .wlv-tally { flex-basis: 100%; justify-content: flex-start; } }
+      @media (prefers-reduced-motion: reduce) { .wlv-tally i { animation: none; } }
+      /* EU companies stand out inside the modal */
+      .wl-co.eu { background: color-mix(in srgb, var(--color-accent) 10%, var(--color-paper)); border-color: color-mix(in srgb, var(--color-accent) 42%, transparent); }
+      .wl-co em { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-muted); margin-left: 5px; }
+      .wl-co.eu em { color: var(--color-accent); }
+      .wl-excl { font-family: var(--font-mono); font-size: 11px; color: var(--color-muted); margin-top: 16px; line-height: 1.5; }
+      .wl-excl b { color: var(--color-ink); }
+      /* v2: center the modal in the viewport so it pops where you clicked, not at the page bottom */
+      .wl-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(940px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow-y: auto; margin: 0; z-index: 50; }
+      @media (prefers-reduced-motion: reduce) { .cov-bar::after { animation: none; display: none; } }
+    </style>
+  </body>
+</html>

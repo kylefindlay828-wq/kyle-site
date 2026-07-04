@@ -1,9 +1,6 @@
 ---
 const links = [
-  { id: 'gtm-radar', label: 'GTM Radar' },
-  { id: 'signals', label: 'Signals' },
-  { id: 'workflows', label: 'Workflows' },
-  { id: 'how', label: 'How it works' },
+  { id: 'gtm-radar', label: 'GTM Radar V1' },
   { id: 'about', label: 'About' },
 ];
 ---
@@ -15,17 +12,16 @@ const links = [
       <ul id="nav-list" class="hidden sm:flex gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted
                                absolute sm:static top-full left-0 right-0 bg-paper sm:bg-transparent border-b sm:border-0 border-rule
                                flex-col sm:flex-row p-6 sm:p-0">
-        {links.map((l) => (
-          <li>
-            <a href={`#${l.id}`} data-nav={l.id} class="nav-link block pb-0.5 border-b-2 border-transparent hover:text-ink hover:border-accent transition">
-              {l.label}
-            </a>
-          </li>
-        ))}
+        <li>
+          <span class="ver-toggle">
+            <a href="/" class="ver ver-v1">GTM Radar V1</a>
+            <a href="/radar-v2" class="ver ver-v2"><span class="v2-dot" aria-hidden="true"></span>GTM Radar V2</a>
+          </span>
+        </li>
+        <li>
+          <a href="/about" class="ver-solo">About &amp; Contact</a>
+        </li>
       </ul>
-      <a href="#contact" class="cta-pill inline-flex items-center px-4 py-2 bg-accent text-[10.5px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition shrink-0">
-        Contact
-      </a>
       <button id="nav-toggle" class="sm:hidden text-ink text-xl shrink-0" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -73,3 +69,23 @@ const links = [
   );
   sections.forEach((s) => obs.observe(s));
 </script>
+
+<style>
+  /* segmented V1 | V2 toggle — two versions, one control */
+  .ver-toggle { display: inline-flex; align-items: stretch; border: 1px solid var(--color-rule); border-radius: 999px; overflow: hidden; }
+  .ver { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out); }
+  .ver-v1 { color: var(--color-ink); }
+  .ver-v1:hover { background: color-mix(in srgb, var(--color-ink) 7%, transparent); color: var(--color-ink); }
+  .ver-v2 { color: var(--color-on-accent); background: var(--color-accent); }
+  .ver-v2:hover { color: var(--color-on-accent); opacity: 0.92; }
+  /* About & Contact — matched pill, in line with the version toggle */
+  .ver-solo { display: inline-flex; align-items: center; padding: 6px 13px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink); border: 1px solid var(--color-rule); border-radius: 999px; transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out); }
+  .ver-solo:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .v2-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-on-accent); box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-on-accent) 70%, transparent); animation: v2pulse 2s ease-out infinite; }
+  @keyframes v2pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-on-accent) 55%, transparent); }
+    70% { box-shadow: 0 0 0 6px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { .v2-dot { animation: none; } }
+</style>

@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import About from '../components/About.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const title = 'About & Contact — Kyle Findlay';
+const description = 'Kyle Findlay — seven years owning the operator layer behind high-stakes client programs, now building AI-assisted GTM intelligence workflows. Get in touch.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    </style>
+  </head>
+  <body class="bg-paper text-ink min-h-screen">
+    <Nav />
+    <main class="max-w-content mx-auto px-6">
+      <About />
+      <FinalCta />
+    </main>
+
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('[data-reveal]');
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+        els.forEach((el) => obs.observe(el));
+      }
+    </script>
+  </body>
+</html>
