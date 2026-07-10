@@ -15,16 +15,16 @@ const steps = [
   { n: '04', h: 'Deploy', b: 'Route into higher-value roles or internal AI workflow capacity.' },
 ];
 
-const signals = ['workflow judgment', 'systems thinking', 'communication', 'execution', 'agency', 'tool curiosity', 'process improvement', 'comfort with ambiguity', 'ability to learn by building'];
-const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped projects without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
+const signals = ['workflow judgment', 'systems thinking', 'communication', 'execution', 'agency', 'tool curiosity', 'process improvement', 'comfort with ambiguity', 'learns by building'];
+const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
 
 const buildInto = [
-  { h: 'AI-augmented account operator', from: 'account manager / account director / client services', builds: 'account intelligence, renewal-risk detection, meeting synthesis, personalized follow-up, strategic briefs' },
-  { h: 'AI workflow operator', from: 'project manager / operations lead / coordinator', builds: 'workflow automation, status synthesis, dependency mapping, implementation playbooks' },
-  { h: 'AI-enabled customer operator', from: 'customer success / support lead / onboarding specialist', builds: 'churn signals, playbooks, customer summaries, onboarding automation, support workflows' },
-  { h: 'AI GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: 'research automation, CRM hygiene, lead scoring, reporting, outbound systems' },
-  { h: 'AI product/delivery operator', from: 'product ops / delivery manager / QA analyst / technical project coordinator', builds: 'specs, QA workflows, feedback synthesis, implementation tracking, eval workflows' },
-  { h: 'AI admin/workflow operator', from: 'paralegal / compliance analyst / healthcare admin / finance ops / HR coordinator', builds: 'intake routing, document workflows, compliance checklists, summary systems, process tracking' },
+  { h: 'AI-augmented account operator', from: 'account manager / account director / client services', builds: ['account intelligence', 'renewal-risk detection', 'meeting synthesis', 'personalized follow-up', 'strategic briefs'] },
+  { h: 'AI workflow operator', from: 'project manager / operations lead / coordinator', builds: ['workflow automation', 'status synthesis', 'dependency mapping', 'implementation playbooks'] },
+  { h: 'AI-enabled customer operator', from: 'customer success / support lead / onboarding specialist', builds: ['churn signals', 'playbooks', 'customer summaries', 'onboarding automation', 'support workflows'] },
+  { h: 'AI GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: ['research automation', 'CRM hygiene', 'lead scoring', 'reporting', 'outbound systems'] },
+  { h: 'AI product/delivery operator', from: 'product ops / delivery manager / QA analyst / technical project coordinator', builds: ['specs', 'QA workflows', 'feedback synthesis', 'implementation tracking', 'eval workflows'] },
+  { h: 'AI admin/workflow operator', from: 'paralegal / compliance analyst / healthcare admin / finance ops / HR coordinator', builds: ['intake routing', 'document workflows', 'compliance checklists', 'summary systems', 'process tracking'] },
 ];
 
 const clusters = [
@@ -83,7 +83,7 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
       .ss-dark a:not(.cta-pill) { color: var(--color-paper); }
       .ss-dark a:not(.cta-pill):hover { color: var(--color-accent); }
 
-      /* subtle film-grain texture, dependency-free (inline SVG turbulence) */
+      /* subtle film-grain texture (inline SVG turbulence) */
       .ss-noise { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
@@ -99,14 +99,33 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
       .ss-frame > .ss-inner { border-radius: 17px; background: var(--color-ink); height: 100%; }
       .ss-soft { box-shadow: 0 44px 100px -55px rgba(0,0,0,0.95); }
       .ss-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.028);
-        border-radius: 16px; transition: border-color .2s var(--ease-out), background-color .2s var(--ease-out); }
-      .ss-card:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+        border-radius: 16px; transition: border-color .2s var(--ease-out), background-color .2s var(--ease-out), transform .2s var(--ease-out); }
+      .ss-card:hover { border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
         background: rgba(255,255,255,0.05); }
-      .ss-pill { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.14);
-        border-radius: 999px; padding: 7px 13px; font-family: var(--font-mono); font-size: 12px;
-        letter-spacing: 0.01em; color: var(--color-paper); background: rgba(255,255,255,0.02);
-        transition: border-color .2s var(--ease-out); }
-      .ss-pill:hover { border-color: color-mix(in srgb, var(--color-accent) 60%, transparent); }
+
+      /* small square-ish tiles (replaces bland ovals) */
+      .ss-tile { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.02); border-radius: 10px; padding: 9px 12px; font-size: 13px;
+        line-height: 1.2; color: color-mix(in srgb, var(--color-paper) 78%, transparent); }
+      .ss-tile-bright { border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 8%, rgba(255,255,255,0.02));
+        border-radius: 10px; padding: 9px 12px; font-size: 13.5px; line-height: 1.25; color: var(--color-paper);
+        display: flex; align-items: center; gap: 9px; }
+      .ss-cap { display: inline-flex; align-items: center; border-radius: 8px; padding: 5px 9px;
+        font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.01em;
+        border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+        color: color-mix(in srgb, var(--color-paper) 92%, transparent); }
+
+      /* system strip — Deploy gets the strongest treatment */
+      .ss-step-strong { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 13%, rgba(255,255,255,0.02));
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 25%, transparent),
+          0 30px 70px -48px color-mix(in srgb, var(--color-accent) 90%, transparent); }
+
+      /* before panel — deliberately dim + flat */
+      .ss-before { border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.012);
+        border-radius: 16px; opacity: 0.7; filter: saturate(0.6); }
     </style>
     <Analytics />
   </head>
@@ -119,7 +138,6 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
       <section class="relative pt-10 md:pt-16 pb-14 md:pb-16 border-b border-white/10">
         <div class="ss-glow" style="top:-30px; right:-10px; width:460px; height:460px;"></div>
         <div class="relative grid grid-cols-1 md:grid-cols-2 md:grid-rows-[auto_auto] gap-7 md:gap-x-12 md:items-center">
-          <!-- text -->
           <div class="order-1 md:col-start-1 md:row-start-1 hero-rise">
             <p class="kicker">Kyle Findlay · Founder thesis</p>
             <h1 class="font-serif text-paper text-6xl md:text-7xl leading-none mt-4 tracking-tight lowercase">/skillshift</h1>
@@ -133,7 +151,6 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
             </p>
           </div>
 
-          <!-- video -->
           <div class="order-2 md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
             <div class="ss-frame ss-soft">
               <div class="ss-inner">
@@ -152,14 +169,9 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
             </div>
           </div>
 
-          <!-- buttons -->
           <div class="order-3 md:col-start-1 md:row-start-2 flex flex-wrap gap-3">
             <a href="#contact" class="cta-pill inline-flex items-center px-6 py-3 bg-accent text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition">
               Contact Kyle
-            </a>
-            <!-- TODO: replace href with thesis-memo PDF -->
-            <a href="#thesis-memo" class="inline-flex items-center px-6 py-3 border border-white/15 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full text-paper hover:border-accent hover:text-accent transition">
-              Read thesis
             </a>
           </div>
         </div>
@@ -167,18 +179,21 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
       <!-- 2 · SYSTEM STRIP -->
       <section class="py-12 md:py-14 border-b border-white/10" data-reveal>
-        <p class="kicker mb-6">The system</p>
-        <div class="flex flex-col md:flex-row md:items-stretch gap-3">
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">The system</p>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:items-stretch gap-3 mt-6">
           {steps.map((s, i) => (
             <>
-              <div class="ss-card flex-1 p-5 md:p-6">
-                <div class="flex items-center justify-between">
-                  <span class="font-mono text-[12px] uppercase tracking-[0.12em] text-accent">{s.h}</span>
-                  <span class="font-mono text-[11px] text-paper/35">{s.n}</span>
+              <div class:list={["ss-card flex-1 p-6 flex flex-col", i === 3 && "ss-step-strong"]}>
+                <div class="flex items-baseline justify-between">
+                  <span class:list={["font-serif text-2xl", i === 3 ? "text-accent" : "text-paper"]}>{s.h}</span>
+                  <span class:list={["font-mono text-[13px]", i === 3 ? "text-accent/70" : "text-paper/30"]}>{s.n}</span>
                 </div>
-                <p class="text-[14px] text-paper/75 leading-snug mt-3">{s.b}</p>
+                <p class="text-[13.5px] text-paper/70 leading-snug mt-4">{s.b}</p>
               </div>
-              {i < steps.length - 1 && <div class="hidden md:flex items-center text-accent" aria-hidden="true">→</div>}
+              {i < steps.length - 1 && <div class="hidden lg:flex items-center text-accent text-lg" aria-hidden="true">→</div>}
             </>
           ))}
         </div>
@@ -186,18 +201,25 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
       <!-- 3 · WHO WE SOURCE -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">Who we source</p>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Who we source</p>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+          <!-- signals (neutral / darker) -->
           <div class="ss-card p-6 md:p-7">
-            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">Operator signals</p>
+            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-paper/50">Operator signals</p>
             <div class="flex flex-wrap gap-2 mt-5">
-              {signals.map((t) => <span class="ss-pill">{t}</span>)}
+              {signals.map((t) => <span class="ss-tile">{t}</span>)}
             </div>
           </div>
-          <div class="ss-card p-6 md:p-7">
-            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">Evidence we look for</p>
-            <div class="flex flex-wrap gap-2 mt-5">
-              {evidence.map((t) => <span class="ss-pill">{t}</span>)}
+          <!-- evidence (brighter / concrete) -->
+          <div class="ss-card p-6 md:p-7" style="border-color: color-mix(in srgb, var(--color-accent) 22%, transparent);">
+            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-accent">Evidence we look for</p>
+            <div class="flex flex-col gap-2 mt-5">
+              {evidence.map((t) => (
+                <span class="ss-tile-bright"><span class="text-accent" aria-hidden="true">✓</span>{t}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -205,65 +227,82 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
       <!-- 4 · WHAT WE BUILD THEM INTO -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">What we build them into</p>
-        <p class="text-[13px] text-paper/45 italic mt-2 max-w-[560px]">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">What we build them into</p>
+        </div>
+        <p class="text-[13px] text-paper/45 italic mt-3 max-w-[560px]">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
           {buildInto.map((c) => (
             <div class="ss-card p-6 flex flex-col">
-              <h3 class="font-serif text-paper text-[1.35rem] leading-snug">{c.h}</h3>
+              <h3 class="font-serif text-paper text-[1.4rem] leading-tight">{c.h}</h3>
               <div class="mt-4">
-                <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-paper/40">From</p>
-                <p class="text-[13.5px] text-paper/70 mt-1 leading-snug">{c.from}</p>
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-paper/40">From</p>
+                <p class="text-[13px] text-paper/55 mt-1.5 leading-snug">{c.from}</p>
               </div>
-              <div class="mt-3.5">
-                <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-accent/80">Builds</p>
-                <p class="text-[13.5px] text-paper/80 mt-1 leading-snug">{c.builds}</p>
+              <div class="flex items-center gap-2 my-4 text-accent" aria-hidden="true">
+                <span class="h-px flex-1 bg-white/10"></span>
+                <span class="font-mono text-[10px] uppercase tracking-[0.14em]">builds ↓</span>
+                <span class="h-px flex-1 bg-white/10"></span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                {c.builds.map((b) => <span class="ss-cap">{b}</span>)}
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <!-- 5 · THE ROLE UNIVERSE -->
+      <!-- 5 · ROLE UNIVERSE -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">The role universe</p>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">The role universe</p>
+        </div>
         <h2 class="font-serif text-paper text-3xl md:text-4xl leading-[1.14] mt-3 max-w-[640px]">
           A large, underserved talent market.
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
           {clusters.map((c) => (
-            <div class="ss-card p-6">
-              <p class="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">{c.h}</p>
-              <p class="text-[13.5px] text-paper/65 leading-relaxed mt-3">{c.roles}</p>
+            <div class="ss-card p-5 relative overflow-hidden">
+              <span class="absolute top-0 left-0 h-[3px] w-full" style="background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 75%, transparent), transparent);"></span>
+              <p class="font-serif text-paper text-lg mt-1.5">{c.h}</p>
+              <p class="text-[12.5px] text-paper/55 leading-relaxed mt-2.5">{c.roles}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <!-- 6 · PROOF-OF-WORK -->
+      <!-- 6 · NOT CLASSES. PROOF-OF-WORK. -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">Not classes. Proof-of-work.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
-          <div class="ss-card p-6 md:p-7">
-            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/40">Before</p>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Not classes. Proof-of-work.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1.05fr] gap-4 md:gap-3 items-center mt-7">
+          <!-- BEFORE (dim) -->
+          <div class="ss-before p-6 md:p-7">
+            <p class="font-mono text-[12px] uppercase tracking-[0.14em] text-paper/40">Before</p>
             <ul class="mt-4 space-y-2.5">
               {before.map((t) => (
-                <li class="flex gap-3 items-center text-[15px] text-paper/50">
-                  <span class="text-paper/30" aria-hidden="true">✕</span>{t}
-                </li>
+                <li class="flex gap-2.5 items-center text-[15px] text-paper/45"><span class="text-paper/25" aria-hidden="true">✕</span>{t}</li>
               ))}
             </ul>
           </div>
-          <div class="ss-frame ss-soft">
-            <div class="ss-inner p-6 md:p-7">
-              <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">After</p>
-              <ul class="mt-4 space-y-2.5">
-                {after.map((t) => (
-                  <li class="flex gap-3 items-center text-[15px] text-paper/85">
-                    <span class="text-accent" aria-hidden="true">◆</span>{t}
-                  </li>
-                ))}
-              </ul>
+          <!-- arrow -->
+          <div class="flex justify-center text-accent text-3xl rotate-90 md:rotate-0" aria-hidden="true">→</div>
+          <!-- AFTER (bright) -->
+          <div class="relative">
+            <div class="ss-glow" style="inset:8% 4%;"></div>
+            <div class="ss-frame ss-soft relative">
+              <div class="ss-inner p-6 md:p-7">
+                <p class="font-mono text-[12px] uppercase tracking-[0.14em] text-accent">After</p>
+                <ul class="mt-4 space-y-2.5">
+                  {after.map((t) => (
+                    <li class="flex gap-2.5 items-center text-[15px] text-paper"><span class="text-accent" aria-hidden="true">◆</span>{t}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -274,34 +313,38 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
       <!-- 7 · WHY ME -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">Why me</p>
-        <div class="ss-card p-7 md:p-9 mt-5 max-w-[900px]">
-          <p class="text-[17px] md:text-[18px] text-paper/80 leading-relaxed max-w-[640px]">
-            My background is GTM execution, project management, client delivery, and workflow-heavy
-            operations.
-          </p>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 mt-8">
-            {stats.map((s, i) => (
-              <div class={i > 0 ? 'md:border-l md:border-white/10 md:pl-5' : ''}>
-                <p class="font-serif text-3xl md:text-[2.1rem] leading-none text-paper">{s.n}</p>
-                <p class="font-mono text-[11px] uppercase tracking-[0.06em] text-paper/50 mt-2">{s.l}</p>
-              </div>
-            ))}
-          </div>
-          <p class="text-[16px] text-paper/70 leading-relaxed mt-8 max-w-[640px]">
-            I build close to customers, test fast, and turn messy workflows into shipped systems.
-          </p>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Why me</p>
         </div>
+        <p class="text-[16px] md:text-[17px] text-paper/75 leading-relaxed mt-5 max-w-[640px]">
+          My background is GTM execution, project management, client delivery, and workflow-heavy
+          operations.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7 max-w-[820px]">
+          {stats.map((s) => (
+            <div class="ss-card p-5">
+              <p class="font-serif text-[2rem] md:text-[2.3rem] leading-none text-paper">{s.n}</p>
+              <p class="font-mono text-[10.5px] uppercase tracking-[0.07em] text-paper/50 mt-2.5">{s.l}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-[16px] text-paper/70 leading-relaxed mt-7 max-w-[640px]">
+          I build close to customers, test fast, and turn messy workflows into shipped systems.
+        </p>
       </section>
 
       <!-- 8 · LOOKING TO MEET -->
       <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <p class="kicker">Looking to meet</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3.5 mt-7 max-w-[880px]">
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Looking to meet</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-6 max-w-[900px]">
           {looking.map((item) => (
-            <div class="flex gap-3 items-start">
-              <span class="text-accent mt-1.5 text-xs" aria-hidden="true">◆</span>
-              <p class="text-[16px] text-paper/80 leading-relaxed">{item}</p>
+            <div class="ss-card px-4 py-3.5 flex gap-3 items-center">
+              <span class="text-accent shrink-0" aria-hidden="true">→</span>
+              <p class="text-[15px] text-paper/85 leading-snug">{item}</p>
             </div>
           ))}
         </div>
@@ -309,25 +352,32 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
       <!-- 9 · CONTACT -->
       <section id="contact" class="py-14 md:py-18 scroll-mt-20" data-reveal>
-        <p class="kicker">Contact</p>
-        <div class="ss-frame ss-soft mt-5 max-w-[720px]">
-          <div class="ss-inner p-6 md:p-8">
-            <div class="grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-6 md:gap-8 items-center">
-              <div class="rounded-xl overflow-hidden border border-white/10 w-[130px] sm:w-[150px] h-[168px] sm:h-[190px]">
-                <Image src={headshot} alt="Kyle Findlay" width={400} height={520} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
-              </div>
-              <div>
-                <p class="font-serif font-bold text-2xl md:text-3xl text-paper">Kyle Findlay</p>
-                <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-paper/55 mt-2">San Francisco / Los Angeles</p>
-                <p class="font-mono text-[14px] text-paper/80 mt-4">{email}</p>
-                <div class="mt-5 flex flex-wrap items-center gap-3">
-                  <button data-copy-email data-email={email} type="button" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-[12px] font-mono font-semibold rounded-full hover:opacity-90 transition cursor-pointer">
-                    <span class="ce-text">Copy email</span>
-                    <span aria-hidden="true">⧉</span>
-                  </button>
-                  <a href={linkedin} target="_blank" rel="noopener" class="inline-flex items-center px-4 py-2.5 border border-white/15 text-[12px] font-mono font-semibold rounded-full text-paper hover:border-accent hover:text-accent transition">
-                    LinkedIn ↗
-                  </a>
+        <div class="flex items-center gap-3">
+          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Contact</p>
+        </div>
+        <div class="relative mt-6 max-w-[760px]">
+          <div class="ss-glow" style="inset: 18% 28%;"></div>
+          <div class="ss-frame ss-soft relative">
+            <div class="ss-inner p-6 md:p-8">
+              <div class="grid grid-cols-1 sm:grid-cols-[168px_1fr] gap-6 md:gap-9 items-center">
+                <div class="rounded-2xl overflow-hidden border border-white/10 w-[140px] sm:w-[168px] h-[176px] sm:h-[210px]">
+                  <Image src={headshot} alt="Kyle Findlay" width={420} height={540} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+                </div>
+                <div>
+                  <p class="font-serif font-bold text-3xl md:text-4xl text-paper leading-none">Kyle Findlay</p>
+                  <p class="font-mono text-[12px] uppercase tracking-[0.08em] text-paper/55 mt-3">San Francisco / Los Angeles</p>
+                  <div class="h-px bg-white/10 my-5"></div>
+                  <p class="font-mono text-[14.5px] text-paper/85">{email}</p>
+                  <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <button data-copy-email data-email={email} type="button" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-[12px] font-mono font-semibold uppercase tracking-[0.08em] rounded-full hover:opacity-90 transition cursor-pointer">
+                      <span class="ce-text">Copy email</span>
+                      <span aria-hidden="true">⧉</span>
+                    </button>
+                    <a href={linkedin} target="_blank" rel="noopener" class="inline-flex items-center px-5 py-2.5 border border-white/15 text-[12px] font-mono font-semibold uppercase tracking-[0.08em] rounded-full text-paper hover:border-accent hover:text-accent transition">
+                      LinkedIn ↗
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -347,7 +397,6 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
     </main>
 
     <script>
-      // scroll-reveal for [data-reveal] sections
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const els = document.querySelectorAll('[data-reveal]');
       if (reduce || !('IntersectionObserver' in window)) {
@@ -359,7 +408,6 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
         els.forEach((el) => obs.observe(el));
       }
 
-      // "Copy email" buttons — copy the address to the clipboard, no mail app needed.
       document.querySelectorAll('[data-copy-email]').forEach((btn) => {
         const label = btn.querySelector('.ce-text');
         const original = label?.textContent ?? '';
