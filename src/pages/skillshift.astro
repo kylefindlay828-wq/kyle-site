@@ -28,10 +28,10 @@ const buildInto = [
 ];
 
 const clusters = [
-  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, operations managers, business operations, chiefs of staff, executive assistants, implementation specialists, business analysts' },
+  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, executive assistants, implementation specialists, business analysts' },
   { h: 'Customer / account', roles: 'account managers, account directors, customer success managers, client services, onboarding specialists, renewals managers, partnerships managers' },
   { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement' },
-  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts, technical project coordinators' },
+  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts' },
   { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators' },
 ];
 
@@ -76,324 +76,314 @@ const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
     <meta name="twitter:image" content="https://kylefindlay.xyz/og-about.png" />
     <style>
       html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-      /* global.css hard-codes body bg + heading/link colors and beats Tailwind utilities.
-         Class selectors win the cascade — scoped to this page only. */
-      body.ss-body { background: oklch(23% 0.006 60); color: var(--color-paper); }
-      .ss-dark :is(h1, h2, h3, h4) { color: var(--color-paper); }
-      .ss-dark a:not(.cta-pill) { color: var(--color-paper); }
-      .ss-dark a:not(.cta-pill):hover { color: var(--color-accent); }
 
-      /* subtle film-grain texture (inline SVG turbulence) */
-      .ss-noise { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      /* ── light "sky-lab" theme, scoped to this page ────────────────── */
+      body.sky-body { color: oklch(42% 0.02 258); background-color: oklch(97.6% 0.006 250); }
+      .sky-ink :is(h1, h2, h3, h4) { color: oklch(23% 0.025 262); }
+      .sky-ink a:not(.cta-pill) { color: oklch(23% 0.025 262); }
+      .sky-ink a:not(.cta-pill):hover { color: var(--color-accent); }
+      .sky-strong { color: oklch(23% 0.025 262); }
+      .sky-mut { color: oklch(46% 0.02 258); }
+      .sky-faint { color: oklch(57% 0.02 255); }
 
-      /* premium treatments — all dependency-free */
-      .ss-glow { position: absolute; z-index: 0; pointer-events: none; border-radius: 9999px;
-        filter: blur(70px); opacity: 0.4;
-        background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, transparent), transparent 62%); }
-      .ss-frame { position: relative; border-radius: 18px; padding: 1px;
-        background: linear-gradient(155deg,
-          color-mix(in srgb, var(--color-accent) 55%, transparent) 0%,
-          color-mix(in srgb, #ffffff 15%, transparent) 34%,
-          rgba(255,255,255,0.02) 72%); }
-      .ss-frame > .ss-inner { border-radius: 17px; background: var(--color-ink); height: 100%; }
-      .ss-soft { box-shadow: 0 44px 100px -55px rgba(0,0,0,0.95); }
-      .ss-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.028);
-        border-radius: 16px; transition: border-color .2s var(--ease-out), background-color .2s var(--ease-out), transform .2s var(--ease-out); }
-      .ss-card:hover { border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
-        background: rgba(255,255,255,0.05); }
+      /* hero sky: soft atmospheric gradient + abstract cloud texture (fractal noise) */
+      .sky-hero { position: relative; overflow: hidden;
+        background:
+          radial-gradient(72% 55% at 16% -5%, rgba(255,255,255,0.96), transparent 60%),
+          radial-gradient(60% 62% at 90% 8%, rgba(196,220,243,0.8), transparent 60%),
+          linear-gradient(180deg, oklch(90% 0.042 236) 0%, oklch(95% 0.016 244) 56%, oklch(97.6% 0.006 250) 100%); }
+      .sky-clouds { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.38; mix-blend-mode: soft-light;
+        background-size: 760px 540px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='540'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009 0.014' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 -0.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"); }
 
-      /* small square-ish tiles (replaces bland ovals) */
-      .ss-tile { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.02); border-radius: 10px; padding: 9px 12px; font-size: 13px;
-        line-height: 1.2; color: color-mix(in srgb, var(--color-paper) 78%, transparent); }
-      .ss-tile-bright { border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
-        background: color-mix(in srgb, var(--color-accent) 8%, rgba(255,255,255,0.02));
-        border-radius: 10px; padding: 9px 12px; font-size: 13.5px; line-height: 1.25; color: var(--color-paper);
-        display: flex; align-items: center; gap: 9px; }
-      .ss-cap { display: inline-flex; align-items: center; border-radius: 8px; padding: 5px 9px;
+      /* surfaces */
+      .sky-card { background: #fff; border: 1px solid oklch(91% 0.012 250); border-radius: 16px;
+        box-shadow: 0 1px 2px rgba(24,36,62,0.05), 0 16px 34px -24px rgba(24,36,62,0.22);
+        transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out), transform .2s var(--ease-out); }
+      .sky-card:hover { border-color: color-mix(in srgb, var(--color-accent) 45%, oklch(91% 0.012 250));
+        box-shadow: 0 2px 4px rgba(24,36,62,0.06), 0 22px 44px -26px rgba(24,36,62,0.28); }
+      .sky-panel { background: rgba(255,255,255,0.9); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.9);
+        border-radius: 22px; box-shadow: 0 2px 8px rgba(24,36,62,0.06), 0 40px 80px -40px rgba(24,36,62,0.34); }
+
+      .sky-tile { display: inline-flex; align-items: center; border: 1px solid oklch(91% 0.012 250);
+        background: oklch(97% 0.006 250); border-radius: 10px; padding: 8px 12px; font-size: 13px; line-height: 1.2;
+        color: oklch(36% 0.02 258); }
+      .sky-tile-bright { display: flex; align-items: center; gap: 9px; border-radius: 10px; padding: 9px 12px;
+        font-size: 13.5px; line-height: 1.25; color: oklch(32% 0.04 44);
+        border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 7%, #fff); }
+      .sky-cap { display: inline-flex; align-items: center; border-radius: 8px; padding: 5px 9px;
         font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.01em;
-        border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
-        background: color-mix(in srgb, var(--color-accent) 12%, transparent);
-        color: color-mix(in srgb, var(--color-paper) 92%, transparent); }
+        border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 9%, #fff);
+        color: color-mix(in srgb, var(--color-accent) 78%, #000); }
 
-      /* system strip — Deploy gets the strongest treatment */
-      .ss-step-strong { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
-        background: color-mix(in srgb, var(--color-accent) 13%, rgba(255,255,255,0.02));
-        box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 25%, transparent),
-          0 30px 70px -48px color-mix(in srgb, var(--color-accent) 90%, transparent); }
+      .sky-step-strong { border-color: color-mix(in srgb, var(--color-accent) 45%, transparent) !important;
+        background: color-mix(in srgb, var(--color-accent) 9%, #fff);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 22%, transparent),
+          0 20px 40px -26px color-mix(in srgb, var(--color-accent) 70%, transparent); }
 
-      /* before panel — deliberately dim + flat */
-      .ss-before { border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.012);
-        border-radius: 16px; opacity: 0.7; filter: saturate(0.6); }
+      .sky-before { background: oklch(95.5% 0.008 250); border: 1px solid oklch(91% 0.01 250); border-radius: 16px;
+        filter: saturate(0.55); }
+      .sky-after { border-radius: 16px; border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+        background: linear-gradient(160deg, color-mix(in srgb, var(--color-accent) 13%, #fff), #fff 70%);
+        box-shadow: 0 26px 56px -34px color-mix(in srgb, var(--color-accent) 55%, transparent); }
+
+      /* dark video module, elevated over the sky */
+      .sky-video { border-radius: 18px; border: 1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(165deg, oklch(28% 0.02 262), oklch(22% 0.02 264));
+        box-shadow: 0 30px 70px -34px rgba(24,36,62,0.5); }
     </style>
     <Analytics />
   </head>
-  <body class="ss-body text-paper min-h-screen">
-    <div class="ss-noise" aria-hidden="true"></div>
+  <body class="sky-body min-h-screen">
     <Nav />
-    <main class="ss-dark relative z-[1] max-w-content mx-auto px-6 overflow-x-clip">
+    <main class="sky-ink">
 
-      <!-- 1 · HERO -->
-      <section class="relative pt-10 md:pt-16 pb-14 md:pb-16 border-b border-white/10">
-        <div class="ss-glow" style="top:-30px; right:-10px; width:460px; height:460px;"></div>
-        <div class="relative grid grid-cols-1 md:grid-cols-2 md:grid-rows-[auto_auto] gap-7 md:gap-x-12 md:items-center">
-          <div class="order-1 md:col-start-1 md:row-start-1 hero-rise">
-            <p class="kicker">Kyle Findlay · Founder thesis</p>
-            <h1 class="font-serif text-paper text-6xl md:text-7xl leading-none mt-4 tracking-tight lowercase">/skillshift</h1>
-            <p class="font-serif text-xl md:text-2xl text-paper leading-snug mt-5 max-w-[500px]">
-              Sources, validates, sharpens, and deploys AI-native operators.
-            </p>
-            <p class="text-[15px] md:text-[16px] text-paper/65 leading-relaxed mt-4 max-w-[520px]">
-              AI is creating new workflow roles between business teams and software systems. The hard
-              part is identifying who has the judgment, agency, and workflow instinct to become
-              valuable in those roles.
-            </p>
+      <!-- 1 · HERO (sky) -->
+      <section class="sky-hero">
+        <div class="sky-clouds"></div>
+        <div class="relative max-w-content mx-auto px-6 pt-12 md:pt-16 pb-24 md:pb-32">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="hero-rise">
+              <p class="font-mono text-[12.5px] uppercase tracking-[0.16em] text-accent">Kyle Findlay · Founder thesis</p>
+              <h1 class="font-sans font-extrabold italic text-6xl md:text-8xl leading-[0.92] tracking-tight mt-4 lowercase sky-strong">/skillshift</h1>
+              <p class="font-sans font-semibold text-xl md:text-[1.65rem] leading-snug mt-6 max-w-[500px] sky-strong">
+                Sources, validates, sharpens, and deploys AI-native operators.
+              </p>
+              <p class="text-[16px] md:text-[17px] leading-relaxed mt-3 max-w-[500px] sky-mut">
+                Finding the people who can operate the next version of work.
+              </p>
+              <p class="font-mono text-[11.5px] uppercase tracking-[0.14em] text-accent mt-5">Not classes. Proof-of-work.</p>
+              <div class="flex flex-wrap gap-3 mt-8">
+                <a href="#contact" class="cta-pill inline-flex items-center px-6 py-3 bg-accent text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition">
+                  Contact Kyle
+                </a>
+              </div>
+            </div>
+
+            <!-- video -->
+            <div class="sky-video group relative aspect-video w-full overflow-hidden">
+              <div class="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                <span class="w-16 h-16 md:w-[70px] md:h-[70px] rounded-full bg-accent flex items-center justify-center shadow-[0_12px_40px_-8px_rgba(0,0,0,0.4)] transition group-hover:scale-105">
+                  <svg viewBox="0 0 24 24" class="w-7 h-7 translate-x-[2px]" fill="var(--color-on-accent)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <div class="text-center">
+                  <p class="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.16em]" style="color: rgba(255,255,255,0.9);">90-second founder thesis</p>
+                  <p class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent mt-1.5">coming soon</p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div class="order-2 md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
-            <div class="ss-frame ss-soft">
-              <div class="ss-inner">
-                <div class="group relative aspect-video w-full overflow-hidden rounded-[17px]">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                    <span class="w-16 h-16 md:w-[70px] md:h-[70px] rounded-full bg-accent flex items-center justify-center shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] transition group-hover:scale-105">
-                      <svg viewBox="0 0 24 24" class="w-7 h-7 translate-x-[2px]" fill="var(--color-on-accent)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                    </span>
-                    <div class="text-center">
-                      <p class="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.16em] text-paper/85">90-second founder thesis</p>
-                      <p class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent/80 mt-1.5">coming soon</p>
-                    </div>
+      <!-- 2 · SYSTEM STRIP (floating panel) -->
+      <section class="relative z-10 max-w-content mx-auto px-6 -mt-16 md:-mt-24">
+        <div class="sky-panel p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">The system</p>
+          </div>
+          <div class="flex flex-col lg:flex-row lg:items-stretch gap-3">
+            {steps.map((s, i) => (
+              <>
+                <div class:list={["sky-card flex-1 p-5 flex flex-col", i === 3 && "sky-step-strong"]}>
+                  <div class="flex items-baseline justify-between">
+                    <span class:list={["font-sans font-bold text-xl", i === 3 ? "text-accent" : "sky-strong"]}>{s.h}</span>
+                    <span class:list={["font-mono text-[13px]", i === 3 ? "text-accent" : "sky-faint"]}>{s.n}</span>
                   </div>
+                  <p class="text-[13.5px] leading-snug mt-3 sky-mut">{s.b}</p>
+                </div>
+                {i < steps.length - 1 && <div class="hidden lg:flex items-center text-accent text-lg" aria-hidden="true">→</div>}
+              </>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div class="max-w-content mx-auto px-6">
+
+        <!-- 3 · WHO WE SOURCE -->
+        <section class="py-16 md:py-20">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">Who we source</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+            <div class="sky-card p-6 md:p-7">
+              <p class="font-mono text-[11px] uppercase tracking-[0.12em] sky-faint">Operator signals</p>
+              <div class="flex flex-wrap gap-2 mt-5">
+                {signals.map((t) => <span class="sky-tile">{t}</span>)}
+              </div>
+            </div>
+            <div class="sky-card p-6 md:p-7" style="border-color: color-mix(in srgb, var(--color-accent) 28%, transparent);">
+              <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-accent">Evidence we look for</p>
+              <div class="flex flex-col gap-2 mt-5">
+                {evidence.map((t) => (
+                  <span class="sky-tile-bright"><span class="text-accent" aria-hidden="true">✓</span>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 · WHAT WE BUILD THEM INTO -->
+        <section class="py-16 md:py-20 border-t" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">What we build them into</p>
+          </div>
+          <p class="text-[13px] italic mt-3 max-w-[560px] sky-faint">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
+            {buildInto.map((c) => (
+              <div class="sky-card p-6 flex flex-col">
+                <h3 class="font-sans font-bold text-[1.25rem] leading-tight sky-strong">{c.h}</h3>
+                <div class="mt-4">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.14em] sky-faint">From</p>
+                  <p class="text-[13px] mt-1.5 leading-snug sky-mut">{c.from}</p>
+                </div>
+                <div class="flex items-center gap-2 my-4 text-accent" aria-hidden="true">
+                  <span class="h-px flex-1" style="background: oklch(90% 0.01 250);"></span>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.14em]">builds ↓</span>
+                  <span class="h-px flex-1" style="background: oklch(90% 0.01 250);"></span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  {c.builds.map((b) => <span class="sky-cap">{b}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- 5 · ROLE UNIVERSE -->
+        <section class="py-16 md:py-20 border-t" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">The role universe</p>
+          </div>
+          <h2 class="font-sans font-bold text-3xl md:text-4xl leading-[1.12] mt-3 max-w-[620px] sky-strong">
+            A large, underserved talent market.
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
+            {clusters.map((c) => (
+              <div class="sky-card p-5 relative overflow-hidden">
+                <span class="absolute top-0 left-0 h-[3px] w-full" style="background: linear-gradient(90deg, var(--color-accent), transparent);"></span>
+                <p class="font-sans font-bold text-lg mt-1.5 sky-strong">{c.h}</p>
+                <p class="text-[12.5px] leading-relaxed mt-2.5 sky-mut">{c.roles}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- 6 · NOT CLASSES. PROOF-OF-WORK. -->
+        <section class="py-16 md:py-20 border-t" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">Not classes. Proof-of-work.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1.05fr] gap-4 md:gap-3 items-center mt-7">
+            <div class="sky-before p-6 md:p-7">
+              <p class="font-mono text-[12px] uppercase tracking-[0.14em] sky-faint">Before</p>
+              <ul class="mt-4 space-y-2.5">
+                {before.map((t) => (
+                  <li class="flex gap-2.5 items-center text-[15px] sky-faint"><span aria-hidden="true" style="opacity:0.5;">✕</span>{t}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="flex justify-center text-accent text-3xl rotate-90 md:rotate-0" aria-hidden="true">→</div>
+            <div class="sky-after p-6 md:p-7">
+              <p class="font-mono text-[12px] uppercase tracking-[0.14em] text-accent">After</p>
+              <ul class="mt-4 space-y-2.5">
+                {after.map((t) => (
+                  <li class="flex gap-2.5 items-center text-[15px] sky-strong"><span class="text-accent" aria-hidden="true">◆</span>{t}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <p class="font-sans font-semibold text-xl md:text-2xl leading-snug pl-5 mt-8 max-w-[720px] sky-strong" style="border-left: 2px solid var(--color-accent);">
+            The filter is not interest in AI. The filter is whether someone can improve a real workflow.
+          </p>
+        </section>
+
+        <!-- 7 · WHY ME -->
+        <section class="py-16 md:py-20 border-t" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">Why me</p>
+          </div>
+          <p class="text-[16px] md:text-[17px] leading-relaxed mt-5 max-w-[640px] sky-mut">
+            My background is GTM execution, project management, client delivery, and workflow-heavy operations.
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7 max-w-[820px]">
+            {stats.map((s) => (
+              <div class="sky-card p-5">
+                <p class="font-sans font-extrabold text-[2rem] md:text-[2.3rem] leading-none sky-strong">{s.n}</p>
+                <p class="font-mono text-[10.5px] uppercase tracking-[0.07em] mt-2.5 sky-faint">{s.l}</p>
+              </div>
+            ))}
+          </div>
+          <p class="text-[16px] leading-relaxed mt-7 max-w-[640px] sky-mut">
+            I build close to customers, test fast, and turn messy workflows into shipped systems.
+          </p>
+        </section>
+
+        <!-- 8 · LOOKING TO MEET -->
+        <section class="py-16 md:py-20 border-t" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">Looking to meet</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-6 max-w-[900px]">
+            {looking.map((item) => (
+              <div class="sky-card px-4 py-3.5 flex gap-3 items-center">
+                <span class="text-accent shrink-0" aria-hidden="true">→</span>
+                <p class="text-[15px] leading-snug sky-strong">{item}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- 9 · CONTACT -->
+        <section id="contact" class="py-16 md:py-20 border-t scroll-mt-20" style="border-color: oklch(92% 0.01 250);">
+          <div class="flex items-center gap-3">
+            <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
+            <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">Contact</p>
+          </div>
+          <div class="sky-card mt-6 max-w-[760px] p-6 md:p-8">
+            <div class="grid grid-cols-1 sm:grid-cols-[176px_1fr] gap-6 md:gap-9 items-center">
+              <div class="rounded-2xl overflow-hidden w-[148px] sm:w-[176px] h-[186px] sm:h-[220px]" style="border: 1px solid oklch(90% 0.012 250);">
+                <Image src={headshot} alt="Kyle Findlay" width={440} height={560} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+              </div>
+              <div>
+                <p class="font-sans font-extrabold text-3xl md:text-4xl leading-none sky-strong">Kyle Findlay</p>
+                <p class="font-mono text-[12px] uppercase tracking-[0.08em] mt-3 sky-faint">San Francisco / Los Angeles</p>
+                <div class="h-px my-5" style="background: oklch(92% 0.01 250);"></div>
+                <p class="font-mono text-[14.5px] sky-mut">{email}</p>
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                  <button data-copy-email data-email={email} type="button" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-[12px] font-mono font-semibold uppercase tracking-[0.08em] rounded-full hover:opacity-90 transition cursor-pointer">
+                    <span class="ce-text">Copy email</span>
+                    <span aria-hidden="true">⧉</span>
+                  </button>
+                  <a href={linkedin} target="_blank" rel="noopener" class="inline-flex items-center px-5 py-2.5 border rounded-full text-[12px] font-mono font-semibold uppercase tracking-[0.08em] sky-strong hover:text-accent transition" style="border-color: oklch(84% 0.02 255);">
+                    LinkedIn ↗
+                  </a>
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="order-3 md:col-start-1 md:row-start-2 flex flex-wrap gap-3">
-            <a href="#contact" class="cta-pill inline-flex items-center px-6 py-3 bg-accent text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition">
-              Contact Kyle
-            </a>
-          </div>
-        </div>
-      </section>
+        <!-- FOOTER -->
+        <footer class="py-10 border-t" style="border-color: oklch(92% 0.01 250);">
+          <nav class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[12px] uppercase tracking-[0.07em] sky-faint">
+            <a href="/" class="hover:text-accent transition">About &amp; Contact</a>
+            <a href="/gtm-radar" class="hover:text-accent transition">GTM Radar V1</a>
+            <a href="/radar-v2" class="hover:text-accent transition">GTM Radar V2</a>
+          </nav>
+        </footer>
 
-      <!-- 2 · SYSTEM STRIP -->
-      <section class="py-12 md:py-14 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">The system</p>
-        </div>
-        <div class="flex flex-col lg:flex-row lg:items-stretch gap-3 mt-6">
-          {steps.map((s, i) => (
-            <>
-              <div class:list={["ss-card flex-1 p-6 flex flex-col", i === 3 && "ss-step-strong"]}>
-                <div class="flex items-baseline justify-between">
-                  <span class:list={["font-serif text-2xl", i === 3 ? "text-accent" : "text-paper"]}>{s.h}</span>
-                  <span class:list={["font-mono text-[13px]", i === 3 ? "text-accent/70" : "text-paper/30"]}>{s.n}</span>
-                </div>
-                <p class="text-[13.5px] text-paper/70 leading-snug mt-4">{s.b}</p>
-              </div>
-              {i < steps.length - 1 && <div class="hidden lg:flex items-center text-accent text-lg" aria-hidden="true">→</div>}
-            </>
-          ))}
-        </div>
-      </section>
-
-      <!-- 3 · WHO WE SOURCE -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Who we source</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
-          <!-- signals (neutral / darker) -->
-          <div class="ss-card p-6 md:p-7">
-            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-paper/50">Operator signals</p>
-            <div class="flex flex-wrap gap-2 mt-5">
-              {signals.map((t) => <span class="ss-tile">{t}</span>)}
-            </div>
-          </div>
-          <!-- evidence (brighter / concrete) -->
-          <div class="ss-card p-6 md:p-7" style="border-color: color-mix(in srgb, var(--color-accent) 22%, transparent);">
-            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-accent">Evidence we look for</p>
-            <div class="flex flex-col gap-2 mt-5">
-              {evidence.map((t) => (
-                <span class="ss-tile-bright"><span class="text-accent" aria-hidden="true">✓</span>{t}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 · WHAT WE BUILD THEM INTO -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">What we build them into</p>
-        </div>
-        <p class="text-[13px] text-paper/45 italic mt-3 max-w-[560px]">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
-          {buildInto.map((c) => (
-            <div class="ss-card p-6 flex flex-col">
-              <h3 class="font-serif text-paper text-[1.4rem] leading-tight">{c.h}</h3>
-              <div class="mt-4">
-                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-paper/40">From</p>
-                <p class="text-[13px] text-paper/55 mt-1.5 leading-snug">{c.from}</p>
-              </div>
-              <div class="flex items-center gap-2 my-4 text-accent" aria-hidden="true">
-                <span class="h-px flex-1 bg-white/10"></span>
-                <span class="font-mono text-[10px] uppercase tracking-[0.14em]">builds ↓</span>
-                <span class="h-px flex-1 bg-white/10"></span>
-              </div>
-              <div class="flex flex-wrap gap-1.5">
-                {c.builds.map((b) => <span class="ss-cap">{b}</span>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- 5 · ROLE UNIVERSE -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">The role universe</p>
-        </div>
-        <h2 class="font-serif text-paper text-3xl md:text-4xl leading-[1.14] mt-3 max-w-[640px]">
-          A large, underserved talent market.
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
-          {clusters.map((c) => (
-            <div class="ss-card p-5 relative overflow-hidden">
-              <span class="absolute top-0 left-0 h-[3px] w-full" style="background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 75%, transparent), transparent);"></span>
-              <p class="font-serif text-paper text-lg mt-1.5">{c.h}</p>
-              <p class="text-[12.5px] text-paper/55 leading-relaxed mt-2.5">{c.roles}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- 6 · NOT CLASSES. PROOF-OF-WORK. -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Not classes. Proof-of-work.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1.05fr] gap-4 md:gap-3 items-center mt-7">
-          <!-- BEFORE (dim) -->
-          <div class="ss-before p-6 md:p-7">
-            <p class="font-mono text-[12px] uppercase tracking-[0.14em] text-paper/40">Before</p>
-            <ul class="mt-4 space-y-2.5">
-              {before.map((t) => (
-                <li class="flex gap-2.5 items-center text-[15px] text-paper/45"><span class="text-paper/25" aria-hidden="true">✕</span>{t}</li>
-              ))}
-            </ul>
-          </div>
-          <!-- arrow -->
-          <div class="flex justify-center text-accent text-3xl rotate-90 md:rotate-0" aria-hidden="true">→</div>
-          <!-- AFTER (bright) -->
-          <div class="relative">
-            <div class="ss-glow" style="inset:8% 4%;"></div>
-            <div class="ss-frame ss-soft relative">
-              <div class="ss-inner p-6 md:p-7">
-                <p class="font-mono text-[12px] uppercase tracking-[0.14em] text-accent">After</p>
-                <ul class="mt-4 space-y-2.5">
-                  {after.map((t) => (
-                    <li class="flex gap-2.5 items-center text-[15px] text-paper"><span class="text-accent" aria-hidden="true">◆</span>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="font-serif text-xl md:text-2xl leading-snug text-paper border-l-2 border-accent pl-5 mt-8 max-w-[720px]">
-          The filter is not interest in AI. The filter is whether someone can improve a real workflow.
-        </p>
-      </section>
-
-      <!-- 7 · WHY ME -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Why me</p>
-        </div>
-        <p class="text-[16px] md:text-[17px] text-paper/75 leading-relaxed mt-5 max-w-[640px]">
-          My background is GTM execution, project management, client delivery, and workflow-heavy
-          operations.
-        </p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-7 max-w-[820px]">
-          {stats.map((s) => (
-            <div class="ss-card p-5">
-              <p class="font-serif text-[2rem] md:text-[2.3rem] leading-none text-paper">{s.n}</p>
-              <p class="font-mono text-[10.5px] uppercase tracking-[0.07em] text-paper/50 mt-2.5">{s.l}</p>
-            </div>
-          ))}
-        </div>
-        <p class="text-[16px] text-paper/70 leading-relaxed mt-7 max-w-[640px]">
-          I build close to customers, test fast, and turn messy workflows into shipped systems.
-        </p>
-      </section>
-
-      <!-- 8 · LOOKING TO MEET -->
-      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Looking to meet</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-6 max-w-[900px]">
-          {looking.map((item) => (
-            <div class="ss-card px-4 py-3.5 flex gap-3 items-center">
-              <span class="text-accent shrink-0" aria-hidden="true">→</span>
-              <p class="text-[15px] text-paper/85 leading-snug">{item}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- 9 · CONTACT -->
-      <section id="contact" class="py-14 md:py-18 scroll-mt-20" data-reveal>
-        <div class="flex items-center gap-3">
-          <span class="inline-block h-3.5 w-[3px] rounded-full bg-accent"></span>
-          <p class="font-mono text-[12.5px] md:text-[13px] uppercase tracking-[0.14em] text-accent">Contact</p>
-        </div>
-        <div class="relative mt-6 max-w-[760px]">
-          <div class="ss-glow" style="inset: 18% 28%;"></div>
-          <div class="ss-frame ss-soft relative">
-            <div class="ss-inner p-6 md:p-8">
-              <div class="grid grid-cols-1 sm:grid-cols-[168px_1fr] gap-6 md:gap-9 items-center">
-                <div class="rounded-2xl overflow-hidden border border-white/10 w-[140px] sm:w-[168px] h-[176px] sm:h-[210px]">
-                  <Image src={headshot} alt="Kyle Findlay" width={420} height={540} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
-                </div>
-                <div>
-                  <p class="font-serif font-bold text-3xl md:text-4xl text-paper leading-none">Kyle Findlay</p>
-                  <p class="font-mono text-[12px] uppercase tracking-[0.08em] text-paper/55 mt-3">San Francisco / Los Angeles</p>
-                  <div class="h-px bg-white/10 my-5"></div>
-                  <p class="font-mono text-[14.5px] text-paper/85">{email}</p>
-                  <div class="mt-4 flex flex-wrap items-center gap-3">
-                    <button data-copy-email data-email={email} type="button" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-[12px] font-mono font-semibold uppercase tracking-[0.08em] rounded-full hover:opacity-90 transition cursor-pointer">
-                      <span class="ce-text">Copy email</span>
-                      <span aria-hidden="true">⧉</span>
-                    </button>
-                    <a href={linkedin} target="_blank" rel="noopener" class="inline-flex items-center px-5 py-2.5 border border-white/15 text-[12px] font-mono font-semibold uppercase tracking-[0.08em] rounded-full text-paper hover:border-accent hover:text-accent transition">
-                      LinkedIn ↗
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER (slim links) -->
-      <footer class="py-10 border-t border-white/10">
-        <nav class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[12px] uppercase tracking-[0.07em] text-paper/50">
-          <a href="/" class="hover:text-accent transition">About &amp; Contact</a>
-          <a href="/gtm-radar" class="hover:text-accent transition">GTM Radar V1</a>
-          <a href="/radar-v2" class="hover:text-accent transition">GTM Radar V2</a>
-        </nav>
-      </footer>
-
+      </div>
     </main>
 
     <script>
