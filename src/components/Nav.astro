@@ -3,6 +3,7 @@ const p = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isV1 = p === '/gtm-radar';
 const isV2 = p === '/radar-v2';
 const isAbout = p === '/';
+const isSkillshift = p === '/skillshift';
 ---
 <nav class="sticky top-0 z-30 bg-paper border-t-2 border-accent border-b border-rule">
   <div class="max-w-content mx-auto px-6 py-3 flex items-baseline gap-6 relative">
@@ -20,6 +21,11 @@ const isAbout = p === '/';
         </li>
         <li>
           <a href="/" class:list={["ver-solo", isAbout && "ver-solo-active"]} aria-current={isAbout ? "page" : undefined}>About &amp; Contact</a>
+        </li>
+        <li>
+          <a href="/skillshift" class:list={["ver-solo", isSkillshift && "ver-solo-active"]} aria-current={isSkillshift ? "page" : undefined} style="text-transform: none;">
+/skillshift<span class="ver-new" aria-label="new">New</span>
+          </a>
         </li>
       </ul>
       <button id="nav-toggle" class="sm:hidden text-ink text-xl shrink-0" aria-label="Toggle menu" aria-expanded="false">☰</button>
@@ -49,4 +55,7 @@ const isAbout = p === '/';
   .ver-solo:hover { border-color: var(--color-accent); color: var(--color-accent); }
   .ver-solo-active { color: var(--color-on-accent); background: var(--color-accent); border-color: var(--color-accent); }
   .ver-solo-active:hover { color: var(--color-on-accent); }
+  /* small "New" flag on the Workshift pill — signals the latest build */
+  .ver-new { margin-left: 7px; padding: 1px 6px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; border-radius: 999px; background: var(--color-accent); color: var(--color-on-accent); }
+  .ver-solo-active .ver-new { background: var(--color-on-accent); color: var(--color-accent); }
 </style>

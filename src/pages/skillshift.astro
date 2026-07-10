@@ -1,0 +1,383 @@
+---
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import headshot from '../assets/photos/headshot.png';
+import Nav from '../components/Nav.astro';
+import Analytics from '@vercel/analytics/astro';
+
+const title = '/skillshift — Kyle Findlay';
+const description = 'A founder thesis on sourcing, validating, sharpening, and deploying AI-native operators through proof-of-work.';
+
+const steps = [
+  { n: '01', h: 'Source', b: 'Find people with workflow judgment, agency, and tool curiosity.' },
+  { n: '02', h: 'Validate', b: 'Test through proof-of-work, not certificates.' },
+  { n: '03', h: 'Sharpen', b: 'Build real workflows with AI-native tools.' },
+  { n: '04', h: 'Deploy', b: 'Route into higher-value roles or internal AI workflow capacity.' },
+];
+
+const signals = ['workflow judgment', 'systems thinking', 'communication', 'execution', 'agency', 'tool curiosity', 'process improvement', 'comfort with ambiguity', 'ability to learn by building'];
+const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped projects without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
+
+const buildInto = [
+  { h: 'AI-augmented account operator', from: 'account manager / account director / client services', builds: 'account intelligence, renewal-risk detection, meeting synthesis, personalized follow-up, strategic briefs' },
+  { h: 'AI workflow operator', from: 'project manager / operations lead / coordinator', builds: 'workflow automation, status synthesis, dependency mapping, implementation playbooks' },
+  { h: 'AI-enabled customer operator', from: 'customer success / support lead / onboarding specialist', builds: 'churn signals, playbooks, customer summaries, onboarding automation, support workflows' },
+  { h: 'AI GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: 'research automation, CRM hygiene, lead scoring, reporting, outbound systems' },
+  { h: 'AI product/delivery operator', from: 'product ops / delivery manager / QA analyst / technical project coordinator', builds: 'specs, QA workflows, feedback synthesis, implementation tracking, eval workflows' },
+  { h: 'AI admin/workflow operator', from: 'paralegal / compliance analyst / healthcare admin / finance ops / HR coordinator', builds: 'intake routing, document workflows, compliance checklists, summary systems, process tracking' },
+];
+
+const clusters = [
+  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, operations managers, business operations, chiefs of staff, executive assistants, implementation specialists, business analysts' },
+  { h: 'Customer / account', roles: 'account managers, account directors, customer success managers, client services, onboarding specialists, renewals managers, partnerships managers' },
+  { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement' },
+  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts, technical project coordinators' },
+  { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators' },
+];
+
+const before = ['passive courses', 'certificates', 'generic AI literacy', 'watching tutorials', 'claiming fluency'];
+const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs', 'automations', 'implementation playbooks', 'proof companies can evaluate'];
+
+const stats = [
+  { n: '$3.1M+', l: 'owned annually' },
+  { n: '$5–6M', l: 'supported' },
+  { n: '30–40', l: 'programs / year' },
+  { n: '12+', l: 'national brands' },
+];
+
+const looking = [
+  'operators already improving workflows with AI',
+  'technical cofounders interested in labor-market intelligence',
+  'recruiters noticing new AI-era role demand',
+  'companies trying to build AI workflow capacity',
+  'adaptable professionals trying to move into higher-value roles',
+];
+
+const email = 'kylefindlay828@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kylefindlay.xyz/skillshift" />
+    <!-- TODO: swap for a dedicated skillshift OG card (og-skillshift.png) before sharing widely -->
+    <meta property="og:image" content="https://kylefindlay.xyz/og-about.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kylefindlay.xyz/og-about.png" />
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+      /* global.css hard-codes body bg + heading/link colors and beats Tailwind utilities.
+         Class selectors win the cascade — scoped to this page only. */
+      body.ss-body { background: oklch(23% 0.006 60); color: var(--color-paper); }
+      .ss-dark :is(h1, h2, h3, h4) { color: var(--color-paper); }
+      .ss-dark a:not(.cta-pill) { color: var(--color-paper); }
+      .ss-dark a:not(.cta-pill):hover { color: var(--color-accent); }
+
+      /* subtle film-grain texture, dependency-free (inline SVG turbulence) */
+      .ss-noise { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+      /* premium treatments — all dependency-free */
+      .ss-glow { position: absolute; z-index: 0; pointer-events: none; border-radius: 9999px;
+        filter: blur(70px); opacity: 0.4;
+        background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, transparent), transparent 62%); }
+      .ss-frame { position: relative; border-radius: 18px; padding: 1px;
+        background: linear-gradient(155deg,
+          color-mix(in srgb, var(--color-accent) 55%, transparent) 0%,
+          color-mix(in srgb, #ffffff 15%, transparent) 34%,
+          rgba(255,255,255,0.02) 72%); }
+      .ss-frame > .ss-inner { border-radius: 17px; background: var(--color-ink); height: 100%; }
+      .ss-soft { box-shadow: 0 44px 100px -55px rgba(0,0,0,0.95); }
+      .ss-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.028);
+        border-radius: 16px; transition: border-color .2s var(--ease-out), background-color .2s var(--ease-out); }
+      .ss-card:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+        background: rgba(255,255,255,0.05); }
+      .ss-pill { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 999px; padding: 7px 13px; font-family: var(--font-mono); font-size: 12px;
+        letter-spacing: 0.01em; color: var(--color-paper); background: rgba(255,255,255,0.02);
+        transition: border-color .2s var(--ease-out); }
+      .ss-pill:hover { border-color: color-mix(in srgb, var(--color-accent) 60%, transparent); }
+    </style>
+    <Analytics />
+  </head>
+  <body class="ss-body text-paper min-h-screen">
+    <div class="ss-noise" aria-hidden="true"></div>
+    <Nav />
+    <main class="ss-dark relative z-[1] max-w-content mx-auto px-6 overflow-x-clip">
+
+      <!-- 1 · HERO -->
+      <section class="relative pt-10 md:pt-16 pb-14 md:pb-16 border-b border-white/10">
+        <div class="ss-glow" style="top:-30px; right:-10px; width:460px; height:460px;"></div>
+        <div class="relative grid grid-cols-1 md:grid-cols-2 md:grid-rows-[auto_auto] gap-7 md:gap-x-12 md:items-center">
+          <!-- text -->
+          <div class="order-1 md:col-start-1 md:row-start-1 hero-rise">
+            <p class="kicker">Kyle Findlay · Founder thesis</p>
+            <h1 class="font-serif text-paper text-6xl md:text-7xl leading-none mt-4 tracking-tight lowercase">/skillshift</h1>
+            <p class="font-serif text-xl md:text-2xl text-paper leading-snug mt-5 max-w-[500px]">
+              Sources, validates, sharpens, and deploys AI-native operators.
+            </p>
+            <p class="text-[15px] md:text-[16px] text-paper/65 leading-relaxed mt-4 max-w-[520px]">
+              AI is creating new workflow roles between business teams and software systems. The hard
+              part is identifying who has the judgment, agency, and workflow instinct to become
+              valuable in those roles.
+            </p>
+          </div>
+
+          <!-- video -->
+          <div class="order-2 md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
+            <div class="ss-frame ss-soft">
+              <div class="ss-inner">
+                <div class="group relative aspect-video w-full overflow-hidden rounded-[17px]">
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                    <span class="w-16 h-16 md:w-[70px] md:h-[70px] rounded-full bg-accent flex items-center justify-center shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] transition group-hover:scale-105">
+                      <svg viewBox="0 0 24 24" class="w-7 h-7 translate-x-[2px]" fill="var(--color-on-accent)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                    <div class="text-center">
+                      <p class="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.16em] text-paper/85">90-second founder thesis</p>
+                      <p class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent/80 mt-1.5">coming soon</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- buttons -->
+          <div class="order-3 md:col-start-1 md:row-start-2 flex flex-wrap gap-3">
+            <a href="#contact" class="cta-pill inline-flex items-center px-6 py-3 bg-accent text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full hover:opacity-90 transition">
+              Contact Kyle
+            </a>
+            <!-- TODO: replace href with thesis-memo PDF -->
+            <a href="#thesis-memo" class="inline-flex items-center px-6 py-3 border border-white/15 text-[11px] font-mono font-semibold uppercase tracking-[0.14em] rounded-full text-paper hover:border-accent hover:text-accent transition">
+              Read thesis
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 · SYSTEM STRIP -->
+      <section class="py-12 md:py-14 border-b border-white/10" data-reveal>
+        <p class="kicker mb-6">The system</p>
+        <div class="flex flex-col md:flex-row md:items-stretch gap-3">
+          {steps.map((s, i) => (
+            <>
+              <div class="ss-card flex-1 p-5 md:p-6">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[12px] uppercase tracking-[0.12em] text-accent">{s.h}</span>
+                  <span class="font-mono text-[11px] text-paper/35">{s.n}</span>
+                </div>
+                <p class="text-[14px] text-paper/75 leading-snug mt-3">{s.b}</p>
+              </div>
+              {i < steps.length - 1 && <div class="hidden md:flex items-center text-accent" aria-hidden="true">→</div>}
+            </>
+          ))}
+        </div>
+      </section>
+
+      <!-- 3 · WHO WE SOURCE -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">Who we source</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+          <div class="ss-card p-6 md:p-7">
+            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">Operator signals</p>
+            <div class="flex flex-wrap gap-2 mt-5">
+              {signals.map((t) => <span class="ss-pill">{t}</span>)}
+            </div>
+          </div>
+          <div class="ss-card p-6 md:p-7">
+            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">Evidence we look for</p>
+            <div class="flex flex-wrap gap-2 mt-5">
+              {evidence.map((t) => <span class="ss-pill">{t}</span>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 · WHAT WE BUILD THEM INTO -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">What we build them into</p>
+        <p class="text-[13px] text-paper/45 italic mt-2 max-w-[560px]">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
+          {buildInto.map((c) => (
+            <div class="ss-card p-6 flex flex-col">
+              <h3 class="font-serif text-paper text-[1.35rem] leading-snug">{c.h}</h3>
+              <div class="mt-4">
+                <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-paper/40">From</p>
+                <p class="text-[13.5px] text-paper/70 mt-1 leading-snug">{c.from}</p>
+              </div>
+              <div class="mt-3.5">
+                <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-accent/80">Builds</p>
+                <p class="text-[13.5px] text-paper/80 mt-1 leading-snug">{c.builds}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 5 · THE ROLE UNIVERSE -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">The role universe</p>
+        <h2 class="font-serif text-paper text-3xl md:text-4xl leading-[1.14] mt-3 max-w-[640px]">
+          A large, underserved talent market.
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
+          {clusters.map((c) => (
+            <div class="ss-card p-6">
+              <p class="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">{c.h}</p>
+              <p class="text-[13.5px] text-paper/65 leading-relaxed mt-3">{c.roles}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 6 · PROOF-OF-WORK -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">Not classes. Proof-of-work.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
+          <div class="ss-card p-6 md:p-7">
+            <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/40">Before</p>
+            <ul class="mt-4 space-y-2.5">
+              {before.map((t) => (
+                <li class="flex gap-3 items-center text-[15px] text-paper/50">
+                  <span class="text-paper/30" aria-hidden="true">✕</span>{t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ss-frame ss-soft">
+            <div class="ss-inner p-6 md:p-7">
+              <p class="font-mono text-[12px] uppercase tracking-[0.1em] text-accent">After</p>
+              <ul class="mt-4 space-y-2.5">
+                {after.map((t) => (
+                  <li class="flex gap-3 items-center text-[15px] text-paper/85">
+                    <span class="text-accent" aria-hidden="true">◆</span>{t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p class="font-serif text-xl md:text-2xl leading-snug text-paper border-l-2 border-accent pl-5 mt-8 max-w-[720px]">
+          The filter is not interest in AI. The filter is whether someone can improve a real workflow.
+        </p>
+      </section>
+
+      <!-- 7 · WHY ME -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">Why me</p>
+        <div class="ss-card p-7 md:p-9 mt-5 max-w-[900px]">
+          <p class="text-[17px] md:text-[18px] text-paper/80 leading-relaxed max-w-[640px]">
+            My background is GTM execution, project management, client delivery, and workflow-heavy
+            operations.
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 mt-8">
+            {stats.map((s, i) => (
+              <div class={i > 0 ? 'md:border-l md:border-white/10 md:pl-5' : ''}>
+                <p class="font-serif text-3xl md:text-[2.1rem] leading-none text-paper">{s.n}</p>
+                <p class="font-mono text-[11px] uppercase tracking-[0.06em] text-paper/50 mt-2">{s.l}</p>
+              </div>
+            ))}
+          </div>
+          <p class="text-[16px] text-paper/70 leading-relaxed mt-8 max-w-[640px]">
+            I build close to customers, test fast, and turn messy workflows into shipped systems.
+          </p>
+        </div>
+      </section>
+
+      <!-- 8 · LOOKING TO MEET -->
+      <section class="py-14 md:py-18 border-b border-white/10" data-reveal>
+        <p class="kicker">Looking to meet</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3.5 mt-7 max-w-[880px]">
+          {looking.map((item) => (
+            <div class="flex gap-3 items-start">
+              <span class="text-accent mt-1.5 text-xs" aria-hidden="true">◆</span>
+              <p class="text-[16px] text-paper/80 leading-relaxed">{item}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 9 · CONTACT -->
+      <section id="contact" class="py-14 md:py-18 scroll-mt-20" data-reveal>
+        <p class="kicker">Contact</p>
+        <div class="ss-frame ss-soft mt-5 max-w-[720px]">
+          <div class="ss-inner p-6 md:p-8">
+            <div class="grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-6 md:gap-8 items-center">
+              <div class="rounded-xl overflow-hidden border border-white/10 w-[130px] sm:w-[150px] h-[168px] sm:h-[190px]">
+                <Image src={headshot} alt="Kyle Findlay" width={400} height={520} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
+              </div>
+              <div>
+                <p class="font-serif font-bold text-2xl md:text-3xl text-paper">Kyle Findlay</p>
+                <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-paper/55 mt-2">San Francisco / Los Angeles</p>
+                <p class="font-mono text-[14px] text-paper/80 mt-4">{email}</p>
+                <div class="mt-5 flex flex-wrap items-center gap-3">
+                  <button data-copy-email data-email={email} type="button" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-[12px] font-mono font-semibold rounded-full hover:opacity-90 transition cursor-pointer">
+                    <span class="ce-text">Copy email</span>
+                    <span aria-hidden="true">⧉</span>
+                  </button>
+                  <a href={linkedin} target="_blank" rel="noopener" class="inline-flex items-center px-4 py-2.5 border border-white/15 text-[12px] font-mono font-semibold rounded-full text-paper hover:border-accent hover:text-accent transition">
+                    LinkedIn ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER (slim links) -->
+      <footer class="py-10 border-t border-white/10">
+        <nav class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[12px] uppercase tracking-[0.07em] text-paper/50">
+          <a href="/" class="hover:text-accent transition">About &amp; Contact</a>
+          <a href="/gtm-radar" class="hover:text-accent transition">GTM Radar V1</a>
+          <a href="/radar-v2" class="hover:text-accent transition">GTM Radar V2</a>
+        </nav>
+      </footer>
+
+    </main>
+
+    <script>
+      // scroll-reveal for [data-reveal] sections
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('[data-reveal]');
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+        els.forEach((el) => obs.observe(el));
+      }
+
+      // "Copy email" buttons — copy the address to the clipboard, no mail app needed.
+      document.querySelectorAll('[data-copy-email]').forEach((btn) => {
+        const label = btn.querySelector('.ce-text');
+        const original = label?.textContent ?? '';
+        btn.addEventListener('click', async () => {
+          const addr = btn.getAttribute('data-email') ?? '';
+          try {
+            await navigator.clipboard.writeText(addr);
+          } catch {
+            const t = document.createElement('textarea');
+            t.value = addr; document.body.appendChild(t); t.select();
+            document.execCommand('copy'); t.remove();
+          }
+          if (label) {
+            label.textContent = 'Copied ✓';
+            setTimeout(() => { label.textContent = original; }, 1800);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
