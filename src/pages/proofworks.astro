@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
+import ProofworksEngine from '../components/ProofworksEngine.astro';
 
 const title = '/proofworks — Kyle Findlay';
 const description = 'A founder thesis on proof-of-work talent for the AI labor market: identifying adaptable talent, validating real workflow ability, and routing people into AI-enabled roles.';
@@ -404,6 +405,9 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
             <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
           </div>
         </section>
+
+        <!-- THE PROOFWORKS ENGINE (light interrupt) -->
+        <ProofworksEngine />
 
         <!-- ROLE UNIVERSE -->
         <section class="sec univ">

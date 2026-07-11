@@ -1,0 +1,87 @@
+---
+// The Proofworks Engine — a full-width LIGHT band that interrupts the dark
+// constellation page. Opaque background covers the fixed canvas/dot-grid behind it.
+---
+<section class="engine" aria-label="The Proofworks Engine">
+  <div class="ewrap">
+    <p class="eng-kicker">The Proofworks Engine</p>
+    <p class="eng-tagline">How it works, scales, and generates repeat business.</p>
+
+    <div class="eng-block">
+      <h2 class="eng-anchor">Service-assisted software for workforce transformation.</h2>
+      <p class="eng-body">We identify who can adapt, establish their baseline through applied work, and develop them from everyday AI users into people who can build and operate useful systems appropriate to their roles.</p>
+    </div>
+
+    <hr class="eng-div" />
+
+    <div class="eng-block">
+      <h2 class="eng-anchor">Retooling is not another AI course.</h2>
+      <div class="eng-stages">
+        <div class="eng-stage">
+          <h3 class="eng-label">Establish the baseline</h3>
+          <p>Participants begin with an applied challenge that reveals how they <b>frame problems</b>, handle ambiguity, choose tools, test outputs, and build something usable.</p>
+        </div>
+        <div class="eng-stage">
+          <h3 class="eng-label">Build through real work</h3>
+          <p>They move beyond passive, chat-based AI use into hands-on work with the tools appropriate to the problem—such as terminal environments, APIs, automations, agents, company data, and deployment systems.</p>
+        </div>
+        <div class="eng-stage">
+          <h3 class="eng-label">Verify and route</h3>
+          <p>Proofworks records demonstrated capability, identifies remaining gaps, and moves stronger operators into higher-value projects, responsibilities, and roles.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="eng-div" />
+
+    <div class="eng-block">
+      <h2 class="eng-anchor">Every engagement improves the product.</h2>
+      <p class="eng-strong">Stronger assessments. Better benchmarks. Reusable project systems. More automated development, evaluation, and delivery.</p>
+      <p class="eng-body">The first engagements are hands-on. The repeatable parts become software.</p>
+    </div>
+
+    <hr class="eng-div" />
+
+    <div class="eng-block">
+      <h2 class="eng-anchor">One cohort becomes a recurring system.</h2>
+      <p class="eng-body">A company may begin with one team or a focused group of operators.</p>
+      <p class="eng-body">Successful projects can expand into additional teams, new capability cycles, ongoing assessment, and access to externally validated talent.</p>
+      <p class="eng-strong">Start hands-on. Productize what repeats. Expand across the workforce.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* full-width light band — opaque bg hides the fixed constellation canvas behind it */
+  .engine { position: relative; background: #f4f4f0; color: #17181c; padding: 88px 0; }
+  .ewrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  .eng-kicker { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #17181c; margin: 0; }
+  .eng-tagline { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 500;
+    font-size: clamp(16px, 1.7vw, 20px); color: #5a5f68; margin: 10px 0 44px; }
+
+  .eng-block { max-width: 900px; }
+  .eng-anchor { font-family: 'Space Grotesk', sans-serif; font-style: italic; font-weight: 600;
+    font-size: clamp(26px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.022em; color: #0e0f13; margin: 0; }
+  .eng-body { font-size: 17px; line-height: 1.55; color: #34373e; margin: 18px 0 0; max-width: 720px; }
+  .eng-body b { color: #0e0f13; font-weight: 700; }
+  .eng-strong { font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: clamp(18px, 2vw, 23px); line-height: 1.36; letter-spacing: -0.01em; color: #14151a; margin: 20px 0 0; max-width: 760px; }
+
+  .eng-div { border: 0; border-top: 1px solid #cfcfc7; margin: 48px 0; }
+
+  .eng-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 30px; }
+  .eng-stage p { font-size: 15px; line-height: 1.52; color: #3b3e46; margin: 12px 0 0; }
+  .eng-stage p b { color: #0e0f13; font-weight: 700; }
+  .eng-label { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12.5px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #0e0f13; margin: 0; }
+
+  @media (max-width: 760px) {
+    .engine { padding: 60px 0; }
+    .eng-tagline { margin-bottom: 34px; }
+    .eng-anchor { font-size: clamp(25px, 7.4vw, 33px); }
+    .eng-stages { grid-template-columns: 1fr; gap: 30px; }
+    .eng-div { margin: 38px 0; }
+  }
+</style>
