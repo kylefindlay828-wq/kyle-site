@@ -1,83 +1,233 @@
 ---
-// The Proofworks Engine — a full-width LIGHT interrupt with a soft multicolor
-// aurora field. Opaque light background covers the fixed dark canvas/dot-grid.
+// The Proofworks Engine — full-width LIGHT interrupt (the machinery beneath the
+// dark thesis). Opaque warm base covers the fixed dark canvas/dot-grid. Uses the
+// page-wide [data-reveal] observer; reveal CSS re-declared scoped so it animates.
+const baseline = ['Handle ambiguity', 'Choose tools', 'Test outputs', 'Build something usable'];
+const tools = ['Terminal', 'APIs', 'Automations', 'Agents', 'Company data', 'Deployment'];
+const scale = [
+  { n: '20–50', lab: 'ideal start', ideal: true },
+  { n: 'up to 250', lab: 'expand' },
+  { n: 'enterprise', lab: 'transform the workforce' },
+];
 ---
 <section class="engine" aria-label="The Proofworks Engine">
   <div class="ewrap">
-    <h2 class="eng-title">The Proofworks Engine</h2>
-    <p class="eng-h2">How it actually works.</p>
 
-    <hr class="eng-div" />
+    <!-- TITLE (sizing kept) -->
+    <div class="e-title-mask mask-reveal" data-reveal>
+      <h2 class="e-title">The Proofworks Engine</h2>
+    </div>
+    <p class="e-h2" data-reveal style="transition-delay:.12s">How it actually works.</p>
 
-    <p class="eng-lead">We identify <em class="cv">who can adapt</em>, establish their <em class="cv">baseline</em> through applied work, then develop them beyond everyday AI use into people who can <em class="cv">build and operate useful systems</em>.</p>
-    <p class="eng-sub">Participants move from chat-based tools into hands-on work with the technical environments appropriate to their role—terminal tools, APIs, automations, agents, company data, and deployment systems.</p>
+    <hr class="e-div" data-reveal style="transition-delay:.18s" />
 
-    <hr class="eng-div" />
+    <!-- OPENING STATEMENT — tight 2-line masthead -->
+    <div class="e-lead">
+      <p data-reveal>We identify <b class="cg">who can adapt</b> and establish their <b class="cb">baseline</b> through applied work —</p>
+      <p data-reveal style="transition-delay:.16s">then develop them into people who can <b class="cv"><i>build and operate useful systems</i></b>.</p>
+    </div>
 
-    <h3 class="eng-course-h">Retooling is <em>not</em> another AI course.</h3>
-    <div class="eng-steps">
-      <div class="eng-step">
-        <p class="eng-slabel cb">Frame the problem</p>
-        <p class="eng-sbody">It starts with <b>real company problems and real work</b>—not generic content.</p>
+    <hr class="e-div" data-reveal />
+
+    <!-- WHO WE'RE HELPING — two audiences, strong split -->
+    <p class="e-eyebrow" data-reveal>Who we're helping</p>
+    <div class="e-two">
+      <div class="e-side enter-left" data-reveal>
+        <h3 class="e-side-h cg">Capable people</h3>
+        <p class="e-side-b">Young, tech-savvy graduates entering an AI-shaped labor market. Career switchers. Underused operators. <b>People with the judgment and learning ability to become valuable builders.</b></p>
       </div>
-      <div class="eng-step estab">
-        <p class="eng-slabel cb">Establish the baseline</p>
-        <p class="eng-sbody">Participants begin with an applied challenge that reveals how they <b>frame problems</b>, handle ambiguity, choose tools, test outputs, and build something usable.</p>
-      </div>
-      <div class="eng-step">
-        <p class="eng-slabel cb">Build through real work</p>
-        <p class="eng-sbody">They move beyond passive, chat-based AI use into <b>hands-on work</b> with the tools appropriate to the problem—<b><i>terminal environments, APIs, automations, agents, company data, and deployment systems.</i></b></p>
+      <div class="e-side enter-right" data-reveal style="transition-delay:.12s">
+        <h3 class="e-side-h cb">Companies that cannot afford to fall behind</h3>
+        <p class="e-side-b">Operations-heavy teams first — then expand.</p>
+        <div class="e-scale">
+          {scale.map((s, i) => (
+            <>
+              {i > 0 && <span class="e-scale-arr" aria-hidden="true">→</span>}
+              <span class:list={["e-scale-step", s.ideal && "ideal"]}>
+                <span class="e-scale-n">{s.n}{s.ideal && <span class="e-check" aria-hidden="true"> ✓</span>}</span>
+                <span class="e-scale-lab">{s.lab}</span>
+              </span>
+            </>
+          ))}
+        </div>
       </div>
     </div>
+
+    <hr class="e-div" data-reveal />
+
+    <!-- RETOOLING -->
+    <h3 class="e-retool" data-reveal>Retooling <span class="e-bracket">[ <em class="cv">not</em> another AI course ]</span></h3>
+
+    <div class="e-stages">
+      <div class="e-stage" data-reveal>
+        <p class="e-num"><span class="e-nn cg">01</span> Frame the problem</p>
+        <p class="e-stmt"><b>Real company problems.</b> <span class="dim">Before tools.</span></p>
+      </div>
+      <div class="e-stage" data-reveal style="transition-delay:.06s">
+        <p class="e-num"><span class="e-nn cb">02</span> Establish the baseline</p>
+        <p class="e-stmt cb"><b>How do they frame the problem?</b></p>
+        <p class="e-mini">{baseline.map((p, i) => (<>{i > 0 && <span class="e-sep"> · </span>}{p}</>))}</p>
+      </div>
+      <div class="e-stage" data-reveal style="transition-delay:.12s">
+        <p class="e-num"><span class="e-nn cv">03</span> Build through real work</p>
+        <p class="e-stmt"><b>Beyond chat-based AI</b> — build through real work.</p>
+        <p class="e-mini tools">{tools.map((t, i) => (<>{i > 0 && <span class="e-sep"> · </span>}<span class="e-tool">{t}</span></>))}</p>
+      </div>
+      <div class="e-stage" data-reveal style="transition-delay:.18s">
+        <p class="e-num"><span class="e-nn cg">04</span> Verify and route</p>
+        <p class="e-stmt"><b>Demonstrated capability</b> <span class="dim">→</span> higher-value work.</p>
+      </div>
+    </div>
+
+    <!-- THE PAYOFF — the most important line in the section -->
+    <p class="e-payoff" data-reveal>From <span class="dim">passive AI use</span> to <b class="cg">building and operating useful systems</b> appropriate to their role.</p>
+
+    <hr class="e-div" data-reveal />
+
+    <!-- COMMERCIAL RESULT (sizing kept) -->
+    <div class="e-result-wrap" data-reveal>
+      <span class="e-vbar" aria-hidden="true"></span>
+      <p class="e-result">Proofworks turns <b class="cg">real company problems</b> into <b class="cb">working systems</b>—and reveals <b class="cv">who can build</b> what the company needs next.</p>
+      <span class="e-vbar" aria-hidden="true"></span>
+    </div>
+
   </div>
 </section>
 
 <style>
-  /* full-width light band with a soft multicolor aurora field; opaque base
-     covers the fixed constellation canvas behind it */
-  .engine { position: relative; color: #191a1e; padding: 94px 0;
-    background-color: #f4f3ee;
+  /* ── full-width warm light band + restrained aurora + paper grain ── */
+  .engine { position: relative; color: #17181c; padding: 84px 0; isolation: isolate;
+    /* accents matched to the dark page hues (green ~155, blue ~232, violet ~300), tuned for light bg */
+    --eg: oklch(0.60 0.17 156); --eb: #2757c9; --ev: #7734d4;
+    background-color: #f5f4ef;
     background-image:
-      radial-gradient(55% 46% at 9% 12%, hsla(150, 62%, 55%, 0.15), transparent 62%),
-      radial-gradient(52% 52% at 93% 24%, hsla(224, 72%, 60%, 0.16), transparent 62%),
-      radial-gradient(58% 56% at 66% 106%, hsla(283, 60%, 62%, 0.15), transparent 62%); }
-  .ewrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+      radial-gradient(50% 44% at 8% 10%, hsla(150, 60%, 55%, 0.14), transparent 62%),
+      radial-gradient(50% 50% at 94% 26%, hsla(224, 70%, 60%, 0.15), transparent 62%),
+      radial-gradient(56% 54% at 62% 108%, hsla(283, 58%, 62%, 0.14), transparent 62%); }
+  .engine::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0.4; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px; }
+  .ewrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
-  .cg { color: #157a4c; }   /* green */
-  .cb { color: #2a5fd0; }   /* blue */
-  .cv { color: #7a3fd6; }   /* violet */
+  .cg { color: var(--eg); }
+  .cb { color: var(--eb); }
+  .cv { color: var(--ev); }
+  .dim { color: #8a8d94; }
 
-  .eng-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; text-transform: uppercase;
-    font-size: clamp(40px, 8vw, 96px); line-height: 0.9; letter-spacing: -0.032em; color: #131418; margin: 0; }
-  .eng-h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-style: italic;
-    font-size: clamp(26px, 4.2vw, 50px); line-height: 1.0; letter-spacing: -0.02em; color: #2c2f36; margin: 14px 0 0; }
+  .e-eyebrow { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #6a6d74; margin: 0 0 26px; }
 
-  .eng-div { border: 0; border-top: 1px solid #cfcec6; margin: 42px 0; }
+  /* title */
+  .e-title-mask { padding-bottom: .06em; }
+  .e-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; text-transform: uppercase;
+    font-size: clamp(46px, 8.6vw, 96px); line-height: 0.9; letter-spacing: -0.035em; color: #101116; margin: 0; }
+  .e-h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-style: italic;
+    font-size: clamp(23px, 3vw, 40px); line-height: 1.0; letter-spacing: -0.022em; color: #2b2e35; margin: 16px 0 0; }
 
-  .eng-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 3.4vw, 40px);
-    line-height: 1.14; letter-spacing: -0.02em; color: #171922; margin: 0; max-width: 1000px; }
-  .eng-lead em { font-style: normal; font-weight: 700; }
-  .eng-sub { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; color: #45484f; margin: 22px 0 0; max-width: 760px; }
+  .e-div { border: 0; border-top: 1px solid #cdccc4; margin: 36px 0; }
 
-  .eng-course-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-style: italic;
-    font-size: clamp(24px, 3.4vw, 40px); line-height: 1.04; letter-spacing: -0.02em; color: #131418; margin: 0 0 26px; }
-  .eng-course-h em { color: #131418; font-weight: 700; font-style: italic; }
+  /* opening masthead — 2 tidy lines */
+  .e-lead p { font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: clamp(22px, 2.9vw, 34px); line-height: 1.14; letter-spacing: -0.02em; color: #14161d; margin: 0 0 .12em; max-width: 1060px; }
+  .e-lead p:last-child { margin-bottom: 0; }
+  .e-lead b { font-weight: 700; } .e-lead i { font-style: italic; }
 
-  .eng-steps { display: grid; grid-template-columns: 1fr; }
-  .eng-step { display: grid; grid-template-columns: 300px 1fr; gap: 30px; padding: 26px 0;
-    border-top: 1px solid #d3d2ca; align-items: start; }
-  .eng-step:last-child { border-bottom: 1px solid #d3d2ca; }
-  .eng-slabel { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(16px, 1.8vw, 20px);
-    letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
-  .eng-sbody { font-size: clamp(16px, 1.7vw, 19px); line-height: 1.5; color: #3a3d44; margin: 0; }
-  .eng-sbody b { color: #131418; font-weight: 700; }
-  .eng-sbody i { color: #131418; }
+  /* two audiences — strong split with a divider */
+  .e-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .e-side:first-child { padding-right: 50px; border-right: 1px solid #cdccc4; }
+  .e-side:last-child { padding-left: 50px; }
+  .e-side-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(21px, 2.7vw, 32px); line-height: 1.04; letter-spacing: -0.01em; margin: 0 0 16px; }
+  .e-side-b { font-size: clamp(16px, 1.8vw, 20px); line-height: 1.5; color: #3c3f47; margin: 0; max-width: 460px; }
+  .e-side-b b { color: #14161d; font-weight: 700; }
 
-  @media (max-width: 760px) {
-    .engine { padding: 60px 0; }
-    .eng-title { font-size: clamp(38px, 12vw, 62px); line-height: 0.94; }
-    .eng-lead { font-size: clamp(23px, 6.4vw, 30px); }
-    .eng-step { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
-    .eng-div { margin: 34px 0; }
+  /* company scale flow */
+  .e-scale { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px 14px; margin-top: 22px; }
+  .e-scale-step { display: flex; flex-direction: column; }
+  .e-scale-n { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(21px, 2.4vw, 30px);
+    letter-spacing: -0.02em; color: #14161d; line-height: 1; }
+  .e-scale-step.ideal .e-scale-n { color: var(--eg); }
+  .e-check { color: var(--eg); }
+  .e-scale-lab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; color: #8a8d94; margin-top: 6px; }
+  .e-scale-arr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--eb);
+    font-size: clamp(20px, 2.2vw, 28px); line-height: 1; align-self: flex-start; }
+
+  /* retooling — right-sized, bracketed */
+  .e-retool { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(24px, 3.2vw, 38px); line-height: 1.04; letter-spacing: -0.026em; color: #101116; margin: 0 0 30px; }
+  .e-bracket { font-weight: 600; font-size: 0.46em; letter-spacing: 0.01em; color: #4a4d55; white-space: nowrap; }
+  .e-bracket em { font-style: italic; font-weight: 700; }
+
+  /* stages — readable, numbered flow */
+  .e-stages { display: grid; grid-template-columns: 1fr 1fr; }
+  .e-stage { padding: 26px 0 28px; border-top: 1px solid #d4d3cb; }
+  .e-stage:nth-child(2n+1) { border-right: 1px solid #d4d3cb; padding-right: 46px; }
+  .e-stage:nth-child(2n) { padding-left: 46px; }
+  .e-num { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: clamp(14px, 1.5vw, 16px);
+    letter-spacing: 0.08em; text-transform: uppercase; color: #55585f; }
+  .e-nn { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic;
+    font-size: clamp(21px, 2.3vw, 28px); line-height: 0.9; letter-spacing: -0.02em; }
+  .e-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+    font-size: clamp(19px, 2vw, 25px); line-height: 1.16; letter-spacing: -0.015em; color: #2a2d34; margin: 0; }
+  .e-stmt b { color: #101116; font-weight: 700; }
+  .e-mini { font-family: 'JetBrains Mono', monospace; font-size: clamp(14px, 1.4vw, 16px);
+    letter-spacing: 0.01em; color: #5c5f66; margin: 12px 0 0; line-height: 1.6; }
+  .e-sep { color: #b3b1a8; }
+  .e-tool { color: var(--eb); }
+  .e-tool:nth-of-type(3n+2) { color: var(--eg); }
+  .e-tool:nth-of-type(3n) { color: var(--ev); }
+
+  /* THE PAYOFF — the emphasis of the whole section */
+  .e-payoff { font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: clamp(21px, 2.8vw, 34px); line-height: 1.12; letter-spacing: -0.022em; color: #101116;
+    margin: 40px 0 0; max-width: 1040px; border-left: 4px solid var(--eg); padding-left: 26px; }
+  .e-payoff b { font-weight: 700; }
+
+  /* commercial result (sizing kept) */
+  .e-result-wrap { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; gap: 26px; margin-top: 4px; }
+  .e-vbar { width: 3px; border-radius: 3px; align-self: stretch; min-height: 100%;
+    background: linear-gradient(180deg, transparent, var(--eg) 22%, var(--eg) 78%, transparent); }
+  .e-result { font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: clamp(23px, 3.2vw, 40px); line-height: 1.1; letter-spacing: -0.025em; color: #101116; margin: 0; }
+  .e-result b { font-weight: 700; }
+
+  /* ── reveal system (scoped) ── */
+  [data-reveal] { opacity: 0; transform: translateY(24px);
+    transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  [data-reveal].in { opacity: 1; transform: none; }
+  .enter-left[data-reveal] { transform: translateX(-46px); }
+  .enter-right[data-reveal] { transform: translateX(46px); }
+  .enter-left[data-reveal].in, .enter-right[data-reveal].in { transform: none; }
+  .mask-reveal[data-reveal] { opacity: 1; transform: none; overflow: hidden; }
+  .mask-reveal[data-reveal] > * { transform: translateY(114%); transition: transform 1.05s cubic-bezier(.22,1,.36,1); }
+  .mask-reveal[data-reveal].in > * { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], .enter-left[data-reveal], .enter-right[data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .mask-reveal[data-reveal] > * { transform: none !important; transition: none !important; }
+  }
+
+  /* ── mobile ── */
+  @media (max-width: 820px) {
+    .e-two { grid-template-columns: 1fr; gap: 34px; }
+    .e-side:first-child { padding-right: 0; border-right: 0; border-bottom: 1px solid #cdccc4; padding-bottom: 30px; }
+    .e-side:last-child { padding-left: 0; }
+    .enter-left[data-reveal], .enter-right[data-reveal] { transform: translateY(24px); }
+    .e-stages { grid-template-columns: 1fr; }
+    .e-stage:nth-child(2n+1) { border-right: 0; padding-right: 0; }
+    .e-stage:nth-child(2n) { padding-left: 0; }
+  }
+  @media (max-width: 640px) {
+    .engine { padding: 66px 0; }
+    .e-title { font-size: clamp(44px, 13.5vw, 60px); line-height: 0.94; }
+    .e-h2 { font-size: clamp(25px, 8vw, 38px); }
+    .e-lead p { font-size: clamp(25px, 7.4vw, 36px); }
+    .e-div { margin: 32px 0; }
+    .e-retool { font-size: clamp(30px, 9.5vw, 44px); }
+    .e-payoff { font-size: clamp(26px, 8vw, 40px); padding-left: 18px; }
+    .e-result { font-size: clamp(28px, 8.4vw, 46px); }
+    .e-result-wrap { gap: 16px; }
   }
 </style>
