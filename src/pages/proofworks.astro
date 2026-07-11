@@ -1,0 +1,650 @@
+---
+import { Image } from 'astro:assets';
+import headshot from '../assets/photos/headshot.png';
+import Analytics from '@vercel/analytics/astro';
+
+const title = '/proofworks — Kyle Findlay';
+const description = 'A founder thesis on proof-of-work talent for the AI labor market: identifying adaptable talent, validating real workflow ability, and routing people into AI-enabled roles.';
+
+const G = 'var(--g)', C = 'var(--c)', V = 'var(--v)';
+
+const steps = [
+  { n: '01', h: 'Source', b: 'Find adaptable talent with judgment, agency, and learning velocity.', a: 'var(--g)' },
+  { n: '02', h: 'Validate', b: 'Test real workflow ability, not resume keywords.', a: 'oklch(0.82 0.15 200)' },
+  { n: '03', h: 'Sharpen', b: 'Build through projects, not passive classes.', a: 'var(--c)' },
+  { n: '04', h: 'Route', b: 'Place proven talent into AI-enabled roles companies are beginning to define.', a: 'var(--v)' },
+];
+
+// "The bigger market" — old signal vs better signal
+const traits = ['judgment', 'agency', 'learning velocity', 'workflow instinct', 'communication', 'systems thinking', 'comfort with ambiguity', 'ability to learn by building'];
+const oldSignal = ['resume titles', 'keywords', 'certificates', 'years of experience', 'past job scope'];
+const betterSignal = ['proof-of-work', 'workflow judgment', 'learning velocity', 'tool fluency', 'systems thinking', 'real artifacts'];
+
+const signals = [
+  { t: 'workflow judgment', a: 'var(--g)' }, { t: 'systems thinking' }, { t: 'communication' },
+  { t: 'execution' }, { t: 'agency', a: 'var(--c)' }, { t: 'tool curiosity' },
+  { t: 'process improvement' }, { t: 'comfort with ambiguity' }, { t: 'learns by building', a: 'var(--v)' },
+];
+const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
+
+const buildInto = [
+  { h: 'Account operator', from: 'account manager / director / client services', builds: ['account intelligence', 'renewal-risk detection', 'meeting synthesis', 'personalized follow-up', 'strategic briefs'] },
+  { h: 'Workflow operator', from: 'project manager / ops lead / coordinator', builds: ['workflow automation', 'status synthesis', 'dependency mapping', 'implementation playbooks'] },
+  { h: 'Customer operator', from: 'customer success / support lead / onboarding', builds: ['churn signals', 'playbooks', 'customer summaries', 'onboarding automation', 'support workflows'] },
+  { h: 'GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: ['research automation', 'CRM hygiene', 'lead scoring', 'reporting', 'outbound systems'] },
+  { h: 'Product & delivery operator', from: 'product ops / delivery mgr / QA / tech coordinator', builds: ['specs', 'QA workflows', 'feedback synthesis', 'implementation tracking', 'eval workflows'] },
+  { h: 'Admin & workflow operator', from: 'paralegal / compliance / healthcare admin / finance / HR', builds: ['intake routing', 'document workflows', 'compliance checklists', 'summary systems', 'process tracking'] },
+];
+
+const clusters = [
+  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, executive assistants, implementation specialists, business analysts', a: 'var(--g)' },
+  { h: 'Customer / account', roles: 'account managers, account directors, customer success managers, client services, onboarding specialists, renewals managers, partnerships managers', a: 'var(--c)' },
+  { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement', a: 'var(--v)' },
+  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts', a: 'var(--g)' },
+  { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators', a: 'var(--c)' },
+];
+
+const before = ['passive courses', 'certificates', 'generic AI literacy', 'watching tutorials', 'claiming fluency'];
+const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs & automations', 'implementation playbooks', 'proof companies can evaluate'];
+
+const looking = [
+  { t: 'adaptable operators who want to prove what they can build', a: 'var(--g)' },
+  { t: 'companies trying to find AI-capable talent before job titles catch up', a: 'var(--c)' },
+  { t: 'recruiters noticing new AI-era role demand', a: 'var(--v)' },
+  { t: 'technical cofounders interested in proof-of-work talent platforms', a: 'var(--g)' },
+  { t: 'professionals whose resumes undersell what they could become with AI', a: 'var(--c)', full: true },
+];
+
+const email = 'kylefindlay828@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
+const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kylefindlay.xyz/proofworks" />
+    <meta property="og:image" content="https://kylefindlay.xyz/og-about.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kylefindlay.xyz/og-about.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 74px; -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0; background: #06070a; color: #eef1f4;
+        font-family: 'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+        --g: oklch(0.85 0.16 155); --c: oklch(0.8 0.15 232); --v: oklch(0.8 0.15 300);
+        overflow-x: hidden;
+      }
+      ::selection { background: oklch(0.85 0.16 155 / 0.28); }
+      a { text-decoration: none; }
+
+      #bg { position: fixed; inset: 0; z-index: 0; display: block; }
+      .dotgrid { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+        background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 34px 34px;
+        -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 85%);
+        mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 85%); }
+      .wrap { position: relative; z-index: 2; }
+      .col { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+      .disp { font-family: 'Space Grotesk', sans-serif; }
+      .mono { font-family: 'JetBrains Mono', monospace; }
+      h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+
+      /* nav */
+      .nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px);
+        background: rgba(6,7,10,0.55); border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .nav-in { max-width: 1120px; margin: 0 auto; padding: 13px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 14px; }
+      .nav a { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #aab2bc; transition: color .2s; }
+      .nav a:hover { color: #eef1f4; }
+      .nav .brand { color: #eef1f4; }
+      .nav-others { display: flex; align-items: center; gap: 12px; padding: 7px 16px;
+        border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; background: rgba(255,255,255,0.02); }
+      .nav-others a { color: #8b94a0; }
+      .nav-others .sep { color: #40474f; }
+      .navpill { color: var(--g) !important; border: 1px solid oklch(0.85 0.16 155 / 0.4);
+        border-radius: 100px; padding: 6px 14px; background: oklch(0.85 0.16 155 / 0.06); }
+
+      .sec { padding: 70px 0; }
+      .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--g); margin: 0 0 34px; }
+
+      /* hero */
+      .hero { padding: 120px 0 90px; }
+      .hero .eyebrow { color: #8b94a0; letter-spacing: .18em; margin-bottom: 26px; }
+      .h1 { font-size: clamp(56px, 10vw, 132px); line-height: .92; letter-spacing: -0.03em; }
+      .h1 .slash { color: #4b5560; }
+      .h1 .grad { background: linear-gradient(100deg, var(--g), var(--c), var(--v));
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .subhead { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(22px, 3vw, 32px);
+        line-height: 1.18; letter-spacing: -0.01em; margin: 30px 0 0; max-width: 780px; }
+      .support { font-size: 19px; line-height: 1.55; color: #aeb6c0; margin: 20px 0 0; max-width: 620px; }
+      .support b { color: #eef1f4; font-weight: 600; }
+      .cta-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 34px; }
+      .btn-g { font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--g); color: #06251a;
+        padding: 14px 26px; border-radius: 100px; border: 0; cursor: pointer; transition: opacity .2s; }
+      .btn-g:hover { opacity: .9; }
+      .status { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8b94a0; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g); box-shadow: 0 0 12px var(--g); animation: pulseGlow 1.8s ease-in-out infinite; }
+      /* full-width editorial hero */
+      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(36px, 6.2vw, 72px); line-height: 1.0; letter-spacing: -0.03em; color: #eef1f4; margin: 18px 0 0; max-width: 1040px; }
+      .hero-head .accent { color: var(--g); font-style: italic; }
+      .hero-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(19px, 2.1vw, 27px); line-height: 1.38; letter-spacing: -0.01em; color: #c7cdd4; margin: 26px 0 0; max-width: 960px; }
+      .hero-lead b { color: #ffffff; font-weight: 600; }
+      .hero-sub { font-size: clamp(15px, 1.5vw, 17px); line-height: 1.6; color: #8b94a0; margin: 18px 0 0; max-width: 900px; }
+      .hero-sub b { color: #dfe4ea; font-weight: 600; }
+      .hero-sub i { color: #c7cdd4; }
+      /* wide video band (lives lower on the page) */
+      .video-band { position: relative; width: 100%; height: clamp(280px, 40vw, 440px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .video-band .play { width: 74px; height: 74px; border-radius: 50%; background: var(--g); display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 40px -10px rgba(0,0,0,.55); }
+      .video-band .vlabel { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #c7cdd4; margin-top: 20px; }
+      .video-band .vsub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--g); margin-top: 7px; }
+      /* big impactful statement near the top */
+      .impact { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; color: #eef1f4; margin: 0; max-width: 1040px; }
+      .impact .accent { color: var(--g); }
+      .impact .dim { color: #7b8490; font-style: italic; }
+
+      /* section heading for "The bigger market" */
+      .mkt-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; }
+      .mkt-sub { font-size: 17px; line-height: 1.5; color: #aeb6c0; margin: 16px 0 22px; max-width: 640px; }
+      /* strongest system step (Route) */
+      .step-strong { border-color: color-mix(in srgb, var(--v) 45%, rgba(255,255,255,0.09)); background: rgba(255,255,255,0.075);
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--v) 22%, transparent), 0 24px 50px -34px color-mix(in srgb, var(--v) 85%, transparent); }
+
+      /* generic card */
+      .card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 18px; position: relative; overflow: hidden;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .spanel { border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); border-radius: 18px; padding: 26px 30px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+      /* system */
+      .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .step { padding: 22px 22px 26px; }
+      .step .glow { position: absolute; inset: 0; pointer-events: none; }
+      .step .lbl { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: .06em; position: relative; }
+      .step h3 { font-size: 22px; margin: 14px 0 10px; position: relative; }
+      .step p { font-size: 15px; line-height: 1.5; color: #aeb6c0; margin: 0; position: relative; }
+
+      /* who we source */
+      .source-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 44px; }
+      .panel-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; margin: 0 0 22px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+      .chip { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 9px 15px; border-radius: 100px;
+        background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14); color: #c7cdd4; }
+      .evid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 26px; }
+      .evid li { list-style: none; display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: #c7cdd4; line-height: 1.4; }
+      .evid .ck { color: var(--g); }
+      ul { margin: 0; padding: 0; }
+
+      /* what we build */
+      .intro { font-size: 19px; line-height: 1.5; color: #aeb6c0; margin: -14px 0 34px; max-width: 720px; }
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .role { padding: 24px 24px 26px; }
+      .role h3 { font-size: 20px; margin: 0 0 10px; }
+      .role .from { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8b94a0; margin: 0 0 16px; line-height: 1.5; }
+      .role .builds-lbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .04em; margin: 0 0 11px; }
+      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+      .tag { font-size: 13px; padding: 5px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); color: #c7cdd4; }
+
+      /* role universe */
+      .univ h2 { font-size: clamp(32px, 5vw, 56px); line-height: 1.02; margin: 0 0 30px; max-width: 760px; }
+      .urow { display: grid; grid-template-columns: 280px 1fr; gap: 30px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.09); }
+      .urow:last-child { border-bottom: 1px solid rgba(255,255,255,0.09); }
+      .urow .cat { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; }
+      .urow .rl { font-size: 16px; line-height: 1.55; color: #aeb6c0; }
+
+      /* proof of work */
+      .pow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; }
+      .pow-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.045); border-radius: 18px; padding: 26px 28px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .pow-card.after { border-color: oklch(0.85 0.16 155 / 0.3); background: oklch(0.85 0.16 155 / 0.05); }
+      .pow-lbl { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 18px; }
+      .pow li { list-style: none; display: flex; gap: 12px; align-items: center; font-size: 15px; margin: 12px 0; }
+      .pow .before-l { color: #8892a0; } .pow .before-l .m { color: #5a636e; }
+      .pow .after-l { color: #dfe4ea; } .pow .after-l .m { color: var(--g); }
+      .arrow { font-size: 30px; color: var(--g); padding: 0 26px; animation: floaty 3s ease-in-out infinite; }
+      .pow-close { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(22px, 3.4vw, 34px);
+        line-height: 1.25; letter-spacing: -0.02em; margin: 44px 0 0; max-width: 900px; }
+      .pow-close b { color: var(--g); font-weight: 500; }
+      .pow-close .q { font-style: italic; color: #c7cdd4; }
+
+      /* why me */
+      .why-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(24px, 3.6vw, 38px);
+        line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 40px; max-width: 900px; }
+      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .stat { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 24px 22px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .statnum { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 44px; letter-spacing: -0.02em; line-height: 1; }
+      .statlbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9aa3ad; margin-top: 12px; letter-spacing: .02em; }
+      .why-close { font-size: 18px; line-height: 1.55; color: #aeb6c0; margin: 36px 0 0; max-width: 640px; }
+
+      /* looking to meet */
+      .meet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .meet { display: flex; gap: 14px; align-items: center; border: 1px solid rgba(255,255,255,0.09);
+        background: rgba(255,255,255,0.045); border-radius: 14px; padding: 20px 22px; font-size: 16px; color: #dfe4ea;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .meet .ar { flex-shrink: 0; }
+      .meet.full { grid-column: 1 / -1; }
+
+      /* contact */
+      .contact-panel { border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; backdrop-filter: blur(6px);
+        background: linear-gradient(140deg, oklch(0.85 0.16 155 / 0.06), oklch(0.8 0.15 300 / 0.05)); padding: 34px 36px; }
+      .contact-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+      .who { display: flex; align-items: center; gap: 18px; }
+      .avatar { width: 132px; height: 164px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); flex-shrink: 0; }
+      .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; transform: scale(1.35) translateY(-10%); transform-origin: top center; }
+      .who .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; }
+      .who .loc { color: #9aa3ad; font-size: 15px; margin-top: 3px; }
+      .contact-actions { display: flex; align-items: center; gap: 12px; }
+      .pill-out { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 100px; padding: 12px 20px; transition: border-color .2s; }
+      .pill-out:hover { border-color: rgba(255,255,255,0.4); }
+      .contact-email { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #9aa3ad; margin: 22px 0 0; }
+      .foot { display: flex; gap: 22px; flex-wrap: wrap; padding: 30px 0 60px; }
+      .foot a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
+      .foot a:hover { color: var(--g); }
+
+      /* reveal + ambient motion */
+      [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+      [data-reveal].in { opacity: 1; transform: none; }
+      @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+      @keyframes pulseGlow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) {
+        [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .arrow, .dot { animation: none !important; }
+        html { scroll-behavior: auto; }
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+        .grid4 { grid-template-columns: 1fr 1fr; }
+        .grid3 { grid-template-columns: 1fr 1fr; }
+        .source-grid { grid-template-columns: 1fr; gap: 40px; }
+        .stat-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 640px) {
+        .hero { padding: 90px 0 60px; }
+        .grid4, .grid3, .meet-grid, .evid, .stat-grid { grid-template-columns: 1fr; }
+        .urow { grid-template-columns: 1fr; gap: 8px; }
+        .pow { grid-template-columns: 1fr; gap: 16px; }
+        .arrow { transform: rotate(90deg); padding: 4px 0; }
+        .contact-row { flex-direction: column; align-items: flex-start; }
+      }
+    </style>
+    <Analytics />
+  </head>
+  <body>
+    <canvas id="bg"></canvas>
+    <div class="dotgrid"></div>
+
+    <div class="wrap">
+      <!-- NAV -->
+      <nav class="nav">
+        <div class="nav-in">
+          <a href="/" class="brand mono">Kyle Findlay</a>
+          <div class="nav-others mono">
+            <a href="/gtm-radar">GTM Radar V1</a>
+            <span class="sep">·</span>
+            <a href="/radar-v2">GTM Radar V2</a>
+            <span class="sep">·</span>
+            <a href="/">About &amp; Contact</a>
+          </div>
+          <a href="/proofworks" class="navpill mono">/proofworks</a>
+        </div>
+      </nav>
+
+      <main>
+        <!-- HERO -->
+        <section class="hero">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Kyle Findlay · Founder thesis</p>
+            <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
+            <p class="hero-lead" data-reveal style="transition-delay:.14s">AI is creating new capabilities inside existing roles — finding people who can <b>adapt</b>, proving what they can <b>build</b>, and <b>routing</b> them into the companies that need them.</p>
+            <p class="hero-sub" data-reveal style="transition-delay:.18s">The market is not just people who already know AI — it's the <b>much larger group</b> of operators, coordinators, account people, analysts, assistants, and generalists whose resumes show <b>old titles</b>, but whose <i>judgment, agency, and learning velocity</i> could make them valuable in AI-enabled work.</p>
+            <div class="cta-row" data-reveal style="transition-delay:.22s">
+              <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
+              <a href="mailto:kylefindlay828@gmail.com?subject=Find%20operators" class="pill-out">Find operators</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- IMPACT STATEMENT -->
+        <section class="sec">
+          <div class="col">
+            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
+          </div>
+        </section>
+
+        <!-- ROLE UNIVERSE -->
+        <section class="sec univ">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The role universe</p>
+            <h2 data-reveal style="transition-delay:.06s">A large, underserved talent market.</h2>
+            <div class="spanel" style="padding: 6px 30px;">
+              {clusters.map((c, i) => (
+                <div class="urow" data-reveal style={`transition-delay:${i * 60}ms`}>
+                  <div class="cat" style={`color:${c.a}`}>{c.h}</div>
+                  <div class="rl">{c.roles}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- WHAT WE BUILD THEM INTO -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>What we build them into</p>
+            <p class="intro" data-reveal style="transition-delay:.06s">AI expands what strong operators can do — not every role just becomes “AI [title].”</p>
+            <div class="grid3">
+              {buildInto.map((c, i) => (
+                <div class="card role" data-reveal style={`transition-delay:${(i % 3) * 80}ms`}>
+                  <h3>{c.h}</h3>
+                  <p class="from">from · {c.from}</p>
+                  <p class="builds-lbl" style={`color:${buildAccents[i % 3]}`}>builds ↓</p>
+                  <div class="tags">
+                    {c.builds.map((b) => <span class="tag">{b}</span>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- THE SYSTEM -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The system</p>
+            <div class="grid4">
+              {steps.map((s, i) => (
+                <div class:list={["card step", i === 3 && "step-strong"]} data-reveal style={`transition-delay:${i * 80}ms`}>
+                  <div class="glow" style={`background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${s.a} ${i === 3 ? 20 : 12}%, transparent), transparent 60%)`}></div>
+                  <span class="lbl" style={`color:${s.a}`}>{s.h} · {s.n}</span>
+                  <h3>{s.h}</h3>
+                  <p>{s.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- THE BIGGER MARKET -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The bigger market</p>
+            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">The market is not just AI power users.</h2>
+            <p class="mkt-sub" data-reveal style="transition-delay:.1s">It is the much larger group whose resumes show old titles, but whose traits point to future value.</p>
+            <div class="chips" data-reveal style="transition-delay:.12s">
+              {traits.map((t) => <span class="chip">{t}</span>)}
+            </div>
+            <div class="pow" style="margin-top: 28px;">
+              <div class="pow-card" data-reveal>
+                <p class="pow-lbl" style="color:#8b94a0">Old signal</p>
+                <ul>{oldSignal.map((s) => <li class="before-l"><span class="m">✕</span>{s}</li>)}</ul>
+              </div>
+              <div class="arrow" data-reveal style="transition-delay:.1s" aria-hidden="true">→</div>
+              <div class="pow-card after" data-reveal style="transition-delay:.14s">
+                <p class="pow-lbl" style="color:var(--g)">Better signal</p>
+                <ul>{betterSignal.map((s) => <li class="after-l"><span class="m">◆</span>{s}</li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIDEO (dropped lower on the page) -->
+        <section class="sec">
+          <div class="col">
+            <div class="video-band" data-reveal>
+              <span class="play"><svg viewBox="0 0 24 24" width="26" height="26" fill="#06251a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+              <p class="vlabel">90-second founder thesis</p>
+              <p class="vsub">coming soon</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- WHO WE SOURCE -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Who we source</p>
+            <p class="intro" data-reveal style="transition-delay:.06s">Some candidates already use AI tools. Many others show the raw traits that predict they could become valuable in AI-enabled work.</p>
+            <div class="spanel" data-reveal style="transition-delay:.1s">
+              <h3 class="panel-title">Evidence we look for</h3>
+              <ul class="evid">
+                {evidence.map((e) => (
+                  <li><span class="ck">✓</span>{e}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROOF OF WORK -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Not classes. Proof-of-work.</p>
+            <div class="pow">
+              <div class="pow-card" data-reveal>
+                <p class="pow-lbl" style="color:#8b94a0">Before</p>
+                <ul>
+                  {before.map((b) => <li class="before-l"><span class="m">✕</span>{b}</li>)}
+                </ul>
+              </div>
+              <div class="arrow" data-reveal style="transition-delay:.1s" aria-hidden="true">→</div>
+              <div class="pow-card after" data-reveal style="transition-delay:.14s">
+                <p class="pow-lbl" style="color:var(--g)">After</p>
+                <ul>
+                  {after.map((a) => <li class="after-l"><span class="m">◆</span>{a}</li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WHY ME -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Why me</p>
+            <p class="why-stmt" data-reveal style="transition-delay:.06s">My background is GTM execution, project management, client delivery, and workflow-heavy operations.</p>
+            <div class="stat-grid">
+              <div class="stat" data-reveal>
+                <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
+                <div class="statlbl">owned annually</div>
+              </div>
+              <div class="stat" data-reveal style="transition-delay:.08s">
+                <div class="statnum" style="color:var(--c)">$5–6M</div>
+                <div class="statlbl">supported</div>
+              </div>
+              <div class="stat" data-reveal style="transition-delay:.16s">
+                <div class="statnum" style="color:var(--v)">30–40</div>
+                <div class="statlbl">programs / year</div>
+              </div>
+              <div class="stat" data-reveal style="transition-delay:.24s">
+                <div class="statnum" style="color:var(--g)" data-count data-count-to="12" data-count-dec="0" data-count-suffix="+">12+</div>
+                <div class="statlbl">national brands</div>
+              </div>
+            </div>
+            <p class="why-close" data-reveal>I build close to customers, test fast, and turn messy workflows into shipped systems.</p>
+          </div>
+        </section>
+
+        <!-- LOOKING TO MEET -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Looking to meet</p>
+            <div class="meet-grid">
+              {looking.map((m, i) => (
+                <div class:list={["meet", m.full && "full"]} data-reveal style={`transition-delay:${i * 60}ms`}>
+                  <span class="ar" style={`color:${m.a}`}>→</span>{m.t}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="sec" id="contact">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Contact</p>
+            <div class="contact-panel" data-reveal>
+              <div class="contact-row">
+                <div class="who">
+                  <div class="avatar"><Image src={headshot} alt="Kyle Findlay" width={360} height={450} /></div>
+                  <div>
+                    <div class="nm">Kyle Findlay</div>
+                    <div class="loc">San Francisco / Los Angeles</div>
+                  </div>
+                </div>
+                <div class="contact-actions">
+                  <button id="copy-email" class="btn-g" data-email={email} type="button"><span class="ce">Copy email</span> ⧉</button>
+                  <a href={linkedin} target="_blank" rel="noopener" class="pill-out">LinkedIn ↗</a>
+                </div>
+              </div>
+              <p class="contact-email">{email}</p>
+            </div>
+            <div class="foot">
+              <a href="/">About &amp; Contact</a>
+              <a href="/gtm-radar">GTM Radar V1</a>
+              <a href="/radar-v2">GTM Radar V2</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // ── animated background: aurora blobs (hue-drift) + constellation network ──
+      (() => {
+        const canvas = document.getElementById('bg');
+        if (!(canvas instanceof HTMLCanvasElement)) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let W = 0, H = 0;
+        function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          W = window.innerWidth; H = window.innerHeight;
+          canvas.width = W * dpr; canvas.height = H * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        const blobs = [
+          { hue: 138, r: .44, ox: .26, oy: .34, ax: .12, ay: .10, sx: .075, sy: .055, hs: 5, op: 0.6, sr: .090, so: .070 },   // green (reduced, stays on-page)
+          { hue: 224, r: .56, ox: .74, oy: .40, ax: .13, ay: .12, sx: .105, sy: .125, hs: -6, op: 1.5, sr: .110, so: .085 }, // blue (clear blue)
+          { hue: 282, r: .52, ox: .50, oy: .70, ax: .14, ay: .11, sx: .130, sy: .085, hs: 8, op: 1.25, sr: .080, so: .100 },  // purple
+        ];
+        const N = 230, pts = [];
+        for (let i = 0; i < N; i++) pts.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * 0.00012, vy: (Math.random() - .5) * 0.00012 });
+        const start = performance.now();
+        const maxD = 0.062;
+        function frame(now) {
+          const t = (now - start) / 1000;
+          ctx.clearRect(0, 0, W, H);
+          ctx.fillStyle = '#06070a'; ctx.fillRect(0, 0, W, H);
+          ctx.globalCompositeOperation = 'lighter';
+          for (const b of blobs) {
+            const cx = (b.ox + Math.sin(t * b.sx) * b.ax) * W;
+            const cy = (b.oy + Math.cos(t * b.sy) * b.ay) * H;
+            const rad = b.r * Math.max(W, H) * 0.5 * (1 + Math.sin(t * (b.sr ?? .08) + b.hue) * 0.15);
+            const hue = b.hue + Math.sin(t * 0.12) * b.hs;
+            const op = (b.op ?? 1) * (0.88 + 0.14 * Math.sin(t * (b.so ?? .08) + b.r * 12));
+            const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+            g.addColorStop(0, `hsla(${hue}, 90%, 72%, ${0.42 * op})`);
+            g.addColorStop(0.3, `hsla(${hue}, 85%, 60%, ${0.22 * op})`);
+            g.addColorStop(0.66, `hsla(${hue}, 75%, 48%, ${0.07 * op})`);
+            g.addColorStop(1, `hsla(${hue}, 70%, 45%, 0)`);
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.fill();
+          }
+          ctx.globalCompositeOperation = 'source-over';
+          for (let i = 0; i < N; i++) {
+            const p = pts[i];
+            if (!reduce) {
+              p.x += p.vx; p.y += p.vy;
+              if (p.x < 0 || p.x > 1) p.vx *= -1;
+              if (p.y < 0 || p.y > 1) p.vy *= -1;
+              p.x = Math.max(0, Math.min(1, p.x)); p.y = Math.max(0, Math.min(1, p.y));
+            }
+            for (let j = i + 1; j < N; j++) {
+              const q = pts[j];
+              const dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx, dy);
+              if (d < maxD) {
+                ctx.strokeStyle = `rgba(180,200,210,${0.10 * (1 - d / maxD)})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(p.x * W, p.y * H); ctx.lineTo(q.x * W, q.y * H); ctx.stroke();
+              }
+            }
+          }
+          for (const p of pts) {
+            ctx.fillStyle = 'rgba(200,215,225,0.5)';
+            ctx.beginPath(); ctx.arc(p.x * W, p.y * H, 1.3, 0, Math.PI * 2); ctx.fill();
+          }
+          if (!reduce) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      })();
+
+      // ── scroll reveal + count-up ──
+      (() => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function countUp(el) {
+          const to = parseFloat(el.dataset.countTo || '0');
+          const dec = parseInt(el.dataset.countDec || '0', 10);
+          const pre = el.dataset.countPrefix || '', suf = el.dataset.countSuffix || '';
+          const dur = 1200, start = performance.now();
+          function step(now) {
+            const p = Math.min(1, (now - start) / dur);
+            const e = 1 - Math.pow(1 - p, 3);
+            el.textContent = pre + (to * e).toFixed(dec) + suf;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+        const els = document.querySelectorAll('[data-reveal]');
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('in'));
+          document.querySelectorAll('[data-count]').forEach((el) => countUp(el));
+          return;
+        }
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('in');
+            const c = e.target.querySelector('[data-count]');
+            if (c && !c.dataset.done) { c.dataset.done = '1'; countUp(c); }
+            o.unobserve(e.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => obs.observe(el));
+      })();
+
+      // ── copy email ──
+      (() => {
+        const btn = document.getElementById('copy-email');
+        if (!btn) return;
+        const label = btn.querySelector('.ce');
+        const original = label ? label.textContent : '';
+        btn.addEventListener('click', async () => {
+          try { await navigator.clipboard.writeText(btn.dataset.email || ''); }
+          catch { const t = document.createElement('textarea'); t.value = btn.dataset.email || ''; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+          if (label) { label.textContent = 'Copied!'; setTimeout(() => { label.textContent = original; }, 1600); }
+        });
+      })();
+    </script>
+  </body>
+</html>
