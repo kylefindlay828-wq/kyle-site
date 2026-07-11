@@ -22,7 +22,7 @@ const bridge = [
 ];
 
 const flow = [
-  { v: 'Find', l: 'Adaptable operators' },
+  { v: 'Map', l: 'Adaptable operators' },
   { v: 'Validate', l: 'Real workflows' },
   { v: 'Sharpen', l: 'Stronger proof' },
   { v: 'Route', l: 'Jobs and contracts' },
@@ -135,6 +135,11 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       /* hero */
       .hero { padding: 120px 0 90px; }
       .hero .eyebrow { color: #8b94a0; letter-spacing: .18em; margin-bottom: 26px; }
+      .brandblock { margin-bottom: 20px; }
+      .brandname { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(21px, 2.4vw, 27px);
+        letter-spacing: 0.16em; text-transform: uppercase; color: #eef1f4; margin: 0; }
+      .brandsub { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px;
+        letter-spacing: 0.1em; text-transform: uppercase; color: #8b94a0; margin: 8px 0 0; }
       .h1 { font-size: clamp(56px, 10vw, 132px); line-height: .92; letter-spacing: -0.03em; }
       .h1 .slash { color: #4b5560; }
       .h1 .grad { background: linear-gradient(100deg, var(--g), var(--c), var(--v));
@@ -342,9 +347,12 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         <!-- HERO -->
         <section class="hero">
           <div class="col">
-            <p class="eyebrow" data-reveal>Kyle Findlay · Founder thesis</p>
+            <div class="brandblock" data-reveal>
+              <p class="brandname">PROOFWORKS</p>
+              <p class="brandsub">Founder thesis by Kyle Findlay</p>
+            </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>finds</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into AI-enabled companies.</p>
+            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>maps</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into AI-enabled companies.</p>
             <p class="hero-sub" data-reveal style="transition-delay:.18s">We help enterprises <span class="g">identify, retool, and deploy AI-capable operators</span>—while helping talent build careers around the work companies need next.</p>
             <div class="cta-row" data-reveal style="transition-delay:.22s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
@@ -413,22 +421,11 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           </div>
         </section>
 
-        <!-- FOUNDER VIDEO -->
-        <section class="sec">
-          <div class="col">
-            <div class="video-band" data-reveal>
-              <span class="play"><svg viewBox="0 0 24 24" width="26" height="26" fill="#06251a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-              <p class="vlabel">90-second founder thesis</p>
-              <p class="vsub">coming soon</p>
-            </div>
-          </div>
-        </section>
-
         <!-- WHY ME -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>Why this founder</p>
-            <p class="why-stmt" data-reveal style="transition-delay:.06s">Deep firsthand experience in GTM execution, project management, client delivery, and turning messy workflows into scalable systems.</p>
+            <p class="why-stmt" data-reveal style="transition-delay:.06s">Running complex client programs showed me that the people most capable of adapting, improving work, and taking on new responsibilities are often poorly represented by their formal roles.</p>
             <div class="stat-grid">
               <div class="stat" data-reveal>
                 <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
@@ -447,7 +444,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                 <div class="statlbl">national brands</div>
               </div>
             </div>
-            <p class="why-close" data-reveal>I build close to customers, test fast, and ship — 12+ national brands at Beyond Meat scale. A real edge in designing talent systems rooted in how work actually gets done.</p>
+            <p class="why-close" data-reveal>I have built three iterations of this thesis across labor-market intelligence, talent signals, and workforce retooling—starting with GTM Radar V1, evolving through GTM Radar V2, and now Proofworks.</p>
             <p class="why-close" data-reveal style="margin-top:14px"><b style="color:#eef1f4">Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of AI, talent, and real operator workflows.</p>
           </div>
         </section>
