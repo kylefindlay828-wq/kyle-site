@@ -4,23 +4,28 @@ import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
 
 const title = '/skillshift — Kyle Findlay';
-const description = 'A founder thesis on sourcing, validating, sharpening, and deploying AI-native operators through proof-of-work.';
+const description = 'A founder thesis on proof-of-work talent for the AI labor market: identifying adaptable talent, validating real workflow ability, and routing people into AI-enabled roles.';
 
 const G = 'var(--g)', C = 'var(--c)', V = 'var(--v)';
 
 const steps = [
-  { n: '01', h: 'Source', b: 'Find people with workflow judgment, agency, and tool curiosity.', a: 'var(--g)' },
-  { n: '02', h: 'Validate', b: 'Test through proof-of-work, not certificates.', a: 'oklch(0.82 0.15 200)' },
-  { n: '03', h: 'Sharpen', b: 'Build real workflows with AI-native tools.', a: 'var(--c)' },
-  { n: '04', h: 'Deploy', b: 'Route into higher-value roles or internal AI workflow capacity.', a: 'var(--v)' },
+  { n: '01', h: 'Source', b: 'Find adaptable talent with judgment, agency, and learning velocity.', a: 'var(--g)' },
+  { n: '02', h: 'Validate', b: 'Test real workflow ability, not resume keywords.', a: 'oklch(0.82 0.15 200)' },
+  { n: '03', h: 'Sharpen', b: 'Build through projects, not passive classes.', a: 'var(--c)' },
+  { n: '04', h: 'Route', b: 'Place proven talent into AI-enabled roles companies are beginning to define.', a: 'var(--v)' },
 ];
+
+// "The bigger market" — old signal vs better signal
+const traits = ['judgment', 'agency', 'learning velocity', 'workflow instinct', 'communication', 'systems thinking', 'comfort with ambiguity', 'ability to learn by building'];
+const oldSignal = ['resume titles', 'keywords', 'certificates', 'years of experience', 'past job scope'];
+const betterSignal = ['proof-of-work', 'workflow judgment', 'learning velocity', 'tool fluency', 'systems thinking', 'real artifacts'];
 
 const signals = [
   { t: 'workflow judgment', a: 'var(--g)' }, { t: 'systems thinking' }, { t: 'communication' },
   { t: 'execution' }, { t: 'agency', a: 'var(--c)' }, { t: 'tool curiosity' },
   { t: 'process improvement' }, { t: 'comfort with ambiguity' }, { t: 'learns by building', a: 'var(--v)' },
 ];
-const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
+const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
 
 const buildInto = [
   { h: 'Account operator', from: 'account manager / director / client services', builds: ['account intelligence', 'renewal-risk detection', 'meeting synthesis', 'personalized follow-up', 'strategic briefs'] },
@@ -43,11 +48,11 @@ const before = ['passive courses', 'certificates', 'generic AI literacy', 'watch
 const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs & automations', 'implementation playbooks', 'proof companies can evaluate'];
 
 const looking = [
-  { t: 'operators already improving workflows with AI', a: 'var(--g)' },
-  { t: 'technical cofounders interested in labor-market intelligence', a: 'var(--c)' },
+  { t: 'adaptable operators who want to prove what they can build', a: 'var(--g)' },
+  { t: 'companies trying to find AI-capable talent before job titles catch up', a: 'var(--c)' },
   { t: 'recruiters noticing new AI-era role demand', a: 'var(--v)' },
-  { t: 'companies trying to build AI workflow capacity', a: 'var(--g)' },
-  { t: 'adaptable professionals trying to move into higher-value roles', a: 'var(--c)', full: true },
+  { t: 'technical cofounders interested in proof-of-work talent platforms', a: 'var(--g)' },
+  { t: 'professionals whose resumes undersell what they could become with AI', a: 'var(--c)', full: true },
 ];
 
 const email = 'kylefindlay828@gmail.com';
@@ -133,6 +138,32 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       .btn-g:hover { opacity: .9; }
       .status { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8b94a0; }
       .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g); box-shadow: 0 0 12px var(--g); animation: pulseGlow 1.8s ease-in-out infinite; }
+      /* full-width editorial hero */
+      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(36px, 6.2vw, 72px); line-height: 1.0; letter-spacing: -0.03em; color: #eef1f4; margin: 18px 0 0; max-width: 1040px; }
+      .hero-head .accent { color: var(--g); font-style: italic; }
+      .hero-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(19px, 2.1vw, 27px); line-height: 1.38; letter-spacing: -0.01em; color: #c7cdd4; margin: 26px 0 0; max-width: 960px; }
+      .hero-lead b { color: #ffffff; font-weight: 600; }
+      .hero-sub { font-size: clamp(15px, 1.5vw, 17px); line-height: 1.6; color: #8b94a0; margin: 18px 0 0; max-width: 900px; }
+      .hero-sub b { color: #dfe4ea; font-weight: 600; }
+      .hero-sub i { color: #c7cdd4; }
+      /* wide video band (lives lower on the page) */
+      .video-band { position: relative; width: 100%; height: clamp(280px, 40vw, 440px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .video-band .play { width: 74px; height: 74px; border-radius: 50%; background: var(--g); display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 40px -10px rgba(0,0,0,.55); }
+      .video-band .vlabel { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #c7cdd4; margin-top: 20px; }
+      .video-band .vsub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--g); margin-top: 7px; }
+      /* big impactful statement near the top */
+      .impact { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; color: #eef1f4; margin: 0; max-width: 1040px; }
+      .impact .accent { color: var(--g); }
+      .impact .dim { color: #7b8490; font-style: italic; }
+
+      /* section heading for "The bigger market" */
+      .mkt-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; }
+      .mkt-sub { font-size: 17px; line-height: 1.5; color: #aeb6c0; margin: 16px 0 22px; max-width: 640px; }
+      /* strongest system step (Route) */
+      .step-strong { border-color: color-mix(in srgb, var(--v) 45%, rgba(255,255,255,0.09)); background: rgba(255,255,255,0.075);
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--v) 22%, transparent), 0 24px 50px -34px color-mix(in srgb, var(--v) 85%, transparent); }
 
       /* generic card */
       .card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 18px; position: relative; overflow: hidden;
@@ -240,6 +271,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
 
       /* responsive */
       @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; gap: 30px; }
         .grid4 { grid-template-columns: 1fr 1fr; }
         .grid3 { grid-template-columns: 1fr 1fr; }
         .source-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -281,55 +313,20 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         <section class="hero">
           <div class="col">
             <p class="eyebrow" data-reveal>Kyle Findlay · Founder thesis</p>
-            <h1 class="h1" data-reveal style="transition-delay:.06s"><span class="slash">/</span>skill<span class="grad">shift</span></h1>
-            <p class="subhead" data-reveal style="transition-delay:.12s">Sources, validates, sharpens, and deploys <span style={`color:${G}`}>AI-native operators</span>.</p>
-            <p class="support" data-reveal style="transition-delay:.16s">Finding the people who can operate the next version of work. Not classes. <b>Proof-of-work.</b></p>
-            <div class="cta-row" data-reveal style="transition-delay:.2s">
-              <a href="#contact" class="btn-g">Contact Kyle →</a>
-              <span class="status"><span class="dot"></span>90-second founder thesis · coming soon</span>
+            <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
+            <p class="hero-lead" data-reveal style="transition-delay:.14s">AI is creating new capabilities inside existing roles. <b>skillshift</b> finds people who can <b>adapt</b>, proves what they can <b>build</b>, and <b>routes</b> them into the companies that need them.</p>
+            <p class="hero-sub" data-reveal style="transition-delay:.18s">The market is not just people who already know AI — it's the <b>much larger group</b> of operators, coordinators, account people, analysts, assistants, and generalists whose resumes show <b>old titles</b>, but whose <i>judgment, agency, and learning velocity</i> could make them valuable in AI-enabled work.</p>
+            <div class="cta-row" data-reveal style="transition-delay:.22s">
+              <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
+              <a href="mailto:kylefindlay828@gmail.com?subject=Find%20operators" class="pill-out">Find operators</a>
             </div>
           </div>
         </section>
 
-        <!-- THE SYSTEM -->
+        <!-- IMPACT STATEMENT -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>The system</p>
-            <div class="grid4">
-              {steps.map((s, i) => (
-                <div class="card step" data-reveal style={`transition-delay:${i * 80}ms`}>
-                  <div class="glow" style={`background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${s.a} 12%, transparent), transparent 60%)`}></div>
-                  <span class="lbl" style={`color:${s.a}`}>{s.h} · {s.n}</span>
-                  <h3>{s.h}</h3>
-                  <p>{s.b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <!-- WHO WE SOURCE -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Who we source</p>
-            <div class="source-grid">
-              <div class="spanel" data-reveal>
-                <h3 class="panel-title">Operator signals</h3>
-                <div class="chips">
-                  {signals.map((s) => (
-                    <span class="chip" style={s.a ? `color:${s.a}; border-color:color-mix(in srgb, ${s.a} 40%, transparent)` : ''}>{s.t}</span>
-                  ))}
-                </div>
-              </div>
-              <div class="spanel" data-reveal style="transition-delay:.12s">
-                <h3 class="panel-title">Evidence we look for</h3>
-                <ul class="evid">
-                  {evidence.map((e) => (
-                    <li><span class="ck">✓</span>{e}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
           </div>
         </section>
 
@@ -369,6 +366,73 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           </div>
         </section>
 
+        <!-- THE SYSTEM -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The system</p>
+            <div class="grid4">
+              {steps.map((s, i) => (
+                <div class:list={["card step", i === 3 && "step-strong"]} data-reveal style={`transition-delay:${i * 80}ms`}>
+                  <div class="glow" style={`background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${s.a} ${i === 3 ? 20 : 12}%, transparent), transparent 60%)`}></div>
+                  <span class="lbl" style={`color:${s.a}`}>{s.h} · {s.n}</span>
+                  <h3>{s.h}</h3>
+                  <p>{s.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- THE BIGGER MARKET -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The bigger market</p>
+            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">The market is not just AI power users.</h2>
+            <p class="mkt-sub" data-reveal style="transition-delay:.1s">It is the much larger group whose resumes show old titles, but whose traits point to future value.</p>
+            <div class="chips" data-reveal style="transition-delay:.12s">
+              {traits.map((t) => <span class="chip">{t}</span>)}
+            </div>
+            <div class="pow" style="margin-top: 28px;">
+              <div class="pow-card" data-reveal>
+                <p class="pow-lbl" style="color:#8b94a0">Old signal</p>
+                <ul>{oldSignal.map((s) => <li class="before-l"><span class="m">✕</span>{s}</li>)}</ul>
+              </div>
+              <div class="arrow" data-reveal style="transition-delay:.1s" aria-hidden="true">→</div>
+              <div class="pow-card after" data-reveal style="transition-delay:.14s">
+                <p class="pow-lbl" style="color:var(--g)">Better signal</p>
+                <ul>{betterSignal.map((s) => <li class="after-l"><span class="m">◆</span>{s}</li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIDEO (dropped lower on the page) -->
+        <section class="sec">
+          <div class="col">
+            <div class="video-band" data-reveal>
+              <span class="play"><svg viewBox="0 0 24 24" width="26" height="26" fill="#06251a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+              <p class="vlabel">90-second founder thesis</p>
+              <p class="vsub">coming soon</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- WHO WE SOURCE -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>Who we source</p>
+            <p class="intro" data-reveal style="transition-delay:.06s">Some candidates already use AI tools. Many others show the raw traits that predict they could become valuable in AI-enabled work.</p>
+            <div class="spanel" data-reveal style="transition-delay:.1s">
+              <h3 class="panel-title">Evidence we look for</h3>
+              <ul class="evid">
+                {evidence.map((e) => (
+                  <li><span class="ck">✓</span>{e}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <!-- PROOF OF WORK -->
         <section class="sec">
           <div class="col">
@@ -388,7 +452,6 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                 </ul>
               </div>
             </div>
-            <p class="pow-close" data-reveal>The filter is not <span class="q">“interest in AI.”</span> The filter is whether someone can <b>improve a real workflow.</b></p>
           </div>
         </section>
 
@@ -481,12 +544,12 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         resize();
         window.addEventListener('resize', resize);
         const blobs = [
-          { hue: 135, r: .42, ox: .20, oy: .26, ax: .13, ay: .10, sx: .090, sy: .070, hs: 6, op: 0.9 },  // green
-          { hue: 205, r: .54, ox: .80, oy: .30, ax: .10, ay: .13, sx: .140, sy: .100, hs: -8, op: 1.15 }, // blue
-          { hue: 278, r: .52, ox: .50, oy: .80, ax: .15, ay: .09, sx: .065, sy: .130, hs: 10, op: 1.3 },  // purple
+          { hue: 138, r: .44, ox: .26, oy: .34, ax: .12, ay: .10, sx: .075, sy: .055, hs: 5, op: 0.6, sr: .090, so: .070 },   // green (reduced, stays on-page)
+          { hue: 224, r: .56, ox: .74, oy: .40, ax: .13, ay: .12, sx: .105, sy: .125, hs: -6, op: 1.5, sr: .110, so: .085 }, // blue (clear blue)
+          { hue: 282, r: .52, ox: .50, oy: .70, ax: .14, ay: .11, sx: .130, sy: .085, hs: 8, op: 1.25, sr: .080, so: .100 },  // purple
         ];
         const N = 230, pts = [];
-        for (let i = 0; i < N; i++) pts.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * 0.00024, vy: (Math.random() - .5) * 0.00024 });
+        for (let i = 0; i < N; i++) pts.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * 0.00012, vy: (Math.random() - .5) * 0.00012 });
         const start = performance.now();
         const maxD = 0.062;
         function frame(now) {
@@ -497,9 +560,9 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           for (const b of blobs) {
             const cx = (b.ox + Math.sin(t * b.sx) * b.ax) * W;
             const cy = (b.oy + Math.cos(t * b.sy) * b.ay) * H;
-            const rad = b.r * Math.max(W, H) * 0.5;
+            const rad = b.r * Math.max(W, H) * 0.5 * (1 + Math.sin(t * (b.sr ?? .08) + b.hue) * 0.15);
             const hue = b.hue + Math.sin(t * 0.12) * b.hs;
-            const op = b.op ?? 1;
+            const op = (b.op ?? 1) * (0.88 + 0.14 * Math.sin(t * (b.so ?? .08) + b.r * 12));
             const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
             g.addColorStop(0, `hsla(${hue}, 90%, 72%, ${0.42 * op})`);
             g.addColorStop(0.3, `hsla(${hue}, 85%, 60%, ${0.22 * op})`);
