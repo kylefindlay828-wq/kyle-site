@@ -1,233 +1,219 @@
 ---
-// The Proofworks Engine — full-width LIGHT interrupt (the machinery beneath the
-// dark thesis). Opaque warm base covers the fixed dark canvas/dot-grid. Uses the
-// page-wide [data-reveal] observer; reveal CSS re-declared scoped so it animates.
-const baseline = ['Handle ambiguity', 'Choose tools', 'Test outputs', 'Build something usable'];
-const tools = ['Terminal', 'APIs', 'Automations', 'Agents', 'Company data', 'Deployment'];
-const scale = [
-  { n: '20–50', lab: 'ideal start', ideal: true },
-  { n: 'up to 250', lab: 'expand' },
-  { n: 'enterprise', lab: 'transform the workforce' },
+// The Proofworks Engine — a full-width LIGHT interrupt presenting the two-sided
+// talent + workforce-transformation business. Opaque warm base covers the fixed
+// dark canvas; reveal CSS is re-declared (scoped) so the page-wide [data-reveal]
+// observer animates this component too.
+const talentOutcomes = ['Establish capability.', 'Build through real work.', 'Create credible proof.', 'Access stronger jobs and projects.'];
+const companyOffers = ['Validated external talent.', 'Internal workforce transformation.', 'Development before and after placement.', 'Ongoing access to proven operators.'];
+const revenue = [
+  { h: 'Talent access & placement', b: 'Companies pay for access to validated talent and successful hires.', a: 'var(--eg)' },
+  { h: 'Workforce transformation', b: 'Companies pay to assess, develop, and deploy internal employees against real business needs.', a: 'var(--eb)' },
+  { h: 'Recurring software & systems', b: 'Ongoing assessment, capability tracking, additional teams, development, and external hiring.', a: 'var(--ev)' },
 ];
+const loop = ['Join', 'Prove', 'Place', 'Develop', 'Refer', 'Expand'];
+const outputs = ['What work is changing.', 'Who can adapt.', 'What each person has demonstrated.', 'Which gaps remain.', 'Who is ready for which work.', 'Where external talent is required.', 'What economic value the transformation produced.'];
 ---
 <section class="engine" aria-label="The Proofworks Engine">
   <div class="ewrap">
 
-    <!-- TITLE (sizing kept) -->
+    <!-- TITLE -->
     <div class="e-title-mask mask-reveal" data-reveal>
       <h2 class="e-title">The Proofworks Engine</h2>
     </div>
     <p class="e-h2" data-reveal style="transition-delay:.12s">How it actually works.</p>
 
-    <hr class="e-div" data-reveal style="transition-delay:.18s" />
+    <hr class="e-div" data-reveal />
 
-    <!-- OPENING STATEMENT — tight 2-line masthead -->
+    <!-- OPENING STATEMENT — clause by clause -->
     <div class="e-lead">
-      <p data-reveal>We identify <b class="cg">who can adapt</b> and establish their <b class="cb">baseline</b> through applied work —</p>
-      <p data-reveal style="transition-delay:.16s">then develop them into people who can <b class="cv"><i>build and operate useful systems</i></b>.</p>
+      <p data-reveal>Proofworks <b class="cg">attracts adaptable talent</b>,</p>
+      <p data-reveal style="transition-delay:.14s">identifies <b class="cb">what each person can already do</b>,</p>
+      <p data-reveal style="transition-delay:.28s">develops <b class="cv">the capabilities companies need</b>,</p>
+      <p data-reveal style="transition-delay:.42s">and connects <b>demonstrated ability</b> with real work.</p>
     </div>
 
     <hr class="e-div" data-reveal />
 
-    <!-- WHO WE'RE HELPING — two audiences, strong split -->
-    <p class="e-eyebrow" data-reveal>Who we're helping</p>
+    <!-- TWO-SIDED ENGINE -->
     <div class="e-two">
-      <div class="e-side enter-left" data-reveal>
-        <h3 class="e-side-h cg">Capable people</h3>
-        <p class="e-side-b">Young, tech-savvy graduates entering an AI-shaped labor market. Career switchers. Underused operators. <b>People with the judgment and learning ability to become valuable builders.</b></p>
+      <div class="e-side" data-reveal>
+        <h3 class="e-side-h cg">Talent enters directly</h3>
+        <p class="e-side-b">Some arrive ready. Others arrive with the <b>judgment, ambition, and learning ability</b> to become highly valuable operators.</p>
+        <ul class="e-list">
+          {talentOutcomes.map((o) => <li><span class="cg">•</span>{o}</li>)}
+        </ul>
       </div>
-      <div class="e-side enter-right" data-reveal style="transition-delay:.12s">
-        <h3 class="e-side-h cb">Companies that cannot afford to fall behind</h3>
-        <p class="e-side-b">Operations-heavy teams first — then expand.</p>
-        <div class="e-scale">
-          {scale.map((s, i) => (
-            <>
-              {i > 0 && <span class="e-scale-arr" aria-hidden="true">→</span>}
-              <span class:list={["e-scale-step", s.ideal && "ideal"]}>
-                <span class="e-scale-n">{s.n}{s.ideal && <span class="e-check" aria-hidden="true"> ✓</span>}</span>
-                <span class="e-scale-lab">{s.lab}</span>
-              </span>
-            </>
-          ))}
+      <div class="e-side" data-reveal style="transition-delay:.14s">
+        <h3 class="e-side-h cb">Companies pay for capability</h3>
+        <p class="e-side-b">Companies pay to <b>access, hire, develop, and deploy</b> talent that helps them adapt faster.</p>
+        <ul class="e-list">
+          {companyOffers.map((o) => <li><span class="cb">•</span>{o}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <!-- CONNECTING STATEMENT -->
+    <p class="e-connect" data-reveal>Talent joins for <b class="cg">career upside</b>. Companies pay for <b class="cb">proven capability</b>.</p>
+
+    <hr class="e-div" data-reveal />
+
+    <!-- RETOOLING IS NOT TRAINING -->
+    <h3 class="e-sec-h" data-reveal>Retooling is not training.</h3>
+    <p class="e-note" data-reveal style="transition-delay:.1s">Watching lessons and learning AI terminology does not prove that someone can <b>improve a business</b>.</p>
+    <p class="e-note" data-reveal style="transition-delay:.18s"><b>Proofworks develops people through real work tied to actual company demand.</b></p>
+
+    <hr class="e-div" data-reveal />
+
+    <!-- HOW PROOFWORKS MAKES MONEY -->
+    <h3 class="e-sec-h" data-reveal>How Proofwork<span class="e-dollar">$</span> makes money.</h3>
+    <div class="e-money">
+      {revenue.map((r, i) => (
+        <div class="e-money-item" data-reveal style={`transition-delay:${i * 90}ms`}>
+          <p class="e-money-lbl" style={`color:${r.a}`}>{r.h}</p>
+          <p class="e-money-b">{r.b}</p>
         </div>
-      </div>
+      ))}
     </div>
+    <p class="e-mini" data-reveal>The employer is the primary payer.</p>
 
     <hr class="e-div" data-reveal />
 
-    <!-- RETOOLING -->
-    <h3 class="e-retool" data-reveal>Retooling <span class="e-bracket">[ <em class="cv">not</em> another AI course ]</span></h3>
-
-    <div class="e-stages">
-      <div class="e-stage" data-reveal>
-        <p class="e-num"><span class="e-nn cg">01</span> Frame the problem</p>
-        <p class="e-stmt"><b>Real company problems.</b> <span class="dim">Before tools.</span></p>
-      </div>
-      <div class="e-stage" data-reveal style="transition-delay:.06s">
-        <p class="e-num"><span class="e-nn cb">02</span> Establish the baseline</p>
-        <p class="e-stmt cb"><b>How do they frame the problem?</b></p>
-        <p class="e-mini">{baseline.map((p, i) => (<>{i > 0 && <span class="e-sep"> · </span>}{p}</>))}</p>
-      </div>
-      <div class="e-stage" data-reveal style="transition-delay:.12s">
-        <p class="e-num"><span class="e-nn cv">03</span> Build through real work</p>
-        <p class="e-stmt"><b>Beyond chat-based AI</b> — build through real work.</p>
-        <p class="e-mini tools">{tools.map((t, i) => (<>{i > 0 && <span class="e-sep"> · </span>}<span class="e-tool">{t}</span></>))}</p>
-      </div>
-      <div class="e-stage" data-reveal style="transition-delay:.18s">
-        <p class="e-num"><span class="e-nn cg">04</span> Verify and route</p>
-        <p class="e-stmt"><b>Demonstrated capability</b> <span class="dim">→</span> higher-value work.</p>
-      </div>
+    <!-- RELATIONSHIP FLYWHEEL -->
+    <h3 class="e-sec-h small" data-reveal>The relationship loop.</h3>
+    <div class="e-loop" data-reveal style="transition-delay:.08s">
+      {loop.map((s, i) => (
+        <>
+          <span class="e-loop-node">{s}</span>
+          {i < loop.length - 1 && <span class="e-loop-arr" aria-hidden="true">→</span>}
+        </>
+      ))}
     </div>
-
-    <!-- THE PAYOFF — the most important line in the section -->
-    <p class="e-payoff" data-reveal>From <span class="dim">passive AI use</span> to <b class="cg">building and operating useful systems</b> appropriate to their role.</p>
+    <p class="e-note" data-reveal style="transition-delay:.16s">Every successful operator can become a <b class="cg">referral source</b>, a <b class="cb">future hiring manager</b>, or the <b class="cv">entry point into a new company</b>.</p>
 
     <hr class="e-div" data-reveal />
 
-    <!-- COMMERCIAL RESULT (sizing kept) -->
-    <div class="e-result-wrap" data-reveal>
-      <span class="e-vbar" aria-hidden="true"></span>
-      <p class="e-result">Proofworks turns <b class="cg">real company problems</b> into <b class="cb">working systems</b>—and reveals <b class="cv">who can build</b> what the company needs next.</p>
-      <span class="e-vbar" aria-hidden="true"></span>
-    </div>
+    <!-- WHAT IT BECOMES -->
+    <h3 class="e-sec-h" data-reveal>What it becomes.</h3>
+    <p class="e-note" data-reveal style="transition-delay:.08s">The long-term product is not an online school or a recruiting agency.</p>
+    <p class="e-become" data-reveal style="transition-delay:.16s">It is a <b class="cb">workforce operating system</b> connecting changing company needs with demonstrated human capability.</p>
+    <ul class="e-outputs" data-reveal style="transition-delay:.24s">
+      {outputs.map((o) => <li>{o}</li>)}
+    </ul>
+
+    <hr class="e-div" data-reveal />
+
+    <!-- FINAL COMMERCIAL RESULT -->
+    <p class="e-result" data-reveal>Proofworks turns <b class="cg">real company problems</b> into <b class="cb">working systems</b>—and connects companies with the <b class="cv">people capable of building</b> <b>what they need next</b>.</p>
 
   </div>
 </section>
 
 <style>
   /* ── full-width warm light band + restrained aurora + paper grain ── */
-  .engine { position: relative; color: #17181c; padding: 84px 0; isolation: isolate;
-    /* accents matched to the dark page hues (green ~155, blue ~232, violet ~300), tuned for light bg */
+  .engine { position: relative; color: #17181c; padding: 88px 0; isolation: isolate;
     --eg: oklch(0.60 0.17 156); --eb: #2757c9; --ev: #7734d4;
     background-color: #f5f4ef;
     background-image:
-      radial-gradient(50% 44% at 8% 10%, hsla(150, 60%, 55%, 0.14), transparent 62%),
-      radial-gradient(50% 50% at 94% 26%, hsla(224, 70%, 60%, 0.15), transparent 62%),
-      radial-gradient(56% 54% at 62% 108%, hsla(283, 58%, 62%, 0.14), transparent 62%); }
+      radial-gradient(50% 44% at 8% 8%, hsla(150, 60%, 55%, 0.14), transparent 62%),
+      radial-gradient(50% 50% at 94% 24%, hsla(224, 70%, 60%, 0.15), transparent 62%),
+      radial-gradient(56% 54% at 60% 104%, hsla(283, 58%, 62%, 0.14), transparent 62%); }
   .engine::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
     opacity: 0.4; mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 150px 150px; }
   .ewrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
-  .cg { color: var(--eg); }
-  .cb { color: var(--eb); }
-  .cv { color: var(--ev); }
-  .dim { color: #8a8d94; }
-
-  .e-eyebrow { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px;
-    letter-spacing: 0.16em; text-transform: uppercase; color: #6a6d74; margin: 0 0 26px; }
+  .cg { color: var(--eg); } .cb { color: var(--eb); } .cv { color: var(--ev); }
 
   /* title */
   .e-title-mask { padding-bottom: .06em; }
   .e-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; text-transform: uppercase;
-    font-size: clamp(46px, 8.6vw, 96px); line-height: 0.9; letter-spacing: -0.035em; color: #101116; margin: 0; }
+    font-size: clamp(46px, 8.4vw, 94px); line-height: 0.9; letter-spacing: -0.035em; color: #101116; margin: 0; }
   .e-h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-style: italic;
     font-size: clamp(23px, 3vw, 40px); line-height: 1.0; letter-spacing: -0.022em; color: #2b2e35; margin: 16px 0 0; }
 
-  .e-div { border: 0; border-top: 1px solid #cdccc4; margin: 36px 0; }
+  .e-div { border: 0; border-top: 1px solid #cdccc4; margin: 40px 0; }
 
-  /* opening masthead — 2 tidy lines */
+  /* opening — clause by clause */
   .e-lead p { font-family: 'Space Grotesk', sans-serif; font-weight: 600;
-    font-size: clamp(22px, 2.9vw, 34px); line-height: 1.14; letter-spacing: -0.02em; color: #14161d; margin: 0 0 .12em; max-width: 1060px; }
+    font-size: clamp(22px, 2.9vw, 34px); line-height: 1.16; letter-spacing: -0.02em; color: #14161d; margin: 0 0 .1em; max-width: 1060px; }
   .e-lead p:last-child { margin-bottom: 0; }
-  .e-lead b { font-weight: 700; } .e-lead i { font-style: italic; }
+  .e-lead b { font-weight: 700; }
 
-  /* two audiences — strong split with a divider */
+  /* two-sided */
   .e-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-  .e-side:first-child { padding-right: 50px; border-right: 1px solid #cdccc4; }
-  .e-side:last-child { padding-left: 50px; }
+  .e-side:first-child { padding-right: 48px; border-right: 1px solid #cdccc4; }
+  .e-side:last-child { padding-left: 48px; }
   .e-side-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
-    font-size: clamp(21px, 2.7vw, 32px); line-height: 1.04; letter-spacing: -0.01em; margin: 0 0 16px; }
-  .e-side-b { font-size: clamp(16px, 1.8vw, 20px); line-height: 1.5; color: #3c3f47; margin: 0; max-width: 460px; }
+    font-size: clamp(19px, 2.2vw, 26px); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 14px; }
+  .e-side-b { font-size: clamp(18px, 2vw, 23px); line-height: 1.5; color: #3c3f47; margin: 0 0 22px; max-width: 480px; }
   .e-side-b b { color: #14161d; font-weight: 700; }
+  .e-list { list-style: none; margin: 0; padding: 0; }
+  .e-list li { display: flex; gap: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: clamp(19px, 2.1vw, 25px); line-height: 1.28; letter-spacing: -0.015em; color: #14161d; margin: 0 0 14px; }
+  .e-list li span { font-weight: 700; }
 
-  /* company scale flow */
-  .e-scale { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px 14px; margin-top: 22px; }
-  .e-scale-step { display: flex; flex-direction: column; }
-  .e-scale-n { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(21px, 2.4vw, 30px);
-    letter-spacing: -0.02em; color: #14161d; line-height: 1; }
-  .e-scale-step.ideal .e-scale-n { color: var(--eg); }
-  .e-check { color: var(--eg); }
-  .e-scale-lab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em;
-    text-transform: uppercase; color: #8a8d94; margin-top: 6px; }
-  .e-scale-arr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--eb);
-    font-size: clamp(20px, 2.2vw, 28px); line-height: 1; align-self: flex-start; }
+  /* connecting statement — the hinge of the whole model, sized large */
+  .e-connect { font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: clamp(32px, 5.2vw, 62px); line-height: 1.06; letter-spacing: -0.03em; color: #101116; margin: 48px 0 0; max-width: 1020px; }
+  .e-connect b { font-weight: 700; }
 
-  /* retooling — right-sized, bracketed */
-  .e-retool { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
-    font-size: clamp(24px, 3.2vw, 38px); line-height: 1.04; letter-spacing: -0.026em; color: #101116; margin: 0 0 30px; }
-  .e-bracket { font-weight: 600; font-size: 0.46em; letter-spacing: 0.01em; color: #4a4d55; white-space: nowrap; }
-  .e-bracket em { font-style: italic; font-weight: 700; }
+  /* section headings */
+  .e-sec-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
+    font-size: clamp(24px, 3.3vw, 38px); line-height: 1.04; letter-spacing: -0.026em; color: #101116; margin: 0 0 20px; }
+  .e-sec-h.small { font-size: clamp(20px, 2.4vw, 28px); margin-bottom: 22px; }
+  .e-dollar { color: #0c7a3e; font-weight: 800; }
+  .e-note { font-size: clamp(18px, 2vw, 24px); line-height: 1.45; color: #34373e; margin: 0 0 14px; max-width: 860px; }
+  .e-note b { color: #101116; font-weight: 700; }
 
-  /* stages — readable, numbered flow */
-  .e-stages { display: grid; grid-template-columns: 1fr 1fr; }
-  .e-stage { padding: 26px 0 28px; border-top: 1px solid #d4d3cb; }
-  .e-stage:nth-child(2n+1) { border-right: 1px solid #d4d3cb; padding-right: 46px; }
-  .e-stage:nth-child(2n) { padding-left: 46px; }
-  .e-num { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px;
-    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: clamp(14px, 1.5vw, 16px);
-    letter-spacing: 0.08em; text-transform: uppercase; color: #55585f; }
-  .e-nn { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic;
-    font-size: clamp(21px, 2.3vw, 28px); line-height: 0.9; letter-spacing: -0.02em; }
-  .e-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500;
-    font-size: clamp(19px, 2vw, 25px); line-height: 1.16; letter-spacing: -0.015em; color: #2a2d34; margin: 0; }
-  .e-stmt b { color: #101116; font-weight: 700; }
-  .e-mini { font-family: 'JetBrains Mono', monospace; font-size: clamp(14px, 1.4vw, 16px);
-    letter-spacing: 0.01em; color: #5c5f66; margin: 12px 0 0; line-height: 1.6; }
-  .e-sep { color: #b3b1a8; }
-  .e-tool { color: var(--eb); }
-  .e-tool:nth-of-type(3n+2) { color: var(--eg); }
-  .e-tool:nth-of-type(3n) { color: var(--ev); }
+  /* revenue grid */
+  .e-money { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 30px 0 0; }
+  .e-money-lbl { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(15px, 1.6vw, 17px);
+    letter-spacing: 0.05em; text-transform: uppercase; color: #14161d; margin: 0 0 12px; }
+  .e-money-b { font-size: clamp(17px, 1.8vw, 20px); line-height: 1.5; color: #3c3f47; margin: 0; }
 
-  /* THE PAYOFF — the emphasis of the whole section */
-  .e-payoff { font-family: 'Space Grotesk', sans-serif; font-weight: 600;
-    font-size: clamp(21px, 2.8vw, 34px); line-height: 1.12; letter-spacing: -0.022em; color: #101116;
-    margin: 40px 0 0; max-width: 1040px; border-left: 4px solid var(--eg); padding-left: 26px; }
-  .e-payoff b { font-weight: 700; }
+  .e-mini { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(18px, 2vw, 24px);
+    letter-spacing: -0.015em; color: #101116; margin: 22px 0 0; line-height: 1.4; }
 
-  /* commercial result (sizing kept) */
-  .e-result-wrap { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; gap: 26px; margin-top: 4px; }
-  .e-vbar { width: 3px; border-radius: 3px; align-self: stretch; min-height: 100%;
-    background: linear-gradient(180deg, transparent, var(--eg) 22%, var(--eg) 78%, transparent); }
+  /* flywheel */
+  .e-loop { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin: 0 0 22px; }
+  .e-loop-node { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(18px, 2.2vw, 26px);
+    letter-spacing: -0.02em; color: #101116; }
+  .e-loop-arr { color: var(--eb); font-size: clamp(16px, 1.8vw, 22px); font-weight: 600; }
+
+  /* what it becomes */
+  .e-become { font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: clamp(22px, 3vw, 36px); line-height: 1.14; letter-spacing: -0.022em; color: #101116; margin: 0 0 24px; max-width: 980px; }
+  .e-become b { font-weight: 700; }
+  .e-outputs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; }
+  .e-outputs li { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(18px, 2vw, 23px);
+    line-height: 1.32; letter-spacing: -0.015em; color: #2a2d34; padding-left: 18px; position: relative; }
+  .e-outputs li::before { content: "—"; position: absolute; left: 0; color: #a9a79d; }
+
+  /* final result */
   .e-result { font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-    font-size: clamp(23px, 3.2vw, 40px); line-height: 1.1; letter-spacing: -0.025em; color: #101116; margin: 0; }
+    font-size: clamp(24px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.026em; color: #101116; margin: 0; max-width: 1080px; }
   .e-result b { font-weight: 700; }
 
   /* ── reveal system (scoped) ── */
   [data-reveal] { opacity: 0; transform: translateY(24px);
     transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
   [data-reveal].in { opacity: 1; transform: none; }
-  .enter-left[data-reveal] { transform: translateX(-46px); }
-  .enter-right[data-reveal] { transform: translateX(46px); }
-  .enter-left[data-reveal].in, .enter-right[data-reveal].in { transform: none; }
   .mask-reveal[data-reveal] { opacity: 1; transform: none; overflow: hidden; }
   .mask-reveal[data-reveal] > * { transform: translateY(114%); transition: transform 1.05s cubic-bezier(.22,1,.36,1); }
   .mask-reveal[data-reveal].in > * { transform: none; }
   @media (prefers-reduced-motion: reduce) {
-    [data-reveal], .enter-left[data-reveal], .enter-right[data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
     .mask-reveal[data-reveal] > * { transform: none !important; transition: none !important; }
   }
 
   /* ── mobile ── */
   @media (max-width: 820px) {
+    .engine { padding: 60px 0; }
     .e-two { grid-template-columns: 1fr; gap: 34px; }
     .e-side:first-child { padding-right: 0; border-right: 0; border-bottom: 1px solid #cdccc4; padding-bottom: 30px; }
     .e-side:last-child { padding-left: 0; }
-    .enter-left[data-reveal], .enter-right[data-reveal] { transform: translateY(24px); }
-    .e-stages { grid-template-columns: 1fr; }
-    .e-stage:nth-child(2n+1) { border-right: 0; padding-right: 0; }
-    .e-stage:nth-child(2n) { padding-left: 0; }
-  }
-  @media (max-width: 640px) {
-    .engine { padding: 66px 0; }
-    .e-title { font-size: clamp(44px, 13.5vw, 60px); line-height: 0.94; }
-    .e-h2 { font-size: clamp(25px, 8vw, 38px); }
-    .e-lead p { font-size: clamp(25px, 7.4vw, 36px); }
-    .e-div { margin: 32px 0; }
-    .e-retool { font-size: clamp(30px, 9.5vw, 44px); }
-    .e-payoff { font-size: clamp(26px, 8vw, 40px); padding-left: 18px; }
-    .e-result { font-size: clamp(28px, 8.4vw, 46px); }
-    .e-result-wrap { gap: 16px; }
+    .e-money { grid-template-columns: 1fr; gap: 24px; }
+    .e-outputs { grid-template-columns: 1fr; }
   }
 </style>

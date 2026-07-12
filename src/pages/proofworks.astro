@@ -56,7 +56,10 @@ const clusters = [
   { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement', a: 'var(--c)' },
   { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts', a: 'var(--c)' },
   { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators', a: 'var(--c)' },
+  { h: 'Field & frontline commercial', roles: 'field sales reps, inside sales, dispatch coordinators, service & install schedulers, estimators, branch operators, territory & franchise managers, account reps', a: 'var(--c)' },
 ];
+
+const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply chain', 'Healthcare', 'Financial services', 'Insurance', 'Manufacturing', 'Construction', 'Retail & e-commerce', 'Professional services', 'Energy & utilities', 'Public sector'];
 
 const before = ['passive courses', 'certificates', 'generic AI literacy', 'watching tutorials', 'claiming fluency'];
 const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs & automations', 'implementation playbooks', 'proof companies can evaluate'];
@@ -242,6 +245,16 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       .urow:last-child { border-bottom: 1px solid rgba(255,255,255,0.09); }
       .urow .cat { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; }
       .urow .rl { font-size: 16px; line-height: 1.55; color: #eef1f4; font-weight: 500; }
+      /* industry breadth — the market is huge */
+      .breadth { margin: 46px 0 0; }
+      .breadth-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 3.6vw, 38px);
+        line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
+      .breadth-b { font-size: clamp(16px, 1.9vw, 19px); line-height: 1.6; color: #c7cdd4; margin: 0 0 26px; max-width: 860px; font-weight: 500; }
+      .breadth-b b { color: #eef1f4; font-weight: 600; }
+      .sectors { display: flex; flex-wrap: wrap; gap: 10px; }
+      .sector { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
+        padding: 9px 16px; border-radius: 999px; color: #dfe4ea;
+        border: 1px solid color-mix(in srgb, var(--g) 30%, rgba(255,255,255,0.1)); background: color-mix(in srgb, var(--g) 6%, rgba(255,255,255,0.03)); }
 
       /* proof of work */
       .pow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; }
@@ -353,7 +366,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
               <p class="brandsub">Founder thesis by Kyle Findlay</p>
             </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>maps</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into AI-enabled companies.</p>
+            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>maps</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into companies being reshaped by AI.</p>
             <p class="hero-sub" data-reveal style="transition-delay:.18s">We help users <span class="g">identify, retool, and deploy AI-capable operators</span>—while helping talent build careers around the work companies need next.</p>
             <div class="cta-row" data-reveal style="transition-delay:.22s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
@@ -367,7 +380,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>The model</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">A pull-based talent network.</h2>
+            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">Pull-based talent network.</h2>
             <p class="mkt-lead" data-reveal style="transition-delay:.1s"><b>Talent comes for career upside. Companies pay for proven capability.</b></p>
             <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks teaches operators through real workflow projects, turns what they build into proof, and connects the strongest talent with companies.</p>
             <div class="grid3">
@@ -421,6 +434,14 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                   <div class="rl">{c.roles}</div>
                 </div>
               ))}
+            </div>
+
+            <div class="breadth">
+              <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
+              <p class="breadth-b" data-reveal style="transition-delay:.06s">The same operator exists everywhere. A national plumbing company has sales reps, dispatchers, and estimators. A logistics firm runs on coordinators and account managers. A hospital network has schedulers and claims teams. <b>Every company adopting AI — in every industry — has operators worth retooling.</b></p>
+              <div class="sectors" data-reveal style="transition-delay:.12s">
+                {sectors.map((s) => <span class="sector">{s}</span>)}
+              </div>
             </div>
           </div>
         </section>
@@ -579,7 +600,9 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           const dec = parseInt(el.dataset.countDec || '0', 10);
           const pre = el.dataset.countPrefix || '', suf = el.dataset.countSuffix || '';
           const dur = 1200, start = performance.now();
+          const token = (el._ct = (el._ct || 0) + 1); // supersede any in-flight run
           function step(now) {
+            if (el._ct !== token) return;
             const p = Math.min(1, (now - start) / dur);
             const e = 1 - Math.pow(1 - p, 3);
             el.textContent = pre + (to * e).toFixed(dec) + suf;
@@ -593,16 +616,32 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           document.querySelectorAll('[data-count]').forEach((el) => countUp(el));
           return;
         }
-        const obs = new IntersectionObserver((entries, o) => {
+        // reveal on first enter; never un-reveal on leave (so mid-page scrolling
+        // up/down never re-triggers).
+        const obs = new IntersectionObserver((entries) => {
           entries.forEach((e) => {
-            if (!e.isIntersecting) return;
-            e.target.classList.add('in');
-            const c = e.target.querySelector('[data-count]');
-            if (c && !c.dataset.done) { c.dataset.done = '1'; countUp(c); }
-            o.unobserve(e.target);
+            if (e.isIntersecting && !e.target.classList.contains('in')) {
+              e.target.classList.add('in');
+              const c = e.target.querySelector('[data-count]');
+              if (c) countUp(c);
+            }
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
         els.forEach((el) => obs.observe(el));
+
+        // only when the user returns to the very top do we clear the reveals that
+        // are below the fold — so the next scroll down replays every animation.
+        let armed = false;
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) armed = true;
+          else if (window.scrollY <= 2 && armed) {
+            armed = false;
+            const vh = window.innerHeight;
+            els.forEach((el) => {
+              if (el.getBoundingClientRect().top >= vh) el.classList.remove('in');
+            });
+          }
+        }, { passive: true });
       })();
 
       // ── copy email (every button with data-email — hero + contact) ──
