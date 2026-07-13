@@ -2,77 +2,12 @@
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
-import ProofworksEngine from '../components/ProofworksEngine.astro';
 
 const title = '/proofworks — Kyle Findlay';
-const description = 'A founder thesis on proof-of-work talent for the AI labor market: identifying adaptable talent, validating real workflow ability, and routing people into AI-enabled roles.';
-
-const G = 'var(--g)', C = 'var(--c)', V = 'var(--v)';
-
-const steps = [
-  { n: '01', h: 'Source', b: 'Find operators who already improve workflows, build tools, and automate.', a: 'var(--g)' },
-  { n: '02', h: 'Validate', b: 'Test real workflow judgment — not resumes, certificates, or buzzwords.', a: 'oklch(0.82 0.15 200)' },
-  { n: '03', h: 'Sharpen', b: 'Project-based building, not passive classes — real artifacts that prove it.', a: 'var(--c)' },
-  { n: '04', h: 'Route', b: 'Place proven talent into AI roles — plus corporate transformation & recruiting contracts.', a: 'var(--v)' },
-];
-
-const bridge = [
-  { h: 'For enterprises', b: 'Retool internal operators or hire proven external talent.', a: 'var(--c)' },
-  { h: 'For talent', b: 'Learn by building: use tools like Claude Code in the terminal, automate real workflows, and create proof — not certificates.', a: 'var(--g)' },
-  { h: 'For recruiters', b: 'Match people through demonstrated work, not keywords alone.', a: 'var(--v)' },
-];
-
-const flow = [
-  { v: 'Map', l: 'Adaptable operators' },
-  { v: 'Validate', l: 'Real workflows' },
-  { v: 'Sharpen', l: 'Stronger proof' },
-  { v: 'Route', l: 'Jobs and contracts' },
-];
-
-// "The bigger market" — old signal vs better signal
-const traits = ['judgment', 'agency', 'learning velocity', 'workflow instinct', 'communication', 'systems thinking', 'comfort with ambiguity', 'ability to learn by building'];
-const oldSignal = ['resume titles', 'keywords', 'certificates', 'years of experience', 'past job scope'];
-const betterSignal = ['proof-of-work', 'workflow judgment', 'learning velocity', 'tool fluency', 'systems thinking', 'real artifacts'];
-
-const signals = [
-  { t: 'workflow judgment', a: 'var(--g)' }, { t: 'systems thinking' }, { t: 'communication' },
-  { t: 'execution' }, { t: 'agency', a: 'var(--c)' }, { t: 'tool curiosity' },
-  { t: 'process improvement' }, { t: 'comfort with ambiguity' }, { t: 'learns by building', a: 'var(--v)' },
-];
-const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
-
-const buildInto = [
-  { h: 'Account operator', from: 'account manager / director / client services', builds: ['account intelligence', 'renewal-risk detection', 'meeting synthesis', 'personalized follow-up', 'strategic briefs'] },
-  { h: 'Workflow operator', from: 'project manager / ops lead / coordinator', builds: ['workflow automation', 'status synthesis', 'dependency mapping', 'implementation playbooks'] },
-  { h: 'Customer operator', from: 'customer success / support lead / onboarding', builds: ['churn signals', 'playbooks', 'customer summaries', 'onboarding automation', 'support workflows'] },
-  { h: 'GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: ['research automation', 'CRM hygiene', 'lead scoring', 'reporting', 'outbound systems'] },
-  { h: 'Product & delivery operator', from: 'product ops / delivery mgr / QA / tech coordinator', builds: ['specs', 'QA workflows', 'feedback synthesis', 'implementation tracking', 'eval workflows'] },
-  { h: 'Admin & workflow operator', from: 'paralegal / compliance / healthcare admin / finance / HR', builds: ['intake routing', 'document workflows', 'compliance checklists', 'summary systems', 'process tracking'] },
-];
-
-const clusters = [
-  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, executive assistants, implementation specialists, business analysts', a: 'var(--c)' },
-  { h: 'Customer / account', roles: 'account managers, account directors, customer success managers, client services, onboarding specialists, renewals managers, partnerships managers', a: 'var(--c)' },
-  { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement', a: 'var(--c)' },
-  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts', a: 'var(--c)' },
-  { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators', a: 'var(--c)' },
-  { h: 'Field & frontline commercial', roles: 'field sales reps, inside sales, dispatch coordinators, service & install schedulers, estimators, branch operators, territory & franchise managers, account reps', a: 'var(--c)' },
-];
-
-const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply chain', 'Healthcare', 'Financial services', 'Insurance', 'Manufacturing', 'Construction', 'Retail & e-commerce', 'Professional services', 'Energy & utilities', 'Public sector'];
-
-const before = ['passive courses', 'certificates', 'generic AI literacy', 'watching tutorials', 'claiming fluency'];
-const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs & automations', 'implementation playbooks', 'proof companies can evaluate'];
-
-const looking = [
-  { t: 'adaptable operators who want to prove what they can build with AI', a: 'var(--g)' },
-  { t: 'companies and recruiters facing AI talent gaps', a: 'var(--c)' },
-  { t: 'technical cofounders or partners excited about proof-of-work talent infrastructure', a: 'var(--v)', full: true },
-];
+const description = 'Proofworks retools the operators mid-market companies already have (dispatchers, coordinators, account managers, estimators) into people who rebuild their own workflows with AI. Employer-paid retooling, measured on real work. Proof over credentials.';
 
 const email = 'kylefindlay828@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
-const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
 ---
 <!doctype html>
 <html lang="en">
@@ -307,6 +242,62 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       .foot a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
       .foot a:hover { color: var(--g); }
 
+      /* placeholder blocks — clearly marked for Kyle to fill */
+      .ph { border: 1px dashed color-mix(in srgb, var(--g) 55%, rgba(255,255,255,0.22)); border-radius: 12px;
+        background: oklch(0.85 0.16 155 / 0.045); padding: 15px 18px; margin: 16px 0 0; }
+      .ph-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--g); display: block; margin: 0 0 7px; }
+      .ph-b { font-size: 15px; line-height: 1.5; color: #aeb6c0; font-style: italic; margin: 0; }
+
+      /* lineage — the spine */
+      .lin-head { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; flex-wrap: wrap; }
+      .lin-step { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; font-size: clamp(28px, 4.2vw, 50px); letter-spacing: -0.035em; color: #4b5560; }
+      .lin-step.now { color: var(--g); }
+      .lin-sep { color: var(--g); font-size: clamp(20px, 2.6vw, 30px); }
+      .lin { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+      .lin-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.04); border-radius: 18px; padding: 26px 26px 28px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .lin-card.now { border-color: color-mix(in srgb, var(--g) 45%, rgba(255,255,255,0.09)); background: oklch(0.85 0.16 155 / 0.05); }
+      .lin-top { display: flex; align-items: baseline; gap: 10px; margin: 0 0 16px; flex-wrap: wrap; }
+      .lin-tag { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; letter-spacing: .1em; color: var(--g); }
+      .lin-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: -0.02em; color: #eef1f4; }
+      a.lin-name { transition: color .2s; }
+      a.lin-name:hover { color: var(--g); }
+      .lin-row { margin: 13px 0 0; }
+      .lin-row .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #8b94a0; display: block; margin: 0 0 5px; }
+      .lin-row .t { font-size: 15px; line-height: 1.5; color: #c7cdd4; }
+      .lin-row .t.strong { color: #eef1f4; font-weight: 500; }
+
+      /* wedge */
+      .w-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(30px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -0.025em; color: #eef1f4; margin: 0; max-width: 900px; }
+      .w-block { margin: 34px 0 0; max-width: 820px; }
+      .w-k { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--g); margin: 0 0 12px; }
+      .w-b { font-size: clamp(17px, 1.9vw, 20px); line-height: 1.55; color: #dbe1e8; margin: 0; }
+      .w-b b { color: #fff; font-weight: 600; }
+      .w-steps { font-size: clamp(17px, 1.9vw, 20px); line-height: 1.6; color: #dbe1e8; margin: 0; }
+      .w-keeper { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(19px, 2.2vw, 26px); line-height: 1.3; letter-spacing: -0.02em; color: #eef1f4; margin: 20px 0 0; }
+      .w-keeper b { color: var(--g); font-weight: 600; }
+      /* the money-shot paragraph carries extra weight */
+      .w-b.big { font-size: clamp(19px, 2.4vw, 26px); line-height: 1.5; color: #eef1f4; }
+      /* compact, low-key lineage strip */
+      .lin-mini { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: .02em; color: #8b94a0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin: 0; }
+      .lin-mini .lead { color: #c7cdd4; }
+      .lin-mini a { color: #aab2bc; transition: color .2s; }
+      .lin-mini a:hover { color: var(--g); }
+      .lin-mini .s, .lin-mini .now { color: var(--g); }
+      /* mission line */
+      .mission { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.3; letter-spacing: -0.02em; color: #eef1f4; margin: 26px 0 0; max-width: 860px; }
+      .mission b { color: var(--g); font-weight: 600; }
+
+      /* proof */
+      .proof-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(22px, 3vw, 32px); line-height: 1.2; letter-spacing: -0.02em; color: #eef1f4; margin: 0 0 4px; max-width: 840px; }
+      .proof-b { font-size: clamp(17px, 1.9vw, 20px); line-height: 1.55; color: #c7cdd4; margin: 26px 0 24px; max-width: 780px; }
+      .proof-b b { color: #eef1f4; font-weight: 600; }
+
+      /* what it becomes */
+      .becomes { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.22; letter-spacing: -0.02em; color: #eef1f4; margin: 0; max-width: 960px; }
+      .becomes b { color: var(--g); font-weight: 600; }
+      .becomes .dim { color: #8b94a0; }
+
       /* reveal + ambient motion */
       [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
       [data-reveal].in { opacity: 1; transform: none; }
@@ -321,6 +312,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       /* responsive */
       @media (max-width: 900px) {
         .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+        .lin { grid-template-columns: 1fr; }
         .grid4 { grid-template-columns: 1fr 1fr; }
         .grid3 { grid-template-columns: 1fr 1fr; }
         .source-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -353,7 +345,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
             <span class="sep">·</span>
             <a href="/">About &amp; Contact</a>
           </div>
-          <a href="/proofworks" class="navpill mono">/proofworks</a>
+          <a href="/proofworks" class="navpill mono">Proofworks V2</a>
         </div>
       </nav>
 
@@ -366,92 +358,68 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
               <p class="brandsub">Founder thesis by Kyle Findlay</p>
             </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>maps</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into companies being reshaped by AI.</p>
-            <p class="hero-sub" data-reveal style="transition-delay:.18s">We help users <span class="g">identify, retool, and deploy AI-capable operators</span>—while helping talent build careers around the work companies need next.</p>
-            <div class="cta-row" data-reveal style="transition-delay:.22s">
-              <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
-              <a href="mailto:kylefindlay828@gmail.com?subject=Find%20operators" class="pill-out">Find operators</a>
-              <button class="pill-out" data-email={email} type="button" style="cursor:pointer; background:transparent" aria-label="Copy email address"><span class="ce">{email}</span> ⧉</button>
+            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks retools the operators companies already have — dispatchers, coordinators, account managers, estimators — into people who can rebuild their own workflows with AI. <b>Companies pay for the result.</b></p>
+            <div class="cta-row" data-reveal style="transition-delay:.2s">
+              <a href="mailto:kylefindlay828@gmail.com?subject=Let's%20talk%20about%20Proofworks" class="btn-g">Start a conversation →</a>
             </div>
           </div>
         </section>
 
-        <!-- MASSIVE MARKET OPPORTUNITY -->
+        <!-- LINEAGE (compact, low-key) -->
+        <section class="sec" style="padding:36px 0 0">
+          <div class="col">
+            <p class="lin-mini" data-reveal>
+              <span class="lead">My third build.</span>
+              <a href="/gtm-radar">GTM Radar V1</a><span class="s">→</span><a href="/radar-v2">GTM Radar V2</a><span class="s">→</span><span class="now">Proofworks</span>
+            </p>
+          </div>
+        </section>
+
+        <!-- THE WEDGE -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>The model</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">Pull-based talent network.</h2>
-            <p class="mkt-lead" data-reveal style="transition-delay:.1s"><b>Talent comes for career upside. Companies pay for proven capability.</b></p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks teaches operators through real workflow projects, turns what they build into proof, and connects the strongest talent with companies.</p>
-            <div class="grid3">
-              {bridge.map((c, i) => (
-                <div class="card" data-reveal style={`padding:24px 26px; transition-delay:${i * 80}ms`}>
-                  <h3 style={`font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;color:${c.a}`}>{c.h}</h3>
-                  <p style="font-size:14.5px;line-height:1.5;color:#aeb6c0;margin:0">{c.b}</p>
-                </div>
-              ))}
+            <p class="eyebrow" data-reveal>The wedge</p>
+            <h2 class="w-h" data-reveal style="transition-delay:.05s">Retool the operators a company already trusts.</h2>
+
+            <div class="w-block" data-reveal>
+              <p class="w-k">Who pays</p>
+              <p class="w-b big">Mid-market companies outside tech. Home services, logistics, healthcare admin, field and frontline commercial. A national plumbing company runs on dispatchers, estimators, and account reps. A logistics firm runs on coordinators. A hospital network runs on schedulers and claims teams. Every one of them employs operators whose real ability their title never describes.</p>
+            </div>
+
+            <div class="w-block" data-reveal>
+              <p class="w-k">What they buy</p>
+              <p class="w-b" style="margin-bottom:14px"><b>It starts with one workflow.</b></p>
+              <p class="w-steps">A few operators, one real workflow each, rebuilt with AI and measured against how it ran before. That is the entry. Their work keeps changing, so the retooling continues: new workflows, new operators, systems that stay current. The company keeps the systems and the operators. Proofworks stays in the work.</p>
+              <p class="w-b" style="margin-top:16px">Priced as an ongoing engagement, scoped to each company. It starts small and grows as the retooling reaches more workflows and more operators.</p>
+              <p class="w-keeper"><b>No courses, no certificates.</b> Operators rebuild the real workflows they run every day, and the working result is the proof.</p>
+            </div>
+
+            <div class="w-block" data-reveal>
+              <p class="w-k">Why the employer pays</p>
+              <p class="w-b">They are buying a measured outcome on people they already trust. Not a course, not a new hire. These operators know the business. Proofworks makes them faster and leaves systems behind.</p>
             </div>
           </div>
         </section>
 
-        <!-- PROCESS -->
+        <!-- PROOF -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>The process</p>
-            <div class="flow" data-reveal>
-              {flow.map((s, i) => (
-                <>
-                  <div class="flow-stage">
-                    <div class="flow-verb">{s.v}</div>
-                    <div class="flow-label">{s.l}</div>
-                  </div>
-                  {i < flow.length - 1 && <div class="flow-arrow" aria-hidden="true">→</div>}
-                </>
-              ))}
+            <p class="eyebrow" data-reveal>Proof</p>
+            <p class="proof-lead" data-reveal style="transition-delay:.05s">Proof over claims. Pilot results will live here as they come in.</p>
+            <p class="proof-b" data-reveal>For now, the work is the proof. <b>GTM Radar V2 is live:</b> an autonomous agent that catches hiring signals before the role is posted. Same instinct, already shipped.</p>
+            <div class="cta-row" data-reveal>
+              <a href="/radar-v2" class="btn-g">See GTM Radar V2 →</a>
             </div>
           </div>
         </section>
 
-        <!-- FILTER STATEMENT -->
-        <section class="sec">
-          <div class="col">
-            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
-          </div>
-        </section>
-
-        <!-- THE PROOFWORKS ENGINE (light interrupt) -->
-        <ProofworksEngine />
-
-        <!-- ROLE UNIVERSE -->
-        <section class="sec univ">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The role universe</p>
-            <h2 data-reveal style="transition-delay:.06s">A large, underserved talent market.</h2>
-            <div class="spanel" style="padding: 6px 30px;">
-              {clusters.map((c, i) => (
-                <div class="urow" data-reveal style={`transition-delay:${i * 60}ms`}>
-                  <div class="cat" style={`color:${c.a}`}>{c.h}</div>
-                  <div class="rl">{c.roles}</div>
-                </div>
-              ))}
-            </div>
-
-            <div class="breadth">
-              <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
-              <p class="breadth-b" data-reveal style="transition-delay:.06s">The same operator exists everywhere. A national plumbing company has sales reps, dispatchers, and estimators. A logistics firm runs on coordinators and account managers. A hospital network has schedulers and claims teams. <b>Every company adopting AI — in every industry — has operators worth retooling.</b></p>
-              <div class="sectors" data-reveal style="transition-delay:.12s">
-                {sectors.map((s) => <span class="sector">{s}</span>)}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- WHY ME -->
+        <!-- WHY THIS FOUNDER -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>Why this founder</p>
-            <p class="why-stmt" data-reveal style="transition-delay:.06s">Running complex client programs showed me that the people most capable of adapting, improving work, and taking on new responsibilities are often poorly represented by their formal roles.</p>
-            <div class="stat-grid">
+            <p class="why-stmt" data-reveal style="transition-delay:.05s">For years I ran operations built on exactly these people. I saw what they could do the moment someone handed them better tools.</p>
+            <p class="mission" data-reveal style="transition-delay:.1s">Proofworks is how I help people help themselves. Give an operator the ability to rebuild their own work and they carry it for the rest of their career. <b>That is the problem I am solving, and it is the mission.</b></p>
+            <div class="stat-grid" style="margin-top:36px">
               <div class="stat" data-reveal>
                 <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
                 <div class="statlbl">owned annually</div>
@@ -469,22 +437,15 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                 <div class="statlbl">national brands</div>
               </div>
             </div>
-            <p class="why-close" data-reveal>I have built three iterations of this thesis across labor-market intelligence, talent signals, and workforce retooling—starting with GTM Radar V1, evolving through GTM Radar V2, and now Proofworks.</p>
-            <p class="why-close" data-reveal style="margin-top:14px"><b style="color:#eef1f4">Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of AI, talent, and real operator workflows.</p>
+            <p class="why-close" data-reveal style="margin-top:32px"><b style="color:#eef1f4">Solo founder, moving fast,</b> relocating to San Francisco. Open to technical cofounders working at the intersection of AI, talent, and operator workflows.</p>
           </div>
         </section>
 
-        <!-- LOOKING TO CONNECT -->
+        <!-- WHAT IT BECOMES -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>Looking to connect with</p>
-            <div class="meet-grid">
-              {looking.map((m, i) => (
-                <div class:list={["meet", m.full && "full"]} data-reveal style={`transition-delay:${i * 60}ms`}>
-                  <span class="ar" style={`color:${m.a}`}>→</span>{m.t}
-                </div>
-              ))}
-            </div>
+            <p class="eyebrow" data-reveal>What it becomes</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s">Every paid engagement produces operators whose ability is proven on real work. Across enough companies, those operators become <b>a network no job board can match,</b> with demand pulling supply in. <span class="dim">The employer wedge comes first; the network is what it unlocks later.</span></p>
           </div>
         </section>
 
@@ -507,7 +468,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                 </div>
               </div>
               <p class="contact-email">{email}</p>
-              <p style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.1vw,24px);line-height:1.25;color:#eef1f4;margin:20px 0 0">Let's talk about <span style="color:var(--g)">talent, corporate pilots, or building this together.</span></p>
+              <p style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2.1vw,24px);line-height:1.25;color:#eef1f4;margin:20px 0 0">Talking to <span style="color:var(--g)">companies about pilots, and to technical cofounders about building this.</span></p>
             </div>
             <div class="foot">
               <a href="/">About &amp; Contact</a>
@@ -536,6 +497,13 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         }
         resize();
         window.addEventListener('resize', resize);
+        // cursor state — dots part around it and link to it
+        const mouse = { x: null, y: null };
+        if (!reduce) {
+          window.addEventListener('mousemove', (e) => { mouse.x = e.clientX / W; mouse.y = e.clientY / H; }, { passive: true });
+          window.addEventListener('mouseout', (e) => { if (!e.relatedTarget) { mouse.x = mouse.y = null; } });
+          window.addEventListener('blur', () => { mouse.x = mouse.y = null; });
+        }
         const blobs = [
           { hue: 138, r: .44, ox: .26, oy: .34, ax: .12, ay: .10, sx: .075, sy: .055, hs: 5, op: 0.6, sr: .090, so: .070 },   // green (reduced, stays on-page)
           { hue: 224, r: .56, ox: .74, oy: .40, ax: .13, ay: .12, sx: .105, sy: .125, hs: -6, op: 1.5, sr: .110, so: .085 }, // blue (clear blue)
@@ -565,6 +533,11 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
             ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.fill();
           }
           ctx.globalCompositeOperation = 'source-over';
+          const hasM = mouse.x !== null;
+          const mpx = hasM ? mouse.x * W : 0, mpy = hasM ? mouse.y * H : 0;
+          const Rpx = 0.13 * Math.min(W, H);   // repel radius around cursor
+          const linkR = 0.12 * Math.min(W, H); // cursor-to-dot link radius
+          // advance dots + compute rendered positions (parting around the cursor)
           for (let i = 0; i < N; i++) {
             const p = pts[i];
             if (!reduce) {
@@ -573,19 +546,44 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
               if (p.y < 0 || p.y > 1) p.vy *= -1;
               p.x = Math.max(0, Math.min(1, p.x)); p.y = Math.max(0, Math.min(1, p.y));
             }
+            let rx = p.x * W, ry = p.y * H;
+            if (hasM) {
+              const ex = rx - mpx, ey = ry - mpy, ed = Math.hypot(ex, ey);
+              if (ed < Rpx && ed > 0.001) {
+                const push = ((Rpx - ed) / Rpx) ** 2 * 46;
+                rx += (ex / ed) * push; ry += (ey / ed) * push;
+              }
+            }
+            p.rx = rx; p.ry = ry;
+          }
+          // links between nearby dots
+          for (let i = 0; i < N; i++) {
+            const p = pts[i];
             for (let j = i + 1; j < N; j++) {
               const q = pts[j];
               const dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx, dy);
               if (d < maxD) {
                 ctx.strokeStyle = `rgba(180,200,210,${0.10 * (1 - d / maxD)})`;
                 ctx.lineWidth = 1;
-                ctx.beginPath(); ctx.moveTo(p.x * W, p.y * H); ctx.lineTo(q.x * W, q.y * H); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(p.rx, p.ry); ctx.lineTo(q.rx, q.ry); ctx.stroke();
+              }
+            }
+          }
+          // links from the cursor to nearby dots
+          if (hasM) {
+            for (let i = 0; i < N; i++) {
+              const p = pts[i];
+              const dx = p.rx - mpx, dy = p.ry - mpy, d = Math.hypot(dx, dy);
+              if (d < linkR) {
+                ctx.strokeStyle = `rgba(150,225,190,${0.5 * (1 - d / linkR)})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(mpx, mpy); ctx.lineTo(p.rx, p.ry); ctx.stroke();
               }
             }
           }
           for (const p of pts) {
             ctx.fillStyle = 'rgba(200,215,225,0.5)';
-            ctx.beginPath(); ctx.arc(p.x * W, p.y * H, 1.3, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(p.rx, p.ry, 1.3, 0, Math.PI * 2); ctx.fill();
           }
           if (!reduce) requestAnimationFrame(frame);
         }
