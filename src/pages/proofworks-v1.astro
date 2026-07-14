@@ -2,77 +2,35 @@
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
-import ProofworksEngine from '../components/ProofworksEngine.astro';
+import ProofworksEngine from '../components/ProofworksEngineV2.astro';
 
 const title = 'Proofworks V1 — Kyle Findlay';
-const description = 'A founder thesis on proof-of-work talent for the AI labor market: identifying adaptable talent, validating real workflow ability, and routing people into AI-enabled roles.';
+const description = 'Proofworks is a selective, two-sided talent platform. Talent applies to become more valuable; companies pay for demonstrated capability. Work-sample talent infrastructure for adaptive operators.';
 
-const G = 'var(--g)', C = 'var(--c)', V = 'var(--v)';
+const email = 'kylefindlay828@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
-const steps = [
-  { n: '01', h: 'Source', b: 'Find operators who already improve workflows, build tools, and automate.', a: 'var(--g)' },
-  { n: '02', h: 'Validate', b: 'Test real workflow judgment — not resumes, certificates, or buzzwords.', a: 'oklch(0.82 0.15 200)' },
-  { n: '03', h: 'Sharpen', b: 'Project-based building, not passive classes — real artifacts that prove it.', a: 'var(--c)' },
-  { n: '04', h: 'Route', b: 'Place proven talent into AI roles — plus corporate transformation & recruiting contracts.', a: 'var(--v)' },
+const model = [
+  { h: 'For companies', b: 'Identify, develop, redeploy, retain, hire, or contract trusted operators.', a: 'var(--c)' },
+  { h: 'For talent', b: 'Build real workflow projects, sharpen capability, and create a stronger signal than a résumé line.', a: 'var(--g)' },
+  { h: 'For recruiters', b: 'Match people through validated outputs, not keywords alone.', a: 'var(--c)' },
 ];
 
-const bridge = [
-  { h: 'For enterprises', b: 'Retool internal operators or hire proven external talent.', a: 'var(--c)' },
-  { h: 'For talent', b: 'Learn by building: use tools like Claude Code in the terminal, automate real workflows, and create proof — not certificates.', a: 'var(--g)' },
-  { h: 'For recruiters', b: 'Match people through demonstrated work, not keywords alone.', a: 'var(--v)' },
-];
 
-const flow = [
-  { v: 'Map', l: 'Adaptable operators' },
-  { v: 'Validate', l: 'Real workflows' },
-  { v: 'Sharpen', l: 'Stronger proof' },
-  { v: 'Route', l: 'Jobs and contracts' },
-];
 
-// "The bigger market" — old signal vs better signal
-const traits = ['judgment', 'agency', 'learning velocity', 'workflow instinct', 'communication', 'systems thinking', 'comfort with ambiguity', 'ability to learn by building'];
-const oldSignal = ['resume titles', 'keywords', 'certificates', 'years of experience', 'past job scope'];
-const betterSignal = ['proof-of-work', 'workflow judgment', 'learning velocity', 'tool fluency', 'systems thinking', 'real artifacts'];
-
-const signals = [
-  { t: 'workflow judgment', a: 'var(--g)' }, { t: 'systems thinking' }, { t: 'communication' },
-  { t: 'execution' }, { t: 'agency', a: 'var(--c)' }, { t: 'tool curiosity' },
-  { t: 'process improvement' }, { t: 'comfort with ambiguity' }, { t: 'learns by building', a: 'var(--v)' },
-];
-const evidence = ['improved broken workflows', 'built trackers, templates, SOPs, or dashboards', 'automated repetitive work', 'used tools before being asked', 'explained messy processes clearly', 'coordinated across teams', 'shipped without perfect instructions', 'experimented with AI tools', 'created proof instead of collecting certificates'];
-
-const buildInto = [
-  { h: 'Account operator', from: 'account manager / director / client services', builds: ['account intelligence', 'renewal-risk detection', 'meeting synthesis', 'personalized follow-up', 'strategic briefs'] },
-  { h: 'Workflow operator', from: 'project manager / ops lead / coordinator', builds: ['workflow automation', 'status synthesis', 'dependency mapping', 'implementation playbooks'] },
-  { h: 'Customer operator', from: 'customer success / support lead / onboarding', builds: ['churn signals', 'playbooks', 'customer summaries', 'onboarding automation', 'support workflows'] },
-  { h: 'GTM operator', from: 'RevOps / sales ops / marketing ops / recruiting ops', builds: ['research automation', 'CRM hygiene', 'lead scoring', 'reporting', 'outbound systems'] },
-  { h: 'Product & delivery operator', from: 'product ops / delivery mgr / QA / tech coordinator', builds: ['specs', 'QA workflows', 'feedback synthesis', 'implementation tracking', 'eval workflows'] },
-  { h: 'Admin & workflow operator', from: 'paralegal / compliance / healthcare admin / finance / HR', builds: ['intake routing', 'document workflows', 'compliance checklists', 'summary systems', 'process tracking'] },
-];
+const becomes = ['What work is changing?', 'Who can adapt?', 'What has each person demonstrated?', 'Which gaps remain?', 'Who is ready for which work?', 'Where is internal mobility possible?', 'Where is external talent required?', 'What economic value did the transformation create?'];
 
 const clusters = [
-  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, executive assistants, implementation specialists, business analysts', a: 'var(--c)' },
-  { h: 'Customer / account', roles: 'account managers, account directors, customer success managers, client services, onboarding specialists, renewals managers, partnerships managers', a: 'var(--c)' },
-  { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops coordinators, GTM ops, marketing ops, growth ops, recruiting coordinators, talent ops, sales enablement', a: 'var(--c)' },
-  { h: 'Product / delivery', roles: 'product ops, associate product managers, delivery managers, scrum masters, QA analysts, user research coordinators, implementation analysts', a: 'var(--c)' },
-  { h: 'Admin-heavy professional work', roles: 'paralegals, legal ops assistants, compliance analysts, insurance claims coordinators, healthcare admin, patient ops, finance ops, procurement, HR coordinators', a: 'var(--c)' },
-  { h: 'Field & frontline commercial', roles: 'field sales reps, inside sales, dispatch coordinators, service & install schedulers, estimators, branch operators, territory & franchise managers, account reps', a: 'var(--c)' },
+  { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, implementation specialists, business analysts' },
+  { h: 'Customer / account', roles: 'account managers, account directors, customer success, client services, onboarding, renewals, partnerships managers' },
+  { h: 'GTM / revenue operations', roles: 'RevOps analysts, sales ops, GTM ops, marketing ops, growth ops, recruiting ops, sales enablement' },
+  { h: 'Product / delivery', roles: 'product ops, associate PMs, delivery managers, scrum masters, QA analysts, implementation analysts' },
+  { h: 'Admin-heavy professional work', roles: 'paralegals, compliance analysts, insurance claims, healthcare admin, finance ops, procurement, HR coordinators' },
+  { h: 'Field & frontline commercial', roles: 'field sales reps, inside sales, dispatch coordinators, service & install schedulers, estimators, branch operators, territory managers' },
 ];
 
 const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply chain', 'Healthcare', 'Financial services', 'Insurance', 'Manufacturing', 'Construction', 'Retail & e-commerce', 'Professional services', 'Energy & utilities', 'Public sector'];
 
-const before = ['passive courses', 'certificates', 'generic AI literacy', 'watching tutorials', 'claiming fluency'];
-const after = ['workflow challenges', 'real artifacts', 'tool fluency through building', 'AI-assisted SOPs & automations', 'implementation playbooks', 'proof companies can evaluate'];
-
-const looking = [
-  { t: 'adaptable operators who want to prove what they can build with AI', a: 'var(--g)' },
-  { t: 'companies and recruiters facing AI talent gaps', a: 'var(--c)' },
-  { t: 'technical cofounders or partners excited about proof-of-work talent infrastructure', a: 'var(--v)', full: true },
-];
-
-const email = 'kylefindlay828@gmail.com';
-const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
-const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
 ---
 <!doctype html>
 <html lang="en">
@@ -98,30 +56,29 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; scroll-padding-top: 74px; -webkit-text-size-adjust: 100%; }
       body {
-        margin: 0; background: #06070a; color: #eef1f4;
+        margin: 0; background: #090a0e; color: #eef1f4;
         font-family: 'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
-        --g: oklch(0.85 0.16 155); --c: oklch(0.8 0.15 232); --v: oklch(0.8 0.15 300);
+        --g: #4c9dff; --c: #4c9dff; --v: #4c9dff;
         overflow-x: hidden;
       }
-      ::selection { background: oklch(0.85 0.16 155 / 0.28); }
+      ::selection { background: rgba(76,157,255,0.26); }
       a { text-decoration: none; }
+      p { overflow-wrap: break-word; }
 
       #bg { position: fixed; inset: 0; z-index: 0; display: block; }
       .dotgrid { position: fixed; inset: 0; z-index: 1; pointer-events: none;
         background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
         background-size: 34px 34px;
-        -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 85%);
-        mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 85%); }
+        -webkit-mask-image: radial-gradient(ellipse at 50% 22%, #000 24%, transparent 64%);
+        mask-image: radial-gradient(ellipse at 50% 22%, #000 24%, transparent 64%); }
       .wrap { position: relative; z-index: 2; }
       .col { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
-
-      .disp { font-family: 'Space Grotesk', sans-serif; }
       .mono { font-family: 'JetBrains Mono', monospace; }
       h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
 
       /* nav */
       .nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px);
-        background: rgba(6,7,10,0.55); border-bottom: 1px solid rgba(255,255,255,0.07); }
+        background: rgba(9,10,14,0.6); border-bottom: 1px solid rgba(255,255,255,0.07); }
       .nav-in { max-width: 1120px; margin: 0 auto; padding: 13px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 14px; }
       .nav a { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #aab2bc; transition: color .2s; }
       .nav a:hover { color: #eef1f4; }
@@ -131,157 +88,115 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
       .nav-others a { color: #8b94a0; }
       .nav-others .sep { color: #40474f; }
       .pw-pills { display: flex; gap: 8px; }
-      .navpill { color: var(--g) !important; border: 1px solid oklch(0.85 0.16 155 / 0.4);
-        border-radius: 100px; padding: 6px 14px; background: oklch(0.85 0.16 155 / 0.06); }
-      .navpill.on { background: var(--g); color: #06251a !important; border-color: var(--g); }
+      .navpill { color: var(--g) !important; border: 1px solid rgba(76,157,255,0.42);
+        border-radius: 100px; padding: 6px 14px; background: rgba(76,157,255,0.08); }
+      .navpill.on { background: var(--g); color: #04101f !important; border-color: var(--g); }
 
-      .sec { padding: 70px 0; }
-      .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--g); margin: 0 0 34px; }
+      .sec { padding: 66px 0; }
+      .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--g); margin: 0 0 24px; }
 
       /* hero */
-      .hero { padding: 120px 0 90px; }
-      .hero .eyebrow { color: #8b94a0; letter-spacing: .18em; margin-bottom: 26px; }
-      .brandblock { margin-bottom: 20px; }
-      .brandname { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(24px, 2.9vw, 33px);
-        letter-spacing: 0.15em; text-transform: uppercase; color: #eef1f4; margin: 0; }
+      .hero { padding: 110px 0 78px; }
+      .brandname { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(22px, 2.7vw, 30px);
+        letter-spacing: 0.16em; text-transform: uppercase; color: #eef1f4; margin: 0; }
       .brandsub { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px;
         letter-spacing: 0.1em; text-transform: uppercase; color: #8b94a0; margin: 8px 0 0; }
-      .h1 { font-size: clamp(56px, 10vw, 132px); line-height: .92; letter-spacing: -0.03em; }
-      .h1 .slash { color: #4b5560; }
-      .h1 .grad { background: linear-gradient(100deg, var(--g), var(--c), var(--v));
-        -webkit-background-clip: text; background-clip: text; color: transparent; }
-      .subhead { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(22px, 3vw, 32px);
-        line-height: 1.18; letter-spacing: -0.01em; margin: 30px 0 0; max-width: 780px; }
-      .support { font-size: 19px; line-height: 1.55; color: #aeb6c0; margin: 20px 0 0; max-width: 620px; }
-      .support b { color: #eef1f4; font-weight: 600; }
-      .cta-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 34px; }
-      .btn-g { font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--g); color: #06251a;
-        padding: 14px 26px; border-radius: 100px; border: 0; cursor: pointer; transition: opacity .2s; }
-      .btn-g:hover { opacity: .9; }
-      .status { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8b94a0; }
-      .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g); box-shadow: 0 0 12px var(--g); animation: pulseGlow 1.8s ease-in-out infinite; }
-      /* full-width editorial hero */
-      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(36px, 6.2vw, 72px); line-height: 1.0; letter-spacing: -0.03em; color: #eef1f4; margin: 18px 0 0; max-width: 1040px; }
+      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(44px, 8vw, 104px); line-height: .96; letter-spacing: -0.035em; color: #fff; margin: 22px 0 0; max-width: 1040px; }
       .hero-head .accent { color: var(--g); font-style: italic; }
-      .hero-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(19px, 2.1vw, 27px); line-height: 1.38; letter-spacing: -0.01em; color: #c7cdd4; margin: 26px 0 0; max-width: 960px; }
-      .hero-lead b { color: #ffffff; font-weight: 600; }
-      .hero-sub { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 2.9vw, 33px);
-        line-height: 1.2; letter-spacing: -0.02em; color: #eef1f4; margin: 34px 0 6px; max-width: 900px; }
-      .hero-sub .g { color: var(--g); }
-      /* wide video band (lives lower on the page) */
-      .video-band { position: relative; width: 100%; height: clamp(280px, 40vw, 440px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.12);
-        background: linear-gradient(165deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        display: flex; flex-direction: column; align-items: center; justify-content: center; }
-      .video-band .play { width: 74px; height: 74px; border-radius: 50%; background: var(--g); display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 40px -10px rgba(0,0,0,.55); }
-      .video-band .vlabel { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #c7cdd4; margin-top: 20px; }
-      .video-band .vsub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--g); margin-top: 7px; }
-      /* big impactful statement near the top */
-      .impact { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; color: #eef1f4; margin: 0; max-width: 1040px; }
+      .hero-strong { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(22px, 3vw, 34px); line-height: 1.18; letter-spacing: -0.025em; color: #eef1f4; margin: 30px 0 0; max-width: 860px; }
+      .hero-lead { font-size: clamp(17px, 2vw, 21px); line-height: 1.5; color: #b6bfc9; margin: 18px 0 0; max-width: 760px; }
+      .hero-lead b { color: #fff; font-weight: 600; }
+      .hero-doors { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.45; color: #c7cdd4; margin: 22px 0 0; max-width: 740px;
+        padding-left: 16px; border-left: 2px solid rgba(76,157,255,0.55); }
+      .hero-doors b { color: var(--g); font-weight: 700; }
+      .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+      .btn-g { font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--g); color: #04101f;
+        padding: 13px 24px; border-radius: 100px; border: 0; cursor: pointer; transition: opacity .2s; }
+      .btn-g:hover { opacity: .9; }
+      .pill-out { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 100px; padding: 12px 22px; transition: border-color .2s; }
+      .pill-out:hover { border-color: rgba(255,255,255,0.45); }
+
+      /* section headings + text */
+      .mkt-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 48px); line-height: 1.04; letter-spacing: -0.03em; color: #fff; margin: 0; max-width: 900px; }
+      .mkt-lead { font-size: clamp(18px, 2vw, 22px); line-height: 1.45; color: #dbe1e8; margin: 20px 0 0; max-width: 900px; }
+      .mkt-lead b { color: #fff; font-weight: 600; }
+      .mkt-lead2 { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.55; color: #a9b2bd; margin: 18px 0 0; max-width: 860px; }
+      .mini { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9aa3ad; margin: 22px 0 0; letter-spacing: .02em; }
+
+      /* impact / filter statement */
+      .impact { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 4.2vw, 50px); line-height: 1.08; letter-spacing: -0.03em; color: #eef1f4; margin: 0; max-width: 1040px; }
       .impact .accent { color: var(--g); }
       .impact .dim { color: #7b8490; font-style: italic; }
 
-      /* section heading for "The bigger market" */
-      .mkt-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; }
-      .mkt-sub { font-size: 17px; line-height: 1.5; color: #aeb6c0; margin: 16px 0 22px; max-width: 640px; }
-      .mkt-lead { font-size: clamp(18px, 2.1vw, 24px); line-height: 1.42; color: #dbe1e8; margin: 22px 0 0; max-width: 960px; }
-      .mkt-lead b { color: #ffffff; font-weight: 600; }
-      .mkt-lead .big { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5em; letter-spacing: -0.02em; color: var(--g); }
-      .mkt-lead2 { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.5; color: #aeb6c0; margin: 18px 0 26px; max-width: 900px; }
-      .mkt-lead2 b { color: #eef1f4; font-weight: 600; }
-      /* process flow — big italic verbs with arrows between */
+      /* process flow */
       .flow { display: flex; align-items: flex-start; gap: 12px; margin-top: 30px; }
       .flow-stage { flex: 1 1 0; min-width: 0; }
       .flow-verb { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; text-transform: uppercase;
-        font-size: clamp(34px, 4.6vw, 58px); line-height: 1; letter-spacing: -0.035em; color: #eef1f4; }
-      .flow-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.02em; color: #aeb6c0; margin-top: 12px; }
-      .flow-arrow { flex: 0 0 auto; align-self: center; color: var(--g); font-size: 30px; line-height: 1; padding-top: clamp(16px, 2vw, 30px); }
-      @media (max-width: 760px) {
-        .flow { flex-direction: column; align-items: flex-start; gap: 0; margin-top: 22px; }
-        .flow-stage { padding: 10px 0; }
-        .flow-verb { font-size: clamp(34px, 10vw, 40px); }
-        .flow-label { margin-top: 6px; }
-        .flow-arrow { align-self: flex-start; padding: 2px 0 2px 12px; transform: rotate(90deg); }
-      }
-      /* strongest system step (Route) */
-      .step-strong { border-color: color-mix(in srgb, var(--v) 45%, rgba(255,255,255,0.09)); background: rgba(255,255,255,0.075);
-        box-shadow: 0 0 0 1px color-mix(in srgb, var(--v) 22%, transparent), 0 24px 50px -34px color-mix(in srgb, var(--v) 85%, transparent); }
+        font-size: clamp(32px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.035em; color: #fff; }
+      .flow-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.02em; color: #a9b2bd; margin-top: 12px; }
+      .flow-arrow { flex: 0 0 auto; align-self: center; color: var(--g); font-size: 30px; line-height: 1; padding-top: clamp(14px, 2vw, 26px); }
 
-      /* generic card */
-      .card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 18px; position: relative; overflow: hidden;
+      /* cards */
+      .card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 26px 28px;
         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-      .spanel { border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); border-radius: 18px; padding: 26px 30px;
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+      .cardh { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.02em; margin: 0 0 10px; }
+      .cardb { font-size: 15px; line-height: 1.55; color: #aeb6c0; margin: 0; }
+
+      /* selective tiles */
+      .tiles3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+      .tile3 { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 26px 24px;
+        font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(18px, 2vw, 23px); letter-spacing: -0.02em; color: #eef1f4;
         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
-      /* system */
-      .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-      .step { padding: 22px 22px 26px; }
-      .step .glow { position: absolute; inset: 0; pointer-events: none; }
-      .step .lbl { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: .06em; position: relative; }
-      .step h3 { font-size: 22px; margin: 14px 0 10px; position: relative; }
-      .step p { font-size: 15px; line-height: 1.5; color: #aeb6c0; margin: 0; position: relative; }
+      /* relationship loop */
+      .loop { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 8px; }
+      .loop-node { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(19px, 2.6vw, 32px); letter-spacing: -0.025em; color: #fff; }
+      .loop-arr { color: var(--g); font-size: clamp(16px, 2vw, 24px); }
 
-      /* who we source */
-      .source-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 44px; }
-      .panel-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; margin: 0 0 22px; }
-      .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-      .chip { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 9px 15px; border-radius: 100px;
-        background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14); color: #c7cdd4; }
-      .evid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 26px; }
-      .evid li { list-style: none; display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: #c7cdd4; line-height: 1.4; }
-      .evid .ck { color: var(--g); }
-      ul { margin: 0; padding: 0; }
-
-      /* what we build */
-      .intro { font-size: 19px; line-height: 1.5; color: #aeb6c0; margin: -14px 0 34px; max-width: 720px; }
-      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .role { padding: 24px 24px 26px; }
-      .role h3 { font-size: 20px; margin: 0 0 10px; }
-      .role .from { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8b94a0; margin: 0 0 16px; line-height: 1.5; }
-      .role .builds-lbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .04em; margin: 0 0 11px; }
-      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
-      .tag { font-size: 13px; padding: 5px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); color: #c7cdd4; }
+      /* what it becomes */
+      .becomes { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 3.4vw, 42px); line-height: 1.14; letter-spacing: -0.03em; color: #fff; margin: 0; max-width: 1000px; }
+      .becomes b { color: var(--g); }
+      .outputs { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 44px; }
+      .outputs li { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(16px, 1.8vw, 21px); letter-spacing: -0.015em; color: #cbd3dd; padding-left: 18px; position: relative; }
+      .outputs li::before { content: "—"; position: absolute; left: 0; color: #5b6470; }
+      /* light off-white callout box around the questions */
+      .qbox { background: #eae8e2; border: 1px solid #d8d4ca; border-radius: 18px; padding: 30px 34px; margin: 26px 0 0; }
+      .qbox .qlead { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #6b675d; margin: 0 0 18px; }
+      .qbox .outputs { margin: 0; }
+      .qbox .outputs li { color: #23262b; }
+      .qbox .outputs li::before { color: #a7a297; }
 
       /* role universe */
-      .univ h2 { font-size: clamp(32px, 5vw, 56px); line-height: 1.02; margin: 0 0 30px; max-width: 760px; }
-      .urow { display: grid; grid-template-columns: 280px 1fr; gap: 30px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.09); }
-      .urow:last-child { border-bottom: 1px solid rgba(255,255,255,0.09); }
-      .urow .cat { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; }
-      .urow .rl { font-size: 16px; line-height: 1.55; color: #eef1f4; font-weight: 500; }
-      /* industry breadth — the market is huge */
-      .breadth { margin: 46px 0 0; }
-      .breadth-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 3.6vw, 38px);
-        line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
-      .breadth-b { font-size: clamp(16px, 1.9vw, 19px); line-height: 1.6; color: #c7cdd4; margin: 0 0 26px; max-width: 860px; font-weight: 500; }
+      .univ h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.02; margin: 0 0 6px; max-width: 760px; }
+      .univ .sub { font-size: 17px; color: #a9b2bd; margin: 0 0 24px; }
+      .spanel { border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); border-radius: 18px; padding: 4px 28px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .urow { display: grid; grid-template-columns: 260px 1fr; gap: 30px; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.09); }
+      .urow:first-child { border-top: 0; }
+      .urow .cat { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: #eef1f4; }
+      .urow .rl { font-size: 15px; line-height: 1.5; color: #b6bfc9; }
+
+      /* not just a tech story */
+      .breadth { margin: 44px 0 0; }
+      .breadth-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 3.4vw, 36px); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 16px; }
+      .breadth-b { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.55; color: #c7cdd4; margin: 0 0 24px; max-width: 900px; }
       .breadth-b b { color: #eef1f4; font-weight: 600; }
-      .sectors { display: flex; flex-wrap: wrap; gap: 10px; }
-      .sector { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
-        padding: 9px 16px; border-radius: 999px; color: #dfe4ea;
-        border: 1px solid color-mix(in srgb, var(--g) 30%, rgba(255,255,255,0.1)); background: color-mix(in srgb, var(--g) 6%, rgba(255,255,255,0.03)); }
+      .sectors { display: flex; flex-wrap: wrap; gap: 9px; }
+      .sector { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: -0.01em;
+        padding: 8px 15px; border-radius: 999px; color: #dfe4ea;
+        border: 1px solid rgba(76,157,255,0.28); background: rgba(76,157,255,0.05); }
 
-      /* proof of work */
-      .pow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; }
-      .pow-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.045); border-radius: 18px; padding: 26px 28px;
+      /* why founder */
+      .why-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(23px, 3.4vw, 36px); line-height: 1.2; letter-spacing: -0.025em; color: #eef1f4; margin: 0 0 34px; max-width: 900px; }
+      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .stat { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 22px 20px;
         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-      .pow-card.after { border-color: oklch(0.85 0.16 155 / 0.3); background: oklch(0.85 0.16 155 / 0.05); }
-      .pow-lbl { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 18px; }
-      .pow li { list-style: none; display: flex; gap: 12px; align-items: center; font-size: 15px; margin: 12px 0; }
-      .pow .before-l { color: #8892a0; } .pow .before-l .m { color: #5a636e; }
-      .pow .after-l { color: #dfe4ea; } .pow .after-l .m { color: var(--g); }
-      .arrow { font-size: 30px; color: var(--g); padding: 0 26px; animation: floaty 3s ease-in-out infinite; }
-      .pow-close { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(22px, 3.4vw, 34px);
-        line-height: 1.25; letter-spacing: -0.02em; margin: 44px 0 0; max-width: 900px; }
-      .pow-close b { color: var(--g); font-weight: 500; }
-      .pow-close .q { font-style: italic; color: #c7cdd4; }
-
-      /* why me */
-      .why-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(24px, 3.6vw, 38px);
-        line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 40px; max-width: 900px; }
-      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-      .stat { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 24px 22px;
-        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-      .statnum { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 44px; letter-spacing: -0.02em; line-height: 1; }
-      .statlbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9aa3ad; margin-top: 12px; letter-spacing: .02em; }
-      .why-close { font-size: 18px; line-height: 1.55; color: #aeb6c0; margin: 36px 0 0; max-width: 640px; }
+      .statnum { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 40px; letter-spacing: -0.02em; line-height: 1; }
+      .statlbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9aa3ad; margin-top: 11px; letter-spacing: .02em; }
+      .why-close { font-size: 17px; line-height: 1.55; color: #a9b2bd; margin: 32px 0 0; max-width: 700px; }
+      .why-close b { color: #eef1f4; }
 
       /* looking to meet */
       .meet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -293,48 +208,45 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
 
       /* contact */
       .contact-panel { border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; backdrop-filter: blur(6px);
-        background: linear-gradient(140deg, oklch(0.85 0.16 155 / 0.06), oklch(0.8 0.15 300 / 0.05)); padding: 34px 36px; }
+        background: linear-gradient(140deg, rgba(76,157,255,0.1), rgba(76,157,255,0.04)); padding: 32px 34px; }
       .contact-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
       .who { display: flex; align-items: center; gap: 18px; }
-      .avatar { width: 132px; height: 164px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); flex-shrink: 0; }
+      .avatar { width: 122px; height: 152px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); flex-shrink: 0; }
       .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; transform: scale(1.35) translateY(-10%); transform-origin: top center; }
-      .who .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; }
+      .who .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 23px; }
       .who .loc { color: #9aa3ad; font-size: 15px; margin-top: 3px; }
-      .contact-actions { display: flex; align-items: center; gap: 12px; }
-      .pill-out { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 100px; padding: 12px 20px; transition: border-color .2s; }
-      .pill-out:hover { border-color: rgba(255,255,255,0.4); }
+      .contact-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
       .contact-email { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #9aa3ad; margin: 22px 0 0; }
       .foot { display: flex; gap: 22px; flex-wrap: wrap; padding: 30px 0 60px; }
       .foot a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
       .foot a:hover { color: var(--g); }
 
-      /* reveal + ambient motion */
-      [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+      /* reveal */
+      [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
       [data-reveal].in { opacity: 1; transform: none; }
-      @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-      @keyframes pulseGlow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
       @media (prefers-reduced-motion: reduce) {
         [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-        .arrow, .dot { animation: none !important; }
         html { scroll-behavior: auto; }
       }
 
       /* responsive */
+      @media (max-width: 760px) {
+        .flow { flex-direction: column; align-items: flex-start; gap: 0; margin-top: 22px; }
+        .flow-stage { padding: 9px 0; }
+        .flow-verb { font-size: clamp(32px, 11vw, 44px); }
+        .flow-label { margin-top: 5px; }
+        .flow-arrow { align-self: flex-start; padding: 2px 0 2px 10px; transform: rotate(90deg); }
+      }
       @media (max-width: 900px) {
-        .hero-grid { grid-template-columns: 1fr; gap: 30px; }
-        .grid4 { grid-template-columns: 1fr 1fr; }
-        .grid3 { grid-template-columns: 1fr 1fr; }
-        .source-grid { grid-template-columns: 1fr; gap: 40px; }
+        .grid3, .tiles3 { grid-template-columns: 1fr 1fr; }
         .stat-grid { grid-template-columns: 1fr 1fr; }
       }
-      @media (max-width: 640px) {
-        .hero { padding: 90px 0 60px; }
-        .grid4, .grid3, .meet-grid, .evid, .stat-grid { grid-template-columns: 1fr; }
-        .urow { grid-template-columns: 1fr; gap: 8px; }
-        .pow { grid-template-columns: 1fr; gap: 16px; }
-        .arrow { transform: rotate(90deg); padding: 4px 0; }
+      @media (max-width: 620px) {
+        .hero { padding: 84px 0 56px; }
+        .grid3, .tiles3, .meet-grid, .stat-grid, .outputs { grid-template-columns: 1fr; }
+        .urow { grid-template-columns: 1fr; gap: 6px; }
         .contact-row { flex-direction: column; align-items: flex-start; }
+        .who { flex-direction: column; align-items: flex-start; }
       }
     </style>
     <Analytics />
@@ -366,76 +278,69 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         <!-- HERO -->
         <section class="hero">
           <div class="col">
-            <div class="brandblock" data-reveal>
+            <div data-reveal>
               <p class="brandname">PROOFWORKS</p>
               <p class="brandsub">Founder thesis by Kyle Findlay</p>
             </div>
-            <h1 class="hero-head" data-reveal style="transition-delay:.06s">Work is changing <span class="accent">faster than hiring can keep up.</span></h1>
-            <p class="hero-lead" data-reveal style="transition-delay:.14s">Proofworks <b>maps</b>, <b>validates</b>, <b>sharpens</b>, and <b>routes</b> adaptable operators into companies being reshaped by AI.</p>
-            <p class="hero-sub" data-reveal style="transition-delay:.18s">We help users <span class="g">identify, retool, and deploy AI-capable operators</span>—while helping talent build careers around the work companies need next.</p>
-            <div class="cta-row" data-reveal style="transition-delay:.22s">
+            <h1 class="hero-head" data-reveal style="transition-delay:.06s">Start with the people already <span class="accent">closest to the work.</span></h1>
+            <p class="hero-strong" data-reveal style="transition-delay:.12s">Pick one real workflow. Develop the <b>trusted employees already running it</b>. Measure how much better it gets.</p>
+            <p class="hero-doors" data-reveal style="transition-delay:.22s"><b>An employer service</b> — internal people, real work, measured improvement.</p>
+            <div class="cta-row" data-reveal style="transition-delay:.24s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
               <a href="mailto:kylefindlay828@gmail.com?subject=Find%20operators" class="pill-out">Find operators</a>
-              <button class="pill-out" data-email={email} type="button" style="cursor:pointer; background:transparent" aria-label="Copy email address"><span class="ce">{email}</span> ⧉</button>
+              <a href="mailto:kylefindlay828@gmail.com?subject=Talk%20to%20Kyle" class="pill-out">Talk to Kyle</a>
             </div>
           </div>
         </section>
 
-        <!-- MASSIVE MARKET OPPORTUNITY -->
+        <!-- WHAT IT BECOMES (after hero) -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>What it becomes</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
+            <div class="qbox" data-reveal style="transition-delay:.1s">
+              <p class="qlead">Proofworks helps answer:</p>
+              <ul class="outputs">
+                {becomes.map((o) => <li>{o}</li>)}
+              </ul>
+            </div>
+            <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
+          </div>
+        </section>
+
+        <!-- THE MODEL -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>The model</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.06s">Pull-based talent network.</h2>
-            <p class="mkt-lead" data-reveal style="transition-delay:.1s"><b>Talent comes for career upside. Companies pay for proven capability.</b></p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks teaches operators through real workflow projects, turns what they build into proof, and connects the strongest talent with companies.</p>
+            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Selective talent network.</h2>
+            <p class="mkt-lead" data-reveal style="transition-delay:.09s"><b>Talent comes for career upside. Companies pay for demonstrated capability.</b></p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks develops operators through real workflow projects, turns outputs into work samples, and connects the strongest talent with companies and teams that need them.</p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.14s"><b>Not for everyone</b> — for people with judgment, agency, learning velocity, and evidence they can improve messy workflows.</p>
             <div class="grid3">
-              {bridge.map((c, i) => (
-                <div class="card" data-reveal style={`padding:24px 26px; transition-delay:${i * 80}ms`}>
-                  <h3 style={`font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;margin:0 0 10px;color:${c.a}`}>{c.h}</h3>
-                  <p style="font-size:14.5px;line-height:1.5;color:#aeb6c0;margin:0">{c.b}</p>
+              {model.map((c, i) => (
+                <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
+                  <h3 class="cardh" style={`color:${c.a}`}>{c.h}</h3>
+                  <p class="cardb">{c.b}</p>
                 </div>
               ))}
             </div>
+            <p class="impact" data-reveal style="margin-top:44px">The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
           </div>
         </section>
 
-        <!-- PROCESS -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The process</p>
-            <div class="flow" data-reveal>
-              {flow.map((s, i) => (
-                <>
-                  <div class="flow-stage">
-                    <div class="flow-verb">{s.v}</div>
-                    <div class="flow-label">{s.l}</div>
-                  </div>
-                  {i < flow.length - 1 && <div class="flow-arrow" aria-hidden="true">→</div>}
-                </>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <!-- FILTER STATEMENT -->
-        <section class="sec">
-          <div class="col">
-            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
-          </div>
-        </section>
-
-        <!-- THE PROOFWORKS ENGINE (light interrupt) -->
+        <!-- THE PROOFWORKS ENGINE (standout stone band) -->
         <ProofworksEngine />
 
         <!-- ROLE UNIVERSE -->
         <section class="sec univ">
           <div class="col">
             <p class="eyebrow" data-reveal>The role universe</p>
-            <h2 data-reveal style="transition-delay:.06s">A large, underserved talent market.</h2>
-            <div class="spanel" style="padding: 6px 30px;">
+            <h2 data-reveal style="transition-delay:.05s">A large, underserved talent market.</h2>
+            <p class="sub" data-reveal>Every company has people close to the work.</p>
+            <div class="spanel">
               {clusters.map((c, i) => (
-                <div class="urow" data-reveal style={`transition-delay:${i * 60}ms`}>
-                  <div class="cat" style={`color:${c.a}`}>{c.h}</div>
+                <div class="urow" data-reveal style={`transition-delay:${i * 50}ms`}>
+                  <div class="cat">{c.h}</div>
                   <div class="rl">{c.roles}</div>
                 </div>
               ))}
@@ -443,19 +348,19 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
 
             <div class="breadth">
               <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
-              <p class="breadth-b" data-reveal style="transition-delay:.06s">The same operator exists everywhere. A national plumbing company has sales reps, dispatchers, and estimators. A logistics firm runs on coordinators and account managers. A hospital network has schedulers and claims teams. <b>Every company adopting AI — in every industry — has operators worth retooling.</b></p>
-              <div class="sectors" data-reveal style="transition-delay:.12s">
+              <p class="breadth-b" data-reveal style="transition-delay:.05s">The same operator exists everywhere: dispatchers, estimators, schedulers, coordinators, account managers, claims teams, field reps, and people close to the work. <b>Every workflow-heavy company has people worth developing.</b></p>
+              <div class="sectors" data-reveal style="transition-delay:.1s">
                 {sectors.map((s) => <span class="sector">{s}</span>)}
               </div>
             </div>
           </div>
         </section>
 
-        <!-- WHY ME -->
+        <!-- WHY THIS FOUNDER -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>Why this founder</p>
-            <p class="why-stmt" data-reveal style="transition-delay:.06s">Running complex client programs showed me that the people most capable of adapting, improving work, and taking on new responsibilities are often poorly represented by their formal roles.</p>
+            <p class="why-stmt" data-reveal style="transition-delay:.05s">Running complex client programs showed me that the people most capable of adapting, improving work, and taking on new responsibilities are often poorly represented by their formal roles.</p>
             <div class="stat-grid">
               <div class="stat" data-reveal>
                 <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
@@ -466,30 +371,16 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
                 <div class="statlbl">supported</div>
               </div>
               <div class="stat" data-reveal style="transition-delay:.16s">
-                <div class="statnum" style="color:var(--v)">30–40</div>
+                <div class="statnum" style="color:var(--g)">30–40</div>
                 <div class="statlbl">programs / year</div>
               </div>
               <div class="stat" data-reveal style="transition-delay:.24s">
-                <div class="statnum" style="color:var(--g)" data-count data-count-to="12" data-count-dec="0" data-count-suffix="+">12+</div>
+                <div class="statnum" style="color:var(--c)" data-count data-count-to="12" data-count-dec="0" data-count-suffix="+">12+</div>
                 <div class="statlbl">national brands</div>
               </div>
             </div>
-            <p class="why-close" data-reveal>I have built three iterations of this thesis across labor-market intelligence, talent signals, and workforce retooling—starting with GTM Radar V1, evolving through GTM Radar V2, and now Proofworks.</p>
-            <p class="why-close" data-reveal style="margin-top:14px"><b style="color:#eef1f4">Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of AI, talent, and real operator workflows.</p>
-          </div>
-        </section>
-
-        <!-- LOOKING TO CONNECT -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Looking to connect with</p>
-            <div class="meet-grid">
-              {looking.map((m, i) => (
-                <div class:list={["meet", m.full && "full"]} data-reveal style={`transition-delay:${i * 60}ms`}>
-                  <span class="ar" style={`color:${m.a}`}>→</span>{m.t}
-                </div>
-              ))}
-            </div>
+            <p class="why-close" data-reveal>Proofworks is the third iteration of this work: from labor-market intelligence, to talent signals, to work-sample infrastructure for adaptive talent.</p>
+            <p class="why-close" data-reveal style="margin-top:14px"><b>Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of talent, workforce transformation, and real operator workflows.</p>
           </div>
         </section>
 
@@ -516,6 +407,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
             </div>
             <div class="foot">
               <a href="/">About &amp; Contact</a>
+              <a href="/proofworks-v1">Proofworks V1</a>
               <a href="/gtm-radar">GTM Radar V1</a>
               <a href="/radar-v2">GTM Radar V2</a>
             </div>
@@ -525,7 +417,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
     </div>
 
     <script>
-      // ── animated background: aurora blobs (hue-drift) + constellation network ──
+      // ── background: aurora blobs (electric blue) + constellation ──
       (() => {
         const canvas = document.getElementById('bg');
         if (!(canvas instanceof HTMLCanvasElement)) return;
@@ -542,30 +434,29 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
         resize();
         window.addEventListener('resize', resize);
         const blobs = [
-          { hue: 138, r: .44, ox: .26, oy: .34, ax: .12, ay: .10, sx: .075, sy: .055, hs: 5, op: 0.6, sr: .090, so: .070 },   // green (reduced, stays on-page)
-          { hue: 224, r: .56, ox: .74, oy: .40, ax: .13, ay: .12, sx: .105, sy: .125, hs: -6, op: 1.5, sr: .110, so: .085 }, // blue (clear blue)
-          { hue: 282, r: .52, ox: .50, oy: .70, ax: .14, ay: .11, sx: .130, sy: .085, hs: 8, op: 1.25, sr: .080, so: .100 },  // purple
+          { hue: 208, sat: 90, r: .44, ox: .24, oy: .32, ax: .12, ay: .10, sx: .075, sy: .055, op: 0.7,  so: .070 },
+          { hue: 214, sat: 92, r: .56, ox: .77, oy: .40, ax: .13, ay: .12, sx: .105, sy: .125, op: 1.15, so: .085 },
+          { hue: 200, sat: 80, r: .50, ox: .50, oy: .74, ax: .14, ay: .11, sx: .130, sy: .085, op: 0.75, so: .100 },
         ];
-        const N = 230, pts = [];
+        const N = 200, pts = [];
         for (let i = 0; i < N; i++) pts.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * 0.00012, vy: (Math.random() - .5) * 0.00012 });
         const start = performance.now();
         const maxD = 0.062;
         function frame(now) {
           const t = (now - start) / 1000;
           ctx.clearRect(0, 0, W, H);
-          ctx.fillStyle = '#06070a'; ctx.fillRect(0, 0, W, H);
+          ctx.fillStyle = '#090a0e'; ctx.fillRect(0, 0, W, H);
           ctx.globalCompositeOperation = 'lighter';
           for (const b of blobs) {
             const cx = (b.ox + Math.sin(t * b.sx) * b.ax) * W;
             const cy = (b.oy + Math.cos(t * b.sy) * b.ay) * H;
-            const rad = b.r * Math.max(W, H) * 0.5 * (1 + Math.sin(t * (b.sr ?? .08) + b.hue) * 0.15);
-            const hue = b.hue + Math.sin(t * 0.12) * b.hs;
-            const op = (b.op ?? 1) * (0.88 + 0.14 * Math.sin(t * (b.so ?? .08) + b.r * 12));
+            const rad = b.r * Math.max(W, H) * 0.5 * (1 + Math.sin(t * 0.08 + b.hue) * 0.14);
+            const op = b.op * (0.86 + 0.14 * Math.sin(t * (b.so ?? .08) + b.r * 12));
             const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-            g.addColorStop(0, `hsla(${hue}, 90%, 72%, ${0.42 * op})`);
-            g.addColorStop(0.3, `hsla(${hue}, 85%, 60%, ${0.22 * op})`);
-            g.addColorStop(0.66, `hsla(${hue}, 75%, 48%, ${0.07 * op})`);
-            g.addColorStop(1, `hsla(${hue}, 70%, 45%, 0)`);
+            g.addColorStop(0, `hsla(${b.hue}, ${b.sat}%, 66%, ${0.32 * op})`);
+            g.addColorStop(0.34, `hsla(${b.hue}, ${b.sat}%, 55%, ${0.16 * op})`);
+            g.addColorStop(0.7, `hsla(${b.hue}, ${b.sat}%, 45%, ${0.05 * op})`);
+            g.addColorStop(1, `hsla(${b.hue}, ${b.sat}%, 45%, 0)`);
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.fill();
           }
@@ -582,14 +473,14 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
               const q = pts[j];
               const dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx, dy);
               if (d < maxD) {
-                ctx.strokeStyle = `rgba(180,200,210,${0.10 * (1 - d / maxD)})`;
+                ctx.strokeStyle = `rgba(180,195,210,${0.09 * (1 - d / maxD)})`;
                 ctx.lineWidth = 1;
                 ctx.beginPath(); ctx.moveTo(p.x * W, p.y * H); ctx.lineTo(q.x * W, q.y * H); ctx.stroke();
               }
             }
           }
           for (const p of pts) {
-            ctx.fillStyle = 'rgba(200,215,225,0.5)';
+            ctx.fillStyle = 'rgba(200,210,222,0.45)';
             ctx.beginPath(); ctx.arc(p.x * W, p.y * H, 1.3, 0, Math.PI * 2); ctx.fill();
           }
           if (!reduce) requestAnimationFrame(frame);
@@ -605,9 +496,7 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           const dec = parseInt(el.dataset.countDec || '0', 10);
           const pre = el.dataset.countPrefix || '', suf = el.dataset.countSuffix || '';
           const dur = 1200, start = performance.now();
-          const token = (el._ct = (el._ct || 0) + 1); // supersede any in-flight run
           function step(now) {
-            if (el._ct !== token) return;
             const p = Math.min(1, (now - start) / dur);
             const e = 1 - Math.pow(1 - p, 3);
             el.textContent = pre + (to * e).toFixed(dec) + suf;
@@ -621,35 +510,19 @@ const buildAccents = ['var(--g)', 'var(--c)', 'var(--v)'];
           document.querySelectorAll('[data-count]').forEach((el) => countUp(el));
           return;
         }
-        // reveal on first enter; never un-reveal on leave (so mid-page scrolling
-        // up/down never re-triggers).
-        const obs = new IntersectionObserver((entries) => {
+        const obs = new IntersectionObserver((entries, o) => {
           entries.forEach((e) => {
-            if (e.isIntersecting && !e.target.classList.contains('in')) {
-              e.target.classList.add('in');
-              const c = e.target.querySelector('[data-count]');
-              if (c) countUp(c);
-            }
+            if (!e.isIntersecting) return;
+            e.target.classList.add('in');
+            const c = e.target.querySelector('[data-count]');
+            if (c && !c.dataset.done) { c.dataset.done = '1'; countUp(c); }
+            o.unobserve(e.target);
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
         els.forEach((el) => obs.observe(el));
-
-        // only when the user returns to the very top do we clear the reveals that
-        // are below the fold — so the next scroll down replays every animation.
-        let armed = false;
-        window.addEventListener('scroll', () => {
-          if (window.scrollY > 400) armed = true;
-          else if (window.scrollY <= 2 && armed) {
-            armed = false;
-            const vh = window.innerHeight;
-            els.forEach((el) => {
-              if (el.getBoundingClientRect().top >= vh) el.classList.remove('in');
-            });
-          }
-        }, { passive: true });
       })();
 
-      // ── copy email (every button with data-email — hero + contact) ──
+      // ── copy email ──
       document.querySelectorAll('button[data-email]').forEach((btn) => {
         const label = btn.querySelector('.ce');
         const original = label ? label.textContent : '';

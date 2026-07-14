@@ -1,0 +1,131 @@
+---
+// The Workforce Evolution Engine — responsive HTML/CSS flow diagram.
+// Light-stone panel to match the V2 Proofworks Engine. One-time entrance only.
+const engine = [
+  { n: '1', h: 'Select', b: 'Who has the judgment and learning velocity?' },
+  { n: '2', h: 'Build', b: 'Put them against a real workflow.' },
+  { n: '3', h: 'Validate', b: 'Turn output into evidence a company can evaluate.' },
+  { n: '4', h: 'Route', b: 'Move capability to its next step.' },
+];
+const outcomes = [
+  { h: 'Retain + redeploy', b: 'Keep valuable people; move them into stronger work.' },
+  { h: 'Develop further', b: 'Close specific gaps through more real projects.' },
+  { h: 'Hire + contract', b: 'Bring in outside talent where the gap is real.' },
+  { h: 'Rebuild the workflow', b: 'Leave behind a better operating system.' },
+];
+---
+<section class="evo" aria-label="The Workforce Evolution Engine">
+  <div class="evo-wrap">
+    <p class="evo-eyebrow" data-reveal>The engine</p>
+    <h2 class="evo-h" data-reveal>The Workforce Evolution Engine</h2>
+    <p class="evo-sub" data-reveal>How Proofworks turns changing work into workforce decisions — development happens inside real company work, not around it.</p>
+
+    <div class="evo-flow">
+      <div class="evo-top" data-reveal>
+        <p class="evo-box-h">Technology changes the workflow</p>
+        <p class="evo-box-b">Tools arrive before roles, skills, and org charts catch up.</p>
+      </div>
+
+      <div class="evo-conn" aria-hidden="true"></div>
+
+      <div class="evo-two">
+        <div class="evo-src internal" data-reveal>
+          <p class="evo-box-h">Internal employees</p>
+          <p class="evo-box-b">Trusted people already close to the work.</p>
+        </div>
+        <div class="evo-src external" data-reveal style="transition-delay:.08s">
+          <p class="evo-box-h">External candidates</p>
+          <p class="evo-box-b">People entering directly for stronger work.</p>
+        </div>
+      </div>
+
+      <div class="evo-conn" aria-hidden="true"></div>
+
+      <div class="evo-engine" data-reveal>
+        <p class="evo-engine-title">Proofworks Engine</p>
+        <p class="evo-engine-flow">Select → Build → Validate → Route</p>
+        <div class="evo-steps">
+          {engine.map((s, i) => (
+            <div class="evo-step">
+              <span class="evo-num">{s.n}</span>
+              <div>
+                <p class="evo-step-h">{s.h}</p>
+                <p class="evo-step-b">{s.b}</p>
+              </div>
+              {i < engine.length - 1 && <span class="evo-step-arr" aria-hidden="true">→</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="evo-conn" aria-hidden="true"></div>
+
+      <div class="evo-out">
+        {outcomes.map((o, i) => (
+          <div class="evo-card" data-reveal style={`transition-delay:${i * 60}ms`}>
+            <p class="evo-card-h">{o.h}</p>
+            <p class="evo-card-b">{o.b}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="evo-foot" data-reveal>Every project improves the capability map: what work is changing, who can adapt, and where outside talent is needed.</p>
+    </div>
+  </div>
+
+  <style>
+    .evo, .evo * { box-sizing: border-box; }
+    .evo { position: relative; padding: 92px 0; background: #e7e6e1; color: #23262b;
+      box-shadow: 0 -30px 70px -40px rgba(0,0,0,0.75), 0 30px 70px -40px rgba(0,0,0,0.75); }
+    .evo-wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+    .evo-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #1f5aa6; margin: 0 0 16px; }
+    .evo-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-style: italic; font-size: clamp(30px, 4.8vw, 56px); line-height: 1; letter-spacing: -0.035em; color: #17140e; margin: 0; }
+    .evo-sub { font-size: clamp(16px, 1.9vw, 20px); line-height: 1.5; color: #5a5347; margin: 14px 0 0; }
+
+    .evo-flow { margin-top: 40px; display: flex; flex-direction: column; align-items: center; }
+    .evo-box-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; color: #17140e; margin: 0; }
+    .evo-box-b { font-size: 14.5px; line-height: 1.45; color: #5a5347; margin: 7px 0 0; }
+
+    .evo-top { background: #fbf9f4; border: 1px solid #ddd8cc; border-radius: 14px; padding: 20px 26px; text-align: center; max-width: 520px; }
+    .evo-conn { width: 2px; height: 34px; background: linear-gradient(#c7c3b7, #c7c3b7); }
+    .evo-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 760px; }
+    .evo-src { background: #fbf9f4; border: 1px solid #ddd8cc; border-radius: 14px; padding: 20px 24px; }
+    .evo-src.internal { border-left: 3px solid #1f5aa6; }
+    .evo-src.external { border-left: 3px solid #7b4fd0; }
+
+    .evo-engine { width: 100%; max-width: 940px; background: #17140e; border-radius: 18px; padding: 30px 32px; }
+    .evo-engine-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: .01em; color: #8fe3b0; margin: 0; text-align: center; }
+    .evo-engine-flow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .06em; color: #8fb6e6; margin: 8px 0 0; text-align: center; }
+    .evo-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 24px; align-items: start; }
+    .evo-step { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding-right: 14px; }
+    .evo-num { width: 34px; height: 34px; border-radius: 50%; border: 1px solid #3a3730; display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #e9e5da; }
+    .evo-step-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px; color: #fff; margin: 0; }
+    .evo-step-b { font-size: 13px; line-height: 1.45; color: #b7b2a5; margin: 5px 0 0; }
+    .evo-step-arr { position: absolute; top: 6px; right: -6px; color: #8fe3b0; font-size: 18px; }
+
+    .evo-out { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; }
+    .evo-card { background: #fbf9f4; border: 1px solid #ddd8cc; border-radius: 14px; padding: 20px 20px; border-top: 3px solid #1f5aa6; }
+    .evo-card:nth-child(2) { border-top-color: #2f8f66; }
+    .evo-card:nth-child(3) { border-top-color: #b06a12; }
+    .evo-card:nth-child(4) { border-top-color: #7b4fd0; }
+    .evo-card-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: #17140e; margin: 0; }
+    .evo-card-b { font-size: 13.5px; line-height: 1.45; color: #5a5347; margin: 7px 0 0; }
+
+    .evo-foot { font-size: 15px; line-height: 1.5; color: #5a5347; margin: 34px 0 0; text-align: center; max-width: 820px; }
+
+    [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    [data-reveal].in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
+    @media (max-width: 760px) {
+      .evo { padding: 62px 0; }
+      .evo-steps { grid-template-columns: 1fr 1fr; gap: 18px; }
+      .evo-step-arr { display: none; }
+      .evo-out { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 460px) {
+      .evo-two, .evo-steps, .evo-out { grid-template-columns: 1fr; }
+    }
+  </style>
+</section>

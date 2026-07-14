@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
+import WorkforceTransformationIndex from '../components/WorkforceTransformationIndex.astro';
 import ProofworksEngine from '../components/ProofworksEngineV2.astro';
 
 const title = 'Proofworks V2 — Kyle Findlay';
@@ -11,9 +12,8 @@ const email = 'kylefindlay828@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
 const model = [
-  { h: 'For companies', b: 'Identify, develop, redeploy, retain, hire, or contract trusted operators.', a: 'var(--c)' },
-  { h: 'For talent', b: 'Build real workflow projects, sharpen capability, and create a stronger signal than a résumé line.', a: 'var(--g)' },
-  { h: 'For recruiters', b: 'Match people through validated outputs, not keywords alone.', a: 'var(--c)' },
+  { h: 'For companies', b: 'Bring internal teams or hiring needs. Identify, develop, redeploy, retain, hire, or contract trusted operators.', a: 'var(--c)' },
+  { h: 'For talent', b: 'Enter directly. Build real workflow projects and create a stronger signal than a résumé line. Direct applicants are selected for judgment, agency, learning velocity, and the ability to improve messy workflows.', a: 'var(--g)' },
 ];
 
 
@@ -141,6 +141,8 @@ const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply
       .card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 26px 28px;
         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
       .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+      .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
+      @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
       .cardh { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.02em; margin: 0 0 10px; }
       .cardb { font-size: 15px; line-height: 1.55; color: #aeb6c0; margin: 0; }
 
@@ -297,16 +299,13 @@ const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>What it becomes</p>
-            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
-            <div class="qbox" data-reveal style="transition-delay:.1s">
-              <p class="qlead">Proofworks helps answer:</p>
-              <ul class="outputs">
-                {becomes.map((o) => <li>{o}</li>)}
-              </ul>
-            </div>
-            <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s"><b>Workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
+            <p class="becomes" data-reveal style="transition-delay:.1s; margin-top:22px; font-size:clamp(20px,2.6vw,32px); color:#c7cdd4">Understand what work is changing, who can grow with it, and where outside talent is genuinely required.</p>
           </div>
         </section>
+
+        <!-- WORKFORCE TRANSFORMATION INDEX (interactive) -->
+        <WorkforceTransformationIndex />
 
         <!-- THE MODEL -->
         <section class="sec">
@@ -314,9 +313,8 @@ const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply
             <p class="eyebrow" data-reveal>The model</p>
             <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Selective talent network.</h2>
             <p class="mkt-lead" data-reveal style="transition-delay:.09s"><b>Talent comes for career upside. Companies pay for demonstrated capability.</b></p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks develops operators through real workflow projects, turns outputs into work samples, and connects the strongest talent with companies and teams that need them.</p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.14s"><b>Not for everyone</b> — for people with judgment, agency, learning velocity, and evidence they can improve messy workflows.</p>
-            <div class="grid3">
+            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Companies bring internal teams or hiring needs. Talent can also enter directly.</p>
+            <div class="grid2">
               {model.map((c, i) => (
                 <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
                   <h3 class="cardh" style={`color:${c.a}`}>{c.h}</h3>
@@ -328,33 +326,8 @@ const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply
           </div>
         </section>
 
-        <!-- THE PROOFWORKS ENGINE (standout stone band) -->
+        <!-- THE PROOFWORKS ENGINE (V1 stone engine) -->
         <ProofworksEngine />
-
-        <!-- ROLE UNIVERSE -->
-        <section class="sec univ">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The role universe</p>
-            <h2 data-reveal style="transition-delay:.05s">A large, underserved talent market.</h2>
-            <p class="sub" data-reveal>Every company has people close to the work.</p>
-            <div class="spanel">
-              {clusters.map((c, i) => (
-                <div class="urow" data-reveal style={`transition-delay:${i * 50}ms`}>
-                  <div class="cat">{c.h}</div>
-                  <div class="rl">{c.roles}</div>
-                </div>
-              ))}
-            </div>
-
-            <div class="breadth">
-              <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
-              <p class="breadth-b" data-reveal style="transition-delay:.05s">The same operator exists everywhere: dispatchers, estimators, schedulers, coordinators, account managers, claims teams, field reps, and people close to the work. <b>Every workflow-heavy company has people worth developing.</b></p>
-              <div class="sectors" data-reveal style="transition-delay:.1s">
-                {sectors.map((s) => <span class="sector">{s}</span>)}
-              </div>
-            </div>
-          </div>
-        </section>
 
         <!-- WHY THIS FOUNDER -->
         <section class="sec">
@@ -379,7 +352,6 @@ const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply
                 <div class="statlbl">national brands</div>
               </div>
             </div>
-            <p class="why-close" data-reveal>Proofworks is the third iteration of this work: from labor-market intelligence, to talent signals, to work-sample infrastructure for adaptive talent.</p>
             <p class="why-close" data-reveal style="margin-top:14px"><b>Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of talent, workforce transformation, and real operator workflows.</p>
           </div>
         </section>

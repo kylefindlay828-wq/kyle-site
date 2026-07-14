@@ -1,0 +1,258 @@
+---
+// The Workforce Transformation Index — native interactive SVG bubble chart.
+// Light panel for readability; numbered bubbles + legend so every cluster is
+// legible without hovering. Data-driven from src/data/workforce-index.ts.
+import { clusters, notes } from '../data/workforce-index.ts';
+
+const VB = { w: 1000, h: 640 };
+const M = { l: 92, r: 66, t: 58, b: 92 };
+const P = { x0: M.l, x1: VB.w - M.r, y0: M.t, y1: VB.h - M.b };
+const D = { xmin: 3.2, xmax: 10, ymin: 2.2, ymax: 10 };
+const px = (x: number) => P.x0 + ((x - D.xmin) / (D.xmax - D.xmin)) * (P.x1 - P.x0);
+const py = (y: number) => P.y1 - ((y - D.ymin) / (D.ymax - D.ymin)) * (P.y1 - P.y0);
+
+const bubbles = clusters.map((c, i) => ({ ...c, n: i + 1, cx: +px(c.x).toFixed(1), cy: +py(c.y).toFixed(1), rr: +(c.r * 0.92).toFixed(1) }));
+const qx = +px(7).toFixed(1), qy = +py(7).toFixed(1);
+
+// priority-zone ellipse around the top-right cluster
+const pri = bubbles.filter((b) => b.zone === 'priority');
+const pz = {
+  cx: (Math.min(...pri.map((b) => b.cx - b.rr)) + Math.max(...pri.map((b) => b.cx + b.rr))) / 2,
+  cy: (Math.min(...pri.map((b) => b.cy - b.rr)) + Math.max(...pri.map((b) => b.cy + b.rr))) / 2,
+  rx: (Math.max(...pri.map((b) => b.cx + b.rr)) - Math.min(...pri.map((b) => b.cx - b.rr))) / 2 + 26,
+  ry: (Math.max(...pri.map((b) => b.cy + b.rr)) - Math.min(...pri.map((b) => b.cy - b.rr))) / 2 + 26,
+};
+---
+<section class="wti" aria-label="The Workforce Transformation Index">
+  <div class="wti-col">
+    <p class="wti-eyebrow" data-reveal>The market</p>
+    <h2 class="wti-h" data-reveal>The Workforce Transformation Index</h2>
+    <p class="wti-sub" data-reveal>Where companies may create more value by developing people than replacing them. Each bubble is a <b>work cluster</b> — not a whole industry. Bubble size = modeled commercial opportunity.</p>
+
+    <div class="wti-board" data-reveal>
+      <div class="wti-chartwrap">
+        <svg class="wti-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} role="group" aria-label="Bubble chart of work clusters by transformation urgency and development value" preserveAspectRatio="xMidYMid meet">
+          <rect x={P.x0} y={P.y0} width={P.x1 - P.x0} height={P.y1 - P.y0} fill="none" stroke="rgba(20,24,30,0.14)" />
+          <line x1={qx} y1={P.y0} x2={qx} y2={P.y1} class="wti-div" />
+          <line x1={P.x0} y1={qy} x2={P.x1} y2={qy} class="wti-div" />
+
+          <!-- quadrant labels -->
+          <text x={P.x0 + 12} y={P.y0 + 22} class="wti-quad">DEVELOP SELECTIVELY</text>
+          <text x={P.x1 - 12} y={P.y1 - 12} class="wti-quad" text-anchor="end" fill="#c0603f">AUTOMATE OR REDESIGN</text>
+          <text x={P.x0 + 12} y={P.y1 - 12} class="wti-quad">WATCH, DON'T LEAD</text>
+
+          <!-- priority zone -->
+          <ellipse cx={pz.cx} cy={pz.cy} rx={pz.rx} ry={pz.ry} class="wti-zone" />
+          <text x={pz.cx} y={pz.cy - pz.ry - 10} text-anchor="middle" class="wti-zone-lbl">PROOFWORKS PRIORITY ZONE</text>
+          <text x={pz.cx} y={pz.cy - pz.ry + 7} text-anchor="middle" class="wti-zone-sub">Urgent change · valuable people · repeatable employer need</text>
+
+          <!-- axes -->
+          <text x={(P.x0 + P.x1) / 2} y={VB.h - 30} text-anchor="middle" class="wti-axis">How urgently the workflow needs to change</text>
+          <text x={P.x0} y={VB.h - 30} class="wti-axis-end">Lower</text>
+          <text x={P.x1} y={VB.h - 30} text-anchor="end" class="wti-axis-end">Higher →</text>
+          <text transform={`translate(30 ${(P.y0 + P.y1) / 2}) rotate(-90)`} text-anchor="middle" class="wti-axis">How valuable it is to develop the people</text>
+          <text transform={`translate(30 ${P.y1}) rotate(-90)`} text-anchor="start" class="wti-axis-end">Lower</text>
+          <text transform={`translate(30 ${P.y0}) rotate(-90)`} text-anchor="end" class="wti-axis-end">Higher →</text>
+
+          <!-- bubbles -->
+          <g class="wti-bubbles">
+            {bubbles.map((b) => (
+              <g class:list={["wti-b", `z-${b.zone}`]} data-id={b.id} tabindex="0" role="button"
+                 aria-label={`${b.n}. ${b.label}. Opportunity ${b.opportunity}. Press Enter for details.`} style={`--c:${b.color}`}>
+                <circle cx={b.cx} cy={b.cy} r={b.rr} class="wti-dot" />
+                <text x={b.cx} y={b.cy + 4.5} text-anchor="middle" class="wti-num">{b.n}</text>
+                <circle cx={b.cx} cy={b.cy} r={b.rr} class="wti-hit" fill="transparent" />
+              </g>
+            ))}
+          </g>
+        </svg>
+        <div class="wti-tip" role="status" aria-live="polite" hidden></div>
+      </div>
+
+      <!-- legend: number -> cluster (readable without hover) -->
+      <ul class="wti-legend">
+        {bubbles.map((b) => (
+          <li>
+            <button class="wti-leg" data-id={b.id} type="button" style={`--c:${b.color}`}>
+              <span class="wti-leg-n">{b.n}</span><span class="wti-leg-t">{b.label}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <p class="wti-note" data-reveal>{notes.methodologyStatus}. Work clusters — not whole industries. Positions and sizes are directional until supported by employment, wage, adoption, and employer-spend data.</p>
+  </div>
+
+  <div class="wti-backdrop" hidden></div>
+  <aside class="wti-panel" role="dialog" aria-modal="false" aria-labelledby="wti-panel-title" hidden tabindex="-1">
+    <button class="wti-close" aria-label="Close details" type="button">✕</button>
+    <div class="wti-panel-body"></div>
+  </aside>
+
+  <script type="application/json" id="wti-data" set:html={JSON.stringify(clusters)}></script>
+
+  <script>
+    (() => {
+      const root = document.querySelector('.wti'); if (!root) return;
+      const CL = JSON.parse(root.querySelector('#wti-data').textContent || '[]');
+      const byId = Object.fromEntries(CL.map((c) => [c.id, c]));
+      const chartwrap = root.querySelector('.wti-chartwrap');
+      const tip = root.querySelector('.wti-tip');
+      const panel = root.querySelector('.wti-panel');
+      const backdrop = root.querySelector('.wti-backdrop');
+      const panelBody = root.querySelector('.wti-panel-body');
+      const closeBtn = root.querySelector('.wti-close');
+      const bubbles = [...root.querySelectorAll('.wti-b')];
+      const legs = [...root.querySelectorAll('.wti-leg')];
+      const colorOf = (c) => ({ priority: '#4c9dff', develop: '#6fb0d8', automate: '#d67a5f', watch: '#7c8695', ai: '#9b7ff0' }[c.zone] || '#4c9dff');
+      const pressure = (x) => (x >= 8 ? 'High' : x >= 6.5 ? 'Elevated' : 'Moderate');
+      const leverage = (y) => (y >= 8 ? 'High' : y >= 6.5 ? 'Strong' : 'Moderate');
+      let lastFocus = null;
+
+      function showTip(el) {
+        const c = byId[el.dataset.id]; if (!c) return;
+        tip.innerHTML =
+          `<div class="wti-tip-name">${c.label}</div>` +
+          `<div class="wti-tip-row"><span>Transformation pressure</span><b>${pressure(c.x)}</b></div>` +
+          `<div class="wti-tip-row"><span>Development leverage</span><b>${leverage(c.y)}</b></div>` +
+          `<div class="wti-tip-row"><span>Commercial opportunity</span><b>${c.opportunity}</b></div>` +
+          `<div class="wti-tip-roles">${c.roles.slice(0, 3).join(' · ')}</div>`;
+        const cr = el.querySelector('.wti-dot').getBoundingClientRect();
+        const wr = chartwrap.getBoundingClientRect();
+        tip.hidden = false;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        let left = Math.max(4, Math.min(cr.left - wr.left + cr.width / 2 - tw / 2, wr.width - tw - 4));
+        let top = cr.top - wr.top - th - 12; if (top < 0) top = cr.top - wr.top + cr.height + 12;
+        tip.style.left = left + 'px'; tip.style.top = top + 'px';
+      }
+      const hideTip = () => { tip.hidden = true; };
+      function setActive(id) { bubbles.forEach((b) => { b.classList.toggle('dim', b.dataset.id !== id); b.classList.toggle('active', b.dataset.id === id); }); }
+      const clearActive = () => bubbles.forEach((b) => b.classList.remove('dim', 'active'));
+
+      const li = (a) => a.map((t) => `<li>${t}</li>`).join('');
+      const block = (t, a) => `<div class="wti-p-block"><p class="wti-p-lbl">${t}</p><ul>${li(a)}</ul></div>`;
+      function openPanel(id, focusEl) {
+        const c = byId[id]; if (!c) return; lastFocus = focusEl || null;
+        panelBody.innerHTML =
+          `<span class="wti-p-zone" style="--c:${colorOf(c)}">${c.zoneLabel}</span>` +
+          `<h3 id="wti-panel-title">${c.label}</h3>` +
+          `<p class="wti-p-sum">${c.summary}</p>` +
+          block('Representative industries', c.industries) + block('Representative roles', c.roles) +
+          block('Why the work is changing', c.whyChanging) + block('What can be developed internally', c.internalDevelopment) +
+          block('Where outside hiring may be needed', c.externalHiring) + (c.marketExamples ? block('Market examples', c.marketExamples) : '');
+        panel.hidden = false; backdrop.hidden = false;
+        requestAnimationFrame(() => { panel.classList.add('open'); backdrop.classList.add('open'); });
+        panel.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open'); backdrop.classList.remove('open');
+        setTimeout(() => { panel.hidden = true; backdrop.hidden = true; }, 260);
+        if (lastFocus) lastFocus.focus();
+      }
+
+      bubbles.forEach((el) => {
+        el.addEventListener('mouseenter', () => { setActive(el.dataset.id); showTip(el); });
+        el.addEventListener('mouseleave', () => { clearActive(); hideTip(); });
+        el.addEventListener('focus', () => { setActive(el.dataset.id); showTip(el); });
+        el.addEventListener('blur', () => { clearActive(); hideTip(); });
+        el.addEventListener('click', () => openPanel(el.dataset.id, el));
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(el.dataset.id, el); } });
+      });
+      legs.forEach((el) => {
+        el.addEventListener('mouseenter', () => setActive(el.dataset.id));
+        el.addEventListener('mouseleave', clearActive);
+        el.addEventListener('click', () => openPanel(el.dataset.id, el));
+      });
+      closeBtn.addEventListener('click', closePanel);
+      backdrop.addEventListener('click', closePanel);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
+    })();
+  </script>
+
+  <style>
+    .wti, .wti * { box-sizing: border-box; }
+    .wti { position: relative; padding: 66px 0; }
+    .wti-col { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+    .wti-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: #4c9dff; margin: 0 0 18px; }
+    .wti-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 46px); line-height: 1.04; letter-spacing: -0.03em; color: #fff; margin: 0; }
+    .wti-sub { font-size: clamp(16px, 1.9vw, 20px); line-height: 1.5; color: #aeb6c0; margin: 16px 0 0; max-width: 840px; }
+    .wti-sub b { color: #eef1f4; font-weight: 600; }
+
+    /* light "fogged" panel */
+    .wti-board { margin-top: 30px; background: #edece6; border: 1px solid #dcd9cf; border-radius: 20px; padding: 22px 22px 20px;
+      box-shadow: 0 30px 70px -44px rgba(0,0,0,0.85); }
+    .wti-chartwrap { position: relative; }
+    .wti-svg { width: 100%; height: auto; display: block; touch-action: manipulation; }
+
+    .wti-div { stroke: rgba(20,24,30,0.16); stroke-dasharray: 4 5; }
+    .wti-quad { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; fill: #9a948a; }
+    .wti-zone { fill: rgba(31,90,166,0.05); stroke: #3f7fd0; stroke-width: 1.5; stroke-dasharray: 5 6; }
+    .wti-zone-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; fill: #2f6fd0; }
+    .wti-zone-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; fill: #6a86ad; }
+    .wti-axis { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; fill: #3c414a; }
+    .wti-axis-end { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .04em; fill: #96907f; }
+
+    .wti-b { cursor: pointer; outline: none; }
+    .wti-dot { fill: color-mix(in srgb, var(--c) 48%, white); stroke: var(--c); stroke-width: 1.8;
+      transition: transform .18s ease, filter .18s ease; transform-box: fill-box; transform-origin: center; }
+    .wti-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; fill: #1c2129; pointer-events: none; }
+    .wti-b.active .wti-dot { transform: scale(1.16); filter: drop-shadow(0 3px 8px rgba(20,30,50,0.4)); }
+    .wti-b.dim { opacity: 0.38; }
+    .wti-b:focus-visible .wti-dot { stroke-width: 2.6; }
+    .wti-b:focus-visible { outline: 2px solid #1f5aa6; outline-offset: 2px; border-radius: 50%; }
+
+    /* tooltip (dark, high-contrast) */
+    .wti-tip { position: absolute; z-index: 6; pointer-events: none; min-width: 190px; max-width: 260px;
+      background: rgba(14,16,22,0.97); border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 12px 14px;
+      box-shadow: 0 16px 40px -20px rgba(0,0,0,0.7); }
+    .wti-tip-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 8px; }
+    .wti-tip-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; color: #a4aebb; margin: 4px 0; }
+    .wti-tip-row b { color: #eef1f4; font-weight: 600; }
+    .wti-tip-roles { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7f8894; margin-top: 8px; line-height: 1.5; }
+
+    /* legend */
+    .wti-legend { list-style: none; margin: 6px 0 0; padding: 12px 4px 2px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 14px; border-top: 1px solid #dcd9cf; }
+    .wti-leg { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: 0; cursor: pointer; padding: 7px 6px; border-radius: 8px; }
+    .wti-leg:hover { background: rgba(20,24,30,0.05); }
+    .wti-leg-n { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #1c2129;
+      background: color-mix(in srgb, var(--c) 48%, white); border: 1.5px solid var(--c); }
+    .wti-leg-t { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 14.5px; color: #24272d; letter-spacing: -0.01em; }
+
+    .wti-note { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: #6f7885; margin: 24px 0 0; max-width: 900px; }
+
+    /* detail panel */
+    .wti-backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(4,6,10,0); transition: background .26s ease; }
+    .wti-backdrop.open { background: rgba(4,6,10,0.5); }
+    .wti-panel { position: fixed; top: 0; right: 0; z-index: 41; width: min(440px, 92vw); height: 100%; overflow-y: auto;
+      background: #0e1117; border-left: 1px solid rgba(255,255,255,0.12); padding: 30px 32px 60px;
+      transform: translateX(100%); transition: transform .26s cubic-bezier(.22,1,.36,1); }
+    .wti-panel.open { transform: none; }
+    .wti-close { position: absolute; top: 18px; right: 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+      color: #cbd3dd; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 14px; }
+    .wti-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .wti-p-zone { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+    .wti-panel h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; color: #fff; margin: 10px 0 0; }
+    .wti-p-sum { font-size: 15.5px; line-height: 1.5; color: #c2cbd6; margin: 14px 0 0; }
+    .wti-p-block { margin: 22px 0 0; }
+    .wti-p-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #7f8894; margin: 0 0 8px; }
+    .wti-p-block ul { list-style: none; margin: 0; padding: 0; }
+    .wti-p-block li { font-size: 15px; line-height: 1.45; color: #dbe1e8; padding: 4px 0 4px 16px; position: relative; }
+    .wti-p-block li::before { content: "—"; position: absolute; left: 0; color: #5b6470; }
+
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    [data-reveal].in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .wti-dot, .wti-panel, .wti-backdrop { transition: none !important; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+    @media (max-width: 720px) { .wti-legend { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) {
+      .wti-panel { top: auto; bottom: 0; right: 0; width: 100%; height: auto; max-height: 82vh; border-left: 0; border-top: 1px solid rgba(255,255,255,0.12);
+        border-radius: 20px 20px 0 0; transform: translateY(100%); }
+      .wti-panel.open { transform: none; }
+    }
+    @media (max-width: 460px) { .wti-legend { grid-template-columns: 1fr; } }
+  </style>
+</section>
