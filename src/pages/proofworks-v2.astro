@@ -33,7 +33,7 @@ const pays = [
 
 const loop = ['Join', 'Build', 'Validate', 'Route', 'Develop', 'Refer', 'Expand'];
 
-const becomes = ['What work is changing.', 'Who can adapt.', 'What each person has demonstrated.', 'Which gaps remain.', 'Who is ready for which work.', 'Where internal mobility is possible.', 'Where external talent is required.', 'What economic value the transformation produced.'];
+const becomes = ['What work is changing?', 'Who can adapt?', 'What has each person demonstrated?', 'Which gaps remain?', 'Who is ready for which work?', 'Where is internal mobility possible?', 'Where is external talent required?', 'What economic value did the transformation create?'];
 
 const clusters = [
   { h: 'Operations / execution', roles: 'project managers, program managers, operations associates, chiefs of staff, implementation specialists, business analysts' },
@@ -297,14 +297,27 @@ const looking = [
               <p class="brandsub">Founder thesis by Kyle Findlay</p>
             </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-strong" data-reveal style="transition-delay:.12s">Most companies already have people worth betting on.</p>
-            <p class="hero-lead" data-reveal style="transition-delay:.16s">Proofworks helps companies find the <b>people closest to the work</b>, put them against real workflow problems, and see who can grow before defaulting to layoffs or external hiring.</p>
-            <p class="hero-doors" data-reveal style="transition-delay:.2s"><b>Two doors. One standard.</b> Talent applies to become more valuable. Companies pay for demonstrated capability.</p>
+            <p class="hero-strong" data-reveal style="transition-delay:.12s">The next workforce shift should not default to layoffs, generic training, or blind external hiring.</p>
+            <p class="hero-lead" data-reveal style="transition-delay:.16s">Proofworks helps companies see who can adapt through real work — then <b>develop, redeploy, retain, or hire</b> the talent they need next.</p>
+            <p class="hero-doors" data-reveal style="transition-delay:.2s"><b>One standard</b> for internal employees and external candidates.</p>
             <div class="cta-row" data-reveal style="transition-delay:.24s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
               <a href="mailto:kylefindlay828@gmail.com?subject=Find%20operators" class="pill-out">Find operators</a>
               <a href="mailto:kylefindlay828@gmail.com?subject=Talk%20to%20Kyle" class="pill-out">Talk to Kyle</a>
             </div>
+          </div>
+        </section>
+
+        <!-- WHAT IT BECOMES (moved up: after hero, before the model) -->
+        <section class="sec">
+          <div class="col">
+            <p class="eyebrow" data-reveal>What it becomes</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.1s">Proofworks helps answer:</p>
+            <ul class="outputs" data-reveal style="transition-delay:.14s">
+              {becomes.map((o) => <li>{o}</li>)}
+            </ul>
+            <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
           </div>
         </section>
 
@@ -360,13 +373,13 @@ const looking = [
           </div>
         </section>
 
-        <!-- RETOOLING IS NOT TRAINING -->
+        <!-- TRAINING HAS TO MOVE INTO THE WORK -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>The method</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Retooling is not training.</h2>
-            <p class="mkt-lead" data-reveal style="transition-delay:.09s">Watching lessons and learning terminology does not show whether someone can improve a business. <b>Proofworks develops people through real work tied to actual company demand.</b></p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">The goal is not passive learning. The goal is to reveal who can learn, build, and operate as work changes.</p>
+            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Training has to move into the work.</h2>
+            <p class="mkt-lead" data-reveal style="transition-delay:.09s">Watching lessons and learning terminology does not show whether someone can improve a business.</p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">The next version of workforce development will be built around real workflows, measured outputs, and people showing they can improve how a company operates.</p>
           </div>
         </section>
 
@@ -400,18 +413,6 @@ const looking = [
               ))}
             </div>
             <p class="mkt-lead2" data-reveal style="transition-delay:.1s">Every successful operator can become a referral source, a future hiring manager, or the entry point into a new company.</p>
-          </div>
-        </section>
-
-        <!-- WHAT IT BECOMES -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>What it becomes</p>
-            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
-            <ul class="outputs" data-reveal style="transition-delay:.12s">
-              {becomes.map((o) => <li>{o}</li>)}
-            </ul>
-            <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
           </div>
         </section>
 
