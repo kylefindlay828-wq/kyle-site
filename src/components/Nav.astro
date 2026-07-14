@@ -3,7 +3,8 @@ const p = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isV1 = p === '/gtm-radar';
 const isV2 = p === '/radar-v2';
 const isAbout = p === '/';
-const isProofworks = p === '/proofworks';
+const isPwV1 = p === '/proofworks-v1';
+const isPwV2 = p === '/proofworks-v2';
 ---
 <nav class="sticky top-0 z-30 bg-paper/90 backdrop-blur-md border-b border-rule">
   <div class="max-w-content mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -17,7 +18,10 @@ const isProofworks = p === '/proofworks';
       <a href="/" class:list={["nl", isAbout && "nl-on"]} aria-current={isAbout ? "page" : undefined}>About &amp; Contact</a>
     </div>
 
-    <a href="/proofworks" class:list={["navpill", isProofworks && "navpill-on"]} aria-current={isProofworks ? "page" : undefined}>Proofworks V2</a>
+    <div class="nav-pills">
+      <a href="/proofworks-v1" class:list={["navpill", isPwV1 && "navpill-on"]} aria-current={isPwV1 ? "page" : undefined}>Proofworks V1</a>
+      <a href="/proofworks-v2" class:list={["navpill", isPwV2 && "navpill-on"]} aria-current={isPwV2 ? "page" : undefined}>Proofworks V2</a>
+    </div>
   </div>
 </nav>
 
@@ -29,6 +33,7 @@ const isProofworks = p === '/proofworks';
   .nl:hover { color: var(--color-ink); }
   .nl-on { color: var(--color-accent); }
   .nsep { color: var(--color-rule); }
+  .nav-pills { display: inline-flex; gap: 8px; }
   /* /proofworks pill on the right — accent; filled when it's the current page */
   .navpill { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--color-accent);
     border: 1px solid color-mix(in srgb, var(--color-accent) 42%, transparent); border-radius: 999px; padding: 6px 14px;
