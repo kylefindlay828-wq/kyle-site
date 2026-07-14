@@ -16,9 +16,7 @@ const model = [
   { h: 'For recruiters', b: 'Match people through validated outputs, not keywords alone.', a: 'var(--c)' },
 ];
 
-const selective = ['Learns by building', 'Handles ambiguity', 'Improves real workflows'];
 
-const loop = ['Join', 'Build', 'Validate', 'Route', 'Develop', 'Refer', 'Expand'];
 
 const becomes = ['What work is changing?', 'Who can adapt?', 'What has each person demonstrated?', 'Which gaps remain?', 'Who is ready for which work?', 'Where is internal mobility possible?', 'Where is external talent required?', 'What economic value did the transformation create?'];
 
@@ -33,11 +31,6 @@ const clusters = [
 
 const sectors = ['SaaS & software', 'Home & field services', 'Logistics & supply chain', 'Healthcare', 'Financial services', 'Insurance', 'Manufacturing', 'Construction', 'Retail & e-commerce', 'Professional services', 'Energy & utilities', 'Public sector'];
 
-const looking = [
-  { t: 'adaptable operators who want to demonstrate what they can build', a: 'var(--g)' },
-  { t: 'companies and recruiters facing talent-signal gaps', a: 'var(--c)' },
-  { t: 'technical cofounders or partners excited about work-sample talent infrastructure', a: 'var(--g)', full: true },
-];
 ---
 <!doctype html>
 <html lang="en">
@@ -168,6 +161,12 @@ const looking = [
       .outputs { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 44px; }
       .outputs li { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(16px, 1.8vw, 21px); letter-spacing: -0.015em; color: #cbd3dd; padding-left: 18px; position: relative; }
       .outputs li::before { content: "—"; position: absolute; left: 0; color: #5b6470; }
+      /* light off-white callout box around the questions */
+      .qbox { background: #eae8e2; border: 1px solid #d8d4ca; border-radius: 18px; padding: 30px 34px; margin: 26px 0 0; }
+      .qbox .qlead { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #6b675d; margin: 0 0 18px; }
+      .qbox .outputs { margin: 0; }
+      .qbox .outputs li { color: #23262b; }
+      .qbox .outputs li::before { color: #a7a297; }
 
       /* role universe */
       .univ h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.02; margin: 0 0 6px; max-width: 760px; }
@@ -299,10 +298,12 @@ const looking = [
           <div class="col">
             <p class="eyebrow" data-reveal>What it becomes</p>
             <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.1s">Proofworks helps answer:</p>
-            <ul class="outputs" data-reveal style="transition-delay:.14s">
-              {becomes.map((o) => <li>{o}</li>)}
-            </ul>
+            <div class="qbox" data-reveal style="transition-delay:.1s">
+              <p class="qlead">Proofworks helps answer:</p>
+              <ul class="outputs">
+                {becomes.map((o) => <li>{o}</li>)}
+              </ul>
+            </div>
             <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
           </div>
         </section>
@@ -314,6 +315,7 @@ const looking = [
             <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Selective talent network.</h2>
             <p class="mkt-lead" data-reveal style="transition-delay:.09s"><b>Talent comes for career upside. Companies pay for demonstrated capability.</b></p>
             <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks develops operators through real workflow projects, turns outputs into work samples, and connects the strongest talent with companies and teams that need them.</p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.14s"><b>Not for everyone</b> — for people with judgment, agency, learning velocity, and evidence they can improve messy workflows.</p>
             <div class="grid3">
               {model.map((c, i) => (
                 <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
@@ -322,18 +324,14 @@ const looking = [
                 </div>
               ))}
             </div>
+            <p class="impact" data-reveal style="margin-top:44px">The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
           </div>
         </section>
 
-        <!-- THE FILTER -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The filter</p>
-            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
-          </div>
-        </section>
+        <!-- THE PROOFWORKS ENGINE (standout stone band) -->
+        <ProofworksEngine />
 
-        <!-- ROLE UNIVERSE (moved up: after the process, before the engine) -->
+        <!-- ROLE UNIVERSE -->
         <section class="sec univ">
           <div class="col">
             <p class="eyebrow" data-reveal>The role universe</p>
@@ -355,47 +353,6 @@ const looking = [
                 {sectors.map((s) => <span class="sector">{s}</span>)}
               </div>
             </div>
-          </div>
-        </section>
-
-        <!-- THE PROOFWORKS ENGINE (standout stone band) -->
-        <ProofworksEngine />
-
-        <!-- SELECTIVE BY DESIGN -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Selective by design</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Not for everyone.</h2>
-            <p class="mkt-lead" data-reveal style="transition-delay:.09s">Proofworks is for people with <b>judgment, agency, learning velocity,</b> and evidence they can improve messy workflows.</p>
-            <div class="tiles3">
-              {selective.map((t, i) => <div class="tile3" data-reveal style={`transition-delay:${i * 80}ms`}>{t}</div>)}
-            </div>
-          </div>
-        </section>
-
-        <!-- TRAINING HAS TO MOVE INTO THE WORK -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The method</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Training has to move into the work.</h2>
-            <p class="mkt-lead" data-reveal style="transition-delay:.09s">Watching lessons and learning terminology does not show whether someone can improve a business.</p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">The next version of workforce development will be built around real workflows, measured outputs, and people showing they can improve how a company operates.</p>
-          </div>
-        </section>
-
-        <!-- RELATIONSHIP LOOP -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The relationship loop</p>
-            <div class="loop" data-reveal style="transition-delay:.05s">
-              {loop.map((n, i) => (
-                <>
-                  <span class="loop-node">{n}</span>
-                  {i < loop.length - 1 && <span class="loop-arr" aria-hidden="true">→</span>}
-                </>
-              ))}
-            </div>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.1s">Every successful operator can become a referral source, a future hiring manager, or the entry point into a new company.</p>
           </div>
         </section>
 
@@ -424,20 +381,6 @@ const looking = [
             </div>
             <p class="why-close" data-reveal>Proofworks is the third iteration of this work: from labor-market intelligence, to talent signals, to work-sample infrastructure for adaptive talent.</p>
             <p class="why-close" data-reveal style="margin-top:14px"><b>Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of talent, workforce transformation, and real operator workflows.</p>
-          </div>
-        </section>
-
-        <!-- LOOKING TO CONNECT -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Looking to connect with</p>
-            <div class="meet-grid">
-              {looking.map((m, i) => (
-                <div class:list={["meet", m.full && "full"]} data-reveal style={`transition-delay:${i * 60}ms`}>
-                  <span class="ar" style={`color:${m.a}`}>→</span>{m.t}
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
