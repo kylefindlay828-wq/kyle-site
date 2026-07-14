@@ -11,15 +11,15 @@ const email = 'kylefindlay828@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 
 const model = [
-  { h: 'For companies', b: 'Identify, develop, redeploy, retain, hire, or contract adaptive operators.', a: 'var(--c)' },
+  { h: 'For companies', b: 'Identify, develop, redeploy, retain, hire, or contract trusted operators.', a: 'var(--c)' },
   { h: 'For talent', b: 'Build real workflow projects, sharpen capability, and create a stronger signal than a résumé line.', a: 'var(--g)' },
-  { h: 'For recruiters', b: 'Match people through demonstrated work, not keywords alone.', a: 'var(--c)' },
+  { h: 'For recruiters', b: 'Match people through validated outputs, not keywords alone.', a: 'var(--c)' },
 ];
 
 const flow = [
-  { v: 'Map', l: 'Adaptive talent' },
-  { v: 'Validate', l: 'Real workflows' },
-  { v: 'Sharpen', l: 'Work samples' },
+  { v: 'Select', l: 'Adaptive talent' },
+  { v: 'Build', l: 'Real workflows' },
+  { v: 'Validate', l: 'Work samples' },
   { v: 'Route', l: 'Jobs, projects, internal mobility' },
 ];
 
@@ -31,7 +31,7 @@ const pays = [
   { h: 'Ongoing talent network', b: 'Companies pay for continued access to adaptive operators, work samples, capability tracking, and additional teams or projects.', a: 'var(--g)' },
 ];
 
-const loop = ['Join', 'Build', 'Validate', 'Place', 'Develop', 'Refer', 'Expand'];
+const loop = ['Join', 'Build', 'Validate', 'Route', 'Develop', 'Refer', 'Expand'];
 
 const becomes = ['What work is changing.', 'Who can adapt.', 'What each person has demonstrated.', 'Which gaps remain.', 'Who is ready for which work.', 'Where internal mobility is possible.', 'Where external talent is required.', 'What economic value the transformation produced.'];
 
@@ -298,7 +298,7 @@ const looking = [
             </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
             <p class="hero-strong" data-reveal style="transition-delay:.12s">Most companies already have people worth betting on.</p>
-            <p class="hero-lead" data-reveal style="transition-delay:.16s">Proofworks is a <b>selective talent platform for adaptive operators</b>: people who can learn by building, improve real workflows, and move into higher-value work.</p>
+            <p class="hero-lead" data-reveal style="transition-delay:.16s">Proofworks helps companies find the <b>people closest to the work</b>, put them against real workflow problems, and see who can grow before defaulting to layoffs or external hiring.</p>
             <p class="hero-doors" data-reveal style="transition-delay:.2s"><b>Two doors. One standard.</b> Talent applies to become more valuable. Companies pay for demonstrated capability.</p>
             <div class="cta-row" data-reveal style="transition-delay:.24s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
@@ -314,7 +314,7 @@ const looking = [
             <p class="eyebrow" data-reveal>The model</p>
             <h2 class="mkt-h" data-reveal style="transition-delay:.05s">Selective talent network.</h2>
             <p class="mkt-lead" data-reveal style="transition-delay:.09s"><b>Talent comes for career upside. Companies pay for demonstrated capability.</b></p>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks develops operators through real workflow projects, turns what they build into work samples, and connects the strongest talent with companies and teams that need them.</p>
+            <p class="mkt-lead2" data-reveal style="transition-delay:.12s">Proofworks develops operators through real workflow projects, turns outputs into work samples, and connects the strongest talent with companies and teams that need them.</p>
             <div class="grid3">
               {model.map((c, i) => (
                 <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
@@ -374,7 +374,7 @@ const looking = [
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>Where companies pay</p>
-            <p class="mkt-lead" data-reveal style="transition-delay:.05s">Talent can enter Proofworks directly. Companies pay when that talent becomes useful: as hires, contractors, internal mobility candidates, retrained employees, or ongoing access to a network of adaptive operators.</p>
+            <p class="mkt-lead" data-reveal style="transition-delay:.05s">Talent can enter Proofworks directly. Companies pay when that talent is ready for real company needs: as hires, contractors, internal mobility candidates, retrained employees, or ongoing access to a network of operators.</p>
             <div class="grid3">
               {pays.map((c, i) => (
                 <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
@@ -407,10 +407,11 @@ const looking = [
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>What it becomes</p>
-            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> connecting changing company needs with demonstrated human capability.</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s">The long-term product is not an online school or a recruiting agency. It is <b>workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
             <ul class="outputs" data-reveal style="transition-delay:.12s">
               {becomes.map((o) => <li>{o}</li>)}
             </ul>
+            <p class="becomes" data-reveal style="margin-top:34px; font-size:clamp(21px,2.8vw,34px)">Proofworks turns <b>real company problems into working systems</b> — and connects companies with the people capable of building what they need next.</p>
           </div>
         </section>
 
@@ -462,7 +463,8 @@ const looking = [
                 <div class="statlbl">national brands</div>
               </div>
             </div>
-            <p class="why-close" data-reveal><b>Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of talent, workforce transformation, and real operator workflows.</p>
+            <p class="why-close" data-reveal>Proofworks is the third iteration of this work: from labor-market intelligence, to talent signals, to work-sample infrastructure for adaptive talent.</p>
+            <p class="why-close" data-reveal style="margin-top:14px"><b>Solo founder, moving fast,</b> relocating to San Francisco — open to technical cofounders building at the intersection of talent, workforce transformation, and real operator workflows.</p>
           </div>
         </section>
 
