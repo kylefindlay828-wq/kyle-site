@@ -16,20 +16,7 @@ const model = [
   { h: 'For recruiters', b: 'Match people through validated outputs, not keywords alone.', a: 'var(--c)' },
 ];
 
-const flow = [
-  { v: 'Select', l: 'Adaptive talent' },
-  { v: 'Build', l: 'Real workflows' },
-  { v: 'Validate', l: 'Work samples' },
-  { v: 'Route', l: 'Jobs, projects, internal mobility' },
-];
-
 const selective = ['Learns by building', 'Handles ambiguity', 'Improves real workflows'];
-
-const pays = [
-  { h: 'Talent access & placement', b: 'Companies pay to access, hire, or contract operators with demonstrated capability.', a: 'var(--g)' },
-  { h: 'Internal workforce transformation', b: 'Companies pay to identify, develop, redeploy, and retain people they already trust.', a: 'var(--c)' },
-  { h: 'Ongoing talent network', b: 'Companies pay for continued access to adaptive operators, work samples, capability tracking, and additional teams or projects.', a: 'var(--g)' },
-];
 
 const loop = ['Join', 'Build', 'Validate', 'Route', 'Develop', 'Refer', 'Expand'];
 
@@ -297,9 +284,7 @@ const looking = [
               <p class="brandsub">Founder thesis by Kyle Findlay</p>
             </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-strong" data-reveal style="transition-delay:.12s">The next workforce shift will not only happen inside AI companies.</p>
-            <p class="hero-lead" data-reveal style="transition-delay:.15s">It will hit the companies that run on <b>operators, coordinators, dispatchers, estimators, account managers, schedulers, and admin teams</b>.</p>
-            <p class="hero-lead" data-reveal style="transition-delay:.18s">Proofworks helps companies see who can adapt through real work — then <b>develop, redeploy, retain, or hire</b> the talent they need next.</p>
+            <p class="hero-strong" data-reveal style="transition-delay:.12s">Proofworks helps companies see who can adapt through real work — then <b>develop, redeploy, retain, or hire</b> the talent they need next.</p>
             <p class="hero-doors" data-reveal style="transition-delay:.22s"><b>One standard</b> for internal employees and external candidates.</p>
             <div class="cta-row" data-reveal style="transition-delay:.24s">
               <a href="mailto:kylefindlay828@gmail.com?subject=Apply%20as%20operator" class="btn-g">Apply as operator →</a>
@@ -309,30 +294,7 @@ const looking = [
           </div>
         </section>
 
-        <!-- THE UNDERSERVED MARKET -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The underserved market</p>
-            <h2 class="mkt-h" data-reveal style="transition-delay:.05s">This is not just a software-company problem.</h2>
-            <div class="grid3">
-              <div class="card" data-reveal>
-                <h3 class="cardh" style="color:var(--c)">Home &amp; field services</h3>
-                <p class="cardb">dispatchers, estimators, schedulers, sales reps, branch operators</p>
-              </div>
-              <div class="card" data-reveal style="transition-delay:.08s">
-                <h3 class="cardh" style="color:var(--c)">Logistics &amp; supply chain</h3>
-                <p class="cardb">coordinators, account managers, operations teams</p>
-              </div>
-              <div class="card" data-reveal style="transition-delay:.16s">
-                <h3 class="cardh" style="color:var(--c)">Healthcare admin</h3>
-                <p class="cardb">schedulers, claims teams, patient operations, admin-heavy workflows</p>
-              </div>
-            </div>
-            <p class="mkt-lead2" data-reveal style="transition-delay:.2s">Every workflow-heavy company has people close to the work. Proofworks helps identify who can adapt, where the gaps are, and what should be rebuilt first.</p>
-          </div>
-        </section>
-
-        <!-- WHAT IT BECOMES (moved up: after hero, before the model) -->
+        <!-- WHAT IT BECOMES (after hero) -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>What it becomes</p>
@@ -363,22 +325,36 @@ const looking = [
           </div>
         </section>
 
-        <!-- THE PROCESS -->
+        <!-- THE FILTER -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>The process</p>
-            <div class="flow" data-reveal>
-              {flow.map((s, i) => (
-                <>
-                  <div class="flow-stage">
-                    <div class="flow-verb">{s.v}</div>
-                    <div class="flow-label">{s.l}</div>
-                  </div>
-                  {i < flow.length - 1 && <div class="flow-arrow" aria-hidden="true">→</div>}
-                </>
+            <p class="eyebrow" data-reveal>The filter</p>
+            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
+          </div>
+        </section>
+
+        <!-- ROLE UNIVERSE (moved up: after the process, before the engine) -->
+        <section class="sec univ">
+          <div class="col">
+            <p class="eyebrow" data-reveal>The role universe</p>
+            <h2 data-reveal style="transition-delay:.05s">A large, underserved talent market.</h2>
+            <p class="sub" data-reveal>Every company has people close to the work.</p>
+            <div class="spanel">
+              {clusters.map((c, i) => (
+                <div class="urow" data-reveal style={`transition-delay:${i * 50}ms`}>
+                  <div class="cat">{c.h}</div>
+                  <div class="rl">{c.roles}</div>
+                </div>
               ))}
             </div>
-            <p class="impact" data-reveal style="margin-top:44px">The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
+
+            <div class="breadth">
+              <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
+              <p class="breadth-b" data-reveal style="transition-delay:.05s">The same operator exists everywhere: dispatchers, estimators, schedulers, coordinators, account managers, claims teams, field reps, and people close to the work. <b>Every workflow-heavy company has people worth developing.</b></p>
+              <div class="sectors" data-reveal style="transition-delay:.1s">
+                {sectors.map((s) => <span class="sector">{s}</span>)}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -407,23 +383,6 @@ const looking = [
           </div>
         </section>
 
-        <!-- WHERE COMPANIES PAY -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Where companies pay</p>
-            <p class="mkt-lead" data-reveal style="transition-delay:.05s">Talent can enter Proofworks directly. Companies pay when that talent is ready for real company needs: as hires, contractors, internal mobility candidates, retrained employees, or ongoing access to a network of operators.</p>
-            <div class="grid3">
-              {pays.map((c, i) => (
-                <div class="card" data-reveal style={`transition-delay:${i * 80}ms`}>
-                  <h3 class="cardh" style={`color:${c.a}`}>{c.h}</h3>
-                  <p class="cardb">{c.b}</p>
-                </div>
-              ))}
-            </div>
-            <p class="mini" data-reveal>The employer is the primary payer.</p>
-          </div>
-        </section>
-
         <!-- RELATIONSHIP LOOP -->
         <section class="sec">
           <div class="col">
@@ -437,31 +396,6 @@ const looking = [
               ))}
             </div>
             <p class="mkt-lead2" data-reveal style="transition-delay:.1s">Every successful operator can become a referral source, a future hiring manager, or the entry point into a new company.</p>
-          </div>
-        </section>
-
-        <!-- ROLE UNIVERSE -->
-        <section class="sec univ">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The role universe</p>
-            <h2 data-reveal style="transition-delay:.05s">A large, underserved talent market.</h2>
-            <p class="sub" data-reveal>Every company has operators close to the work.</p>
-            <div class="spanel">
-              {clusters.map((c, i) => (
-                <div class="urow" data-reveal style={`transition-delay:${i * 50}ms`}>
-                  <div class="cat">{c.h}</div>
-                  <div class="rl">{c.roles}</div>
-                </div>
-              ))}
-            </div>
-
-            <div class="breadth">
-              <h3 class="breadth-h" data-reveal>And this isn't just a tech story.</h3>
-              <p class="breadth-b" data-reveal style="transition-delay:.05s">The same operator exists everywhere: dispatchers, estimators, schedulers, coordinators, account managers, claims teams, field reps, and operators close to the work. <b>Every company adapting to new tools has people worth developing.</b></p>
-              <div class="sectors" data-reveal style="transition-delay:.1s">
-                {sectors.map((s) => <span class="sector">{s}</span>)}
-              </div>
-            </div>
           </div>
         </section>
 
