@@ -1,0 +1,308 @@
+---
+// FINAL Workforce Transformation Index (/proofworks).
+// Forked from WorkforceTransformationIndex.astro. Differences per spec:
+//  - every bubble carries its NAME directly (leader line + collision-avoided
+//    placement); the numbered bubbles and numbered legend are removed.
+//  - section starts with only the title (no eyebrow / explanatory paragraph).
+// Data-driven from src/data/workforce-index-final.ts.
+import { clusters } from '../data/workforce-index-final.ts';
+
+const VB = { w: 1000, h: 560 };
+const M = { l: 92, r: 66, t: 58, b: 12 };
+const P = { x0: M.l, x1: VB.w - M.r, y0: M.t, y1: VB.h - M.b };
+const D = { xmin: 3.2, xmax: 10, ymin: 2.2, ymax: 10 };
+const px = (x: number) => P.x0 + ((x - D.xmin) / (D.xmax - D.xmin)) * (P.x1 - P.x0);
+const py = (y: number) => P.y1 - ((y - D.ymin) / (D.ymax - D.ymin)) * (P.y1 - P.y0);
+
+const base = clusters.map((c) => ({ ...c, cx: +px(c.x).toFixed(1), cy: +py(c.y).toFixed(1), rr: +(c.r * 0.92).toFixed(1) }));
+const qx = +px(7).toFixed(1), qy = +py(7).toFixed(1);
+
+// priority-zone ellipse around the top-right cluster
+const pri = base.filter((b) => b.zone === 'priority');
+const pz = {
+  cx: (Math.min(...pri.map((b) => b.cx - b.rr)) + Math.max(...pri.map((b) => b.cx + b.rr))) / 2,
+  cy: (Math.min(...pri.map((b) => b.cy - b.rr)) + Math.max(...pri.map((b) => b.cy + b.rr))) / 2,
+  rx: (Math.max(...pri.map((b) => b.cx + b.rr)) - Math.min(...pri.map((b) => b.cx - b.rr))) / 2 + 26,
+  ry: (Math.max(...pri.map((b) => b.cy + b.rr)) - Math.min(...pri.map((b) => b.cy - b.rr))) / 2 + 26,
+};
+
+// ── build-time label placement: attach each name beside its bubble with a
+// leader line, avoiding overlaps with bubbles and other labels ──
+const VEC: Record<string, [number, number]> = {
+  E: [1, 0], W: [-1, 0], N: [0, -1], S: [0, 1], NE: [.82, -.57], NW: [-.82, -.57], SE: [.82, .57], SW: [-.82, .57],
+};
+const CHARW = 6.9, LH = 16, PAD = 3;
+const bnd = { x0: 6, y0: 6, x1: VB.w - 6, y1: VB.h - 6 };
+type Rect = { x: number; y: number; w: number; h: number };
+
+function candidate(cx: number, cy: number, rr: number, dir: string, lead: number, text: string) {
+  const [ux, uy] = VEC[dir];
+  const ax = cx + ux * (rr + lead), ay = cy + uy * (rr + lead);
+  const w = text.length * CHARW;
+  const anchor = ux > 0.25 ? 'start' : ux < -0.25 ? 'end' : 'middle';
+  const x0 = anchor === 'start' ? ax : anchor === 'end' ? ax - w : ax - w / 2;
+  const rect: Rect = { x: x0 - PAD, y: ay - LH / 2 - PAD, w: w + 2 * PAD, h: LH + 2 * PAD };
+  return { ax, ay, anchor, rect, ex: cx + ux * rr, ey: cy + uy * rr };
+}
+const inBounds = (r: Rect) => r.x >= bnd.x0 && r.y >= bnd.y0 && r.x + r.w <= bnd.x1 && r.y + r.h <= bnd.y1;
+const overlap = (a: Rect, b: Rect) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+function hitsBubble(r: Rect, selfId: string) {
+  for (const b of base) {
+    if (b.id === selfId) continue;
+    const nx = Math.max(r.x, Math.min(b.cx, r.x + r.w));
+    const ny = Math.max(r.y, Math.min(b.cy, r.y + r.h));
+    if (Math.hypot(b.cx - nx, b.cy - ny) < b.rr + 2) return true;
+  }
+  return false;
+}
+const DIRS_ALL = ['E', 'W', 'N', 'S', 'NE', 'NW', 'SE', 'SW'];
+const LEADS = [16, 26, 38, 52, 68, 86, 108];
+// Place the most-crowded bubbles first so buried ones claim escape routes
+// (with longer leader lines) before the periphery fills the space.
+const crowd = (c: typeof base[number]) =>
+  base.reduce((n, o) => n + (o.id !== c.id && Math.hypot(o.cx - c.cx, o.cy - c.cy) < 150 ? 1 : 0), 0);
+const order = [...base].sort((a, b) => crowd(b) - crowd(a));
+const placed: Rect[] = [];
+const posById: Record<string, ReturnType<typeof candidate>> = {};
+for (const c of order) {
+  const tries = [c.dir, ...DIRS_ALL.filter((d) => d !== c.dir)];
+  let chosen: ReturnType<typeof candidate> | null = null;
+  for (const lead of LEADS) {
+    for (const dir of tries) {
+      const cand = candidate(c.cx, c.cy, c.rr, dir, lead, c.label);
+      if (!inBounds(cand.rect) || hitsBubble(cand.rect, c.id) || placed.some((r) => overlap(r, cand.rect))) continue;
+      chosen = cand; break;
+    }
+    if (chosen) break;
+  }
+  if (!chosen) chosen = candidate(c.cx, c.cy, c.rr, c.dir, 34, c.label);
+  placed.push(chosen.rect);
+  posById[c.id] = chosen;
+}
+// Render in original data order; labels come from the crowd-first placement.
+const bubbles = base.map((c) => {
+  const ch = posById[c.id];
+  const showLead = Math.hypot(ch.ax - ch.ex, ch.ay - ch.ey) > 6;
+  return { ...c, ...ch, showLead };
+});
+---
+<section class="wti" id="index" aria-label="The Workforce Transformation Index">
+  <div class="wti-col">
+    <h2 class="wti-h" data-reveal>The Workforce Transformation Index</h2>
+
+    <div class="wti-board" data-reveal>
+      <p class="wti-ycap"><span class="wti-ax-ar">↑</span> How valuable it is to develop the people doing the work</p>
+      <div class="wti-chartwrap">
+        <svg class="wti-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} role="group" aria-label="Bubble chart of work clusters by transformation urgency and development value" preserveAspectRatio="xMidYMid meet">
+          <rect x={P.x0} y={P.y0} width={P.x1 - P.x0} height={P.y1 - P.y0} fill="none" stroke="rgba(20,24,30,0.14)" />
+          <line x1={qx} y1={P.y0} x2={qx} y2={P.y1} class="wti-div" />
+          <line x1={P.x0} y1={qy} x2={P.x1} y2={qy} class="wti-div" />
+
+          <!-- quadrant labels -->
+          <text x={P.x0 + 12} y={P.y0 + 22} class="wti-quad">DEVELOP SELECTIVELY</text>
+          <text x={P.x1 - 12} y={P.y1 - 12} class="wti-quad" text-anchor="end" fill="#c0603f">AUTOMATE OR REDESIGN</text>
+          <text x={P.x0 + 12} y={P.y1 - 12} class="wti-quad">WATCH, DON'T LEAD</text>
+
+          <!-- priority zone -->
+          <ellipse cx={pz.cx} cy={pz.cy} rx={pz.rx} ry={pz.ry} class="wti-zone" />
+          <text x={pz.cx} y={pz.cy - pz.ry - 10} text-anchor="middle" class="wti-zone-lbl">PROOFWORKS PRIORITY ZONE</text>
+          <text x={pz.cx} y={pz.cy - pz.ry + 7} text-anchor="middle" class="wti-zone-sub">Urgent change · valuable people · repeatable employer need</text>
+
+          <!-- axis direction cues (short, horizontal); full titles are the
+               bold captions above/below the chart, so nothing is rotated -->
+          <text x={P.x0} y={P.y1 - 6} text-anchor="start" class="wti-axis-end">Lower urgency</text>
+          <text x={P.x1} y={P.y1 - 6} text-anchor="end" class="wti-axis-end">Higher urgency →</text>
+
+          <!-- leader lines (under bubbles) -->
+          <g class="wti-leads">
+            {bubbles.filter((b) => b.showLead).map((b) => (
+              <line x1={+b.ex.toFixed(1)} y1={+b.ey.toFixed(1)} x2={+b.ax.toFixed(1)} y2={+b.ay.toFixed(1)} class="wti-lead" />
+            ))}
+          </g>
+
+          <!-- bubbles + attached labels -->
+          <g class="wti-bubbles">
+            {bubbles.map((b) => (
+              <g class:list={["wti-b", `z-${b.zone}`]} data-id={b.id} tabindex="0" role="button"
+                 aria-label={`${b.label}. Modeled opportunity ${b.opportunity}. Press Enter for details.`} style={`--c:${b.color}`}>
+                <circle cx={b.cx} cy={b.cy} r={b.rr} class="wti-dot" />
+                <text x={+b.ax.toFixed(1)} y={+b.ay.toFixed(1)} text-anchor={b.anchor} dominant-baseline="central" class="wti-lbl">{b.label}</text>
+                <circle cx={b.cx} cy={b.cy} r={b.rr} class="wti-hit" fill="transparent" />
+              </g>
+            ))}
+          </g>
+        </svg>
+        <div class="wti-tip" role="status" aria-live="polite" hidden></div>
+      </div>
+      <p class="wti-xcap"><span class="wti-ax-ar">→</span> How urgently the workflow needs to change</p>
+
+      <p class="wti-size">Bubble size = <b>modeled commercial opportunity</b>. Tap or focus a cluster for roles and detail.</p>
+    </div>
+
+    <p class="wti-note" data-reveal>Founder hypothesis. Work clusters—not whole industries. Positions and sizes are directional until supported by employment, wage, adoption, and employer-spend data.</p>
+  </div>
+
+  <div class="wti-backdrop" hidden></div>
+  <aside class="wti-panel" role="dialog" aria-modal="false" aria-labelledby="wti-panel-title" hidden tabindex="-1">
+    <button class="wti-close" aria-label="Close details" type="button">✕</button>
+    <div class="wti-panel-body"></div>
+  </aside>
+
+  <script type="application/json" id="wti-data-final" set:html={JSON.stringify(clusters)}></script>
+
+  <script>
+    (() => {
+      const root = document.querySelector('.wti'); if (!root) return;
+      const CL = JSON.parse(root.querySelector('#wti-data-final').textContent || '[]');
+      const byId = Object.fromEntries(CL.map((c) => [c.id, c]));
+      const chartwrap = root.querySelector('.wti-chartwrap');
+      const tip = root.querySelector('.wti-tip');
+      const panel = root.querySelector('.wti-panel');
+      const backdrop = root.querySelector('.wti-backdrop');
+      const panelBody = root.querySelector('.wti-panel-body');
+      const closeBtn = root.querySelector('.wti-close');
+      const bubbles = [...root.querySelectorAll('.wti-b')];
+      const colorOf = (c) => ({ priority: '#4c9dff', develop: '#6fb0d8', automate: '#d67a5f', watch: '#7c8695', ai: '#9b7ff0' }[c.zone] || '#4c9dff');
+      const pressure = (x) => (x >= 8 ? 'High' : x >= 6.5 ? 'Elevated' : 'Moderate');
+      const leverage = (y) => (y >= 8 ? 'High' : y >= 6.5 ? 'Strong' : 'Moderate');
+      let lastFocus = null;
+
+      function showTip(el) {
+        const c = byId[el.dataset.id]; if (!c) return;
+        tip.innerHTML =
+          `<div class="wti-tip-name">${c.label}</div>` +
+          `<div class="wti-tip-row"><span>Transformation pressure</span><b>${pressure(c.x)}</b></div>` +
+          `<div class="wti-tip-row"><span>Development leverage</span><b>${leverage(c.y)}</b></div>` +
+          `<div class="wti-tip-row"><span>Commercial opportunity</span><b>${c.opportunity}</b></div>` +
+          `<div class="wti-tip-roles">${c.roles.slice(0, 3).join(' · ')}</div>`;
+        const cr = el.querySelector('.wti-dot').getBoundingClientRect();
+        const wr = chartwrap.getBoundingClientRect();
+        tip.hidden = false;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        let left = Math.max(4, Math.min(cr.left - wr.left + cr.width / 2 - tw / 2, wr.width - tw - 4));
+        let top = cr.top - wr.top - th - 12; if (top < 0) top = cr.top - wr.top + cr.height + 12;
+        tip.style.left = left + 'px'; tip.style.top = top + 'px';
+      }
+      const hideTip = () => { tip.hidden = true; };
+      function setActive(id) { bubbles.forEach((b) => { b.classList.toggle('dim', b.dataset.id !== id); b.classList.toggle('active', b.dataset.id === id); }); }
+      const clearActive = () => bubbles.forEach((b) => b.classList.remove('dim', 'active'));
+
+      const li = (a) => a.map((t) => `<li>${t}</li>`).join('');
+      const block = (t, a) => `<div class="wti-p-block"><p class="wti-p-lbl">${t}</p><ul>${li(a)}</ul></div>`;
+      function openPanel(id, focusEl) {
+        const c = byId[id]; if (!c) return; lastFocus = focusEl || null;
+        panelBody.innerHTML =
+          `<span class="wti-p-zone" style="--c:${colorOf(c)}">${c.zoneLabel}</span>` +
+          `<h3 id="wti-panel-title">${c.label}</h3>` +
+          `<p class="wti-p-sum">${c.summary}</p>` +
+          block('Representative industries', c.industries) + block('Representative roles', c.roles) +
+          block('Why the work is changing', c.whyChanging) + block('What can be developed internally', c.internalDevelopment) +
+          block('Where external hiring may be required', c.externalHiring) + (c.marketExamples ? block('Market examples', c.marketExamples) : '');
+        panel.hidden = false; backdrop.hidden = false;
+        requestAnimationFrame(() => { panel.classList.add('open'); backdrop.classList.add('open'); });
+        panel.focus();
+      }
+      function closePanel() {
+        panel.classList.remove('open'); backdrop.classList.remove('open');
+        setTimeout(() => { panel.hidden = true; backdrop.hidden = true; }, 260);
+        if (lastFocus) lastFocus.focus();
+      }
+
+      bubbles.forEach((el) => {
+        el.addEventListener('mouseenter', () => { setActive(el.dataset.id); showTip(el); });
+        el.addEventListener('mouseleave', () => { clearActive(); hideTip(); });
+        el.addEventListener('focus', () => { setActive(el.dataset.id); showTip(el); });
+        el.addEventListener('blur', () => { clearActive(); hideTip(); });
+        el.addEventListener('click', () => openPanel(el.dataset.id, el));
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(el.dataset.id, el); } });
+      });
+      closeBtn.addEventListener('click', closePanel);
+      backdrop.addEventListener('click', closePanel);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
+    })();
+  </script>
+
+  <style>
+    .wti, .wti * { box-sizing: border-box; }
+    .wti { position: relative; padding: 66px 0; }
+    .wti-col { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+    .wti-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 46px); line-height: 1.04; letter-spacing: -0.03em; color: #fff; margin: 0; }
+
+    /* bold, dark, horizontal axis captions (readable without turning your head) */
+    .wti-ycap, .wti-xcap { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.012em; color: #1b1f25;
+      font-size: clamp(14.5px, 1.75vw, 18px); line-height: 1.2; display: flex; align-items: center; gap: 10px; }
+    .wti-ycap { margin: 2px 2px 14px; }
+    .wti-xcap { margin: 14px 2px 0; justify-content: center; text-align: center; }
+    .wti-ax-ar { color: #2f6fd0; font-weight: 800; font-size: 1.25em; line-height: 1; }
+
+    /* light "fogged" panel */
+    .wti-board { margin-top: 30px; background: #edece6; border: 1px solid #dcd9cf; border-radius: 20px; padding: 22px 22px 18px;
+      box-shadow: 0 30px 70px -44px rgba(0,0,0,0.85); }
+    .wti-chartwrap { position: relative; }
+    .wti-svg { width: 100%; height: auto; display: block; overflow: visible; touch-action: manipulation; }
+
+    .wti-div { stroke: rgba(20,24,30,0.16); stroke-dasharray: 4 5; }
+    .wti-quad { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12.5px; letter-spacing: .1em; fill: #6f6a5f; }
+    .wti-zone { fill: rgba(31,90,166,0.05); stroke: #3f7fd0; stroke-width: 1.5; stroke-dasharray: 5 6; }
+    .wti-zone-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .02em; fill: #2f6fd0; }
+    .wti-zone-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; fill: #6a86ad; }
+    .wti-axis-end { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .04em; fill: #6b6a63; }
+
+    .wti-lead { stroke: #9a948a; stroke-width: 1; }
+    .wti-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: -0.01em; fill: #23262b; pointer-events: none; }
+
+    .wti-b { cursor: pointer; outline: none; }
+    .wti-dot { fill: color-mix(in srgb, var(--c) 48%, white); stroke: var(--c); stroke-width: 1.8;
+      transition: transform .18s ease, filter .18s ease; transform-box: fill-box; transform-origin: center; }
+    .wti-b.active .wti-dot { transform: scale(1.16); filter: drop-shadow(0 3px 8px rgba(20,30,50,0.4)); }
+    .wti-b.active .wti-lbl { fill: #0d0f13; }
+    .wti-b.dim { opacity: 0.34; }
+    .wti-b:focus-visible .wti-dot { stroke-width: 2.6; }
+    .wti-b:focus-visible { outline: 2px solid #1f5aa6; outline-offset: 2px; border-radius: 50%; }
+
+    /* tooltip (dark, high-contrast) */
+    .wti-tip { position: absolute; z-index: 6; pointer-events: none; min-width: 190px; max-width: 260px;
+      background: rgba(14,16,22,0.97); border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 12px 14px;
+      box-shadow: 0 16px 40px -20px rgba(0,0,0,0.7); }
+    .wti-tip-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 8px; }
+    .wti-tip-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; color: #a4aebb; margin: 4px 0; }
+    .wti-tip-row b { color: #eef1f4; font-weight: 600; }
+    .wti-tip-roles { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7f8894; margin-top: 8px; line-height: 1.5; }
+
+    .wti-size { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .02em; color: #6f6a5f; margin: 14px 4px 0; }
+    .wti-size b { color: #35322b; font-weight: 500; }
+    .wti-note { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: #6f7885; margin: 22px 0 0; max-width: 900px; }
+
+    /* detail panel */
+    .wti-backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(4,6,10,0); transition: background .26s ease; }
+    .wti-backdrop.open { background: rgba(4,6,10,0.5); }
+    .wti-panel { position: fixed; top: 0; right: 0; z-index: 41; width: min(440px, 92vw); height: 100%; overflow-y: auto;
+      background: #0e1117; border-left: 1px solid rgba(255,255,255,0.12); padding: 30px 32px 60px;
+      transform: translateX(100%); transition: transform .26s cubic-bezier(.22,1,.36,1); }
+    .wti-panel.open { transform: none; }
+    .wti-close { position: absolute; top: 18px; right: 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+      color: #cbd3dd; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 14px; }
+    .wti-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .wti-p-zone { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+    .wti-panel h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; color: #fff; margin: 10px 0 0; }
+    .wti-p-sum { font-size: 15.5px; line-height: 1.5; color: #c2cbd6; margin: 14px 0 0; }
+    .wti-p-block { margin: 22px 0 0; }
+    .wti-p-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #7f8894; margin: 0 0 8px; }
+    .wti-p-block ul { list-style: none; margin: 0; padding: 0; }
+    .wti-p-block li { font-size: 15px; line-height: 1.45; color: #dbe1e8; padding: 4px 0 4px 16px; position: relative; }
+    .wti-p-block li::before { content: "—"; position: absolute; left: 0; color: #5b6470; }
+
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    [data-reveal].in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .wti-dot, .wti-panel, .wti-backdrop { transition: none !important; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+    @media (max-width: 640px) {
+      .wti-lbl { font-size: 15px; }
+      .wti-panel { top: auto; bottom: 0; right: 0; width: 100%; height: auto; max-height: 82vh; border-left: 0; border-top: 1px solid rgba(255,255,255,0.12);
+        border-radius: 20px 20px 0 0; transform: translateY(100%); }
+      .wti-panel.open { transform: none; }
+    }
+  </style>
+</section>
