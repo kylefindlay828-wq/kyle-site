@@ -5,7 +5,7 @@
 //    placement); the numbered bubbles and numbered legend are removed.
 //  - section starts with only the title (no eyebrow / explanatory paragraph).
 // Data-driven from src/data/workforce-index-final.ts.
-import { clusters, notes } from '../data/workforce-index-final.ts';
+import { clusters } from '../data/workforce-index-final.ts';
 
 const VB = { w: 1000, h: 560 };
 const M = { l: 92, r: 66, t: 58, b: 12 };
@@ -139,11 +139,6 @@ const bubbles = base.map((c) => {
       <p class="wti-size">Bubble size = <b>U.S. employment in the mapped occupations</b> (BLS OEWS, May 2025). Tap or focus a cluster for figures and sources.</p>
     </div>
 
-    <div class="wti-note" data-reveal>
-      <p class="wti-note-l"><b>How to read this.</b> Horizontal = how exposed the work is to AI (task-exposure, Eloundou et al. 2023). Vertical = whether AI tends to <i>augment</i> the worker or <i>automate</i> the task (Anthropic Economic Index). Bubble size = U.S. employment in the mapped occupations (BLS OEWS). Work clusters, not whole industries.</p>
-      <p class="wti-note-src">Sources: {notes.sources.map((s) => (<a class="wti-src" href={s.url} target="_blank" rel="noopener">{s.label}</a>))}</p>
-      <p class="wti-note-cav">{notes.caveat}</p>
-    </div>
   </div>
 
   <div class="wti-backdrop" hidden></div>
