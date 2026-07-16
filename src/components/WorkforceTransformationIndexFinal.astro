@@ -9,8 +9,8 @@ import { industries } from '../data/industry-filters.ts';
 
 // V1 (/proofworks) uses defaults; V2 (/proofworks-v2) passes a "Working hypothesis"
 // note and hides the industry filter — neither changes V1.
-interface Props { note?: string; showFilter?: boolean }
-const { note = notes.methodologyStatus, showFilter = true } = Astro.props as Props;
+interface Props { note?: string; noteBrief?: string; showFilter?: boolean }
+const { note = notes.methodologyStatus, noteBrief, showFilter = true } = Astro.props as Props;
 
 const VB = { w: 1000, h: 600 };
 const M = { l: 96, r: 70, t: 96, b: 58 };
@@ -183,7 +183,14 @@ const legend = (['underserved', 'emerging', 'crowded', 'low-fit'] as const).map(
       </div>
     </div>
 
-    <p class="wti-note" data-reveal>{note}</p>
+    {noteBrief ? (
+      <details class="wti-note wti-note-d" data-reveal>
+        <summary>{noteBrief} <span class="wti-note-more">Methodology ⓘ</span></summary>
+        <p>{note}</p>
+      </details>
+    ) : (
+      <p class="wti-note" data-reveal>{note}</p>
+    )}
   </div>
 
   <div class="wti-backdrop" hidden></div>
@@ -441,6 +448,11 @@ const legend = (['underserved', 'emerging', 'crowded', 'low-fit'] as const).map(
     .wti-info { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: #d9d6cc; color: #5a564c; font-size: 10px; font-weight: 700; cursor: help; }
 
     .wti-note { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: #6f7885; margin: 22px 0 0; max-width: 940px; }
+    .wti-note-d > summary { list-style: none; cursor: pointer; }
+    .wti-note-d > summary::-webkit-details-marker { display: none; }
+    .wti-note-more { color: #2f6fd0; margin-left: 6px; white-space: nowrap; }
+    .wti-note-d[open] > summary .wti-note-more { color: #6f7885; }
+    .wti-note-d > p { margin: 10px 0 0; color: #6f7885; }
 
     /* panel */
     .wti-backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(4,6,10,0); transition: background .26s ease; }
