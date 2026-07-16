@@ -1,162 +1,381 @@
-// Source of truth for the FINAL Workforce Transformation Index (/proofworks).
-// Forked from workforce-index.ts so the V1/V2 pages keep rendering unchanged.
-// Differences: full cluster names (labels attach directly to bubbles), roles
-// expanded to 8–12 per cluster, and a `dir` hint for label placement.
+// Source of truth for the Workforce Transformation Index (/proofworks).
+//
+// AXES (modeled founder hypothesis):
+//   x = how urgently the workflow needs to change
+//   y = how much value comes from developing the people doing the work
+//   r = modeled commercial opportunity (NOT measured revenue)
+// COLOR = market status: underserved | emerging | crowded | low-fit
+//
+// IMPORTANT: bubble position/size and every Rating below are MODELED judgments.
+// Only the `sourced` block (BLS employment/wage, O*NET tasks, Eloundou exposure,
+// AEI usage) is externally sourced. Source links do NOT calculate the position.
+export type Rating = 'Low' | 'Medium' | 'High';
+export type Size = 'Small' | 'Medium' | 'Large';
+export type Crowding = 'underserved' | 'emerging' | 'crowded' | 'low-fit';
+export type PriorityStatus = 'priority' | 'adjacent' | 'watch';
+export type Source = { name: string; year: string; supports: string; url: string };
+
 export type Cluster = {
   id: string; label: string; x: number; y: number; r: number;
-  dir: 'E' | 'W' | 'N' | 'S' | 'NE' | 'NW' | 'SE' | 'SW'; // preferred label side
-  zone: 'priority' | 'develop' | 'automate' | 'watch' | 'ai';
-  zoneLabel: string; color: string; opportunity: string;
-  industries: string[]; roles: string[]; summary: string;
-  whyChanging: string[]; internalDevelopment: string[]; externalHiring: string[];
-  marketExamples?: string[];
+  dir: 'E' | 'W' | 'N' | 'S' | 'NE' | 'NW' | 'SE' | 'SW';
+  crowding: Crowding; priority: boolean; priorityStatus: PriorityStatus;
+  industries: string[]; summary: string;
+  decision: {
+    internalDevelopment: Rating; roleEvolution: Rating; taskAutomation: Rating;
+    externalHiring: Rating; displacement: Rating; commercialOpportunity: Size; evidenceConfidence: Rating;
+  };
+  outcomes: { develop: string[]; redeploy: string[]; automate: string[]; hire: string[] };
+  whyHere: { urgency: string; developmentValue: string; crowding: string; fit: string };
+  sourced: {
+    occupationLabel: string; occupationCode: string;
+    employment: string; employmentYear: string; wage: string; wageYear: string;
+    exposure: string; usage?: string;
+  };
+  commercial: {
+    addressableWorkforce: Size; employerUrgency: Rating; spendingCapacity: Rating;
+    repeatability: Rating; crowding: Crowding; modeledSpend: Size;
+  };
+  sources: Source[];
+  marketExamples?: string[]; marketExamplesNote?: string;
+};
+
+const S = {
+  bls: (soc: string): Source => ({ name: 'BLS OEWS / EP', year: 'May 2025 wage', supports: 'Median wage (OEWS May 2025); employment (year as shown beside the figure)', url: `https://www.onetonline.org/link/summary/${soc}` }),
+  onet: (soc: string): Source => ({ name: 'O*NET Online', year: '2025', supports: 'Tasks & work activities', url: `https://www.onetonline.org/link/summary/${soc}` }),
+  eloundou: { name: 'Eloundou et al.', year: '2023', supports: 'Theoretical AI task exposure', url: 'https://arxiv.org/abs/2303.10130' } as Source,
+  aei: { name: 'Anthropic Economic Index', year: '2025', supports: 'Observed AI usage by occupation group', url: 'https://www.anthropic.com/news/the-anthropic-economic-index' } as Source,
 };
 
 export const clusters: Cluster[] = [
   {
-    id: 'field-service-operations', label: 'Field-service operations', x: 8.6, y: 8.9, r: 26, dir: 'E',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'large',
-    industries: ['HVAC', 'Plumbing', 'Electrical', 'Facilities services', 'Appliance repair'],
-    roles: ['Dispatcher', 'Estimator', 'Scheduler', 'Service coordinator', 'Branch operator', 'Field sales representative', 'Service manager', 'Route planner', 'Parts coordinator', 'Operations supervisor'],
-    summary: 'Large, fragmented service businesses with workflow-heavy coordination and significant room to develop trusted internal operators.',
-    whyChanging: ['Scheduling and dispatch are becoming more data-driven', 'Estimating and customer communication can be accelerated', 'Branches need people who can connect tools to real operations'],
-    internalDevelopment: ['Dispatchers into workflow leads', 'Estimators into pricing and systems roles', 'Coordinators into implementation roles'],
-    externalHiring: ['Technical workflow builders', 'Systems implementation specialists'],
-  },
-  {
-    id: 'healthcare-administration', label: 'Healthcare administration', x: 8.0, y: 9.15, r: 26, dir: 'N',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'large',
+    id: 'healthcare-administration', label: 'Healthcare administration', x: 8.4, y: 8.3, r: 36, dir: 'NE',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
     industries: ['Hospital systems', 'Clinics', 'Dental groups', 'Home health', 'Behavioral health'],
-    roles: ['Patient-access representative', 'Scheduling coordinator', 'Intake specialist', 'Medical biller', 'Claims specialist', 'Revenue-cycle analyst', 'Care coordinator', 'Prior-authorization specialist', 'Patient-operations lead', 'Practice administrator'],
-    summary: 'A large administrative workforce with complex workflows, high coordination needs, and strong internal-development potential.',
-    whyChanging: ['Documentation and intake are increasingly software-mediated', 'Scheduling and claims workflows are under cost pressure', 'Human judgment remains important in exceptions and patient coordination'],
-    internalDevelopment: ['Schedulers into patient-operations leads', 'Claims staff into workflow and quality roles', 'Coordinators into implementation roles'],
-    externalHiring: ['Healthcare workflow specialists', 'Automation and integration builders'],
+    summary: 'A very large administrative workforce running document-heavy workflows under acute cost pressure — with little dedicated implementation talent.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'High', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Patient-access representative', 'Scheduling coordinator', 'Medical biller', 'Claims specialist', 'Revenue-cycle analyst', 'Care coordinator', 'Practice administrator'],
+      redeploy: ['Scheduler → patient-operations lead', 'Biller → revenue-cycle systems analyst', 'Claims specialist → denials & appeals workflow lead', 'Coordinator → implementation specialist'],
+      automate: ['First-pass claim coding', 'Eligibility & benefit checks', 'Appointment reminders', 'Prior-authorization drafting', 'EOB & status reporting', 'Routine patient messaging'],
+      hire: ['Healthcare workflow specialist', 'RCM automation engineer', 'Integration specialist (HL7/FHIR)', 'Solutions consultant', 'Data analyst'],
+    },
+    whyHere: {
+      urgency: 'Documentation, intake, billing, and claims are software-mediated and under sustained cost pressure.',
+      developmentValue: 'Staff hold payer rules, exception handling, and patient-coordination knowledge that is hard to replace.',
+      crowding: 'Revenue-cycle vendors exist, but implementation talent for provider back-offices is thin.',
+      fit: 'High: very large workforce, urgent workflows, repeatable across systems and specialties.',
+    },
+    sourced: { occupationLabel: 'Medical Secretaries & Administrative Assistants', occupationCode: '43-6013', employment: '850,000', employmentYear: 'EP 2024', wage: '$45,930', wageYear: 'May 2025', exposure: 'Medium–high (Eloundou)', usage: 'Office & Administrative Support — lower observed usage (AEI)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'underserved', modeledSpend: 'Large' },
+    sources: [S.bls('43-6013.00'), S.onet('43-6013.00'), S.eloundou, S.aei],
   },
   {
-    id: 'logistics-coordination', label: 'Logistics coordination', x: 8.75, y: 8.35, r: 26, dir: 'E',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'large',
-    industries: ['Trucking', 'Freight forwarding', 'Warehousing', 'Distribution', 'Last-mile delivery'],
-    roles: ['Dispatcher', 'Fleet coordinator', 'Carrier manager', 'Transportation planner', 'Warehouse coordinator', 'Load planner', 'Freight broker', 'Supply-chain analyst', 'Import/export coordinator', 'Operations coordinator'],
-    summary: 'Large operator populations and measurable gains from better routing, communication, exception handling, and planning.',
-    whyChanging: ['Routing and planning are becoming more automated', 'Operators still manage exceptions and relationships', 'Workflow improvements can be measured in time, cost, and errors'],
-    internalDevelopment: ['Dispatchers into network-operations roles', 'Coordinators into planning and systems roles', 'Account managers into logistics intelligence roles'],
-    externalHiring: ['Workflow implementation specialists', 'Data and integration talent'],
-  },
-  {
-    id: 'insurance-operations', label: 'Insurance operations', x: 8.05, y: 8.1, r: 21, dir: 'SE',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'medium-large',
-    industries: ['Property and casualty', 'Health insurance', 'Benefits administration', 'Specialty insurance'],
-    roles: ['Claims coordinator', 'Underwriting assistant', 'Policy-operations specialist', 'Compliance analyst', 'Customer-operations representative', 'Claims adjuster', 'Billing specialist', 'Underwriter', 'Operations analyst', 'Renewals specialist'],
-    summary: 'Document-heavy, rules-heavy work with significant judgment, exceptions, and customer impact.',
-    whyChanging: ['Document review and summarization are accelerating', 'Exception handling remains human-intensive', 'Compliance and customer workflows require traceability'],
-    internalDevelopment: ['Claims staff into exception-management roles', 'Policy operations into workflow-design roles', 'Compliance staff into evaluation roles'],
-    externalHiring: ['Insurance automation specialists', 'Technical compliance builders'],
-  },
-  {
-    id: 'construction-planning', label: 'Construction planning', x: 7.55, y: 8.05, r: 21, dir: 'W',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'medium-large',
-    industries: ['Commercial construction', 'Residential building', 'Infrastructure', 'Specialty contractors'],
-    roles: ['Estimator', 'Scheduler', 'Project coordinator', 'Procurement analyst', 'BIM specialist', 'Project manager', 'Preconstruction manager', 'Cost analyst', 'Planning manager', 'Project-controls analyst'],
-    summary: 'Planning and coordination are increasingly software-mediated while field knowledge remains highly valuable.',
-    whyChanging: ['Preconstruction modeling is becoming more capable', 'Estimating and scheduling workflows are increasingly integrated', 'Project risk can be identified earlier'],
-    internalDevelopment: ['Estimators into preconstruction systems roles', 'Project coordinators into implementation roles', 'Schedulers into planning-intelligence roles'],
-    externalHiring: ['BIM and data specialists', 'Workflow integration talent'],
-  },
-  {
-    id: 'manufacturing-planning', label: 'Manufacturing planning', x: 7.25, y: 7.7, r: 26, dir: 'W',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'large',
-    industries: ['Industrial manufacturing', 'Automotive', 'Consumer goods', 'Food production'],
-    roles: ['Production planner', 'Procurement coordinator', 'Quality coordinator', 'Maintenance planner', 'Supply planner', 'Materials manager', 'Scheduling analyst', 'Process engineer', 'Inventory analyst', 'Operations planner'],
-    summary: 'Valuable operational knowledge, complex dependencies, and growing pressure to connect planning systems with frontline reality.',
-    whyChanging: ['Planning systems are becoming more predictive', 'Maintenance and quality workflows are becoming data-rich', 'Operational context remains hard to replace'],
-    internalDevelopment: ['Planners into systems and optimization roles', 'Quality staff into evaluation roles', 'Maintenance coordinators into predictive-operations roles'],
-    externalHiring: ['Industrial data specialists', 'Systems integration talent'],
-  },
-  {
-    id: 'customer-account-operations', label: 'Customer / account operations', x: 8.2, y: 7.55, r: 26, dir: 'SE',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'large',
+    id: 'customer-account-operations', label: 'Customer / account operations', x: 8.9, y: 7.0, r: 34, dir: 'SE',
+    crowding: 'emerging', priority: true, priorityStatus: 'priority',
     industries: ['Software', 'Professional services', 'Healthcare', 'Financial services', 'Retail'],
-    roles: ['Account manager', 'Customer-success manager', 'Onboarding specialist', 'Renewals manager', 'Support lead', 'Account director', 'Implementation specialist', 'Client-services manager', 'Partnerships manager', 'Customer-operations analyst'],
-    summary: 'Relationship judgment remains important while tooling rapidly changes research, communication, and account management.',
-    whyChanging: ['Account intelligence can be assembled faster', 'Risk and renewal signals can be surfaced earlier', 'Routine communication can be automated'],
-    internalDevelopment: ['Account managers into customer-intelligence roles', 'CSMs into workflow and adoption roles', 'Support leads into systems roles'],
-    externalHiring: ['Customer-systems specialists', 'Automation and analytics talent'],
+    summary: 'A cross-industry function where relationship judgment stays valuable while research, communication, and account workflows change fast.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'High', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Account manager', 'Customer-success manager', 'Onboarding specialist', 'Renewals manager', 'Support lead', 'Customer-operations analyst'],
+      redeploy: ['CSM → workflow & adoption specialist', 'Account manager → customer-intelligence lead', 'Support lead → systems & enablement lead', 'Onboarding → implementation specialist'],
+      automate: ['First-response drafting', 'Ticket triage & routing', 'Account research', 'Renewal & risk-signal surfacing', 'Routine follow-ups', 'QBR & report prep'],
+      hire: ['Customer-systems specialist', 'RevOps / automation analyst', 'Integration specialist', 'Solutions engineer', 'Data analyst'],
+    },
+    whyHere: {
+      urgency: 'Research, communication, and account workflows are changing fast across every industry.',
+      developmentValue: 'Relationship judgment and account context stay valuable even as tooling changes.',
+      crowding: 'RevOps and CS tooling is widespread, so some competition exists — an emerging market.',
+      fit: 'Strong and highly repeatable, with rising competition.',
+    },
+    sourced: { occupationLabel: 'Customer Service Representatives', occupationCode: '43-4051', employment: '2,814,000', employmentYear: 'EP 2024', wage: '$44,770', wageYear: 'May 2025', exposure: 'High — CSRs among the most-exposed occupations (Eloundou)', usage: 'Augmentation-leaning (AEI)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'emerging', modeledSpend: 'Large' },
+    sources: [S.bls('43-4051.00'), S.onet('43-4051.00'), S.eloundou, S.aei],
   },
   {
-    id: 'professional-services', label: 'Professional services', x: 7.65, y: 7.35, r: 16, dir: 'S',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'medium',
-    industries: ['Consulting', 'Accounting', 'Legal services', 'Agencies'],
-    roles: ['Engagement manager', 'Analyst', 'Project manager', 'Client-services lead', 'Operations manager', 'Consultant', 'Delivery manager', 'Practice coordinator', 'Resource manager', 'Associate'],
-    summary: 'High-value knowledge work and meaningful budgets, but a more competitive and already-served market.',
-    whyChanging: ['Research and synthesis are accelerating', 'Delivery models are becoming more productized', 'Clients expect faster output'],
-    internalDevelopment: ['Analysts into systems-assisted advisory roles', 'Engagement managers into workflow-design roles', 'Operations managers into automation roles'],
-    externalHiring: ['Domain-specific builders', 'Knowledge-systems specialists'],
+    id: 'field-service-operations', label: 'Field-service operations', x: 7.4, y: 8.1, r: 28, dir: 'W',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
+    industries: ['HVAC', 'Plumbing', 'Electrical', 'Facilities services', 'Appliance repair'],
+    summary: 'Large, fragmented service businesses with workflow-heavy back-office coordination and significant room to develop trusted internal operators.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Low', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Dispatcher', 'Estimator', 'Scheduler', 'Service coordinator', 'Branch operator', 'Service manager', 'Operations supervisor'],
+      redeploy: ['Dispatcher → workflow operations lead', 'Estimator → pricing & systems specialist', 'Coordinator → implementation specialist', 'Branch operator → regional systems lead'],
+      automate: ['First-pass scheduling', 'Routine customer updates', 'Call & message triage', 'Quote drafting', 'Status reporting', 'Basic route optimization'],
+      hire: ['Technical workflow builder', 'Systems implementation specialist', 'Integration specialist', 'Automation engineer', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Scheduling, dispatch, quoting, and customer communication are going data-driven while fragmented operators feel margin and labor pressure.',
+      developmentValue: 'Dispatchers and estimators hold route, customer, and pricing context that is hard to replace.',
+      crowding: 'Few firms specialize in implementation talent for field-service back offices.',
+      fit: 'High: underserved, workflow-heavy, and repeatable across thousands of branches.',
+    },
+    sourced: { occupationLabel: 'Dispatchers, Except Police, Fire, and Ambulance', occupationCode: '43-5032', employment: '202,810', employmentYear: 'OEWS May 2025', wage: '$50,340', wageYear: 'May 2025', exposure: 'Medium (Eloundou)', usage: 'Office & Administrative Support — lower observed usage (AEI)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'underserved', modeledSpend: 'Large' },
+    sources: [S.bls('43-5032.00'), S.onet('43-5032.00'), S.eloundou, S.aei],
   },
   {
-    id: 'property-operations', label: 'Property operations', x: 7.05, y: 7.3, r: 16, dir: 'SW',
-    zone: 'priority', zoneLabel: 'Build before replacing', color: '#4c9dff', opportunity: 'medium',
+    id: 'manufacturing-planning', label: 'Manufacturing planning', x: 6.8, y: 8.0, r: 28, dir: 'W',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
+    industries: ['Industrial manufacturing', 'Automotive', 'Consumer goods', 'Food production'],
+    summary: 'Valuable operational knowledge and complex dependencies, with growing pressure to connect planning systems to frontline reality.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Production planner', 'Procurement coordinator', 'Quality coordinator', 'Maintenance planner', 'Supply planner', 'Materials manager'],
+      redeploy: ['Planner → systems & optimization specialist', 'Quality staff → evaluation & analytics lead', 'Maintenance coordinator → predictive-operations lead', 'Buyer → supply-systems lead'],
+      automate: ['Demand & supply first-pass planning', 'Purchase-order generation', 'Reorder-point checks', 'Quality-report drafting', 'Maintenance scheduling', 'Inventory status reporting'],
+      hire: ['Industrial data specialist', 'Systems integration specialist', 'MES/ERP integration specialist', 'Automation engineer', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Planning is becoming predictive and maintenance/quality workflows are data-rich, under continual cost pressure.',
+      developmentValue: 'Operational context and cross-dependency knowledge are hard to replace.',
+      crowding: 'ERP/MES vendors exist, but implementation talent is scarce.',
+      fit: 'High: large planning workforce, repeatable across plants.',
+    },
+    sourced: { occupationLabel: 'Production, Planning & Expediting Clerks', occupationCode: '43-5061', employment: '388,800', employmentYear: 'EP 2024', wage: '$59,650', wageYear: 'May 2025', exposure: 'Medium (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'Medium', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'underserved', modeledSpend: 'Large' },
+    sources: [S.bls('43-5061.00'), S.onet('43-5061.00'), S.eloundou],
+  },
+  {
+    id: 'insurance-operations', label: 'Insurance operations', x: 8.6, y: 7.7, r: 28, dir: 'E',
+    crowding: 'emerging', priority: true, priorityStatus: 'priority',
+    industries: ['Property and casualty', 'Health insurance', 'Benefits administration', 'Specialty insurance'],
+    summary: 'Document- and rules-heavy work with real judgment, exceptions, and customer impact — early competition, still winnable.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'High', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Claims coordinator', 'Underwriting assistant', 'Policy-operations specialist', 'Compliance analyst', 'Operations analyst'],
+      redeploy: ['Claims staff → exception-management lead', 'Policy ops → workflow-design specialist', 'Compliance analyst → controls & evaluation lead', 'UW assistant → systems underwriter'],
+      automate: ['Document intake & summarization', 'First-pass claim triage', 'Policy-issuance checks', 'Routine correspondence', 'Compliance-evidence collection', 'Status reporting'],
+      hire: ['Insurance automation specialist', 'Technical compliance builder', 'Integration specialist', 'Data analyst', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Document- and rules-heavy work is a prime automation target and carriers are investing now.',
+      developmentValue: 'Judgment on exceptions, edge cases, and compliance stays human.',
+      crowding: 'Insurtech and automation vendors are emerging — competition is rising but the market is winnable.',
+      fit: 'Strong, with competition — an emerging market.',
+    },
+    sourced: { occupationLabel: 'Claims Adjusters, Examiners & Investigators', occupationCode: '13-1031', employment: '356,100', employmentYear: 'EP 2024', wage: '$78,000', wageYear: 'May 2025', exposure: 'High — document/rules-heavy (Eloundou)', usage: 'Business & Financial — above-average usage (AEI)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'High', repeatability: 'High', crowding: 'emerging', modeledSpend: 'Large' },
+    sources: [S.bls('13-1031.00'), S.onet('13-1031.00'), S.eloundou, S.aei],
+  },
+  {
+    id: 'logistics-coordination', label: 'Logistics coordination', x: 7.9, y: 7.0, r: 28, dir: 'SE',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
+    industries: ['Trucking', 'Freight forwarding', 'Warehousing', 'Distribution', 'Last-mile delivery'],
+    summary: 'Large operator populations and measurable gains from better routing, communication, exception handling, and planning.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Dispatcher', 'Fleet coordinator', 'Carrier manager', 'Transportation planner', 'Load planner', 'Operations coordinator'],
+      redeploy: ['Dispatcher → network-operations lead', 'Coordinator → planning & systems specialist', 'Carrier manager → logistics-intelligence lead', 'Broker → account-systems lead'],
+      automate: ['First-pass load matching', 'Track-and-trace updates', 'Carrier check-ins', 'Routine route optimization', 'Exception alerts', 'Status reporting'],
+      hire: ['Workflow implementation specialist', 'TMS integration specialist', 'Data engineer', 'Automation engineer', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Routing and planning are automating, margins are thin, and gains are measurable in time, cost, and errors.',
+      developmentValue: 'Operators own exception handling and carrier/customer relationships.',
+      crowding: 'TMS vendors exist, but dedicated implementation talent is scarce.',
+      fit: 'High: large operator base, repeatable across networks.',
+    },
+    sourced: { occupationLabel: 'Cargo & Freight Agents', occupationCode: '43-5011', employment: '100,600', employmentYear: 'EP 2024', wage: '$52,260', wageYear: 'May 2025', exposure: 'Medium — coordination & documentation (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'underserved', modeledSpend: 'Large' },
+    sources: [S.bls('43-5011.00'), S.onet('43-5011.00'), S.eloundou],
+  },
+  {
+    id: 'construction-planning', label: 'Construction planning', x: 7.0, y: 7.2, r: 20, dir: 'SW',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
+    industries: ['Commercial construction', 'Residential building', 'Infrastructure', 'Specialty contractors'],
+    summary: 'Planning and coordination are increasingly software-mediated while field knowledge stays valuable — the opportunity is the office layer.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'Medium', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Low', commercialOpportunity: 'Medium', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Estimator', 'Scheduler', 'Project coordinator', 'Procurement analyst', 'Preconstruction manager', 'Project-controls analyst'],
+      redeploy: ['Estimator → preconstruction systems specialist', 'Coordinator → implementation specialist', 'Scheduler → planning-intelligence lead', 'Procurement analyst → systems & analytics lead'],
+      automate: ['First-pass takeoffs & estimates', 'Bid leveling', 'Schedule updates', 'RFI & submittal drafting', 'Procurement status tracking', 'Progress reporting'],
+      hire: ['BIM / data specialist', 'Preconstruction systems builder', 'Integration specialist', 'Automation engineer', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Preconstruction modeling and estimating are increasingly software-mediated.',
+      developmentValue: 'Estimators and planners hold field and cost judgment; field execution stays physical.',
+      crowding: 'Fragmented, with little dedicated implementation talent for the office layer.',
+      fit: 'Good in the office/planning layer; field labor is out of scope.',
+    },
+    sourced: { occupationLabel: 'Cost Estimators', occupationCode: '13-1051', employment: '221,400', employmentYear: 'EP 2024', wage: '$78,740', wageYear: 'May 2025', exposure: 'Medium–high for planning/estimating; field work is low (Eloundou)' },
+    commercial: { addressableWorkforce: 'Medium', employerUrgency: 'Medium', spendingCapacity: 'Medium', repeatability: 'Medium', crowding: 'underserved', modeledSpend: 'Medium' },
+    sources: [S.bls('13-1051.00'), S.onet('13-1051.00'), S.eloundou],
+  },
+  {
+    id: 'property-operations', label: 'Property operations', x: 6.6, y: 7.0, r: 24, dir: 'W',
+    crowding: 'underserved', priority: true, priorityStatus: 'priority',
     industries: ['Property management', 'Real-estate services', 'Facilities management', 'Multifamily housing'],
-    roles: ['Property coordinator', 'Maintenance scheduler', 'Leasing-operations specialist', 'Vendor manager', 'Regional operator', 'Assistant property manager', 'Facilities coordinator', 'Resident-services lead', 'Operations manager', 'Portfolio analyst'],
     summary: 'Recurring coordination, vendor management, and fragmented systems create room for internal operator development.',
-    whyChanging: ['Scheduling and resident communication can be streamlined', 'Vendor and maintenance workflows are fragmented', 'Regional visibility is often weak'],
-    internalDevelopment: ['Coordinators into operations-systems roles', 'Schedulers into workflow leads', 'Regional operators into implementation roles'],
-    externalHiring: ['Property-technology implementation talent', 'Systems integration specialists'],
+    decision: { internalDevelopment: 'High', roleEvolution: 'High', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Low', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Property coordinator', 'Maintenance scheduler', 'Leasing-operations specialist', 'Vendor manager', 'Regional operator'],
+      redeploy: ['Coordinator → operations-systems specialist', 'Scheduler → workflow lead', 'Regional operator → implementation lead', 'Leasing ops → systems & analytics lead'],
+      automate: ['Maintenance-ticket triage', 'Resident messaging', 'Vendor scheduling', 'Rent & renewal reminders', 'Turn & inspection reporting', 'Portfolio status reporting'],
+      hire: ['PropTech implementation specialist', 'Systems integration specialist', 'Automation engineer', 'Data analyst', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Fragmented systems, streamlining of scheduling/communication, and weak regional visibility drive change.',
+      developmentValue: 'Coordinators hold vendor, resident, and property context.',
+      crowding: 'PropTech exists, but implementation talent is thin.',
+      fit: 'High: recurring coordination, repeatable across portfolios.',
+    },
+    sourced: { occupationLabel: 'Property, Real Estate & Community Association Managers', occupationCode: '11-9141', employment: '466,100', employmentYear: 'EP 2024', wage: '$69,990', wageYear: 'May 2025', exposure: 'Medium — admin & comms exposed; on-site work is not (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'Medium', spendingCapacity: 'Medium', repeatability: 'High', crowding: 'underserved', modeledSpend: 'Large' },
+    sources: [S.bls('11-9141.00'), S.onet('11-9141.00'), S.eloundou],
   },
   {
-    id: 'public-administration', label: 'Public administration', x: 6.1, y: 8.05, r: 26, dir: 'W',
-    zone: 'develop', zoneLabel: 'Develop selectively', color: '#6fb0d8', opportunity: 'large',
+    id: 'professional-services', label: 'Professional services', x: 7.7, y: 8.6, r: 22, dir: 'N',
+    crowding: 'emerging', priority: false, priorityStatus: 'adjacent',
+    industries: ['Consulting', 'Accounting', 'Legal services', 'Agencies'],
+    summary: 'High-value knowledge work with meaningful budgets — but more competition and existing tooling, so it sits at the edge of the zone.',
+    decision: { internalDevelopment: 'Medium', roleEvolution: 'High', taskAutomation: 'High', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Medium', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Analyst', 'Engagement manager', 'Project manager', 'Client-services lead', 'Operations manager'],
+      redeploy: ['Analyst → AI-assisted advisory', 'Engagement manager → workflow-design lead', 'Operations manager → automation lead', 'PM → delivery-systems lead'],
+      automate: ['Research & synthesis first pass', 'Deck & report drafting', 'Data cleaning', 'Meeting notes & actions', 'Status reporting', 'Routine analysis'],
+      hire: ['Domain-specific builder', 'Knowledge-systems specialist', 'Data / automation engineer', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Research and synthesis are accelerating and delivery is productizing under client speed expectations.',
+      developmentValue: 'Domain expertise and client relationships retain value.',
+      crowding: 'A well-served market with meaningful budgets and more competition — it sits at the edge.',
+      fit: 'Attractive but competitive — adjacent to the core.',
+    },
+    sourced: { occupationLabel: 'Management Analysts', occupationCode: '13-1111', employment: '1,075,100', employmentYear: 'EP 2024', wage: '$101,860', wageYear: 'May 2025', exposure: 'High — accountants/analysts highly exposed (Eloundou)', usage: 'Business & Financial — above-average usage (AEI)' },
+    commercial: { addressableWorkforce: 'Medium', employerUrgency: 'Medium', spendingCapacity: 'High', repeatability: 'Medium', crowding: 'emerging', modeledSpend: 'Medium' },
+    sources: [S.bls('13-1111.00'), S.onet('13-1111.00'), S.eloundou, S.aei],
+  },
+  {
+    id: 'public-administration', label: 'Public administration', x: 5.6, y: 7.9, r: 25, dir: 'W',
+    crowding: 'underserved', priority: false, priorityStatus: 'adjacent',
     industries: ['Federal government', 'State government', 'Municipal government', 'Education administration'],
-    roles: ['Program coordinator', 'Benefits administrator', 'Case-operations specialist', 'Procurement analyst', 'Compliance officer', 'Scheduling coordinator', 'Grants administrator', 'Policy analyst', 'Records manager', 'Program manager'],
-    summary: 'Large workforces and high development value, but slower adoption and buying cycles.',
-    whyChanging: ['Case and benefits workflows are document-heavy', 'Procurement and compliance require traceability', 'Public systems often have significant process debt'],
-    internalDevelopment: ['Program staff into service-design roles', 'Case operations into workflow roles', 'Procurement staff into systems roles'],
-    externalHiring: ['Civic-technology implementation talent', 'Security and compliance specialists'],
+    summary: 'Large workforces and high development value, but slower adoption and buying cycles push near-term urgency lower.',
+    decision: { internalDevelopment: 'High', roleEvolution: 'Medium', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Low', commercialOpportunity: 'Large', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Program coordinator', 'Benefits administrator', 'Case-operations specialist', 'Procurement analyst', 'Compliance officer'],
+      redeploy: ['Program staff → service-design specialist', 'Case ops → workflow lead', 'Procurement → systems specialist', 'Analyst → data & reporting lead'],
+      automate: ['Eligibility first-pass checks', 'Form & case intake', 'Document routing', 'Benefit notices', 'Compliance evidence', 'Status reporting'],
+      hire: ['Civic-tech implementation specialist', 'Security & compliance specialist', 'Integration specialist', 'Data analyst', 'Solutions consultant'],
+    },
+    whyHere: {
+      urgency: 'Document-heavy case and benefits work carries process debt, but slow buying cycles lower near-term urgency.',
+      developmentValue: 'Program and case knowledge is valuable and durable.',
+      crowding: 'GovTech exists and implementation talent is thin, but procurement is hard.',
+      fit: 'Valuable but slower — adjacent, not core near-term.',
+    },
+    sourced: { occupationLabel: 'Eligibility Interviewers, Government Programs', occupationCode: '43-4061', employment: '166,800', employmentYear: 'EP 2024', wage: '$54,210', wageYear: 'May 2025', exposure: 'Medium–high — records & rules-based case work (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'Medium', spendingCapacity: 'Medium', repeatability: 'Medium', crowding: 'underserved', modeledSpend: 'Medium' },
+    sources: [S.bls('43-4061.00'), S.onet('43-4061.00'), S.eloundou],
   },
   {
-    id: 'hospitality-operations', label: 'Hospitality operations', x: 5.95, y: 6.7, r: 16, dir: 'SW',
-    zone: 'develop', zoneLabel: 'Develop selectively', color: '#6fb0d8', opportunity: 'medium',
+    id: 'hospitality-operations', label: 'Hospitality operations', x: 5.7, y: 6.1, r: 20, dir: 'SW',
+    crowding: 'emerging', priority: false, priorityStatus: 'watch',
     industries: ['Restaurants', 'Hotels', 'Venues', 'Travel operations'],
-    roles: ['General manager', 'Scheduling coordinator', 'Revenue manager', 'Guest-operations lead', 'Event-operations manager', 'Front-office manager', 'Food & beverage manager', 'Multi-unit operator', 'Reservations manager', 'Operations supervisor'],
-    summary: 'Large workforces but uneven budgets; the opportunity is concentrated in management, scheduling, revenue, and multi-unit operations.',
-    whyChanging: ['Scheduling and demand planning are becoming more automated', 'Multi-unit operators need better visibility', 'Frontline work remains physical'],
-    internalDevelopment: ['Managers into multi-unit systems roles', 'Schedulers into workforce-planning roles', 'Guest operations into experience systems roles'],
-    externalHiring: ['Hospitality systems specialists', 'Revenue-operations talent'],
+    summary: 'Large workforces but uneven budgets; the opportunity concentrates in management, scheduling, revenue, and multi-unit operations.',
+    decision: { internalDevelopment: 'Medium', roleEvolution: 'Medium', taskAutomation: 'Medium', externalHiring: 'Medium', displacement: 'Medium', commercialOpportunity: 'Medium', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['General manager', 'Scheduling coordinator', 'Revenue manager', 'Guest-operations lead', 'Multi-unit operator'],
+      redeploy: ['Scheduler → workforce-planning lead', 'Manager → multi-unit systems lead', 'Guest ops → experience-systems lead', 'Revenue manager → revenue-systems lead'],
+      automate: ['First-pass shift scheduling', 'Demand & rate forecasting', 'Reservation & guest messaging', 'Review responses', 'Inventory & ordering', 'Reporting'],
+      hire: ['Hospitality systems specialist', 'Revenue-operations talent', 'Integration specialist', 'Data analyst'],
+    },
+    whyHere: {
+      urgency: 'Scheduling and demand planning are automating, but budgets are uneven and frontline work stays physical.',
+      developmentValue: 'Multi-unit operators and managers hold operational judgment.',
+      crowding: 'Hospitality-tech is emerging and budgets are uneven.',
+      fit: 'Selective — the management layer only; watch.',
+    },
+    sourced: { occupationLabel: 'Food Service Managers', occupationCode: '11-9051', employment: '352,800', employmentYear: 'EP 2024', wage: '$69,390', wageYear: 'May 2025', exposure: 'Low–medium — scheduling/admin exposed; service is physical (Eloundou)' },
+    commercial: { addressableWorkforce: 'Medium', employerUrgency: 'Medium', spendingCapacity: 'Medium', repeatability: 'Medium', crowding: 'emerging', modeledSpend: 'Medium' },
+    sources: [S.bls('11-9051.00'), S.onet('11-9051.00'), S.eloundou],
   },
   {
-    id: 'ai-labs-technical-talent', label: 'AI labs / technical talent', x: 9.35, y: 6.35, r: 21, dir: 'W',
-    zone: 'ai', zoneLabel: 'AI labs', color: '#9b7ff0', opportunity: 'medium-large',
+    id: 'ai-labs-technical-talent', label: 'AI labs / technical talent', x: 9.4, y: 6.6, r: 15, dir: 'N',
+    crowding: 'crowded', priority: false, priorityStatus: 'adjacent',
     industries: ['Frontier AI labs', 'AI infrastructure', 'Software', 'Cybersecurity', 'Specialized technical services'],
-    roles: ['Software engineer', 'ML engineer', 'Research engineer', 'Technical product manager', 'AI-infrastructure engineer', 'Applied-AI operator', 'Data engineer', 'Research scientist', 'Solutions engineer', 'Evaluation specialist'],
-    summary: 'A smaller workforce than many distributed service sectors, but extremely high spend per worker and a crowded talent market.',
-    whyChanging: ['Tooling and capability requirements change quickly', 'Demand is concentrated among fewer, high-spending employers', 'Specialized technical talent commands premium pricing'],
-    internalDevelopment: ['Engineers into AI-systems and agent-infrastructure roles', 'Technical product managers into applied-AI workflow roles', 'Operators into evaluation, deployment, and implementation roles'],
-    externalHiring: ['Specialist research and engineering talent', 'AI infrastructure and deployment specialists'],
-    marketExamples: ['Mercor and other technical-talent marketplaces', 'Specialized AI recruiting platforms', 'Expert networks serving frontier labs'],
+    summary: 'A crowded benchmark, not a core target: high urgency and very high spend per worker, but a small specialist workforce already served by well-funded talent platforms.',
+    decision: { internalDevelopment: 'Low', roleEvolution: 'Medium', taskAutomation: 'Low', externalHiring: 'High', displacement: 'Low', commercialOpportunity: 'Small', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Applied-AI operator', 'Solutions engineer', 'Evaluation specialist'],
+      redeploy: ['Engineer → agent-infrastructure lead', 'Technical PM → applied-AI workflow lead', 'Operator → evaluation & deployment lead'],
+      automate: ['Boilerplate code', 'Test generation', 'Documentation drafting', 'Eval-harness scaffolding'],
+      hire: ['Specialist research & engineering talent', 'AI-infrastructure engineer', 'Applied-AI operator', 'Evaluation specialist'],
+    },
+    whyHere: {
+      urgency: 'Tooling and capability requirements change quickly — urgency is high.',
+      developmentValue: 'Talent arrives specialized, so there is less internal-development leverage.',
+      crowding: 'A crowded, well-funded talent market already served by dedicated platforms.',
+      fit: 'Low as a placement/development target — a benchmark, not a core market.',
+    },
+    sourced: { occupationLabel: 'Software Developers', occupationCode: '15-1252', employment: '1,693,800', employmentYear: 'EP 2024', wage: '$135,980', wageYear: 'May 2025', exposure: 'Highest (Eloundou)', usage: 'Computer & Mathematical = 37.2% of Claude usage (AEI)' },
+    commercial: { addressableWorkforce: 'Small', employerUrgency: 'High', spendingCapacity: 'High', repeatability: 'Low', crowding: 'crowded', modeledSpend: 'Small' },
+    sources: [S.bls('15-1252.00'), S.onet('15-1252.00'), S.aei, S.eloundou],
+    marketExamples: ['Mercor', 'Scale / Outlier', 'Turing', 'Other specialist technical-talent platforms'],
+    marketExamplesNote: 'Adjacent market examples — how the crowded technical-talent segment is already served. These are not Proofworks customers.',
   },
   {
-    id: 'routine-clerical', label: 'Routine clerical work', x: 9.0, y: 3.25, r: 16, dir: 'E',
-    zone: 'automate', zoneLabel: 'Automate or redesign', color: '#d67a5f', opportunity: 'medium',
+    id: 'routine-clerical', label: 'Routine clerical work', x: 8.6, y: 3.2, r: 20, dir: 'E',
+    crowding: 'low-fit', priority: false, priorityStatus: 'watch',
     industries: ['Cross-industry'],
-    roles: ['Data-entry clerk', 'Reporting analyst', 'Invoice processor', 'Transcriptionist', 'Administrative assistant', 'File clerk', 'Order processor', 'Records clerk'],
-    summary: 'High automation pressure and weaker economics for heavy development investment in the existing task bundle.',
-    whyChanging: ['Tasks are standardized and repetitive', 'Work is highly computer-mediated', 'Automation can remove large portions of the role'],
-    internalDevelopment: ['Move high-potential employees into exception handling', 'Develop coordination and quality-control capability'],
-    externalHiring: ['Automation operators and supervisors'],
+    summary: 'High urgency but weak development economics — the existing task bundle is a candidate to automate or redesign, and automation vendors already crowd it.',
+    decision: { internalDevelopment: 'Low', roleEvolution: 'Low', taskAutomation: 'High', externalHiring: 'Low', displacement: 'High', commercialOpportunity: 'Small', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['High-potential clerks into exception handling', 'Staff into quality-control roles'],
+      redeploy: ['Clerk → exception-handling specialist', 'Bookkeeper → controls & QA', 'Select staff → coordination roles'],
+      automate: ['Data entry', 'Invoice processing', 'Transcription', 'Standard reporting', 'File management', 'Order processing'],
+      hire: ['Automation operators & supervisors'],
+    },
+    whyHere: {
+      urgency: 'Standardized, computer-mediated tasks face high automation pressure.',
+      developmentValue: 'Limited durable judgment remains in the existing task bundle.',
+      crowding: 'Automation and RPA vendors already crowd this — low Proofworks fit.',
+      fit: 'Low: automate or redesign, weak development economics.',
+    },
+    sourced: { occupationLabel: 'Office Clerks, General', occupationCode: '43-9061', employment: '2,646,000', employmentYear: 'EP 2024', wage: '$45,010', wageYear: 'May 2025', exposure: 'High — routine text/record tasks (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'High', spendingCapacity: 'Low', repeatability: 'High', crowding: 'low-fit', modeledSpend: 'Small' },
+    sources: [S.bls('43-9061.00'), S.onet('43-9061.00'), S.eloundou],
   },
   {
-    id: 'frontline-physical', label: 'Frontline physical work', x: 4.35, y: 4.75, r: 16, dir: 'E',
-    zone: 'watch', zoneLabel: 'Watch, don\'t lead', color: '#7c8695', opportunity: 'medium',
+    id: 'frontline-physical', label: 'Frontline physical work', x: 4.1, y: 4.3, r: 18, dir: 'E',
+    crowding: 'low-fit', priority: false, priorityStatus: 'watch',
     industries: ['Construction', 'Hospitality', 'Janitorial services', 'Warehousing', 'Agriculture'],
-    roles: ['Laborer', 'Cleaner', 'Line worker', 'Warehouse handler', 'Grounds worker', 'Machine operator', 'Assembler', 'Material handler'],
-    summary: 'Large workforce but less direct workflow ownership; opportunity may emerge through movement into supervision, coordination, and planning.',
-    whyChanging: ['Physical tasks remain difficult to automate', 'Digital tools may improve scheduling and supervision', 'The strongest pathway may be upward mobility rather than role redesign'],
-    internalDevelopment: ['Frontline workers into leads and supervisors', 'Experienced workers into scheduling and quality roles'],
-    externalHiring: ['Operational technology and implementation talent'],
+    summary: 'Large workforce but little direct workflow ownership; near-term priority is low — opportunity emerges through movement into supervision and coordination.',
+    decision: { internalDevelopment: 'Low', roleEvolution: 'Medium', taskAutomation: 'Low', externalHiring: 'Low', displacement: 'Low', commercialOpportunity: 'Small', evidenceConfidence: 'Medium' },
+    outcomes: {
+      develop: ['Frontline workers into leads & supervisors'],
+      redeploy: ['Worker → team lead / supervisor', 'Experienced worker → scheduling & quality role'],
+      automate: ['Some scheduling & reporting (physical tasks resist automation)'],
+      hire: ['Operational-technology / implementation talent'],
+    },
+    whyHere: {
+      urgency: 'Physical tasks are hard to automate, so near-term workflow-change pressure is low.',
+      developmentValue: 'Limited direct workflow ownership; value emerges through upward mobility.',
+      crowding: 'Not a served implementation market, but low fit near-term.',
+      fit: 'Low near-term; watch.',
+    },
+    sourced: { occupationLabel: 'Laborers & Freight, Stock & Material Movers, Hand', occupationCode: '53-7062', employment: '2,988,900', employmentYear: 'EP 2024', wage: '$40,240', wageYear: 'May 2025', exposure: 'Low — lowest-overlap set (Eloundou)' },
+    commercial: { addressableWorkforce: 'Large', employerUrgency: 'Low', spendingCapacity: 'Low', repeatability: 'Low', crowding: 'low-fit', modeledSpend: 'Small' },
+    sources: [S.bls('53-7062.00'), S.onet('53-7062.00'), S.eloundou],
   },
 ];
 
+export const CROWD: Record<Crowding, { c: string; label: string; status: string }> = {
+  underserved: { c: '#4c9dff', label: 'Underserved', status: 'Underserved' },
+  emerging: { c: '#e0a458', label: 'Emerging competition', status: 'Emerging' },
+  crowded: { c: '#9b7ff0', label: 'Crowded', status: 'Crowded' },
+  'low-fit': { c: '#8b93a0', label: 'Low Proofworks fit / automation-heavy', status: 'Low-fit' },
+};
+
+export const PRIORITY_LABEL: Record<PriorityStatus, string> = {
+  priority: 'Proofworks priority zone', adjacent: 'Adjacent', watch: 'Watch',
+};
+
 export const notes = {
   bubbleSize: 'Modeled commercial opportunity',
-  methodologyStatus: 'Founder hypothesis',
+  bubbleSizeDetail: 'Combines addressable operator population, employer willingness to pay, urgency, and repeatability. A modeled founder hypothesis — not measured revenue.',
+  spendModel: 'The future dollar model will combine addressable affected workers, employer spend per affected worker, and realistic adoption share. No dollar totals are shown yet.',
+  positionStatus: 'Modeled founder hypothesis',
+  xAxis: 'How urgently the workflow needs to change',
+  yAxis: 'How much value comes from developing the people doing the work',
+  methodologyStatus: 'Founder hypothesis. The clusters represent types of work—not entire industries. Positions and opportunity sizes are directional until supported by employment, wage, AI-adoption, and employer-spending data.',
 };

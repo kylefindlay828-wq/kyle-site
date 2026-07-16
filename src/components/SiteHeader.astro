@@ -1,0 +1,174 @@
+---
+// Shared portfolio header — used on every portfolio route (home, Proofworks V1/V2,
+// GTM Radar V1/V2). Fully self-contained: hardcoded warm-light palette and its own
+// font stacks, so it renders identically on the light Tailwind pages AND on the
+// standalone dark Proofworks pages (which don't load global.css or Tailwind).
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const pwV1 = path === '/proofworks';
+const pwV2 = path === '/proofworks-v2';
+const rV1 = path === '/gtm-radar';
+const rV2 = path === '/radar-v2';
+const pwActive = pwV1 || pwV2;
+const rActive = rV1 || rV2;
+const cur = (b: boolean) => (b ? 'page' : undefined);
+---
+<header class="sh">
+  <div class="sh-in">
+    <a href="/" class="sh-brand">Kyle Findlay</a>
+
+    <nav class="sh-nav" aria-label="Portfolio">
+      <div class="sh-proj">
+        <a href="/proofworks" class:list={['sh-name', pwActive && 'on']} aria-current={cur(pwV1)}>Proofworks</a>
+        <span class="sh-vers">
+          <a href="/proofworks" class:list={['sh-v', pwV1 && 'on']} aria-current={cur(pwV1)}>V1</a>
+          <a href="/proofworks-v2" class:list={['sh-v', pwV2 && 'on']} aria-current={cur(pwV2)}>V2</a>
+        </span>
+      </div>
+
+      <span class="sh-div" aria-hidden="true"></span>
+
+      <div class="sh-proj">
+        <a href="/gtm-radar" class:list={['sh-name', rActive && 'on']} aria-current={cur(rV1)}>GTM Radar</a>
+        <span class="sh-vers">
+          <a href="/gtm-radar" class:list={['sh-v', rV1 && 'on']} aria-current={cur(rV1)}>V1</a>
+          <a href="/radar-v2" class:list={['sh-v', rV2 && 'on']} aria-current={cur(rV2)}>V2</a>
+        </span>
+      </div>
+
+      <a href="/#contact" class="sh-contact">Contact</a>
+    </nav>
+
+    <button id="sh-burger" class="sh-burger" type="button" aria-expanded="false" aria-controls="sh-menu" aria-label="Open menu">
+      <span class="sh-bars"></span>
+    </button>
+  </div>
+
+  <div id="sh-menu" class="sh-menu" hidden>
+    <div class="sh-mg">
+      <p class="sh-mh">Proofworks</p>
+      <a href="/proofworks" class:list={['sh-mi', pwV1 && 'on']} aria-current={cur(pwV1)}>V1 <span class="tag">Founder thesis</span></a>
+      <a href="/proofworks-v2" class:list={['sh-mi', pwV2 && 'on']} aria-current={cur(pwV2)}>V2 <span class="tag">Current version</span></a>
+    </div>
+    <div class="sh-mg">
+      <p class="sh-mh">GTM Radar</p>
+      <a href="/gtm-radar" class:list={['sh-mi', rV1 && 'on']} aria-current={cur(rV1)}>V1 <span class="tag">Research system</span></a>
+      <a href="/radar-v2" class:list={['sh-mi', rV2 && 'on']} aria-current={cur(rV2)}>V2 <span class="tag">Agentic system</span></a>
+    </div>
+    <div class="sh-mg">
+      <p class="sh-mh">Kyle Findlay</p>
+      <a href="/#contact" class="sh-mi">About &amp; Contact</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .sh {
+    --hbg: #f4f1ea; --hink: #26241f; --hmut: #77726a; --hrule: #e4e0d5;
+    --hacc: #b5542f; --haccbg: rgba(181,84,47,0.12);
+    --hsans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    --hmono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'IBM Plex Mono', Menlo, monospace;
+    position: sticky; top: 0; z-index: 100;
+    background: var(--hbg); border-bottom: 1px solid var(--hrule);
+  }
+  .sh *, .sh *::before, .sh *::after { box-sizing: border-box; }
+  .sh a { text-decoration: none; }
+  .sh :focus-visible { outline: 2px solid var(--hacc); outline-offset: 3px; border-radius: 4px; }
+
+  .sh-in { max-width: 1180px; margin: 0 auto; padding: 0 24px; min-height: 58px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+  .sh-brand { font-family: var(--hsans); font-weight: 600; font-size: 17px; letter-spacing: -0.01em;
+    color: var(--hink); white-space: nowrap; transition: color .18s ease; }
+  .sh-brand:hover { color: var(--hacc); }
+
+  .sh-nav { display: flex; align-items: center; gap: 24px; }
+  .sh-div { width: 1px; height: 22px; background: var(--hrule); }
+  .sh-proj { display: flex; align-items: center; gap: 9px; white-space: nowrap; }
+
+  .sh-name { font-family: var(--hsans); font-weight: 600; font-size: 14.5px; color: var(--hink);
+    padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease; }
+  .sh-name:hover { color: var(--hacc); }
+  .sh-name.on { border-bottom-color: var(--hacc); }
+
+  .sh-vers { display: inline-flex; gap: 4px; }
+  .sh-v { font-family: var(--hmono); font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+    color: var(--hmut); padding: 3px 7px; border-radius: 6px; line-height: 1; transition: color .15s ease, background-color .15s ease; }
+  .sh-v:hover { color: var(--hink); background: rgba(38,36,31,0.06); }
+  .sh-v.on { color: var(--hacc); background: var(--haccbg); }
+
+  .sh-contact { font-family: var(--hmono); font-size: 12.5px; font-weight: 600; letter-spacing: .02em;
+    color: var(--hink); border: 1px solid #cfc9bc; border-radius: 999px; padding: 7px 16px; white-space: nowrap;
+    transition: background-color .18s ease, border-color .18s ease, color .18s ease; }
+  .sh-contact:hover { background: var(--hacc); border-color: var(--hacc); color: #fff; }
+
+  .sh-burger { display: none; width: 42px; height: 42px; border: 1px solid #d8d3c6; border-radius: 10px;
+    background: #fbfaf6; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+  .sh-bars, .sh-bars::before, .sh-bars::after { content: ''; display: block; width: 18px; height: 2px;
+    background: var(--hink); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .sh-bars { position: relative; }
+  .sh-bars::before { position: absolute; top: -6px; }
+  .sh-bars::after { position: absolute; top: 6px; }
+  .sh-burger[aria-expanded='true'] .sh-bars { background: transparent; }
+  .sh-burger[aria-expanded='true'] .sh-bars::before { top: 0; transform: rotate(45deg); }
+  .sh-burger[aria-expanded='true'] .sh-bars::after { top: 0; transform: rotate(-45deg); }
+
+  .sh-menu { position: fixed; left: 0; right: 0; top: 58px; bottom: 0; z-index: 99;
+    background: var(--hbg); padding: 8px 24px 40px; overflow-y: auto; overscroll-behavior: contain; }
+  .sh-menu[hidden] { display: none; }
+  .sh-mg { padding: 16px 0; border-bottom: 1px solid var(--hrule); }
+  .sh-mg:last-child { border-bottom: 0; }
+  .sh-mh { font-family: var(--hmono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: #8a8478; margin: 0 0 6px; }
+  .sh-mi { display: flex; align-items: baseline; gap: 12px; font-family: var(--hsans); font-size: 18px; font-weight: 500;
+    color: var(--hink); padding: 14px 6px; border-radius: 10px; }
+  .sh-mi:hover { background: rgba(38,36,31,0.05); }
+  .sh-mi.on { color: var(--hacc); }
+  .sh-mi .tag { font-family: var(--hmono); font-size: 12px; font-weight: 500; color: #8a8478; }
+
+  @media (max-width: 1040px) and (min-width: 881px) {
+    .sh-nav { gap: 16px; }
+    .sh-proj { gap: 7px; }
+  }
+  @media (max-width: 880px) {
+    .sh-nav { display: none; }
+    .sh-burger { display: inline-flex; }
+  }
+  @media (min-width: 881px) {
+    .sh-menu { display: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sh-brand, .sh-name, .sh-v, .sh-contact, .sh-bars, .sh-bars::before, .sh-bars::after { transition: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const burger = document.getElementById('sh-burger');
+    const menu = document.getElementById('sh-menu');
+    if (!burger || !menu) return;
+    let open = false;
+    function setOpen(o: boolean) {
+      open = o;
+      menu.hidden = !o;
+      burger.setAttribute('aria-expanded', o ? 'true' : 'false');
+      burger.setAttribute('aria-label', o ? 'Close menu' : 'Open menu');
+      document.documentElement.style.overflow = o ? 'hidden' : '';
+      if (o) { const first = menu.querySelector('a'); if (first instanceof HTMLElement) first.focus(); }
+      else { burger.focus(); }
+    }
+    burger.addEventListener('click', () => setOpen(!open));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) setOpen(false); });
+    // close if resized up to desktop
+    window.addEventListener('resize', () => { if (open && window.innerWidth > 880) setOpen(false); });
+    // simple focus trap while open
+    menu.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const f = [...menu.querySelectorAll('a')].filter((el): el is HTMLElement => el instanceof HTMLElement);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  })();
+</script>

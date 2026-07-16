@@ -30,3 +30,5 @@ pnpm-debug.log*
 src/pages/experience.astro
 src/pages/photo-editor.astro
 src/pages/thinking.astro
+.vercel
+.env*

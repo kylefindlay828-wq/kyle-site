@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import Analytics from '@vercel/analytics/astro';
+
+const title = 'Proofworks V2 — Kyle Findlay';
+const description = 'Proofworks V2 — redesign in progress. The current founder thesis lives on Proofworks V1.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kylefindlay.xyz/proofworks-v2" />
+    <meta name="robots" content="noindex" />
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+      .v2wrap { max-width: 660px; margin: 0 auto; padding: clamp(80px, 14vh, 150px) 24px 80px; }
+      .v2tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .14em;
+        text-transform: uppercase; color: var(--color-accent); margin: 0 0 18px; }
+      .v2h { font-family: var(--font-serif); font-weight: 700; font-size: clamp(30px, 5vw, 46px);
+        line-height: 1.08; letter-spacing: -0.02em; color: var(--color-ink); margin: 0; }
+      .v2p { font-size: 18px; line-height: 1.6; color: color-mix(in srgb, var(--color-ink) 78%, transparent);
+        margin: 22px 0 0; }
+      .v2note { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+        font-family: var(--font-mono); font-size: 12.5px; color: var(--color-muted);
+        border: 1px dashed color-mix(in srgb, var(--color-ink) 24%, var(--color-rule)); border-radius: 8px; padding: 8px 12px; }
+      .v2links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+      .v2btn { font-family: var(--font-mono); font-size: 14px; padding: 11px 20px; border-radius: 999px;
+        background: var(--color-accent); color: var(--color-on-accent); transition: opacity .2s var(--ease-out); }
+      .v2btn:hover { opacity: .9; color: var(--color-on-accent); }
+      .v2btn.ghost { background: transparent; color: var(--color-ink); border: 1px solid var(--color-rule); }
+      .v2btn.ghost:hover { border-color: color-mix(in srgb, var(--color-ink) 35%, var(--color-rule)); color: var(--color-ink); }
+    </style>
+    <Analytics />
+  </head>
+  <body class="bg-paper text-ink min-h-screen">
+    <SiteHeader />
+    <main class="v2wrap">
+      <p class="v2tag">Proofworks · Version 2</p>
+      <h1 class="v2h">Proofworks V2 is in progress.</h1>
+      <p class="v2p">This route is a placeholder while the V2 redesign is being built. The current founder thesis — the Workforce Transformation Index, the research workflow, and the decision framework — lives on Proofworks V1.</p>
+      <span class="v2note">◆ Temporary page — no V2 content published yet.</span>
+      <div class="v2links">
+        <a href="/proofworks" class="v2btn">View Proofworks V1 →</a>
+        <a href="/#contact" class="v2btn ghost">Contact</a>
+      </div>
+    </main>
+  </body>
+</html>
