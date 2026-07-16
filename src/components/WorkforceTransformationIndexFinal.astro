@@ -7,6 +7,11 @@
 import { clusters, notes, CROWD, PRIORITY_LABEL } from '../data/workforce-index-final.ts';
 import { industries } from '../data/industry-filters.ts';
 
+// V1 (/proofworks) uses defaults; V2 (/proofworks-v2) passes a "Working hypothesis"
+// note and hides the industry filter — neither changes V1.
+interface Props { note?: string; showFilter?: boolean }
+const { note = notes.methodologyStatus, showFilter = true } = Astro.props as Props;
+
 const VB = { w: 1000, h: 600 };
 const M = { l: 96, r: 70, t: 96, b: 58 };
 const P = { x0: M.l, x1: VB.w - M.r, y0: M.t, y1: VB.h - M.b };
@@ -111,13 +116,15 @@ const legend = (['underserved', 'emerging', 'crowded', 'low-fit'] as const).map(
   <div class="wti-col">
     <div class="wti-filterbar" data-reveal>
       <p class="wti-hint">Click a cluster for its workforce-decision detail.</p>
-      <details class="wti-filter">
-        <summary>Filter by industry</summary>
-        <div class="wti-filter-menu">
-          <button class="wti-fitem is-on" data-ind="all" type="button">All clusters</button>
-          {industries.map((i) => (<button class="wti-fitem" data-ind={i.id} type="button">{i.label}</button>))}
-        </div>
-      </details>
+      {showFilter && (
+        <details class="wti-filter">
+          <summary>Filter by industry</summary>
+          <div class="wti-filter-menu">
+            <button class="wti-fitem is-on" data-ind="all" type="button">All clusters</button>
+            {industries.map((i) => (<button class="wti-fitem" data-ind={i.id} type="button">{i.label}</button>))}
+          </div>
+        </details>
+      )}
     </div>
 
     <div class="wti-board" data-reveal>
@@ -176,7 +183,7 @@ const legend = (['underserved', 'emerging', 'crowded', 'low-fit'] as const).map(
       </div>
     </div>
 
-    <p class="wti-note" data-reveal>{notes.methodologyStatus}</p>
+    <p class="wti-note" data-reveal>{note}</p>
   </div>
 
   <div class="wti-backdrop" hidden></div>
