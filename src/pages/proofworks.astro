@@ -3,26 +3,16 @@ import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
 import WorkforceTransformationIndex from '../components/WorkforceTransformationIndexFinal.astro';
-import SiteHeader from '../components/SiteHeader.astro';
+import ProofworksEngine from '../components/ProofworksEngineFinal.astro';
 
 const title = 'Proofworks — Kyle Findlay';
-const description = 'A founder thesis and working research system on how AI is changing work — mapping where companies can develop people, redesign the work itself, or hire externally. By Kyle Findlay.';
+const description = 'Workforce transformation infrastructure. Proofworks helps companies see who can adapt through real work — then develop, redeploy, retain, or hire the talent they need next. One standard for internal employees and external candidates.';
 
 const email = 'kylefindlay828@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
 const talk = 'mailto:kylefindlay828@gmail.com?subject=Talk%20to%20Kyle%20about%20Proofworks';
 
-const flow = [
-  { n: '01', k: 'Source', t: 'Collect company, hiring, product, workflow, investment, and AI-adoption signals.' },
-  { n: '02', k: 'Structure', t: 'Standardize companies, roles, tasks, work clusters, and patterns of change.' },
-  { n: '03', k: 'Validate', t: 'Attach sources, review generated outputs, flag uncertainty, and examine edge cases.' },
-  { n: '04', k: 'Map', t: 'Translate the evidence into workforce priorities and testable employer hypotheses.' },
-];
-const decisions = [
-  { c: '#4c9dff', k: 'Develop and redeploy', t: 'Identify people whose judgment, context, and adaptability remain valuable as the workflow changes.' },
-  { c: '#e0a458', k: 'Redesign and automate', t: 'Change repetitive or poorly designed work rather than preserving every existing task.' },
-  { c: '#9b7ff0', k: 'Hire selectively', t: 'Bring in external capability where the organization genuinely lacks the expertise required next.' },
-];
+const sectors = ['AI labs & software', 'Home & field services', 'Logistics & supply chain', 'Healthcare administration', 'Insurance', 'Financial operations', 'Construction', 'Manufacturing', 'Property & facilities', 'Professional services', 'Retail & hospitality', 'Energy & utilities', 'Public sector'];
 ---
 <!doctype html>
 <html lang="en">
@@ -68,66 +58,70 @@ const decisions = [
       .mono { font-family: 'JetBrains Mono', monospace; }
       h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
 
-      .sec { padding: 62px 0; }
-      .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--g); margin: 0 0 20px; }
-      .sec-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.08; letter-spacing: -0.03em; color: #eef1f4; margin: 0; max-width: 900px; }
-      .sec-sub { font-size: clamp(15px, 1.7vw, 18px); line-height: 1.55; color: #b6bfc9; margin: 16px 0 0; max-width: 720px; }
+      /* minimal nav — no version labels */
+      .nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px);
+        background: rgba(9,10,14,0.6); border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .nav-in { max-width: 1120px; margin: 0 auto; padding: 13px 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .nav .brand { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; }
+      .nav .talk { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--g);
+        border: 1px solid rgba(76,157,255,0.42); border-radius: 100px; padding: 7px 16px; background: rgba(76,157,255,0.08); transition: background .2s; }
+      .nav .talk:hover { background: rgba(76,157,255,0.16); }
+
+      .sec { padding: 66px 0; }
+      .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--g); margin: 0 0 24px; }
 
       /* hero */
-      .hero { padding: 100px 0 66px; }
-      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(44px, 8vw, 104px); line-height: .96; letter-spacing: -0.035em; color: #fff; margin: 20px 0 0; max-width: 1040px; }
+      .hero { padding: 104px 0 70px; }
+      .brandname { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(22px, 2.7vw, 30px);
+        letter-spacing: 0.16em; text-transform: uppercase; color: #eef1f4; margin: 0; }
+      .brandsub { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px;
+        letter-spacing: 0.1em; text-transform: uppercase; color: #8b94a0; margin: 8px 0 0; }
+      .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(44px, 8vw, 104px); line-height: .96; letter-spacing: -0.035em; color: #fff; margin: 22px 0 0; max-width: 1040px; }
       .hero-head .accent { color: var(--g); font-style: italic; }
-      .hero-lead { font-size: clamp(17px, 2vw, 21px); line-height: 1.5; color: #b6bfc9; margin: 26px 0 0; max-width: 660px; }
-      .hero-sub { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .05em; color: #8b94a0; margin: 18px 0 0; }
-      .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+      .hero-lead { font-size: clamp(17px, 2vw, 21px); line-height: 1.5; color: #b6bfc9; margin: 26px 0 0; max-width: 760px; }
+      .hero-strong { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(22px, 3vw, 34px); line-height: 1.18; letter-spacing: -0.025em; color: #eef1f4; margin: 20px 0 0; max-width: 880px; }
+      .hero-strong b { color: var(--g); font-weight: 600; }
+      .hero-doors { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.45; color: #c7cdd4; margin: 22px 0 0; max-width: 740px;
+        padding-left: 16px; border-left: 2px solid rgba(76,157,255,0.55); }
+      .hero-doors b { color: var(--g); font-weight: 700; }
+      .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
       .btn-g { font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--g); color: #04101f;
         padding: 13px 24px; border-radius: 100px; border: 0; cursor: pointer; transition: opacity .2s; }
       .btn-g:hover { opacity: .9; }
       .pill-out { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 100px; padding: 12px 22px; transition: border-color .2s, color .2s; }
+        border-radius: 100px; padding: 12px 22px; transition: border-color .2s; }
       .pill-out:hover { border-color: rgba(255,255,255,0.45); }
-      .pill-out.ghost { color: #9aa3ad; border-color: rgba(255,255,255,0.12); }
-      .pill-out.ghost:hover { color: #eef1f4; border-color: rgba(255,255,255,0.28); }
 
-      .idx-intro { padding-bottom: 6px; }
+      /* what it becomes */
+      .becomes { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(24px, 3.4vw, 42px); line-height: 1.14; letter-spacing: -0.03em; color: #fff; margin: 0; max-width: 1000px; }
+      .becomes b { color: var(--g); }
 
-      /* research workflow */
-      .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-      .flow-card { position: relative; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.04);
-        border-radius: 16px; padding: 22px 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-      .flow-step { display: flex; align-items: center; gap: 9px; margin: 0 0 12px; }
-      .flow-n { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b7480; }
-      .flow-k { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--g); }
-      .flow-card p { font-size: 15px; line-height: 1.5; color: #c3cbd4; margin: 0; }
-      .flow-card::after { content: "→"; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); color: #4a515c; font-size: 15px; z-index: 3; }
-      .flow-card:last-child::after { content: none; }
+      /* filter statement */
+      .filter-sec { padding: 30px 0; }
+      .filter-rule { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+      .impact { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 4.2vw, 50px); line-height: 1.08; letter-spacing: -0.03em; color: #eef1f4; margin: 0; max-width: 1040px;
+        border-left: 3px solid var(--g); padding-left: 24px; }
+      .impact .accent { color: var(--g); }
+      .impact .dim { color: #7b8490; font-style: italic; }
 
-      /* decisions */
-      .decisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .dec-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 18px;
-        padding: 24px 22px 26px; position: relative; overflow: hidden; }
-      .dec-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--dc); }
-      .dec-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dc); display: inline-block; margin-right: 9px; vertical-align: middle; }
-      .dec-k { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; color: #fff; margin: 0 0 10px; }
-      .dec-card p { font-size: 15px; line-height: 1.5; color: #c3cbd4; margin: 0; }
-      .dec-note { margin: 24px 0 0; color: #a9b2bd; font-size: 16px; line-height: 1.55; max-width: 760px; }
-      .dec-note b { color: #eef1f4; font-weight: 600; }
+      /* not just a tech story */
+      .breadth-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 48px); line-height: 1.06; letter-spacing: -0.03em; margin: 0 0 16px; }
+      .breadth-b { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.55; color: #c7cdd4; margin: 0 0 26px; max-width: 940px; }
+      .breadth-b b { color: #eef1f4; font-weight: 600; }
+      .sectors { display: flex; flex-wrap: wrap; gap: 9px; }
+      .sector { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: -0.01em;
+        padding: 8px 15px; border-radius: 999px; color: #dfe4ea;
+        border: 1px solid rgba(76,157,255,0.28); background: rgba(76,157,255,0.05); }
 
-      /* long-term model strip */
-      .ltm { border: 1px solid rgba(76,157,255,0.22); border-radius: 20px;
-        background: linear-gradient(140deg, rgba(76,157,255,0.09), rgba(76,157,255,0.03));
-        padding: 30px 32px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 26px; align-items: center; }
-      .ltm-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(22px, 2.7vw, 30px); line-height: 1.12; letter-spacing: -0.025em; color: #fff; }
-      .ltm-copy { font-size: 16px; line-height: 1.55; color: #c3cbd4; margin: 0; }
-      .ltm-copy .sec2 { display: block; margin-top: 10px; font-size: 14.5px; color: #9aa3ad; }
-
-      /* founder */
-      .founder-p { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(19px, 2.3vw, 26px); line-height: 1.34; letter-spacing: -0.02em; color: #eef1f4; margin: 0 0 32px; max-width: 900px; }
+      /* why founder */
+      .why-stmt { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(23px, 3.4vw, 36px); line-height: 1.2; letter-spacing: -0.025em; color: #eef1f4; margin: 0 0 34px; max-width: 940px; }
       .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
       .stat { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 22px 20px;
         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
       .statnum { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 40px; letter-spacing: -0.02em; line-height: 1; }
       .statlbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9aa3ad; margin-top: 11px; letter-spacing: .02em; }
+      .why-close { font-size: 17px; line-height: 1.55; color: #a9b2bd; margin: 32px 0 0; max-width: 760px; }
+      .why-close b { color: #eef1f4; }
 
       /* contact */
       .contact-panel { border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; backdrop-filter: blur(6px);
@@ -144,6 +138,7 @@ const decisions = [
       .foot a, .foot span { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
       .foot a:hover { color: var(--g); }
 
+      /* reveal */
       [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
       [data-reveal].in { opacity: 1; transform: none; }
       @media (prefers-reduced-motion: reduce) {
@@ -151,17 +146,9 @@ const decisions = [
         html { scroll-behavior: auto; }
       }
 
-      @media (max-width: 920px) {
-        .flow { grid-template-columns: 1fr 1fr; }
-        .flow-card:nth-child(2)::after { content: none; }
-        .decisions { grid-template-columns: 1fr; }
-        .ltm { grid-template-columns: 1fr; gap: 14px; }
-        .stat-grid { grid-template-columns: 1fr 1fr; }
-      }
-      @media (max-width: 560px) {
-        .hero { padding: 78px 0 50px; }
-        .flow { grid-template-columns: 1fr; }
-        .flow-card::after { content: none !important; }
+      @media (max-width: 900px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+      @media (max-width: 620px) {
+        .hero { padding: 80px 0 52px; }
         .stat-grid { grid-template-columns: 1fr; }
         .contact-row { flex-direction: column; align-items: flex-start; }
         .who { flex-direction: column; align-items: flex-start; }
@@ -174,85 +161,70 @@ const decisions = [
     <div class="dotgrid"></div>
 
     <div class="wrap">
-      <SiteHeader />
+      <nav class="nav">
+        <div class="nav-in">
+          <a href="/" class="brand">Kyle Findlay</a>
+          <a href={talk} class="talk">Talk to Kyle →</a>
+        </div>
+      </nav>
 
       <main>
         <!-- 1 · HERO -->
         <section class="hero">
           <div class="col">
-            <p class="eyebrow" data-reveal>Proofworks — Workforce Transformation Thesis</p>
+            <div data-reveal>
+              <p class="brandname">PROOFWORKS</p>
+              <p class="brandsub">Founder thesis by Kyle Findlay</p>
+            </div>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
-            <p class="hero-lead" data-reveal style="transition-delay:.12s">Proofworks maps where AI is changing real workflows, where existing employees can be developed or redeployed, and where companies will need external talent.</p>
-            <p class="hero-sub" data-reveal style="transition-delay:.18s">A founder thesis and working research system by Kyle Findlay.</p>
-            <div class="cta-row" data-reveal style="transition-delay:.24s">
-              <a href="#index-intro" class="btn-g">Explore the index →</a>
-              <a href="#workflow" class="pill-out">See the workflow</a>
-              <a href={talk} class="pill-out ghost">Talk to Kyle</a>
+            <p class="hero-lead" data-reveal style="transition-delay:.12s">The next workforce shift should not default to layoffs, generic training, or blind external hiring.</p>
+            <p class="hero-strong" data-reveal style="transition-delay:.18s">Proofworks helps companies see who can adapt through real work — then <b>develop, redeploy, retain, or hire</b> the talent they need next.</p>
+            <p class="hero-doors" data-reveal style="transition-delay:.24s"><b>One standard</b> for internal employees and external candidates.</p>
+            <div class="cta-row" data-reveal style="transition-delay:.28s">
+              <a href={talk} class="btn-g">Talk to Kyle →</a>
             </div>
           </div>
         </section>
 
-        <!-- 2 · WORKFORCE TRANSFORMATION INDEX -->
-        <section class="sec idx-intro" id="index-intro">
+        <!-- 2 · WHAT IT BECOMES -->
+        <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>Workforce Transformation Index</p>
-            <h2 class="sec-h" data-reveal style="transition-delay:.05s">Where should companies develop people—and where should the work itself change?</h2>
-            <p class="sec-sub" data-reveal style="transition-delay:.1s">The index compares the urgency of workflow change with the value of developing the people currently doing the work.</p>
+            <p class="eyebrow" data-reveal>What it becomes</p>
+            <p class="becomes" data-reveal style="transition-delay:.05s"><b>Workforce transformation infrastructure</b> for companies that want to adapt without giving up on their people.</p>
+            <p class="becomes" data-reveal style="transition-delay:.1s; margin-top:22px; font-size:clamp(20px,2.6vw,32px); color:#c7cdd4">Understand what work is changing, who can grow with it, and where external talent is genuinely required.</p>
           </div>
         </section>
+
+        <!-- 3 · WORKFORCE TRANSFORMATION INDEX -->
         <WorkforceTransformationIndex />
 
-        <!-- 3 · HOW THE RESEARCH WORKS -->
-        <section class="sec" id="workflow">
-          <div class="col">
-            <p class="eyebrow" data-reveal>How the research works</p>
-            <h2 class="sec-h" data-reveal style="transition-delay:.05s">An operational research workflow.</h2>
-            <p class="sec-sub" data-reveal style="transition-delay:.1s">AI-assisted collection and structuring, with human review at every step.</p>
-            <div class="flow" style="margin-top:30px">
-              {flow.map((f, i) => (
-                <div class="flow-card" data-reveal style={`transition-delay:${0.05 + i * 0.06}s`}>
-                  <div class="flow-step"><span class="flow-n">{f.n}</span><span class="flow-k">{f.k}</span></div>
-                  <p>{f.t}</p>
-                </div>
-              ))}
-            </div>
+        <!-- 4 · THE FILTER -->
+        <section class="filter-sec">
+          <div class="filter-rule">
+            <p class="impact" data-reveal>The filter is not whether someone says they are <span class="dim">interested in AI.</span> It is whether they can <span class="accent">improve a real workflow.</span></p>
           </div>
         </section>
 
-        <!-- 4 · THE DECISIONS -->
+        <!-- 5 · THE PROOFWORKS ENGINE -->
+        <ProofworksEngine />
+
+        <!-- 6 · THIS ISN'T JUST A TECH STORY -->
         <section class="sec">
           <div class="col">
-            <p class="eyebrow" data-reveal>The decisions</p>
-            <h2 class="sec-h" data-reveal style="transition-delay:.05s">Three decisions—not one blanket answer.</h2>
-            <div class="decisions" style="margin-top:28px">
-              {decisions.map((d, i) => (
-                <div class="dec-card" data-reveal style={`--dc:${d.c}; transition-delay:${0.05 + i * 0.07}s`}>
-                  <h3 class="dec-k"><span class="dec-dot"></span>{d.k}</h3>
-                  <p>{d.t}</p>
-                </div>
-              ))}
-            </div>
-            <p class="dec-note" data-reveal>The objective is not to preserve every task. It is to distinguish <b>valuable human capability</b> from work that should be redesigned.</p>
-          </div>
-        </section>
-
-        <!-- 5 · LONG-TERM MODEL -->
-        <section class="sec">
-          <div class="col">
-            <div class="ltm" data-reveal>
-              <h2 class="ltm-h">One standard for internal and external talent.</h2>
-              <p class="ltm-copy">Evaluate capability through real workflows, structured outputs, and demonstrated judgment—not job titles alone.
-                <span class="sec2">Companies gain clearer development and hiring signals. People gain a stronger way to demonstrate what they can do.</span>
-              </p>
+            <p class="eyebrow" data-reveal>Market breadth</p>
+            <h2 class="breadth-h" data-reveal style="transition-delay:.05s">This isn't just a tech story.</h2>
+            <p class="breadth-b" data-reveal style="transition-delay:.08s">Proofworks targets <b>workflow-heavy work wherever it exists</b> — from technical teams to the people running services, logistics, healthcare administration, construction planning, manufacturing, finance, and public systems.</p>
+            <div class="sectors" data-reveal style="transition-delay:.12s">
+              {sectors.map((s) => <span class="sector">{s}</span>)}
             </div>
           </div>
         </section>
 
-        <!-- 6 · WHY THIS FOUNDER -->
+        <!-- 7 · WHY THIS FOUNDER -->
         <section class="sec">
           <div class="col">
             <p class="eyebrow" data-reveal>Why this founder</p>
-            <p class="founder-p" data-reveal style="transition-delay:.05s">Running complex customer programs showed me that the people most capable of improving work and assuming new responsibilities are often poorly represented by their formal titles. Proofworks turns that observation into a structured workforce-transformation thesis.</p>
+            <p class="why-stmt" data-reveal style="transition-delay:.05s">Running complex client programs showed me that the people most capable of adapting, improving work, and taking on new responsibilities are often poorly represented by their formal roles.</p>
             <div class="stat-grid">
               <div class="stat" data-reveal>
                 <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
@@ -271,10 +243,11 @@ const decisions = [
                 <div class="statlbl">national brands</div>
               </div>
             </div>
+            <p class="why-close" data-reveal style="margin-top:32px"><b>Solo founder, relocating to San Francisco</b> — looking to meet technical cofounders and early partners building at the intersection of workforce transformation and real company workflows.</p>
           </div>
         </section>
 
-        <!-- 7 · CONTACT -->
+        <!-- 8 · CONTACT -->
         <section class="sec" id="contact">
           <div class="col">
             <p class="eyebrow" data-reveal>Contact</p>
