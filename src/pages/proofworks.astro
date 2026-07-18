@@ -1,29 +1,12 @@
 ---
-import { Image } from 'astro:assets';
-import headshot from '../assets/photos/headshot.png';
 import Analytics from '@vercel/analytics/astro';
 import WorkforceTransformationIndex from '../components/WorkforceTransformationIndexFinal.astro';
 import ProofworksEngine from '../components/ProofworksEngineFinal.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 
 const title = 'Proofworks — Kyle Findlay';
-const description = 'A founder thesis and working research system on how AI is changing work — mapping where companies can develop people, redesign the work itself, or hire externally. By Kyle Findlay.';
-
-const email = 'kylefindlay828@gmail.com';
-const linkedin = 'https://www.linkedin.com/in/kylefindlay828';
-const talk = 'mailto:kylefindlay828@gmail.com?subject=Talk%20to%20Kyle%20about%20Proofworks';
-
-const flow = [
-  { n: '01', k: 'Source', t: 'Collect company, hiring, product, workflow, investment, and AI-adoption signals.' },
-  { n: '02', k: 'Structure', t: 'Standardize companies, roles, tasks, work clusters, and patterns of change.' },
-  { n: '03', k: 'Validate', t: 'Attach sources, review generated outputs, flag uncertainty, and examine edge cases.' },
-  { n: '04', k: 'Map', t: 'Translate the evidence into workforce priorities and testable employer hypotheses.' },
-];
-const decisions = [
-  { c: '#4c9dff', k: 'Develop and redeploy', t: 'Identify people whose judgment, context, and adaptability remain valuable as the workflow changes.' },
-  { c: '#e0a458', k: 'Redesign and automate', t: 'Change repetitive or poorly designed work rather than preserving every existing task.' },
-  { c: '#9b7ff0', k: 'Hire selectively', t: 'Bring in external capability where the organization genuinely lacks the expertise required next.' },
-];
+const description = 'Proofworks maps where AI is changing real workflows — where companies can develop or redeploy employees, redesign the work itself, or hire external talent. A workforce-transformation thesis by Kyle Findlay.';
+const year = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="en">
@@ -79,70 +62,13 @@ const decisions = [
       .hero-head { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(44px, 8vw, 104px); line-height: .96; letter-spacing: -0.035em; color: #fff; margin: 20px 0 0; max-width: 1040px; }
       .hero-head .accent { color: var(--g); font-style: italic; }
       .hero-lead { font-size: clamp(17px, 2vw, 21px); line-height: 1.5; color: #b6bfc9; margin: 26px 0 0; max-width: 660px; }
-      .hero-sub { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .05em; color: #8b94a0; margin: 18px 0 0; }
-      .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
-      .btn-g { font-family: 'JetBrains Mono', monospace; font-size: 14px; background: var(--g); color: #04101f;
-        padding: 13px 24px; border-radius: 100px; border: 0; cursor: pointer; transition: opacity .2s; }
-      .btn-g:hover { opacity: .9; }
-      .pill-out { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #eef1f4; border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 100px; padding: 12px 22px; transition: border-color .2s, color .2s; }
-      .pill-out:hover { border-color: rgba(255,255,255,0.45); }
-      .pill-out.ghost { color: #9aa3ad; border-color: rgba(255,255,255,0.12); }
-      .pill-out.ghost:hover { color: #eef1f4; border-color: rgba(255,255,255,0.28); }
 
       .idx-intro { padding-bottom: 6px; }
 
-      /* research workflow */
-      .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-      .flow-card { position: relative; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.04);
-        border-radius: 16px; padding: 22px 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-      .flow-step { display: flex; align-items: center; gap: 9px; margin: 0 0 12px; }
-      .flow-n { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b7480; }
-      .flow-k { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--g); }
-      .flow-card p { font-size: 15px; line-height: 1.5; color: #c3cbd4; margin: 0; }
-      .flow-card::after { content: "→"; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); color: #4a515c; font-size: 15px; z-index: 3; }
-      .flow-card:last-child::after { content: none; }
-
-      /* decisions */
-      .decisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .dec-card { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 18px;
-        padding: 24px 22px 26px; position: relative; overflow: hidden; }
-      .dec-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--dc); }
-      .dec-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dc); display: inline-block; margin-right: 9px; vertical-align: middle; }
-      .dec-k { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px; color: #fff; margin: 0 0 10px; }
-      .dec-card p { font-size: 15px; line-height: 1.5; color: #c3cbd4; margin: 0; }
-      .dec-note { margin: 24px 0 0; color: #a9b2bd; font-size: 16px; line-height: 1.55; max-width: 760px; }
-      .dec-note b { color: #eef1f4; font-weight: 600; }
-
-      /* long-term model strip */
-      .ltm { border: 1px solid rgba(76,157,255,0.22); border-radius: 20px;
-        background: linear-gradient(140deg, rgba(76,157,255,0.09), rgba(76,157,255,0.03));
-        padding: 30px 32px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 26px; align-items: center; }
-      .ltm-h { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(22px, 2.7vw, 30px); line-height: 1.12; letter-spacing: -0.025em; color: #fff; }
-      .ltm-copy { font-size: 16px; line-height: 1.55; color: #c3cbd4; margin: 0; }
-      .ltm-copy .sec2 { display: block; margin-top: 10px; font-size: 14.5px; color: #9aa3ad; }
-
-      /* founder */
-      .founder-p { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(19px, 2.3vw, 26px); line-height: 1.34; letter-spacing: -0.02em; color: #eef1f4; margin: 0 0 32px; max-width: 900px; }
-      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-      .stat { border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.05); border-radius: 16px; padding: 22px 20px;
-        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-      .statnum { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 40px; letter-spacing: -0.02em; line-height: 1; }
-      .statlbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9aa3ad; margin-top: 11px; letter-spacing: .02em; }
-
-      /* contact */
-      .contact-panel { border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; backdrop-filter: blur(6px);
-        background: linear-gradient(140deg, rgba(76,157,255,0.1), rgba(76,157,255,0.04)); padding: 32px 34px; }
-      .contact-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-      .who { display: flex; align-items: center; gap: 18px; }
-      .avatar { width: 122px; height: 152px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14); flex-shrink: 0; }
-      .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; transform: scale(1.35) translateY(-10%); transform-origin: top center; }
-      .who .nm { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 23px; }
-      .who .loc { color: #9aa3ad; font-size: 15px; margin-top: 3px; }
-      .contact-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-      .contact-email { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #9aa3ad; margin: 22px 0 0; }
-      .foot { display: flex; gap: 22px; flex-wrap: wrap; padding: 30px 0 60px; }
-      .foot a, .foot span { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
+      /* minimal footer */
+      .site-foot { border-top: 1px solid rgba(255,255,255,0.08); margin-top: 24px; }
+      .foot { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; padding: 26px 0 46px; }
+      .foot span, .foot a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7b8490; transition: color .2s; }
       .foot a:hover { color: var(--g); }
 
       [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
@@ -152,20 +78,8 @@ const decisions = [
         html { scroll-behavior: auto; }
       }
 
-      @media (max-width: 920px) {
-        .flow { grid-template-columns: 1fr 1fr; }
-        .flow-card:nth-child(2)::after { content: none; }
-        .decisions { grid-template-columns: 1fr; }
-        .ltm { grid-template-columns: 1fr; gap: 14px; }
-        .stat-grid { grid-template-columns: 1fr 1fr; }
-      }
       @media (max-width: 560px) {
         .hero { padding: 78px 0 50px; }
-        .flow { grid-template-columns: 1fr; }
-        .flow-card::after { content: none !important; }
-        .stat-grid { grid-template-columns: 1fr; }
-        .contact-row { flex-direction: column; align-items: flex-start; }
-        .who { flex-direction: column; align-items: flex-start; }
       }
     </style>
     <Analytics />
@@ -184,12 +98,6 @@ const decisions = [
             <p class="eyebrow" data-reveal>Proofworks — Workforce Transformation Thesis</p>
             <h1 class="hero-head" data-reveal style="transition-delay:.06s">Job titles are <span class="accent">lagging indicators.</span></h1>
             <p class="hero-lead" data-reveal style="transition-delay:.12s">Proofworks maps where AI is changing real workflows, where existing employees can be developed or redeployed, and where companies will need external talent.</p>
-            <p class="hero-sub" data-reveal style="transition-delay:.18s">A founder thesis and working research system by Kyle Findlay.</p>
-            <div class="cta-row" data-reveal style="transition-delay:.24s">
-              <a href="#index-intro" class="btn-g">Explore the index →</a>
-              <a href="#workflow" class="pill-out">See the workflow</a>
-              <a href={talk} class="pill-out ghost">Talk to Kyle</a>
-            </div>
           </div>
         </section>
 
@@ -203,109 +111,16 @@ const decisions = [
         </section>
         <WorkforceTransformationIndex />
 
-        <!-- 2.5 · THE PROOFWORKS ENGINE -->
+        <!-- 3 · THE PROOFWORKS ENGINE (final substantive section) -->
         <ProofworksEngine />
-
-        <!-- 3 · HOW THE RESEARCH WORKS -->
-        <section class="sec" id="workflow">
-          <div class="col">
-            <p class="eyebrow" data-reveal>How the research works</p>
-            <h2 class="sec-h" data-reveal style="transition-delay:.05s">An operational research workflow.</h2>
-            <p class="sec-sub" data-reveal style="transition-delay:.1s">AI-assisted collection and structuring, with human review at every step.</p>
-            <div class="flow" style="margin-top:30px">
-              {flow.map((f, i) => (
-                <div class="flow-card" data-reveal style={`transition-delay:${0.05 + i * 0.06}s`}>
-                  <div class="flow-step"><span class="flow-n">{f.n}</span><span class="flow-k">{f.k}</span></div>
-                  <p>{f.t}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <!-- 4 · THE DECISIONS -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>The decisions</p>
-            <h2 class="sec-h" data-reveal style="transition-delay:.05s">Three decisions—not one blanket answer.</h2>
-            <div class="decisions" style="margin-top:28px">
-              {decisions.map((d, i) => (
-                <div class="dec-card" data-reveal style={`--dc:${d.c}; transition-delay:${0.05 + i * 0.07}s`}>
-                  <h3 class="dec-k"><span class="dec-dot"></span>{d.k}</h3>
-                  <p>{d.t}</p>
-                </div>
-              ))}
-            </div>
-            <p class="dec-note" data-reveal>The objective is not to preserve every task. It is to distinguish <b>valuable human capability</b> from work that should be redesigned.</p>
-          </div>
-        </section>
-
-        <!-- 5 · LONG-TERM MODEL -->
-        <section class="sec">
-          <div class="col">
-            <div class="ltm" data-reveal>
-              <h2 class="ltm-h">One standard for internal and external talent.</h2>
-              <p class="ltm-copy">Evaluate capability through real workflows, structured outputs, and demonstrated judgment—not job titles alone.
-                <span class="sec2">Companies gain clearer development and hiring signals. People gain a stronger way to demonstrate what they can do.</span>
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- 6 · WHY THIS FOUNDER -->
-        <section class="sec">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Why this founder</p>
-            <p class="founder-p" data-reveal style="transition-delay:.05s">Running complex customer programs showed me that the people most capable of improving work and assuming new responsibilities are often poorly represented by their formal titles. Proofworks turns that observation into a structured workforce-transformation thesis.</p>
-            <div class="stat-grid">
-              <div class="stat" data-reveal>
-                <div class="statnum" style="color:var(--g)" data-count data-count-to="3.1" data-count-dec="1" data-count-prefix="$" data-count-suffix="M+">$3.1M+</div>
-                <div class="statlbl">owned annually</div>
-              </div>
-              <div class="stat" data-reveal style="transition-delay:.08s">
-                <div class="statnum" style="color:var(--c)">$5–6M</div>
-                <div class="statlbl">supported</div>
-              </div>
-              <div class="stat" data-reveal style="transition-delay:.16s">
-                <div class="statnum" style="color:var(--g)">30–40</div>
-                <div class="statlbl">programs / year</div>
-              </div>
-              <div class="stat" data-reveal style="transition-delay:.24s">
-                <div class="statnum" style="color:var(--c)" data-count data-count-to="12" data-count-dec="0" data-count-suffix="+">12+</div>
-                <div class="statlbl">national brands</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 7 · CONTACT -->
-        <section class="sec" id="contact">
-          <div class="col">
-            <p class="eyebrow" data-reveal>Contact</p>
-            <div class="contact-panel" data-reveal>
-              <div class="contact-row">
-                <div class="who">
-                  <div class="avatar"><Image src={headshot} alt="Kyle Findlay" width={360} height={450} /></div>
-                  <div>
-                    <div class="nm">Kyle Findlay</div>
-                    <div class="loc">San Francisco / Los Angeles</div>
-                  </div>
-                </div>
-                <div class="contact-actions">
-                  <button id="copy-email" class="btn-g" data-email={email} type="button"><span class="ce">Copy email</span> ⧉</button>
-                  <a href={linkedin} target="_blank" rel="noopener" class="pill-out">LinkedIn ↗</a>
-                  <a href={talk} class="pill-out">Talk to Kyle →</a>
-                </div>
-              </div>
-              <p class="contact-email">{email}</p>
-            </div>
-            <div class="foot">
-              <span>© Kyle Findlay</span>
-              <a href="/">About</a>
-            </div>
-          </div>
-        </section>
       </main>
+
+      <footer class="site-foot">
+        <div class="col foot">
+          <span>© {year} Kyle Findlay</span>
+          <a href="/">Kyle Findlay — About ↗</a>
+        </div>
+      </footer>
     </div>
 
     <script>
@@ -380,50 +195,23 @@ const decisions = [
         requestAnimationFrame(frame);
       })();
 
-      // ── scroll reveal + count-up ──
+      // ── scroll reveal ──
       (() => {
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        function countUp(el) {
-          const to = parseFloat(el.dataset.countTo || '0');
-          const dec = parseInt(el.dataset.countDec || '0', 10);
-          const pre = el.dataset.countPrefix || '', suf = el.dataset.countSuffix || '';
-          const dur = 1200, start = performance.now();
-          function step(now) {
-            const p = Math.min(1, (now - start) / dur);
-            const e = 1 - Math.pow(1 - p, 3);
-            el.textContent = pre + (to * e).toFixed(dec) + suf;
-            if (p < 1) requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        }
         const els = document.querySelectorAll('[data-reveal]');
         if (reduce || !('IntersectionObserver' in window)) {
           els.forEach((el) => el.classList.add('in'));
-          document.querySelectorAll('[data-count]').forEach((el) => countUp(el));
           return;
         }
         const obs = new IntersectionObserver((entries, o) => {
           entries.forEach((e) => {
             if (!e.isIntersecting) return;
             e.target.classList.add('in');
-            const c = e.target.querySelector('[data-count]');
-            if (c && !c.dataset.done) { c.dataset.done = '1'; countUp(c); }
             o.unobserve(e.target);
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
         els.forEach((el) => obs.observe(el));
       })();
-
-      // ── copy email ──
-      document.querySelectorAll('button[data-email]').forEach((btn) => {
-        const label = btn.querySelector('.ce');
-        const original = label ? label.textContent : '';
-        btn.addEventListener('click', async () => {
-          try { await navigator.clipboard.writeText(btn.dataset.email || ''); }
-          catch { const t = document.createElement('textarea'); t.value = btn.dataset.email || ''; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
-          if (label) { label.textContent = 'Copied!'; setTimeout(() => { label.textContent = original; }, 1600); }
-        });
-      });
     </script>
   </body>
 </html>
