@@ -65,7 +65,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .vcol.out { align-items: flex-end; text-align: right; }
       .node { font-size: clamp(14px, 1.4vw, 17px); font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
       .node::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px rgba(76,126,245,0.7); }
-      .vcol.out .node { flex-direction: row-reverse; }
+      .vcol.out .node { flex-direction: row-reverse; font-size: clamp(20px, 1.9vw, 28px); line-height: 1.08; font-weight: 600; color: var(--navy); }
       .vcol.out .node::before { background: var(--vio); box-shadow: 0 0 10px rgba(139,108,240,0.7); }
       .vcol.out .node.w::before { background: var(--gold); box-shadow: 0 0 12px rgba(224,162,78,0.9); }
       .opair { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; }
@@ -74,15 +74,16 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .vcenter { text-align: center; position: relative; padding: 30px 18px; }
       .vcenter::before { content: ''; position: absolute; inset: -30% -20%; z-index: -1;
         background: radial-gradient(closest-side, rgba(245,247,255,0.72), rgba(245,247,255,0.25) 55%, transparent 78%); }
-      .vcenter h2.cl { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: clamp(34px, 5vw, 74px); color: var(--navy); letter-spacing: -0.03em; line-height: 1.0; }
+      .vcenter h2.cl { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: clamp(24px, 3.5vw, 52px); color: var(--navy); letter-spacing: -0.03em; line-height: 1.0; }
       .cyc { display: block; white-space: nowrap; transition: opacity .5s ease, transform .5s ease; }
       .cyc.flip { opacity: 0; transform: translateY(-12px); }
       .cl-fixed { display: block; }
-      .vcenter p { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 500; font-size: clamp(13px, 1.4vw, 17px); line-height: 1.5; color: #55608a; margin: 14px auto 0; max-width: 30ch; }
+      .vcenter p { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 600; font-size: clamp(20px, 2.4vw, 33px); line-height: 1.4; color: #2a3560; margin: 16px auto 0; max-width: 42ch; }
+      .vcenter p .op { color: #3f9184; }
 
       .hero-copy { max-width: none; }
       .hero-copy .a { font-size: clamp(16px, 1.7vw, 22px); line-height: 1.5; color: #46506e; font-weight: 500; max-width: 62ch; }
-      .hero-copy .b { font-size: clamp(14px, 1.4vw, 18px); line-height: 1.5; color: var(--mut); margin: 12px 0 0; max-width: 60ch; }
+      .hero-copy .b { font-size: clamp(20px, 2.8vw, 36px); line-height: 1.28; font-weight: 600; color: #24305a; margin: 16px 0 0; max-width: 60ch; }
 
       /* ── generic sections ── */
       .sec { position: relative; padding: 128px 0; overflow-x: clip; }
@@ -94,17 +95,21 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .fs.r { text-align: right; } .fs.c { text-align: center; }
       .fs.dim { color: #9aa3bd; }
       .fs.green { color: #3fbf8a; }
-      #vision .fs { font-size: clamp(32px, 5.6vw, 88px); line-height: 1.0; }
+      #vision .fs { font-size: clamp(30px, 5vw, 72px); line-height: 1.0; }
+      #vision .fs.dim { font-size: clamp(24px, 4vw, 50px); }
       .fs.acc { background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
       .fs.gap { margin-top: 28px; }
+      .fs.sm { font-size: clamp(26px, 4.4vw, 62px); }
+      .fs.pay { font-size: clamp(40px, 7.2vw, 104px); color: var(--navy); }
+      .fs.up { font-size: clamp(36px, 6.7vw, 98px); }
 
       /* section 3 — engine, positioned statements */
       .engine { position: relative; }
-      .estmt { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 5.8vw, 92px); line-height: 1.0; letter-spacing: -0.04em; color: var(--navy); max-width: 22ch; margin: 46px 0; position: relative; z-index: 2; }
+      .estmt { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -0.04em; color: var(--navy); max-width: 24ch; margin: 40px 0; position: relative; z-index: 2; }
       .e1 { text-align: left; }
-      .e2 { text-align: center; margin-left: auto; margin-right: auto; }
+      .e2 { text-align: center; margin-left: auto; margin-right: auto; font-size: clamp(34px, 6vw, 90px); max-width: 22ch; }
       .e3 { text-align: right; margin-left: auto; }
-      .e4 { text-align: center; max-width: none; font-size: clamp(40px, 7.5vw, 118px); background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .e4 { text-align: center; max-width: none; font-size: clamp(34px, 5.6vw, 88px); background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
       .ecurrent { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); z-index: 1; overflow: visible; }
       .ecurrent line { stroke: url(#eg); stroke-width: 2; stroke-dasharray: 5 14; }
 
@@ -129,10 +134,10 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .prog-rule { height: 2px; margin-top: 26px; border-radius: 2px; transform: scaleX(0); transform-origin: left;
         background: linear-gradient(90deg, var(--blue), var(--vio)); transition: transform 1.1s cubic-bezier(.22,1,.36,1); }
       .prog-rule.in { transform: scaleX(1); }
-      .prog-copy { font-size: clamp(14px, 1.4vw, 17px); line-height: 1.55; color: var(--mut); max-width: 62ch; margin: 30px 0 0; }
+      .prog-copy { font-size: clamp(16px, 1.6vw, 21px); line-height: 1.55; color: var(--mut); max-width: 62ch; margin: 30px 0 0; }
 
       /* contact */
-      .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(40px, 7vw, 100px); line-height: .96; letter-spacing: -0.045em; color: var(--navy); }
+      .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(30px, 4.6vw, 62px); line-height: 1.0; letter-spacing: -0.04em; color: var(--navy); }
       .aud { display: flex; gap: 26px; flex-wrap: wrap; margin: 26px 0 30px; }
       .aud span { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .04em; color: var(--mut); }
       .aud span::before { content: '— '; color: var(--soft); }
@@ -204,7 +209,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
             </ul>
             <div class="vcenter">
               <h2 class="cl"><span class="cyc" id="cyc">Capability</span><span class="cl-fixed">Layer</span></h2>
-              <p>A living connection between people, changing work, demonstrated capability, and opportunity.</p>
+              <p>A living connection between people, changing work, demonstrated capability, and <span class="op">opportunity</span>.</p>
             </div>
             <div class="vcol out">
               <div class="opair">
@@ -225,10 +230,10 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       <section class="sec col">
         <p class="ey rev">The problem with current hiring</p>
         <div class="full-stmts">
-          <p class="fs rl">Experience matters.</p>
-          <p class="fs r rr">Credentials matter.</p>
-          <p class="fs c dim gap rc">But neither fully proves who can perform the work now.</p>
-          <p class="fs acc gap rc">Proofworks makes capability visible before the hiring decision.</p>
+          <p class="fs sm rl">Experience matters.</p>
+          <p class="fs sm r rr">Credentials matter.</p>
+          <p class="fs pay c gap rc">But neither fully proves who can perform the work now.</p>
+          <p class="fs acc up gap rc">Proofworks makes capability visible before the hiring decision.</p>
         </div>
       </section>
 
