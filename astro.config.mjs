@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/proofworks-v2': '/proofworks',
+  },
   vite: {
     plugins: [tailwindcss()]
   }

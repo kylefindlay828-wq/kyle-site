@@ -7,9 +7,7 @@
 // Proofworks pages (which don't load global.css or Tailwind).
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const home = path === '/';
-const pwV1 = path === '/proofworks';
-const pwV2 = path === '/proofworks-v2';
-const pwActive = pwV1 || pwV2;
+const pwActive = path === '/proofworks' || path === '/proofworks-v2';
 const rV1 = path === '/gtm-radar';
 const rV2 = path === '/radar-v2';
 const rActive = rV1 || rV2;
@@ -29,12 +27,7 @@ const cur = (b: boolean) => (b ? 'page' : undefined);
       <span class="sh-div" aria-hidden="true"></span>
 
       <div class="sh-proj">
-        <a href="/proofworks" class:list={['sh-name', pwActive && 'on']} aria-current={cur(pwV1)}>Proofworks</a>
-        <span class="sh-vers">
-          <a href="/proofworks" class:list={['sh-v', pwV1 && 'on']} aria-current={cur(pwV1)}>V1</a>
-          <a href="/proofworks-v2" class:list={['sh-v', pwV2 && 'on']} aria-current={cur(pwV2)}>V2</a>
-          <span class="sh-new" aria-label="newest">NEW</span>
-        </span>
+        <a href="/proofworks" class:list={['sh-name', pwActive && 'on']} aria-current={cur(pwActive)}>Proofworks</a>
       </div>
     </nav>
 
@@ -53,8 +46,7 @@ const cur = (b: boolean) => (b ? 'page' : undefined);
     </div>
     <div class="sh-mg">
       <p class="sh-mh">Proofworks</p>
-      <a href="/proofworks" class:list={['sh-mi', pwV1 && 'on']} aria-current={cur(pwV1)}>V1 <span class="tag">Workforce thesis</span></a>
-      <a href="/proofworks-v2" class:list={['sh-mi', pwV2 && 'on']} aria-current={cur(pwV2)}>V2 <span class="tag">Recruiter-ready</span> <span class="sh-new">NEW</span></a>
+      <a href="/proofworks" class:list={['sh-mi', pwActive && 'on']} aria-current={cur(pwActive)}>Proofworks <span class="tag">Proof-of-work hiring</span></a>
     </div>
     <div class="sh-mg">
       <p class="sh-mh">Kyle Findlay</p>
