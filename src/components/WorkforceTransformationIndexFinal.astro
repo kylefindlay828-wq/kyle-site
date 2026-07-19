@@ -197,7 +197,12 @@ const bubbles = base.map((c) => {
             `<div class="wti-m-row"><span>U.S. employment</span><b>${m.employment}</b></div>` +
             `<div class="wti-m-row"><span>AI task exposure</span><b>${m.exposure}</b></div>` +
             `<div class="wti-m-row"><span>Augment vs. automate</span><b>${m.lean}</b></div>` +
-            `<div class="wti-m-src"><span>Sources</span>${m.sources.map((s) => `<a href="${s.url}" target="_blank" rel="noopener">${s.short || s.label}</a>`).join('')}</div>` +
+          `</div>` : '';
+        const sourcesBlock = m ?
+          `<div class="wti-p-block wti-p-sources">` +
+            `<p class="wti-p-lbl">Sources &amp; method</p>` +
+            `<p class="wti-src-note">Where this sits on the map comes from public data, not estimates — horizontal: AI task exposure; vertical: augmentation vs. automation; bubble size: U.S. employment in the mapped occupations.</p>` +
+            `<ul class="wti-src-ul">${m.sources.map((s) => `<li><a href="${s.url}" target="_blank" rel="noopener">${s.label}</a></li>`).join('')}</ul>` +
           `</div>` : '';
         panelBody.innerHTML =
           `<span class="wti-p-zone" style="--c:${colorOf(c)}">${c.zoneLabel}</span>` +
@@ -205,7 +210,8 @@ const bubbles = base.map((c) => {
           `<p class="wti-p-sum">${c.summary}</p>` + metricsBlock +
           block('Representative industries', c.industries) + block('Representative roles', c.roles) +
           block('Why the work is changing', c.whyChanging) + block('What can be developed internally', c.internalDevelopment) +
-          block('Where external hiring may be required', c.externalHiring) + (c.marketExamples ? block('Market examples', c.marketExamples) : '');
+          block('Where external hiring may be required', c.externalHiring) + (c.marketExamples ? block('Market examples', c.marketExamples) : '') +
+          sourcesBlock;
         panel.hidden = false; backdrop.hidden = false;
         requestAnimationFrame(() => { panel.classList.add('open'); backdrop.classList.add('open'); });
         panel.focus();
@@ -311,8 +317,8 @@ const bubbles = base.map((c) => {
     .wti-p-metrics { margin: 20px 0 0; padding: 14px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 12px; }
     .wti-m-row { display: grid; grid-template-columns: 148px 1fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .wti-m-row:last-of-type { border-bottom: 0; }
-    .wti-m-row span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: #7f8894; }
-    .wti-m-row b { font-size: 13.5px; font-weight: 500; color: #e4e9ef; line-height: 1.4; }
+    .wti-m-row span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: #93b7e6; }
+    .wti-m-row b { font-size: 13.5px; font-weight: 500; color: #f2f5fa; line-height: 1.4; }
     .wti-m-src { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; }
     .wti-m-src span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: #7f8894; margin-bottom: 2px; }
     .wti-m-src a { font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.4; color: #6fa4e6; }
@@ -331,12 +337,21 @@ const bubbles = base.map((c) => {
     .wti-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
     .wti-p-zone { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
     .wti-panel h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; color: #fff; margin: 10px 0 0; }
-    .wti-p-sum { font-size: 15.5px; line-height: 1.5; color: #c2cbd6; margin: 14px 0 0; }
+    .wti-p-sum { font-size: 15.5px; line-height: 1.55; color: #eef2f8; margin: 14px 0 0; }
     .wti-p-block { margin: 22px 0 0; }
-    .wti-p-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #7f8894; margin: 0 0 8px; }
+    .wti-p-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #93b7e6; margin: 0 0 8px; }
     .wti-p-block ul { list-style: none; margin: 0; padding: 0; }
-    .wti-p-block li { font-size: 15px; line-height: 1.45; color: #dbe1e8; padding: 4px 0 4px 16px; position: relative; }
-    .wti-p-block li::before { content: "—"; position: absolute; left: 0; color: #5b6470; }
+    .wti-p-block li { font-size: 15px; line-height: 1.5; color: #f2f5fa; padding: 4px 0 4px 16px; position: relative; }
+    .wti-p-block li::before { content: "—"; position: absolute; left: 0; color: #7f8a97; }
+
+    /* sources footer — where the data comes from */
+    .wti-p-sources { margin-top: 26px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; }
+    .wti-src-note { font-size: 13px; line-height: 1.55; color: #c6cdd6; margin: 0 0 12px; }
+    .wti-src-ul { list-style: none; margin: 0; padding: 0; }
+    .wti-src-ul li { margin: 0 0 8px; padding-left: 18px; position: relative; }
+    .wti-src-ul li::before { content: "↗"; position: absolute; left: 0; top: 1px; color: #6fa4e6; font-size: 12px; }
+    .wti-src-ul a { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; color: #9cc3f5; }
+    .wti-src-ul a:hover { color: #c8e0fb; text-decoration: underline; }
 
     [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
     [data-reveal].in { opacity: 1; transform: none; }
@@ -352,5 +367,34 @@ const bubbles = base.map((c) => {
         border-radius: 20px 20px 0 0; transform: translateY(100%); }
       .wti-panel.open { transform: none; }
     }
+  </style>
+
+  <style is:global>
+    /* The detail-panel body is injected via innerHTML, so it lives OUTSIDE Astro's
+       scoped styles. Without these global rules the injected text inherits the host
+       page's (dark) text colour and renders unreadable on the dark panel. Every
+       selector is .wti-* — unique to this component — so global scope is safe. */
+    .wti-panel-body { color: #eef2f8; }
+    .wti-p-zone { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+    .wti-panel-body h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.02em; color: #ffffff; margin: 10px 0 0; }
+    .wti-p-sum { font-size: 15.5px; line-height: 1.55; color: #eef2f8; margin: 14px 0 0; }
+    .wti-p-block { margin: 22px 0 0; }
+    .wti-p-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #93b7e6; margin: 0 0 8px; }
+    .wti-p-block ul { list-style: none; margin: 0; padding: 0; }
+    .wti-p-block li { font-size: 15px; line-height: 1.5; color: #f2f5fa; padding: 4px 0 4px 16px; position: relative; }
+    .wti-p-block li::before { content: "—"; position: absolute; left: 0; color: #7f8a97; }
+    .wti-p-metrics { margin: 20px 0 0; padding: 14px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; }
+    .wti-m-row { display: grid; grid-template-columns: 152px 1fr; gap: 12px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .wti-m-row:last-of-type { border-bottom: 0; }
+    .wti-m-row span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: #93b7e6; align-self: center; }
+    .wti-m-row b { font-size: 13.5px; font-weight: 500; color: #f2f5fa; line-height: 1.4; }
+    .wti-p-sources { margin-top: 26px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; }
+    .wti-src-note { font-size: 13px; line-height: 1.55; color: #c6cdd6; margin: 0 0 12px; }
+    .wti-src-ul { list-style: none; margin: 0; padding: 0; }
+    .wti-src-ul li { margin: 0 0 8px; padding-left: 18px; position: relative; }
+    .wti-src-ul li::before { content: "\2197"; position: absolute; left: 0; top: 1px; color: #6fa4e6; font-size: 12px; }
+    .wti-src-ul a { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; color: #9cc3f5; text-decoration: none; }
+    .wti-src-ul a:hover { color: #c8e0fb; text-decoration: underline; }
+    @media (max-width: 640px) { .wti-m-row { grid-template-columns: 1fr; gap: 2px; } }
   </style>
 </section>
