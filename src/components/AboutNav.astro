@@ -1,0 +1,50 @@
+---
+// Simple page-local nav for the home/about page. Light warm/paper bar, dark text.
+// Deliberately NOT SiteHeader (no V1/V2 labels). "Kyle Findlay" → "/", the rest are anchors.
+---
+<header class="an">
+  <div class="an-in">
+    <a href="/" class="an-brand">Kyle Findlay</a>
+    <nav class="an-nav" aria-label="Primary">
+      <a href="/proofworks" class="an-link">Proofworks</a>
+      <a href="#about" class="an-link">About</a>
+      <a href="#work" class="an-link">Selected Work</a>
+      <a href="#contact" class="an-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .an {
+    --abg: #f4f1ea; --aink: #26241f; --amut: #77726a; --arule: #e4e0d5; --aacc: #b5542f;
+    --asans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    position: sticky; top: 0; z-index: 100;
+    background: var(--abg); border-bottom: 1px solid var(--arule);
+  }
+  .an *, .an *::before, .an *::after { box-sizing: border-box; }
+  .an a { text-decoration: none; }
+  .an :focus-visible { outline: 2px solid var(--aacc); outline-offset: 3px; border-radius: 4px; }
+
+  .an-in { max-width: 1040px; margin: 0 auto; padding: 0 24px; min-height: 58px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+  .an-brand { font-family: var(--asans); font-weight: 600; font-size: 16px; letter-spacing: -0.01em;
+    color: var(--aink); white-space: nowrap;
+    padding-bottom: 2px; border-bottom: 2px solid var(--aacc);
+    transition: color .18s ease; }
+  .an-brand:hover { color: var(--aacc); }
+
+  .an-nav { display: flex; align-items: center; gap: 22px; }
+  .an-link { font-family: var(--asans); font-weight: 500; font-size: 15px; color: var(--aink);
+    padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease; }
+  .an-link:hover { color: var(--aacc); border-bottom-color: var(--aacc); }
+
+  @media (max-width: 480px) {
+    .an-nav { gap: 15px; }
+    .an-link { font-size: 14px; }
+    .an-brand { font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .an-brand, .an-link { transition: none; }
+  }
+</style>

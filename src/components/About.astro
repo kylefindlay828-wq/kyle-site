@@ -2,80 +2,153 @@
 import { Image } from 'astro:assets';
 import headshot from '../assets/photos/headshot.png';
 
-const brings = [
-  { head: '$3.1M+ directly owned annually', support: 'Supported a broader $5–6M portfolio across national brand programs — Beyond Meat, Hormel, FIJI, POM, GoodRx, Green Dot, Sapporo.' },
-  { head: 'Builds AI-assisted workflows', support: 'Uses automation, structured outputs, and human review to move from concept to reliable execution.' },
-  { head: 'Translator between builders and revenue', support: 'Gets good ideas heard by leadership — and shipped.' },
-  { head: 'Designs the process, not just the interface', support: 'Owns the quality controls and human review across delivery, not only the demo.' },
+const focusAreas = [
+  'Marketplace growth and activation',
+  'Strategic and product operations',
+  'Customer implementation and delivery',
+  'Recruiting and workforce infrastructure',
+  'AI-enabled operational products',
 ];
-const fits = [
-  { label: 'Focus', body: 'AI delivery operations · Human-data operations · Implementation & workflow design · Cross-functional program execution.' },
-  { label: 'Engagement', body: 'Full-time or contract, wherever the brief is still being written — pre-seed to Series C, AI-native or AI-adopting.' },
-  { label: 'Background', body: 'Seven years of end-to-end execution on high-stakes programs: $3.1M+ directly owned within a $5–6M portfolio of national brand programs and live events at scale.' },
+
+const stages = [
+  { n: '01', head: 'Get close to the problem.', body: 'Understand the people, incentives, bottlenecks, and real behavior before proposing a system.' },
+  { n: '02', head: 'Make it move.', body: 'Run the unfinished process, remove friction, and own the immediate outcome.' },
+  { n: '03', head: 'Find the pattern.', body: 'Identify what repeatedly works across customers, projects, or marketplace participants.' },
+  { n: '04', head: 'Build the machine.', body: 'Turn the pattern into workflows, tooling, playbooks, automation, and eventually product.' },
+];
+
+const evidence = [
+  { head: 'Complex program operations', body: 'Managed 20–30 concurrent national programs across more than 60,000 retail locations while directly owning a $3.1M+ annual portfolio.' },
+  { head: 'High-stakes execution', body: 'Coordinated guests, partners, vendors, budgets, and changing logistics across international experiences and live events.' },
+  { head: 'Built from ambiguity', body: 'Created Proofworks and GTM Radar using modern AI-assisted development and human review to explore workforce systems, labor-market signals, and operational products.' },
+];
+
+const bestFit = [
+  'Marketplace growth and activation',
+  'Strategic and product operations',
+  'Customer implementation and delivery',
+  'Recruiting and workforce systems',
+  'AI-enabled operational products',
 ];
 ---
-<section id="about" class="py-20 border-t border-b border-rule scroll-mt-20">
-  <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-start">
-    <div class="flex flex-col gap-3 w-[220px] md:w-[280px] items-start">
-      <div class="rounded-xl overflow-hidden border border-rule w-full h-[290px] md:h-[360px]">
+<!-- HERO -->
+<section id="about" class="pt-16 md:pt-20 pb-16 scroll-mt-16">
+  <div class="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-10 md:gap-14 items-start">
+    <div data-reveal class="max-w-[820px] space-y-6">
+      <p class="font-mono uppercase tracking-[0.14em] text-accent" style="font-size:clamp(15px,1.1vw,16px);">Kyle Findlay</p>
+      <h1 class="font-serif font-bold leading-[1.08]" style="font-size:clamp(1.9rem,3.5vw,3.1rem);">
+        I want to build the systems behind how people work, adapt, and find opportunity.
+      </h1>
+      <p class="font-mono text-accent leading-relaxed" style="font-size:clamp(16px,1.4vw,20px);">
+        Early-stage operations · Marketplaces · Workforce infrastructure · AI-enabled products
+      </p>
+      <div class="space-y-4 text-ink/75 leading-relaxed max-w-[680px]" style="font-size:clamp(18px,1.4vw,21px);">
+        <p>I'm an operator moving deeper into early-stage technology, marketplaces, and AI-enabled workforce systems.</p>
+        <p>My background is in complex program delivery, live operations, stakeholder coordination, and turning ambiguous work into something people can actually run.</p>
+      </div>
+    </div>
+    <div data-reveal class="flex flex-col gap-4 w-[220px] md:w-[280px] items-start md:justify-self-end">
+      <div class="rounded-xl overflow-hidden border border-rule w-full h-[290px] md:h-[350px]">
         <Image src={headshot} alt="Kyle Findlay" width={600} height={750} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
       </div>
-      <button id="copy-email" type="button" data-email="kylefindlay828@gmail.com" aria-label="Copy email address" class="cta-pill inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-[12px] font-mono font-semibold rounded-full hover:opacity-90 transition cursor-pointer mt-1">
-        <span class="ce-text">kylefindlay828@gmail.com</span>
-        <span aria-hidden="true">⧉</span>
-      </button>
-      <a href="https://linkedin.com/in/kylefindlay828" target="_blank" rel="noopener" class="text-[14px] text-ink/70 hover:text-accent underline decoration-rule underline-offset-2 transition">
-        LinkedIn ↗
-      </a>
-    </div>
-    <div class="max-w-[760px] space-y-5">
-      <p class="font-mono text-[12px] uppercase tracking-[0.12em] text-accent">AI delivery operations · Workforce systems · Applied research</p>
-      <h1 class="font-serif font-bold text-3xl md:text-[2.6rem] leading-tight">I turn ambiguous customer and workforce problems into structured systems that can be executed, measured, and improved.</h1>
-      <p class="text-lg text-ink/75 leading-relaxed">My work combines complex program delivery, cross-functional operations, and practical AI-assisted workflows. I am particularly interested in how human expertise is sourced, evaluated, developed, and matched to the work emerging around AI.</p>
-      <p class="text-[15px] text-ink/65 leading-relaxed border-l-2 border-accent pl-4">Proofworks and GTM Radar are independent projects showing how I approach changing labor demand, structured research, workflow design, and human-reviewed AI systems.</p>
     </div>
   </div>
+</section>
 
-  <!-- WHAT I BRING -->
-  <div class="mt-14">
-    <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-7">What I bring</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-9">
-      {brings.map((b) => (
-        <div class="border-l-2 border-accent pl-5">
-          <h3 class="font-serif text-2xl md:text-[1.6rem] leading-snug text-ink">{b.head}</h3>
-          <p class="text-[15px] text-ink/70 leading-relaxed mt-2.5">{b.support}</p>
+<!-- DIRECTION -->
+<section data-reveal class="py-16 border-t border-rule scroll-mt-16">
+  <h2 class="font-serif font-bold leading-[1.1] max-w-[860px]" style="font-size:clamp(2rem,4vw,3.75rem);">
+    Put me where the playbook is still being written.
+  </h2>
+  <div class="mt-7 space-y-5 text-ink/75 leading-relaxed max-w-[720px]" style="font-size:clamp(18px,1.4vw,21px);">
+    <p>I am most interested in companies redefining how marketplaces grow, how people are evaluated and matched with work, and how messy human processes become scalable systems and products.</p>
+    <p>I want to work close to customers, data, product, and the operating problem—not several layers removed from the outcome.</p>
+  </div>
+  <ul class="mt-10 flex flex-col gap-3 max-w-[760px]">
+    {focusAreas.map((f) => (
+      <li class="flex items-baseline gap-3 border-l-2 border-accent pl-4 text-ink/85" style="font-size:clamp(18px,1.5vw,22px);">
+        <span>{f}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<!-- HOW I WORK -->
+<section data-reveal class="py-16 border-t border-rule scroll-mt-16">
+  <p class="font-mono uppercase tracking-[0.12em] text-accent mb-10" style="font-size:clamp(15px,1vw,16px);">How I work</p>
+  <div class="flex flex-col gap-12 md:gap-14">
+    {stages.map((s) => (
+      <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-x-8 gap-y-3 items-start max-w-[900px]">
+        <span class="font-mono text-accent/70" style="font-size:clamp(20px,2vw,28px);">{s.n}</span>
+        <div>
+          <h3 class="font-serif font-semibold leading-[1.12]" style="font-size:clamp(1.75rem,3vw,2.375rem);">{s.head}</h3>
+          <p class="text-ink/70 leading-relaxed mt-3 max-w-[640px]" style="font-size:clamp(18px,1.4vw,21px);">{s.body}</p>
         </div>
-      ))}
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14">
-    {fits.map((f) => (
-      <div class="border-l-2 border-accent pl-4">
-        <p class="font-mono text-[12px] uppercase tracking-[0.07em] text-accent mb-2">{f.label}</p>
-        <p class="text-[15px] text-ink/85 leading-relaxed">{f.body}</p>
       </div>
     ))}
   </div>
 </section>
 
-<script>
-  // "Copy email" button — copies the address to the clipboard, no mail app needed
-  const btn = document.getElementById('copy-email');
-  const label = btn?.querySelector('.ce-text');
-  const original = label?.textContent ?? '';
-  btn?.addEventListener('click', async () => {
-    const email = btn.getAttribute('data-email') ?? '';
-    try {
-      await navigator.clipboard.writeText(email);
-    } catch {
-      const t = document.createElement('textarea');
-      t.value = email; document.body.appendChild(t); t.select();
-      document.execCommand('copy'); t.remove();
-    }
-    if (label) {
-      label.textContent = 'Copied ✓';
-      setTimeout(() => { label.textContent = original; }, 1800);
-    }
-  });
-</script>
+<!-- EVIDENCE -->
+<section data-reveal class="py-16 border-t border-rule scroll-mt-16">
+  <h2 class="font-serif font-bold leading-[1.1] mb-10" style="font-size:clamp(2rem,4vw,3.75rem);">
+    What I have already proven
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-10">
+    {evidence.map((e) => (
+      <div class="border-l-2 border-accent pl-5">
+        <h3 class="font-serif font-semibold leading-snug" style="font-size:clamp(1.5rem,2vw,1.75rem);">{e.head}</h3>
+        <p class="text-ink/70 leading-relaxed mt-3" style="font-size:clamp(17px,1.2vw,19px);">{e.body}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section id="work" data-reveal class="py-16 border-t border-rule scroll-mt-16">
+  <p class="font-mono uppercase tracking-[0.12em] text-accent mb-10" style="font-size:clamp(15px,1vw,16px);">Selected work</p>
+  <div class="flex flex-col gap-14">
+    <article class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-start max-w-[900px]">
+      <div>
+        <h3 class="font-serif font-bold leading-[1.14]" style="font-size:clamp(1.75rem,3vw,2.375rem);">
+          Proofworks
+        </h3>
+        <p class="text-ink/70 leading-relaxed mt-4 max-w-[680px]" style="font-size:clamp(18px,1.4vw,21px);">
+          A capability layer for a changing job market. Interactive workforce index built on BLS data, plus the placement engine behind it.
+        </p>
+      </div>
+      <a href="/proofworks" class="cta-pill inline-flex items-center gap-2 px-5 py-3 bg-accent font-mono font-semibold rounded-full hover:opacity-90 transition whitespace-nowrap md:justify-self-end" style="font-size:clamp(13px,1vw,14px);">
+        View Proofworks <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <article class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-start max-w-[900px]">
+      <div>
+        <h3 class="font-serif font-bold leading-[1.14]" style="font-size:clamp(1.75rem,3vw,2.375rem);">
+          GTM Radar
+        </h3>
+        <p class="text-ink/70 leading-relaxed mt-4 max-w-[680px]" style="font-size:clamp(18px,1.4vw,21px);">
+          An autonomous market-intelligence agent that surfaces hiring signals before roles are posted.
+        </p>
+      </div>
+      <a href="/gtm-radar" class="cta-pill inline-flex items-center gap-2 px-5 py-3 bg-accent font-mono font-semibold rounded-full hover:opacity-90 transition whitespace-nowrap md:justify-self-end" style="font-size:clamp(13px,1vw,14px);">
+        View GTM Radar <span aria-hidden="true">→</span>
+      </a>
+    </article>
+  </div>
+</section>
+
+<!-- BEST-FIT -->
+<section data-reveal class="py-16 border-t border-rule scroll-mt-16">
+  <h2 class="font-serif font-bold leading-[1.1] max-w-[860px]" style="font-size:clamp(2rem,4vw,3.75rem);">
+    Put me where the playbook is still being written.
+  </h2>
+  <ul class="mt-9 flex flex-col gap-3 max-w-[760px]">
+    {bestFit.map((b) => (
+      <li class="border-l-2 border-accent pl-4 text-ink/85" style="font-size:clamp(18px,1.5vw,22px);">{b}</li>
+    ))}
+  </ul>
+  <p class="mt-8 text-ink/70 leading-relaxed max-w-[680px]" style="font-size:clamp(18px,1.4vw,21px);">
+    Especially interested in ambitious, in-person teams building new categories in San Francisco.
+  </p>
+</section>

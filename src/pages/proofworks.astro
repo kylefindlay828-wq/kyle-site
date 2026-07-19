@@ -96,6 +96,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .viz { display: grid; grid-template-columns: minmax(130px, 0.85fr) auto minmax(150px, 0.85fr); align-items: center; gap: 24px; padding: 8px 0; }
       .vcol { display: flex; flex-direction: column; gap: 22px; }
       .vcol.out { align-items: flex-end; text-align: right; }
+      .vcol.in { align-items: flex-start; }
       .node { font-size: var(--pw-small); font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
       .vcol.in .node { font-size: calc(var(--pw-small) * 1.8); gap: 0; }
       .vcol.in .node::before { display: none; }
@@ -173,6 +174,9 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .prog-rule.in { transform: scaleX(1); }
 
       /* contact */
+      .founder-line { font-family: 'JetBrains Mono', monospace; font-size: var(--pw-small); line-height: 1.6; color: var(--mut); margin: 0 0 20px; }
+      .founder-line a { color: var(--navy); border-bottom: 1px solid var(--line); transition: color .18s ease, border-color .18s ease; }
+      .founder-line a:hover { color: var(--blue); border-color: rgba(76,126,245,0.5); }
       .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: var(--pw-section-secondary); line-height: 1.06; letter-spacing: -0.03em; color: var(--navy); }
       .talk-p { font-size: var(--pw-emphasis-copy); line-height: 1.5; color: #46506e; font-weight: 500; max-width: 60ch; margin: 24px 0 0; }
       .talk-cta { margin: 32px 0 34px; }
@@ -298,18 +302,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         </div>
       </section>
 
-      <!-- 3 · THE PROBLEM -->
-      <section class="sec col">
-        <p class="ey intro rev">The problem with hiring right now</p>
-        <div class="full-stmts">
-          <p class="fs sm rl">Experience matters.</p>
-          <p class="fs sm rr">Credentials matter.</p>
-          <p class="fs pay gap rc">Neither proves who can perform the work now—because the work itself keeps changing underneath the titles.</p>
-          <p class="fs acc up gap rc">Proofworks makes capability visible before the hiring decision.</p>
-        </div>
-      </section>
-
-      <!-- 4 · THE PROOFWORKS ENGINE (V1 light-stone band, two-column) -->
+      <!-- 3 · THE PROOFWORKS ENGINE (V1 light-stone band, two-column) -->
       <ProofworksEngine />
 
       <!-- 5 · THIS ISN'T JUST A TECH STORY -->
@@ -351,6 +344,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
 
       <!-- 8 · CONTACT -->
       <section class="sec col" id="contact">
+        <p class="founder-line rev">Proofworks is built by <a href="/">Kyle Findlay</a> — the third iteration of this thesis, after GTM Radar V1 and V2.</p>
         <h2 class="talk-h rev">Let’s talk.</h2>
         <p class="talk-p rev" style="transition-delay:.05s">I want to hear from candidates ready to prove what they can build, recruiters and companies facing capability gaps, and technical people who think proof-of-work talent infrastructure should exist.</p>
         <div class="pw-cta talk-cta rev" style="transition-delay:.08s">
@@ -422,59 +416,64 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         }
       })();
 
-      // ── hero particle field: labels emit → central layer → circulation → destinations ──
+      // ── hero particle field: five word-anchored input streams → layer → two outputs ──
       (() => {
         const cv = document.getElementById('field');
         if (!(cv instanceof HTMLCanvasElement)) return;
         const ctx = cv.getContext('2d');
         if (!ctx) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = { x: 0, y: 0 }, plaPt = { x: 0, y: 0 }, gate = { x: 0, y: 0 }, src = { x0: 0, y0: 0, x1: 0, y1: 0 }, inPts = [], circR = 120, parts = [], t0 = performance.now(), raf = 0;
+        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = { x: 0, y: 0 }, plaPt = { x: 0, y: 0 }, gate = { x: 0, y: 0 }, inPts = [], circR = 120, parts = [], t0 = performance.now(), raf = 0;
         function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { l: r.left - h.left, t: r.top - h.top, r: r.right - h.left, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left, cy: r.top + r.height / 2 - h.top }; }
         function measure() {
-          const inCol = document.querySelector('.vcol.in');
-          if (inCol) { const b = rectIn(inCol); src = { x0: b.l - 34, y0: b.t - 34, x1: b.r + 50, y1: b.b + 34 }; }
-          else src = { x0: 0, y0: H * 0.15, x1: W * 0.24, y1: H * 0.85 };
-          // one emission point per input word (mirrors the two output destinations)
-          inPts = [...document.querySelectorAll('.vcol.in .node')].map((el) => { const b = rectIn(el); return { x: b.r + 6, y: b.cy }; });
+          // emitter origin = the RIGHT EDGE of each input word, at its real rendered
+          // position on the page (measured relative to the canvas). The trail begins
+          // exactly at the word, with no mid-air gap.
+          inPts = [...document.querySelectorAll('.vcol.in .node')].map((el, i) => { const b = rectIn(el); return { x: b.r + 4, y: b.cy, ph: i * 1.27 }; });
+          if (!inPts.length) for (let i = 0; i < 5; i++) inPts.push({ x: W * 0.16, y: H * (0.3 + i * 0.1), ph: i * 1.27 });
           const outEls = [...document.querySelectorAll('.vcol.out .node.v')];
-          recPt = outEls[0] ? (function () { const b = rectIn(outEls[0]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.3 };
-          plaPt = outEls[1] ? (function () { const b = rectIn(outEls[1]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.64 };
+          recPt = outEls[0] ? (function () { const b = rectIn(outEls[0]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.4 };
+          plaPt = outEls[1] ? (function () { const b = rectIn(outEls[1]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.6 };
           const cen = document.querySelector('.vcenter');
           C = cen ? (function () { const b = rectIn(cen); return { x: b.cx, y: b.cy }; })() : { x: W * 0.52, y: H * 0.47 };
           gate = { x: Math.min(recPt.x, plaPt.x) - 90, y: (recPt.y + plaPt.y) / 2 };
-          circR = Math.min(W, H) * 0.22;
+          circR = Math.min(W, H) * 0.2;
         }
-        function reset(p) {
-          p.st = 'in';
-          const ip = inPts.length ? inPts[(Math.random() * inPts.length) | 0] : { x: src.x0, y: (src.y0 + src.y1) / 2 };
-          p.x = ip.x + (Math.random() - 0.5) * 10;
-          p.y = ip.y + (Math.random() - 0.5) * 12;
+        // input-stream particle: parametric travel from its word (u=0) to the layer (u=1),
+        // so the stream always spans the full distance and is born at the word itself.
+        function newIn(p) {
+          p.kind = 'in';
+          p.word = (Math.random() * inPts.length) | 0;
+          p.u = Math.random();
           p.dep = 0.5 + Math.random() * 0.85;
-          p.sp = (0.24 + Math.random() * 0.66) * p.dep;
-          p.soft = Math.random() < 0.07;
-          p.s = p.soft ? 2.4 + Math.random() * 2.4 : 0.4 + Math.random() * 1.3;
-          p.jt = (Math.random() - .5) * 0.9;
-          p.path = Math.random() < 0.5 ? 0 : 1;
-          // ~55% recirculate on the input side (word→center→word) so the five
-          // input lanes stay populated; the rest flow through to the two outputs.
-          p.leftOnly = Math.random() < 0.55;
+          p.uv = (0.0036 + Math.random() * 0.0052) / p.dep;
+          p.off = (Math.random() - 0.5) * 24;
+          p.soft = Math.random() < 0.06;
+          p.s = p.soft ? 2.2 + Math.random() * 2.2 : 0.5 + Math.random() * 1.2;
         }
         function enterCirc(p) {
-          p.st = 'circ'; p.a = Math.atan2(p.y - C.y, p.x - C.x);
-          p.rr = Math.hypot(p.x - C.x, p.y - C.y);
-          p.rt = circR * (0.32 + Math.random() * 0.72);
+          p.st = 'circ'; p.a = Math.random() * Math.PI * 2;
+          p.rr = circR * (0.2 + Math.random() * 0.55); p.rt = circR * (0.32 + Math.random() * 0.72);
           p.av = (0.006 + Math.random() * 0.017) / p.dep;
-          p.life = 45 + Math.random() * 150;
+          p.life = 40 + Math.random() * 150;
+        }
+        // through particle: circulates in the layer, then flows out to a destination, then re-enters
+        function newThru(p, spawnOut) {
+          p.kind = 'thru';
+          p.dep = 0.5 + Math.random() * 0.85;
+          p.sp = (0.3 + Math.random() * 0.68) * p.dep;
+          p.soft = Math.random() < 0.06;
+          p.s = p.soft ? 2.2 + Math.random() * 2.2 : 0.5 + Math.random() * 1.2;
+          p.path = Math.random() < 0.5 ? 0 : 1;
+          if (spawnOut) { p.st = 'out'; const f = Math.random(); p.x = C.x + (gate.x - C.x) * f; p.y = C.y + (gate.y - C.y) * f; }
+          else enterCirc(p);
         }
         function build() {
-          const total = W < 560 ? 800 : W < 1000 ? 2200 : Math.min(5000, Math.round(W * H / 190));
+          const total = W < 560 ? 1000 : W < 1000 ? 2600 : Math.min(5400, Math.round(W * H / 175));
           parts = [];
           for (let i = 0; i < total; i++) {
-            const p = {}; reset(p); const r = Math.random();
-            if (r < 0.5) { const f = Math.random(); p.x += (C.x - p.x) * f * 0.7; p.y += (C.y - p.y) * f * 0.5; }
-            else if (r < 0.82) { enterCirc(p); p.a = Math.random() * Math.PI * 2; p.rr = p.rt; }
-            else { p.st = 'out'; const f = Math.random(); p.x = C.x + (gate.x - C.x) * f; p.y = C.y + (gate.y - C.y) * f; }
+            const p = {};
+            if (i % 20 < 10) newIn(p); else newThru(p, Math.random() < 0.4);
             parts.push(p);
           }
         }
@@ -485,34 +484,40 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
           ng.addColorStop(0, 'rgba(94,98,236,0.20)'); ng.addColorStop(0.5, 'rgba(104,96,232,0.10)'); ng.addColorStop(1, 'rgba(104,96,232,0)');
           ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(C.x, C.y, circR * 1.5 * breathe, 0, Math.PI * 2); ctx.fill();
           for (const p of parts) {
-            let x = p.x, y = p.y, col, aMul = 1;
-            if (p.st === 'in') {
-              const dx = C.x - p.x, dy = C.y - p.y, d = Math.hypot(dx, dy) || 1;
-              const wob = Math.sin((p.x + t * 18) * 0.02) * 0.3;
-              p.x += (dx / d) * p.sp * 0.62 + (-dy / d) * wob;
-              p.y += (dy / d) * p.sp * 0.62 + (dx / d) * wob;
-              if (d < circR * (0.8 + Math.random() * 0.3)) enterCirc(p);
-              x = p.x; y = p.y; col = 'rgba(60,112,236,'; aMul = 1.32;
+            let x, y, col, a;
+            if (p.kind === 'in') {
+              p.u += p.uv;
+              if (p.u >= 1) { p.u = 0; p.word = (Math.random() * inPts.length) | 0; p.off = (Math.random() - 0.5) * 24; }
+              const src = inPts[p.word] || { x: 0, y: H / 2, ph: 0 };
+              const e = p.u;                    // linear: even density the whole way from word to layer
+              const conv = 1 - p.u;             // lateral spread collapses onto the centre
+              const dx = C.x - src.x, dy = C.y - src.y, len = Math.hypot(dx, dy) || 1;
+              const nx = -dy / len, ny = dx / len;
+              const lat = p.off * conv + Math.sin(p.u * 5.5 + src.ph + t * 1.3) * 5 * conv;
+              x = src.x + dx * e + nx * lat;
+              y = src.y + dy * e + ny * lat;
+              // full brightness almost immediately (born at the word), easing slightly into the layer
+              a = (p.soft ? 0.12 : 0.42 + p.dep * 0.3) * Math.min(1, p.u * 50) * (0.6 + 0.4 * conv);
+              col = 'rgba(60,112,236,';
             } else if (p.st === 'circ') {
               p.a += p.av; p.rr += (p.rt - p.rr) * 0.02;
               const rad = p.rr * breathe;
-              x = C.x + Math.cos(p.a) * rad; y = C.y + Math.sin(p.a) * rad * 0.8;
-              p.x = x; p.y = y;
-              if (p.life-- <= 0) { if (p.leftOnly) reset(p); else if (Math.cos(p.a) > 0.12) p.st = 'out'; }
-              col = 'rgba(82,84,228,';
+              x = C.x + Math.cos(p.a) * rad; y = C.y + Math.sin(p.a) * rad * 0.8; p.x = x; p.y = y;
+              if (p.life-- <= 0 && Math.cos(p.a) > 0.1) p.st = 'out';
+              a = p.soft ? 0.1 : Math.min(0.72, 0.34 + p.dep * 0.26); col = 'rgba(82,84,228,';
             } else if (p.st === 'out') {
               const dx = gate.x - p.x, dy = gate.y - p.y, d = Math.hypot(dx, dy) || 1;
               p.x += (dx / d) * (p.sp + 0.4) + (-dy / d) * Math.sin((p.y + t * 20) * 0.02) * 0.3;
               p.y += (dy / d) * (p.sp + 0.4);
               if (d < 22) p.st = 'fan';
-              x = p.x; y = p.y; col = 'rgba(140,106,243,';
+              x = p.x; y = p.y; a = p.soft ? 0.1 : Math.min(0.72, 0.34 + p.dep * 0.26); col = 'rgba(140,106,243,';
             } else {
               const tg = p.path ? plaPt : recPt, dx = tg.x - p.x, dy = tg.y - p.y, d = Math.hypot(dx, dy) || 1;
               p.x += (dx / d) * (p.sp + 0.42); p.y += (dy / d) * (p.sp + 0.42);
-              if (d < 12) reset(p);
-              x = p.x; y = p.y; col = 'rgba(150,110,244,';
+              if (d < 12) newThru(p, false);
+              x = p.x; y = p.y; a = p.soft ? 0.1 : Math.min(0.72, 0.34 + p.dep * 0.26); col = 'rgba(150,110,244,';
             }
-            ctx.fillStyle = col + (p.soft ? 0.1 : Math.min(0.82, (0.34 + p.dep * 0.26) * aMul)) + ')';
+            ctx.fillStyle = col + a + ')';
             ctx.fillRect(x, y, p.s, p.s);
           }
           if (!reduce) raf = requestAnimationFrame(draw);
