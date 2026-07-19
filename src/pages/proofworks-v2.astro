@@ -73,12 +73,14 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .vcenter { text-align: center; position: relative; padding: 30px 18px; }
       .vcenter::before { content: ''; position: absolute; inset: -30% -20%; z-index: -1;
         background: radial-gradient(closest-side, rgba(245,247,255,0.72), rgba(245,247,255,0.25) 55%, transparent 78%); }
-      .vcenter h2 { font-size: clamp(22px, 2.6vw, 34px); color: var(--navy); letter-spacing: -0.025em; }
-      .vcenter p { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.55; color: var(--mut); margin: 12px auto 0; max-width: 24ch; }
+      .vcenter h2 { font-size: clamp(32px, 4.6vw, 64px); color: var(--navy); letter-spacing: -0.03em; perspective: 700px; }
+      .cyc { display: inline-block; transform-origin: center; transition: transform .24s ease, opacity .24s ease; }
+      .cyc.flip { transform: rotateX(90deg); opacity: 0; }
+      .vcenter p { font-family: 'JetBrains Mono', monospace; font-size: clamp(13px, 1.35vw, 16px); line-height: 1.6; color: #46506e; margin: 15px auto 0; max-width: 30ch; }
 
-      .hero-copy { max-width: 720px; }
-      .hero-copy .a { font-size: clamp(17px, 1.7vw, 21px); line-height: 1.5; color: var(--navy); font-weight: 600; }
-      .hero-copy .b { font-size: clamp(15px, 1.4vw, 17px); line-height: 1.5; color: var(--mut); margin: 12px 0 0; }
+      .hero-copy { max-width: none; }
+      .hero-copy .a { font-size: clamp(21px, 2.8vw, 40px); line-height: 1.3; letter-spacing: -0.02em; color: var(--navy); font-weight: 600; }
+      .hero-copy .b { font-size: clamp(17px, 1.9vw, 26px); line-height: 1.4; color: var(--mut); margin: 16px 0 0; }
 
       /* ── generic sections ── */
       .sec { position: relative; padding: 128px 0; overflow-x: clip; }
@@ -89,16 +91,18 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .fs { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(30px, 6vw, 78px); line-height: 1.02; letter-spacing: -0.04em; color: var(--navy); }
       .fs.r { text-align: right; } .fs.c { text-align: center; }
       .fs.dim { color: #9aa3bd; }
+      .fs.green { color: #3fbf8a; }
+      #vision .fs { font-size: clamp(34px, 7.2vw, 108px); line-height: 1.0; }
       .fs.acc { background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
       .fs.gap { margin-top: 28px; }
 
       /* section 3 — engine, positioned statements */
       .engine { position: relative; }
-      .estmt { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(26px, 4.4vw, 56px); line-height: 1.04; letter-spacing: -0.035em; color: var(--navy); max-width: 24ch; margin: 40px 0; position: relative; z-index: 2; }
+      .estmt { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 7vw, 104px); line-height: 1.0; letter-spacing: -0.04em; color: var(--navy); max-width: 22ch; margin: 56px 0; position: relative; z-index: 2; }
       .e1 { text-align: left; }
       .e2 { text-align: center; margin-left: auto; margin-right: auto; }
       .e3 { text-align: right; margin-left: auto; }
-      .e4 { text-align: center; max-width: none; font-size: clamp(30px, 6.4vw, 88px); background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .e4 { text-align: center; max-width: none; font-size: clamp(44px, 11vw, 158px); background: linear-gradient(94deg, var(--blue), var(--vio)); -webkit-background-clip: text; background-clip: text; color: transparent; }
       .ecurrent { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); z-index: 1; overflow: visible; }
       .ecurrent line { stroke: url(#eg); stroke-width: 2; stroke-dasharray: 5 14; }
 
@@ -115,10 +119,10 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .prog-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 14px; }
       .prog-row .p { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; color: var(--navy); opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
       .prog-row.in .p { opacity: 1; transform: none; }
-      .prog-row .p:nth-child(1){ font-size: clamp(16px,2vw,24px); color: var(--blue); transition-delay: 0s; }
-      .prog-row .p:nth-child(3){ font-size: clamp(18px,2.6vw,32px); transition-delay: .12s; }
-      .prog-row .p:nth-child(5){ font-size: clamp(22px,3.4vw,44px); transition-delay: .24s; }
-      .prog-row .p:nth-child(7){ font-size: clamp(26px,4.6vw,60px); color: var(--vio); transition-delay: .36s; }
+      .prog-row .p:nth-child(1){ font-size: clamp(18px,2.6vw,36px); color: var(--blue); transition-delay: 0s; }
+      .prog-row .p:nth-child(3){ font-size: clamp(20px,3.4vw,48px); transition-delay: .12s; }
+      .prog-row .p:nth-child(5){ font-size: clamp(24px,4.6vw,66px); transition-delay: .24s; }
+      .prog-row .p:nth-child(7){ font-size: clamp(30px,6.6vw,92px); color: var(--vio); transition-delay: .36s; }
       .prog-row .ar { color: #aab3cd; }
       .prog-rule { height: 2px; margin-top: 26px; border-radius: 2px; transform: scaleX(0); transform-origin: left;
         background: linear-gradient(90deg, var(--blue), var(--vio)); transition: transform 1.1s cubic-bezier(.22,1,.36,1); }
@@ -197,7 +201,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
               {inputs.map((n) => (<li class="node">{n}</li>))}
             </ul>
             <div class="vcenter">
-              <h2>Capability Layer</h2>
+              <h2><span class="cyc" id="cyc">Capability</span> Layer</h2>
               <p>A living connection between people, work, evidence, and opportunity.</p>
             </div>
             <div class="vcol out">
@@ -223,7 +227,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
         <div class="full-stmts">
           <p class="fs rl">Experience matters.</p>
           <p class="fs r rr">Credentials matter.</p>
-          <p class="fs c dim gap rc">But neither fully proves who can perform the work now.</p>
+          <p class="fs c green gap rc">But neither fully proves who can perform the work now.</p>
           <p class="fs acc gap rc">Proofworks adds the missing evidence.</p>
         </div>
       </section>
@@ -239,7 +243,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       </section>
 
       <!-- 4 · LARGER VISION -->
-      <section class="sec col">
+      <section class="sec col" id="vision">
         <p class="ey rev">The larger vision</p>
         <div class="full-stmts">
           <p class="fs dim rl">Placements are the starting point.</p>
@@ -306,6 +310,15 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
           const tick = () => { g.classList.add('on'); setTimeout(() => g.classList.remove('on'), 430); setTimeout(tick, 4200 + Math.random() * 5200); };
           setTimeout(tick, 1800);
         }
+        // cycle the Capability Layer word (keeps "Layer" fixed) with a twist
+        const cyc = document.getElementById('cyc');
+        if (cyc && !reduce) {
+          const words = ['Capability', 'Application', 'Talent']; let ci = 0;
+          setInterval(() => {
+            cyc.classList.add('flip');
+            setTimeout(() => { ci = (ci + 1) % words.length; cyc.textContent = words[ci]; cyc.classList.remove('flip'); }, 240);
+          }, 2800);
+        }
         // copy email (no mailto)
         const box = document.getElementById('copybox');
         if (box) {
@@ -346,7 +359,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
         function newIn() { return { k: 'in', x: Math.random() * W * 0.30, y: H * (0.06 + Math.random() * 0.86), sp: 0.2 + Math.random() * 0.7, s: 0.5 + Math.random() * 1.1, jt: (Math.random() - .5) * 0.9 }; }
         function newOut() { const path = Math.random() < 0.5 ? R : P; return { k: 'out', x: C.x, y: C.y, tx: path, st: 0, sp: 0.6 + Math.random() * 1.1, s: 0.5 + Math.random() * 0.9, gold: Math.random() < 0.015 }; }
         function build() {
-          const total = Math.max(300, Math.min(1900, Math.round(W * H / (W < 760 ? 1900 : 720))));
+          const total = Math.max(500, Math.min(W < 760 ? 1800 : 5200, Math.round(W * H / (W < 760 ? 560 : 195))));
           parts = [];
           for (let i = 0; i < total; i++) {
             const r = Math.random();
@@ -369,21 +382,21 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
               p.x += (dx / d) * p.sp + (-dy / d) * p.jt * 0.4;
               p.y += (dy / d) * p.sp + (dx / d) * p.jt * 0.4 + Math.sin((p.x + t * 30) * 0.02) * 0.3;
               if (d < coreR * 0.8) Object.assign(p, newIn());
-              ctx.fillStyle = 'rgba(70,118,232,' + (0.36 + p.s * 0.2) + ')';
-              ctx.fillRect(p.x, p.y, p.s, p.s);
+              ctx.fillStyle = 'rgba(64,114,236,' + (0.5 + p.s * 0.24) + ')';
+              ctx.fillRect(p.x, p.y, p.s + 0.3, p.s + 0.3);
             } else if (p.k === 'core') {
               p.a += p.av * 0.016;
               const rad = p.rr * breathe;
               const x = C.x + Math.cos(p.a) * rad, y = C.y + Math.sin(p.a) * rad * 0.82;
-              ctx.fillStyle = 'rgba(82,84,226,' + (0.42 + p.s * 0.18) + ')';
-              ctx.fillRect(x, y, p.s, p.s);
+              ctx.fillStyle = 'rgba(78,80,229,' + (0.56 + p.s * 0.2) + ')';
+              ctx.fillRect(x, y, p.s + 0.3, p.s + 0.3);
             } else {
               const tgt = p.st === 0 ? p.tx : CO;
               const dx = tgt.x - p.x, dy = tgt.y - p.y, d = Math.hypot(dx, dy) || 1;
               p.x += (dx / d) * p.sp; p.y += (dy / d) * p.sp;
               if (d < 14) { if (p.st === 0) p.st = 1; else Object.assign(p, newOut()); }
               if (p.gold && p.st === 1 && d < coreR) { ctx.fillStyle = 'rgba(224,162,78,0.95)'; ctx.fillRect(p.x, p.y, p.s + 1.2, p.s + 1.2); }
-              else { ctx.fillStyle = 'rgba(139,108,240,' + (0.34 + p.s * 0.16) + ')'; ctx.fillRect(p.x, p.y, p.s, p.s); }
+              else { ctx.fillStyle = 'rgba(140,104,242,' + (0.5 + p.s * 0.2) + ')'; ctx.fillRect(p.x, p.y, p.s + 0.3, p.s + 0.3); }
             }
           }
           raf = requestAnimationFrame(frame);
