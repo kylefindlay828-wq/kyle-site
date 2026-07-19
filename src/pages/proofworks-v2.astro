@@ -78,15 +78,15 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .cyc { display: block; white-space: nowrap; transition: opacity .5s ease, transform .5s ease; }
       .cyc.flip { opacity: 0; transform: translateY(-12px); }
       .cl-fixed { display: block; }
-      .vcenter p { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 500; font-size: clamp(16px, 1.9vw, 24px); line-height: 1.45; color: #2f3a5e; margin: 20px auto 0; max-width: 26ch; }
+      .vcenter p { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 500; font-size: clamp(13px, 1.4vw, 17px); line-height: 1.5; color: #55608a; margin: 14px auto 0; max-width: 30ch; }
 
       .hero-copy { max-width: none; }
-      .hero-copy .a { font-size: clamp(32px, 6.4vw, 104px); line-height: 1.04; letter-spacing: -0.035em; color: var(--navy); font-weight: 600; }
-      .hero-copy .b { font-size: clamp(24px, 3.6vw, 56px); line-height: 1.16; letter-spacing: -0.02em; color: var(--mut); margin: 22px 0 0; }
+      .hero-copy .a { font-size: clamp(16px, 1.7vw, 22px); line-height: 1.5; color: #46506e; font-weight: 500; max-width: 62ch; }
+      .hero-copy .b { font-size: clamp(14px, 1.4vw, 18px); line-height: 1.5; color: var(--mut); margin: 12px 0 0; max-width: 60ch; }
 
       /* ── generic sections ── */
       .sec { position: relative; padding: 128px 0; overflow-x: clip; }
-      .ey { font-family: 'JetBrains Mono', monospace; font-size: clamp(13px, 1.4vw, 18px); letter-spacing: .22em; text-transform: uppercase; color: var(--blue); margin: 0 0 44px; }
+      .ey { font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1vw, 13px); letter-spacing: .2em; text-transform: uppercase; color: var(--blue); margin: 0 0 40px; }
 
       /* section 2 — full-width statements */
       .full-stmts { display: flex; flex-direction: column; gap: 8px; }
@@ -129,7 +129,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
       .prog-rule { height: 2px; margin-top: 26px; border-radius: 2px; transform: scaleX(0); transform-origin: left;
         background: linear-gradient(90deg, var(--blue), var(--vio)); transition: transform 1.1s cubic-bezier(.22,1,.36,1); }
       .prog-rule.in { transform: scaleX(1); }
-      .prog-copy { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; color: var(--mut); max-width: 60ch; margin: 34px 0 0; }
+      .prog-copy { font-size: clamp(14px, 1.4vw, 17px); line-height: 1.55; color: var(--mut); max-width: 62ch; margin: 30px 0 0; }
 
       /* contact */
       .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(40px, 7vw, 100px); line-height: .96; letter-spacing: -0.045em; color: var(--navy); }
@@ -151,7 +151,7 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
 
       .foot { margin-top: 40px; border-top: 1px solid var(--line); }
       .foot-in { max-width: 1240px; margin: 0 auto; padding: 34px 32px 54px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
-      .foot-b { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; letter-spacing: -0.02em; color: var(--navy); }
+      .foot-b { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; color: var(--navy); }
       .foot-t { color: var(--mut); font-size: 14px; margin-top: 5px; }
       .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
       .foot-links a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); transition: color .18s ease; }
@@ -211,6 +211,12 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
                 <span class="node v">Recruiter Partners</span>
                 <span class="node v">Direct Placement</span>
               </div>
+              <svg class="omerge" viewBox="0 0 60 46" aria-hidden="true">
+                <path d="M6 6 C 30 10, 34 30, 34 39" />
+                <path d="M54 6 C 38 10, 34 30, 34 39" />
+                <path class="omh" d="M28 33 L 34 42 L 40 33" />
+              </svg>
+              <span class="node w">Companies</span>
             </div>
           </div>
 
@@ -341,62 +347,86 @@ const progression = ['Placements', 'Talent Network', 'Capability Data', 'Hiring 
         const ctx = cv.getContext('2d');
         if (!ctx) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = C, plaPt = C, coPt = C, inPts = [], coreR = 80, parts = [], t0 = performance.now(), raf = 0;
-        function ptOf(el, side) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { x: (side === 'r' ? r.right : side === 'l' ? r.left : r.left + r.width / 2) - h.left, y: r.top + r.height / 2 - h.top }; }
+        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = { x: 0, y: 0 }, plaPt = { x: 0, y: 0 }, gate = { x: 0, y: 0 }, src = { x0: 0, y0: 0, x1: 0, y1: 0 }, circR = 120, parts = [], t0 = performance.now(), raf = 0;
+        function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { l: r.left - h.left, t: r.top - h.top, r: r.right - h.left, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left, cy: r.top + r.height / 2 - h.top }; }
         function measure() {
-          const inEls = [...document.querySelectorAll('.vcol.in .node')];
-          inPts = inEls.length ? inEls.map((el) => ptOf(el, 'r')) : [{ x: W * 0.05, y: H * 0.5 }];
+          const inCol = document.querySelector('.vcol.in');
+          if (inCol) { const b = rectIn(inCol); src = { x0: b.l - 34, y0: b.t - 34, x1: b.r + 50, y1: b.b + 34 }; }
+          else src = { x0: 0, y0: H * 0.15, x1: W * 0.24, y1: H * 0.85 };
           const outEls = [...document.querySelectorAll('.vcol.out .node.v')];
-          recPt = outEls[0] ? ptOf(outEls[0], 'l') : { x: W * 0.8, y: H * 0.28 };
-          plaPt = outEls[1] ? ptOf(outEls[1], 'l') : { x: W * 0.8, y: H * 0.66 };
+          recPt = outEls[0] ? (function () { const b = rectIn(outEls[0]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.3 };
+          plaPt = outEls[1] ? (function () { const b = rectIn(outEls[1]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.64 };
           const cen = document.querySelector('.vcenter');
-          C = cen ? ptOf(cen, 'c') : { x: W * 0.5, y: H * 0.47 };
-          coreR = Math.min(W, H) * 0.2;
+          C = cen ? (function () { const b = rectIn(cen); return { x: b.cx, y: b.cy }; })() : { x: W * 0.52, y: H * 0.47 };
+          gate = { x: Math.min(recPt.x, plaPt.x) - 90, y: (recPt.y + plaPt.y) / 2 };
+          circR = Math.min(W, H) * 0.22;
         }
         function reset(p) {
-          const o = (Math.random() * inPts.length) | 0, s = inPts[o] || { x: 0, y: H * 0.5 };
-          p.o = o; p.st = 'in'; p.x = s.x + (Math.random() - .5) * 12; p.y = s.y + (Math.random() - .5) * 12;
-          p.sp = 0.35 + Math.random() * 0.75; p.s = 0.5 + Math.random() * 1.3; p.jt = (Math.random() - .5) * 0.95;
-          p.path = Math.random() < 0.5 ? 0 : 1; p.gold = Math.random() < 0.014;
+          p.st = 'in';
+          p.x = src.x0 + Math.random() * (src.x1 - src.x0);
+          p.y = src.y0 + Math.random() * (src.y1 - src.y0);
+          p.dep = 0.5 + Math.random() * 0.85;
+          p.sp = (0.24 + Math.random() * 0.66) * p.dep;
+          p.soft = Math.random() < 0.07;
+          p.s = p.soft ? 2.4 + Math.random() * 2.4 : 0.4 + Math.random() * 1.3;
+          p.jt = (Math.random() - .5) * 0.9;
+          p.path = Math.random() < 0.5 ? 0 : 1;
+          p.gold = Math.random() < 0.012;
+        }
+        function enterCirc(p) {
+          p.st = 'circ'; p.a = Math.atan2(p.y - C.y, p.x - C.x);
+          p.rr = Math.hypot(p.x - C.x, p.y - C.y);
+          p.rt = circR * (0.32 + Math.random() * 0.72);
+          p.av = (0.006 + Math.random() * 0.017) / p.dep;
+          p.life = 60 + Math.random() * 200;
         }
         function build() {
-          const total = Math.max(500, Math.min(W < 760 ? 1500 : 5200, Math.round(W * H / (W < 760 ? 640 : 195))));
+          const total = W < 560 ? 800 : W < 1000 ? 2200 : Math.min(5000, Math.round(W * H / 190));
           parts = [];
           for (let i = 0; i < total; i++) {
             const p = {}; reset(p); const r = Math.random();
-            if (r < 0.55) { const f = Math.random(), s = inPts[p.o]; p.x = s.x + (C.x - s.x) * f + (Math.random() - .5) * 8; p.y = s.y + (C.y - s.y) * f + (Math.random() - .5) * 8; }
-            else if (r < 0.8) { p.st = 'core'; p.a = Math.random() * Math.PI * 2; p.rr = coreR * (0.22 + Math.random() * 0.55); p.life = 20 + Math.random() * 46; }
-            else { p.st = 'p1'; const tg = p.path ? plaPt : recPt, f = Math.random(); p.x = C.x + (tg.x - C.x) * f; p.y = C.y + (tg.y - C.y) * f; }
+            if (r < 0.5) { const f = Math.random(); p.x += (C.x - p.x) * f * 0.7; p.y += (C.y - p.y) * f * 0.5; }
+            else if (r < 0.82) { enterCirc(p); p.a = Math.random() * Math.PI * 2; p.rr = p.rt; }
+            else { p.st = 'out'; const f = Math.random(); p.x = C.x + (gate.x - C.x) * f; p.y = C.y + (gate.y - C.y) * f; }
             parts.push(p);
           }
         }
         function draw(now) {
-          const t = (now - t0) / 1000, breathe = 1 + Math.sin(t * 0.5) * 0.08;
+          const t = (now - t0) / 1000, breathe = 1 + Math.sin(t * 0.5) * 0.07;
           ctx.clearRect(0, 0, W, H);
-          const ng = ctx.createRadialGradient(C.x, C.y, 0, C.x, C.y, coreR * 1.7 * breathe);
-          ng.addColorStop(0, 'rgba(96,100,238,0.24)'); ng.addColorStop(0.5, 'rgba(104,96,232,0.11)'); ng.addColorStop(1, 'rgba(104,96,232,0)');
-          ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(C.x, C.y, coreR * 1.7 * breathe, 0, Math.PI * 2); ctx.fill();
+          const ng = ctx.createRadialGradient(C.x, C.y, 0, C.x, C.y, circR * 1.5 * breathe);
+          ng.addColorStop(0, 'rgba(94,98,236,0.20)'); ng.addColorStop(0.5, 'rgba(104,96,232,0.10)'); ng.addColorStop(1, 'rgba(104,96,232,0)');
+          ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(C.x, C.y, circR * 1.5 * breathe, 0, Math.PI * 2); ctx.fill();
           for (const p of parts) {
+            let x = p.x, y = p.y, col;
             if (p.st === 'in') {
               const dx = C.x - p.x, dy = C.y - p.y, d = Math.hypot(dx, dy) || 1;
-              p.x += (dx / d) * p.sp + (-dy / d) * p.jt * 0.5;
-              p.y += (dy / d) * p.sp + (dx / d) * p.jt * 0.5 + Math.sin((p.x + t * 26) * 0.02) * 0.3;
-              if (d < coreR * 0.7) { p.st = 'core'; p.a = Math.atan2(p.y - C.y, p.x - C.x); p.rr = coreR * (0.25 + Math.random() * 0.5); p.life = 18 + Math.random() * 44; }
-              ctx.fillStyle = 'rgba(62,112,236,' + (0.5 + p.s * 0.24) + ')'; ctx.fillRect(p.x, p.y, p.s + 0.3, p.s + 0.3);
-            } else if (p.st === 'core') {
-              p.a += 0.02; p.rr += (coreR * 0.4 - p.rr) * 0.02;
-              const x = C.x + Math.cos(p.a) * p.rr * breathe, y = C.y + Math.sin(p.a) * p.rr * breathe * 0.82;
-              if (--p.life <= 0) { p.st = 'p1'; p.x = x; p.y = y; }
-              ctx.fillStyle = 'rgba(78,80,229,' + (0.58 + p.s * 0.2) + ')'; ctx.fillRect(x, y, p.s + 0.4, p.s + 0.4);
+              p.x += (dx / d) * p.sp + (-dy / d) * p.jt * 0.4 + Math.sin((p.y + t * 22) * 0.012) * 0.25;
+              p.y += (dy / d) * p.sp + (dx / d) * p.jt * 0.4;
+              if (d < circR * (0.82 + Math.random() * 0.3)) enterCirc(p);
+              x = p.x; y = p.y; col = 'rgba(60,112,236,';
+            } else if (p.st === 'circ') {
+              p.a += p.av; p.rr += (p.rt - p.rr) * 0.02;
+              const rad = p.rr * breathe;
+              x = C.x + Math.cos(p.a) * rad; y = C.y + Math.sin(p.a) * rad * 0.8;
+              p.x = x; p.y = y;
+              if (p.life-- <= 0 && Math.cos(p.a) > 0.12) p.st = 'out';
+              col = 'rgba(82,84,228,';
+            } else if (p.st === 'out') {
+              const dx = gate.x - p.x, dy = gate.y - p.y, d = Math.hypot(dx, dy) || 1;
+              p.x += (dx / d) * (p.sp + 0.4) + (-dy / d) * Math.sin((p.y + t * 20) * 0.02) * 0.3;
+              p.y += (dy / d) * (p.sp + 0.4);
+              if (d < 22) p.st = 'fan';
+              x = p.x; y = p.y; col = 'rgba(140,106,243,';
             } else {
               const tg = p.path ? plaPt : recPt, dx = tg.x - p.x, dy = tg.y - p.y, d = Math.hypot(dx, dy) || 1;
-              const wob = Math.sin((p.y + t * 24) * 0.02) * 0.4;
-              p.x += (dx / d) * (p.sp + 0.4) + (-dy / d) * wob;
-              p.y += (dy / d) * (p.sp + 0.4) + (dx / d) * wob;
+              p.x += (dx / d) * (p.sp + 0.42); p.y += (dy / d) * (p.sp + 0.42);
               if (d < 12) reset(p);
-              if (p.gold && p.path && d < 46) { ctx.fillStyle = 'rgba(224,162,78,0.95)'; ctx.fillRect(p.x, p.y, p.s + 1.1, p.s + 1.1); }
-              else { ctx.fillStyle = 'rgba(146,108,243,' + (0.5 + p.s * 0.2) + ')'; ctx.fillRect(p.x, p.y, p.s + 0.2, p.s + 0.2); }
+              if (p.gold && d < 40) { ctx.fillStyle = 'rgba(224,162,78,0.95)'; ctx.fillRect(p.x, p.y, p.s + 1, p.s + 1); continue; }
+              x = p.x; y = p.y; col = 'rgba(150,110,244,';
             }
+            ctx.fillStyle = col + (p.soft ? 0.1 : Math.min(0.72, 0.34 + p.dep * 0.26)) + ')';
+            ctx.fillRect(x, y, p.s, p.s);
           }
           if (!reduce) raf = requestAnimationFrame(draw);
         }
