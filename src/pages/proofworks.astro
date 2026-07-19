@@ -74,30 +74,31 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .btn-ghost:hover { border-color: rgba(76,126,245,0.5); background: rgba(255,255,255,0.8); transform: translateY(-1px); }
 
       /* ── HERO ── */
-      .hero { position: relative; min-height: 92vh; display: flex; overflow: hidden;
+      .hero { position: relative; min-height: 82vh; display: flex; overflow: hidden;
         background: radial-gradient(50% 42% at 52% 46%, rgba(123,108,240,0.16), transparent 72%),
                     radial-gradient(40% 40% at 82% 44%, rgba(139,108,240,0.13), transparent 72%),
                     radial-gradient(46% 50% at 12% 40%, rgba(76,126,245,0.10), transparent 74%); }
       #field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
       .grain { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-      .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 26px 0 44px; }
+      .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0 30px; }
 
       .hero-h { font-size: var(--pw-hero); line-height: 1.06; letter-spacing: -0.03em; color: var(--navy); max-width: 16ch; text-wrap: balance; }
       .glitch { position: relative; display: inline-block; color: var(--navy); }
       .glitch::before, .glitch::after { content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; pointer-events: none; }
-      .glitch::before { color: rgba(76,126,245,0.42); transform: translate(-1.2px, 0.4px); }
-      .glitch::after { color: rgba(139,108,240,0.38); transform: translate(1.2px, -0.4px); }
+      .glitch::before { color: rgba(76,126,245,0.42); transform: translate(-0.3px, 0.1px); }
+      .glitch::after { color: rgba(139,108,240,0.38); transform: translate(0.3px, -0.1px); }
       .glitch.on::before { animation: gA .42s steps(3) 1; }
       .glitch.on::after { animation: gB .42s steps(3) 1; }
       @keyframes gA { 0%{transform:translate(-1px,0)} 25%{transform:translate(-5px,1px)} 50%{transform:translate(3px,-1px)} 75%{transform:translate(-3px,1px)} 100%{transform:translate(-1.2px,0.4px)} }
       @keyframes gB { 0%{transform:translate(1px,0)} 25%{transform:translate(5px,-1px)} 50%{transform:translate(-3px,1px)} 75%{transform:translate(3px,-1px)} 100%{transform:translate(1.2px,-0.4px)} }
 
-      .viz { display: grid; grid-template-columns: minmax(130px, 0.85fr) auto minmax(150px, 0.85fr); align-items: center; gap: 24px; padding: 20px 0; }
+      .viz { display: grid; grid-template-columns: minmax(130px, 0.85fr) auto minmax(150px, 0.85fr); align-items: center; gap: 24px; padding: 8px 0; }
       .vcol { display: flex; flex-direction: column; gap: 22px; }
       .vcol.out { align-items: flex-end; text-align: right; }
       .node { font-size: var(--pw-small); font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
-      .vcol.in .node { font-size: calc(var(--pw-small) * 1.8); }
+      .vcol.in .node { font-size: calc(var(--pw-small) * 1.8); gap: 0; }
+      .vcol.in .node::before { display: none; }
       .node::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px rgba(76,126,245,0.7); }
       .vcol.out .node { flex-direction: row-reverse; font-size: clamp(20px, 2.2vw, 32px); line-height: 1.15; font-weight: 600; color: var(--navy); }
       .vcol.out .node::before { background: var(--vio); box-shadow: 0 0 10px rgba(139,108,240,0.7); }
@@ -106,11 +107,9 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .vcenter::before { content: ''; position: absolute; inset: -30% -20%; z-index: -1;
         background: radial-gradient(closest-side, rgba(245,247,255,0.72), rgba(245,247,255,0.25) 55%, transparent 78%); }
       .vcenter h2.cl { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: var(--pw-section-secondary); color: var(--navy); letter-spacing: -0.03em; line-height: 1.05; }
-      .cyc { display: block; white-space: nowrap; transition: opacity .5s ease, transform .5s ease; }
+      .cyc { display: inline-block; min-width: 6.9em; text-align: center; white-space: nowrap; transition: opacity .5s ease, transform .5s ease; }
       .cyc.flip { opacity: 0; transform: translateY(-12px); }
       .cl-fixed { display: block; }
-      .vcenter p { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-weight: 600; font-size: clamp(18px, 2.2vw, 30px); line-height: 1.4; color: #16214a; margin: 16px auto 0; max-width: 40ch; text-wrap: balance; }
-      .vcenter p .op { color: #3f9184; }
 
       .hero-copy { max-width: none; }
       .hero-copy .a { font-size: var(--pw-emphasis-copy); line-height: 1.44; color: #2a3556; font-weight: 600; max-width: 46ch; }
@@ -219,7 +218,8 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         .viz { grid-template-columns: 1fr; gap: 26px; justify-items: center; padding: 30px 0; }
         .vcol { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px 20px; order: 2; }
         .vcol.out { align-items: center; text-align: center; order: 3; }
-        .vcol.out .node { flex-direction: row; } .opair { flex-direction: row; align-items: center; }
+        .vcol.out .node { flex-direction: row; } .opair { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 20px; }
+        .vcol.in .node, .vcol.out .node { max-width: 92vw; }
         .vcenter { order: 1; }
         .fs.r, .fs.c { text-align: left; }
       }
@@ -266,7 +266,6 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
             </ul>
             <div class="vcenter">
               <h2 class="cl"><span class="cyc" id="cyc">Capability</span><span class="cl-fixed">Layer</span></h2>
-              <p>A living connection between people, changing work, demonstrated capability, and <span class="op">opportunity</span>.</p>
             </div>
             <div class="vcol out">
               <div class="opair">
@@ -430,12 +429,14 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         const ctx = cv.getContext('2d');
         if (!ctx) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = { x: 0, y: 0 }, plaPt = { x: 0, y: 0 }, gate = { x: 0, y: 0 }, src = { x0: 0, y0: 0, x1: 0, y1: 0 }, circR = 120, parts = [], t0 = performance.now(), raf = 0;
+        let W = 0, H = 0, DPR = 1, C = { x: 0, y: 0 }, recPt = { x: 0, y: 0 }, plaPt = { x: 0, y: 0 }, gate = { x: 0, y: 0 }, src = { x0: 0, y0: 0, x1: 0, y1: 0 }, inPts = [], circR = 120, parts = [], t0 = performance.now(), raf = 0;
         function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { l: r.left - h.left, t: r.top - h.top, r: r.right - h.left, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left, cy: r.top + r.height / 2 - h.top }; }
         function measure() {
           const inCol = document.querySelector('.vcol.in');
           if (inCol) { const b = rectIn(inCol); src = { x0: b.l - 34, y0: b.t - 34, x1: b.r + 50, y1: b.b + 34 }; }
           else src = { x0: 0, y0: H * 0.15, x1: W * 0.24, y1: H * 0.85 };
+          // one emission point per input word (mirrors the two output destinations)
+          inPts = [...document.querySelectorAll('.vcol.in .node')].map((el) => { const b = rectIn(el); return { x: b.r + 6, y: b.cy }; });
           const outEls = [...document.querySelectorAll('.vcol.out .node.v')];
           recPt = outEls[0] ? (function () { const b = rectIn(outEls[0]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.3 };
           plaPt = outEls[1] ? (function () { const b = rectIn(outEls[1]); return { x: b.l, y: b.cy }; })() : { x: W * 0.8, y: H * 0.64 };
@@ -446,21 +447,25 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         }
         function reset(p) {
           p.st = 'in';
-          p.x = src.x0 + Math.random() * (src.x1 - src.x0);
-          p.y = src.y0 + Math.random() * (src.y1 - src.y0);
+          const ip = inPts.length ? inPts[(Math.random() * inPts.length) | 0] : { x: src.x0, y: (src.y0 + src.y1) / 2 };
+          p.x = ip.x + (Math.random() - 0.5) * 10;
+          p.y = ip.y + (Math.random() - 0.5) * 12;
           p.dep = 0.5 + Math.random() * 0.85;
           p.sp = (0.24 + Math.random() * 0.66) * p.dep;
           p.soft = Math.random() < 0.07;
           p.s = p.soft ? 2.4 + Math.random() * 2.4 : 0.4 + Math.random() * 1.3;
           p.jt = (Math.random() - .5) * 0.9;
           p.path = Math.random() < 0.5 ? 0 : 1;
+          // ~55% recirculate on the input side (word→center→word) so the five
+          // input lanes stay populated; the rest flow through to the two outputs.
+          p.leftOnly = Math.random() < 0.55;
         }
         function enterCirc(p) {
           p.st = 'circ'; p.a = Math.atan2(p.y - C.y, p.x - C.x);
           p.rr = Math.hypot(p.x - C.x, p.y - C.y);
           p.rt = circR * (0.32 + Math.random() * 0.72);
           p.av = (0.006 + Math.random() * 0.017) / p.dep;
-          p.life = 60 + Math.random() * 200;
+          p.life = 45 + Math.random() * 150;
         }
         function build() {
           const total = W < 560 ? 800 : W < 1000 ? 2200 : Math.min(5000, Math.round(W * H / 190));
@@ -480,19 +485,20 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
           ng.addColorStop(0, 'rgba(94,98,236,0.20)'); ng.addColorStop(0.5, 'rgba(104,96,232,0.10)'); ng.addColorStop(1, 'rgba(104,96,232,0)');
           ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(C.x, C.y, circR * 1.5 * breathe, 0, Math.PI * 2); ctx.fill();
           for (const p of parts) {
-            let x = p.x, y = p.y, col;
+            let x = p.x, y = p.y, col, aMul = 1;
             if (p.st === 'in') {
               const dx = C.x - p.x, dy = C.y - p.y, d = Math.hypot(dx, dy) || 1;
-              p.x += (dx / d) * p.sp + (-dy / d) * p.jt * 0.4 + Math.sin((p.y + t * 22) * 0.012) * 0.25;
-              p.y += (dy / d) * p.sp + (dx / d) * p.jt * 0.4;
-              if (d < circR * (0.82 + Math.random() * 0.3)) enterCirc(p);
-              x = p.x; y = p.y; col = 'rgba(60,112,236,';
+              const wob = Math.sin((p.x + t * 18) * 0.02) * 0.3;
+              p.x += (dx / d) * p.sp * 0.62 + (-dy / d) * wob;
+              p.y += (dy / d) * p.sp * 0.62 + (dx / d) * wob;
+              if (d < circR * (0.8 + Math.random() * 0.3)) enterCirc(p);
+              x = p.x; y = p.y; col = 'rgba(60,112,236,'; aMul = 1.32;
             } else if (p.st === 'circ') {
               p.a += p.av; p.rr += (p.rt - p.rr) * 0.02;
               const rad = p.rr * breathe;
               x = C.x + Math.cos(p.a) * rad; y = C.y + Math.sin(p.a) * rad * 0.8;
               p.x = x; p.y = y;
-              if (p.life-- <= 0 && Math.cos(p.a) > 0.12) p.st = 'out';
+              if (p.life-- <= 0) { if (p.leftOnly) reset(p); else if (Math.cos(p.a) > 0.12) p.st = 'out'; }
               col = 'rgba(82,84,228,';
             } else if (p.st === 'out') {
               const dx = gate.x - p.x, dy = gate.y - p.y, d = Math.hypot(dx, dy) || 1;
@@ -506,7 +512,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
               if (d < 12) reset(p);
               x = p.x; y = p.y; col = 'rgba(150,110,244,';
             }
-            ctx.fillStyle = col + (p.soft ? 0.1 : Math.min(0.72, 0.34 + p.dep * 0.26)) + ')';
+            ctx.fillStyle = col + (p.soft ? 0.1 : Math.min(0.82, (0.34 + p.dep * 0.26) * aMul)) + ')';
             ctx.fillRect(x, y, p.s, p.s);
           }
           if (!reduce) raf = requestAnimationFrame(draw);
