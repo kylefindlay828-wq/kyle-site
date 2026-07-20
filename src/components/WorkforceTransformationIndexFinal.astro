@@ -139,6 +139,13 @@ const bubbles = base.map((c) => {
       <p class="wti-size">Bubble size = <b>U.S. employment in the mapped occupations</b> (BLS OEWS, May 2025).</p>
     </div>
 
+    <button class="wti-deep" type="button" data-reveal aria-label="Open the Logistics coordination market map">
+      <span class="wti-deep-tag">Deep dive · live now</span>
+      <span class="wti-deep-title">Logistics coordination</span>
+      <span class="wti-deep-hook">The same tasks are a job title at one brokerage and an AI agent's workload at another. That gap is the market.</span>
+      <span class="wti-deep-open">See the full market map <span aria-hidden="true">→</span></span>
+    </button>
+
   </div>
 
   <div class="wti-backdrop" hidden></div>
@@ -188,8 +195,60 @@ const bubbles = base.map((c) => {
 
       const li = (a) => a.map((t) => `<li>${t}</li>`).join('');
       const block = (t, a) => `<div class="wti-p-block"><p class="wti-p-lbl">${t}</p><ul>${li(a)}</ul></div>`;
+
+      // §5 note appended to every OTHER cluster panel; the label re-opens the live logistics panel.
+      const MAP_NOTE = `<p class="wti-mm-note">Full mapping in progress. <a class="wti-mm-trigger" href="#">Logistics coordination</a> is live.</p>`;
+
+      // Logistics Coordination deep cluster — verbatim market-map panel (brief §3).
+      function logisticsPanel() {
+        const role = (name, desc) => `<div class="wti-mm-role"><b>${name}</b><span>${desc}</span></div>`;
+        const card = (name, desc) => `<div class="wti-mm-card"><b>${name}</b><span>${desc}</span></div>`;
+        const src = (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`;
+        const U1 = 'https://www.chrobinson.com/en-us/about-us/newsroom/press-releases/2025/chrobinson-launches-an-ai-agent-to-help-shippers-adapt/';
+        const U2 = 'https://www.chrobinson.com/en-us/about-us/newsroom/press-releases/2026/chrobinson-lean-ai-agents-for-ltl-pickup-efficiency/';
+        const U3 = 'https://www.freightwaves.com/news/c-h-robinson-will-use-ai-agents-to-classify-ltl-freight';
+        const U4 = 'https://www.scmr.com/article/beyond-the-algorithm-how-uber-freight-is-using-ai-to-redefine-logistics';
+        const U5 = 'https://www.digitalcommerce360.com/2025/09/16/uber-freight-agentic-ai/';
+        return `<h3 id="wti-panel-title">Logistics coordination</h3>` +
+          `<p class="wti-mm-frame">The same tasks are a job title at one brokerage and an AI agent's workload at another. That gap is the market.</p>` +
+          `<div class="wti-p-block">` +
+            `<p class="wti-p-lbl">Roles in motion</p>` +
+            role(`Track &amp; trace / shipment coordinator`, `C.H. Robinson's AI agents now run <b>95%</b> of missed-pickup checks — over <b>350 hours</b> of manual coordination work automated per day. That was a coordinator's core task.`) +
+            role(`Carrier sales rep`, `Uber Freight's voice AI negotiates carrier rates, cutting hold times up to <b>98%</b>, humans in the loop for verification. Arrive and TQL are still hiring this role by the hundreds.`) +
+            role(`Order entry / account rep`, `Over <b>75%</b> of C.H. Robinson's LTL orders are automated — including the email-based tenders from small shippers that used to be someone's inbox. TQL's current account-rep postings still list "input and manage shipment information" as a core duty.`) +
+            role(`Freight classification specialist`, `C.H. Robinson built an agent that classifies NMFC freight automatically. A specialist skill became a system feature.`) +
+            role(`What's rising: the exceptions operator`, `When the routine work automates, what's left is exception management, carrier relationships, and workflow judgment. Every AI-forward broker says its people are moving there. No resume screens for it. That's the capability Proofworks proves.`) +
+          `</div>` +
+          `<div class="wti-p-block">` +
+            `<p class="wti-p-lbl">Where the work is going / where the operators are</p>` +
+            `<p class="wti-p-lbl wti-mm-group">AI-forward — where the work is going</p>` +
+            `<div class="wti-mm-grid">` +
+              card(`C.H. Robinson`, `hundreds of AI agents across the shipment lifecycle; 3M+ tasks automated`) +
+              card(`Uber Freight`, `agentic AI on repetitive ops; voice agents negotiating rates`) +
+            `</div>` +
+            `<p class="wti-p-lbl wti-mm-group">Traditional — where the operators are today</p>` +
+            `<div class="wti-mm-grid">` +
+              card(`TQL`, `mass-hiring account reps, no experience required, for tasks the leaders just automated`) +
+              card(`Arrive Logistics`, `~75 open roles, heavy on coverage specialists securing carrier capacity by phone`) +
+            `</div>` +
+          `</div>` +
+          `<div class="wti-p-block">` +
+            `<p class="wti-p-lbl">The placeable candidate</p>` +
+            `<p class="wti-p-sum">A coverage rep at a traditional brokerage who documented automating part of their own track-and-trace or quoting workflow — with before/after numbers. They've already proven they belong on the judgment side of the line. Today, no hiring process can see them. Proofworks exists to make them visible.</p>` +
+          `</div>` +
+          `<p class="wti-mm-sources">Sources: C.H. Robinson press releases (Jun 2025, Jan 2026, Mar 2026) → ${src(U1)} · ${src(U2)} · FreightWaves → ${src(U3)} · Supply Chain Management Review on Uber Freight → ${src(U4)} · Digital Commerce 360 → ${src(U5)} · TQL and Arrive Logistics current job postings, July 2026.</p>`;
+      }
+
       function openPanel(id, focusEl) {
         const c = byId[id]; if (!c) return; lastFocus = focusEl || null;
+        if (id === 'logistics-coordination') {
+          panelBody.innerHTML = logisticsPanel();
+          panelBody.scrollTop = 0; panel.scrollTop = 0;
+          panel.hidden = false; backdrop.hidden = false;
+          requestAnimationFrame(() => { panel.classList.add('open'); backdrop.classList.add('open'); });
+          panel.focus();
+          return;
+        }
         const m = c.metrics;
         const metricsBlock = m ?
           `<div class="wti-p-metrics">` +
@@ -211,7 +270,10 @@ const bubbles = base.map((c) => {
           block('Representative industries', c.industries) + block('Representative roles', c.roles) +
           block('Why the work is changing', c.whyChanging) + block('What can be developed internally', c.internalDevelopment) +
           block('Where external hiring may be required', c.externalHiring) + (c.marketExamples ? block('Market examples', c.marketExamples) : '') +
-          sourcesBlock;
+          sourcesBlock + MAP_NOTE;
+        const trig = panelBody.querySelector('.wti-mm-trigger');
+        if (trig) trig.addEventListener('click', (e) => { e.preventDefault(); const lb = root.querySelector('.wti-b[data-id="logistics-coordination"]'); openPanel('logistics-coordination', lb || focusEl); });
+        panelBody.scrollTop = 0; panel.scrollTop = 0;
         panel.hidden = false; backdrop.hidden = false;
         requestAnimationFrame(() => { panel.classList.add('open'); backdrop.classList.add('open'); });
         panel.focus();
@@ -230,6 +292,13 @@ const bubbles = base.map((c) => {
         el.addEventListener('click', () => openPanel(el.dataset.id, el));
         el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(el.dataset.id, el); } });
       });
+      // "Deep dive" teaser: opens the logistics market map; hovering it highlights its bubble.
+      const deep = root.querySelector('.wti-deep');
+      if (deep) {
+        deep.addEventListener('click', () => openPanel('logistics-coordination', deep));
+        deep.addEventListener('mouseenter', () => setActive('logistics-coordination'));
+        deep.addEventListener('mouseleave', () => clearActive());
+      }
       closeBtn.addEventListener('click', closePanel);
       backdrop.addEventListener('click', closePanel);
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
@@ -302,6 +371,19 @@ const bubbles = base.map((c) => {
     .wti-board.in .wti-b .wti-dot { animation: wtiRipple .72s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i, 0) * 0.045s + 0.15s); }
     @keyframes wtiRipple { 0% { transform: scale(1); stroke-width: 1.8; } 42% { transform: scale(1.24); stroke-width: 3.4; } 100% { transform: scale(1); stroke-width: 1.8; } }
     .wti-size { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .02em; color: #6f6a5f; margin: 10px 4px 0; }
+
+    /* "Deep dive" teaser under the chart — surfaces the live Logistics market map.
+       Reuses the board's existing stone bg / line colour / blue accent. */
+    .wti-deep { display: block; width: 100%; text-align: left; cursor: pointer; margin: 18px 0 0;
+      background: #edece6; border: 1px solid #dcd9cf; border-radius: 16px; padding: 20px 22px;
+      transition: border-color .18s ease, transform .15s ease, box-shadow .2s ease; }
+    .wti-deep:hover { border-color: #2f6fd0; transform: translateY(-1px); box-shadow: 0 24px 50px -34px rgba(20,30,50,0.55); }
+    .wti-deep:focus-visible { outline: 2px solid #1f5aa6; outline-offset: 3px; }
+    .wti-deep-tag { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #2f6fd0; }
+    .wti-deep-title { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.02em; color: #1b1f25; margin: 8px 0 0; }
+    .wti-deep-hook { display: block; font-size: 15px; line-height: 1.5; color: #6f6a5f; margin: 8px 0 0; max-width: 62ch; }
+    .wti-deep-open { display: inline-block; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: #2f6fd0; margin: 14px 0 0; }
+    .wti-deep:hover .wti-deep-open { text-decoration: underline; }
     .wti-size b { color: #35322b; font-weight: 500; }
     .wti-note { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: #6f7885; margin: 22px 0 0; max-width: 940px; }
     .wti-note-l { margin: 0; color: #8b95a2; }
@@ -396,5 +478,25 @@ const bubbles = base.map((c) => {
     .wti-src-ul a { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5; color: #9cc3f5; text-decoration: none; }
     .wti-src-ul a:hover { color: #c8e0fb; text-decoration: underline; }
     @media (max-width: 640px) { .wti-m-row { grid-template-columns: 1fr; gap: 2px; } }
+
+    /* Logistics deep cluster (market map) — layout only. Reuses the panel's existing
+       colours, fonts and border treatment; no new colours/fonts/shadows/animations. */
+    .wti-mm-frame { font-size: 15.5px; line-height: 1.55; color: #c6cdd6; margin: 14px 0 0; }
+    .wti-mm-role { margin-top: 6px; }
+    .wti-mm-role + .wti-mm-role { margin-top: 30px; }
+    .wti-mm-role > b { display: block; font-size: 15px; font-weight: 700; color: #f2f5fa; }
+    .wti-mm-role > span { display: block; font-size: 15px; line-height: 1.5; color: #f2f5fa; margin-top: 4px; }
+    .wti-mm-group { margin-top: 18px; }
+    .wti-mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .wti-mm-card { border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 13px 15px; }
+    .wti-mm-card > b { display: block; font-size: 15px; font-weight: 700; color: #f2f5fa; }
+    .wti-mm-card > span { display: block; font-size: 14px; line-height: 1.45; color: #eef2f8; margin-top: 4px; }
+    .wti-mm-sources { font-size: 11.5px; line-height: 1.6; color: #a4aebb; margin-top: 26px; overflow-wrap: anywhere; word-break: break-word; }
+    .wti-mm-sources a { color: #9cc3f5; text-decoration: none; }
+    .wti-mm-sources a:hover { text-decoration: underline; }
+    .wti-mm-note { font-size: 13px; line-height: 1.55; color: #c6cdd6; margin-top: 26px; }
+    .wti-mm-note a { color: #9cc3f5; text-decoration: none; cursor: pointer; }
+    .wti-mm-note a:hover { text-decoration: underline; }
+    @media (max-width: 640px) { .wti-mm-grid { grid-template-columns: 1fr; } }
   </style>
 </section>
