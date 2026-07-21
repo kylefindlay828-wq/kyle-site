@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import SiteHeader from '../components/SiteHeader.astro';
+import GlobalNav from '../components/GlobalNav.astro';
+import RadarToggle from '../components/RadarToggle.astro';
 import Hero from '../components/Hero.astro';
 import RadarProof from '../components/RadarProof.astro';
 import SignalExamples from '../components/SignalExamples.astro';
@@ -22,7 +23,7 @@ const description = 'GTM Radar turns messy company signals into ranked hiring, m
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kylefindlay.xyz/gtm-radar" />
+    <meta property="og:url" content="https://kylefindlay.xyz/radar-v1" />
     <meta property="og:image" content="https://kylefindlay.xyz/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -35,7 +36,8 @@ const description = 'GTM Radar turns messy company signals into ranked hiring, m
     <Analytics />
   </head>
   <body class="bg-paper text-ink min-h-screen">
-    <SiteHeader />
+    <GlobalNav />
+    <RadarToggle />
     <main class="max-w-content mx-auto px-6">
       <Hero />
       <RadarProof />

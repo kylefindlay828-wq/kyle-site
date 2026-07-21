@@ -1,5 +1,6 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+import GlobalNav from '../components/GlobalNav.astro';
 import WorkforceTransformationIndex from '../components/WorkforceTransformationIndexFinal.astro';
 import ProofworksEngine from '../components/ProofworksEngineFinal.astro';
 
@@ -45,7 +46,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         --pw-body: clamp(1rem, 1.25vw, 1.125rem);
         --pw-small: clamp(0.8rem, 0.9vw, 0.9rem);
         --blue: #4c7ef5; --indigo: #5b62e6; --vio: #8b6cf0; --gold: #e0a24e; --line: rgba(24,40,88,0.12); }
-      html { scroll-behavior: smooth; scroll-padding-top: 108px; -webkit-text-size-adjust: 100%; }
+      html { scroll-behavior: smooth; scroll-padding-top: 70px; -webkit-text-size-adjust: 100%; }
       body { margin: 0; color: var(--ink); font-family: 'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden;
         background: linear-gradient(180deg, #eef4fd 0%, #e7eefb 46%, #ecebf9 100%); }
       a { text-decoration: none; color: inherit; }
@@ -54,28 +55,6 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .col { max-width: 1240px; margin: 0 auto; padding: 0 32px; width: 100%; }
       ::selection { background: rgba(76,126,245,0.18); }
       .wrap { position: relative; z-index: 1; }
-      /* global bar — layout identical to the homepage nav (1040 / 24 / 58 / 16px brand /
-         15px links / 22 gap), skinned in the Proofworks design language (sans + indigo) */
-      .pw-header { position: sticky; top: 0; z-index: 50; }
-      .pw-nav { background: rgba(238,244,253,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-      .pw-nav-in { max-width: 1040px; margin: 0 auto; padding: 0 24px; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-      .pw-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: -0.01em; color: var(--navy);
-        padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease; white-space: nowrap; }
-      .pw-brand:hover { color: var(--blue); }
-      .pw-nav-links { display: flex; align-items: center; gap: 22px; }
-      .pw-link { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 15px; color: var(--navy);
-        padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease; }
-      .pw-link:hover { color: var(--blue); border-bottom-color: var(--blue); }
-      .pw-link.on { border-bottom-color: var(--blue); }
-      /* slim secondary row — on-this-page anchors, /proofworks only */
-      .pw-subnav { background: rgba(238,244,253,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-      .pw-subnav-in { max-width: 1040px; margin: 0 auto; padding: 9px 24px; display: flex; align-items: center; gap: 22px; }
-      .pw-sublink { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: .01em; color: var(--mut); transition: color .18s ease; white-space: nowrap; }
-      .pw-sublink:hover { color: var(--navy); }
-      @media (max-width: 560px) {
-        .pw-nav-links { gap: 15px; } .pw-link { font-size: 14px; } .pw-brand { font-size: 15px; }
-        .pw-subnav-in { gap: 16px; } .pw-sublink { font-size: 11.5px; }
-      }
 
       /* shared CTA buttons */
       .pw-cta { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -191,6 +170,12 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .founder-line { font-family: 'JetBrains Mono', monospace; font-size: var(--pw-small); line-height: 1.6; color: var(--mut); margin: 0 0 20px; }
       .founder-line a { color: var(--navy); border-bottom: 1px solid var(--line); transition: color .18s ease, border-color .18s ease; }
       .founder-line a:hover { color: var(--blue); border-color: rgba(76,126,245,0.5); }
+      /* lineage timeline — single restrained-blue rule, entries hang off it */
+      .lineage { position: relative; margin: 44px 0 0; padding-left: 40px; }
+      .lineage::before { content: ''; position: absolute; left: 16px; top: 4px; bottom: 4px; width: 1px; background: rgba(76,126,245,0.4); }
+      .lin-item + .lin-item { margin-top: 26px; }
+      .lin-name { display: block; font-size: var(--pw-body); font-weight: 500; color: var(--navy); }
+      .lin-body { font-size: var(--pw-body); line-height: 1.5; color: var(--mut); margin: 5px 0 0; max-width: 64ch; }
       .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: var(--pw-section-secondary); line-height: 1.06; letter-spacing: -0.03em; color: var(--navy); }
       .talk-p { font-size: var(--pw-emphasis-copy); line-height: 1.5; color: #46506e; font-weight: 500; max-width: 60ch; margin: 24px 0 0; }
       .talk-cta { margin: 32px 0 34px; }
@@ -257,26 +242,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
   </head>
   <body>
     <div class="wrap">
-      <header class="pw-header">
-        <div class="pw-nav">
-          <div class="pw-nav-in">
-            <a href="/" class="pw-brand">Kyle Findlay</a>
-            <nav class="pw-nav-links" aria-label="Primary">
-              <a href="/proofworks" class="pw-link on" aria-current="page">Proofworks</a>
-              <a href="/#about" class="pw-link">About</a>
-              <a href="/#work" class="pw-link">Selected Work</a>
-              <a href="/#contact" class="pw-link">Contact</a>
-            </nav>
-          </div>
-        </div>
-        <div class="pw-subnav">
-          <nav class="pw-subnav-in" aria-label="On this page">
-            <a href="#index" class="pw-sublink">The index</a>
-            <a href="#engine" class="pw-sublink">How it works</a>
-            <a href="#contact" class="pw-sublink">Let’s talk</a>
-          </nav>
-        </div>
-      </header>
+      <GlobalNav />
 
       <!-- 1 · HERO -->
       <header class="hero">
@@ -292,7 +258,7 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
               {inputs.map((n) => (<li class="node">{n}</li>))}
             </ul>
             <div class="vcenter">
-              <h2 class="cl"><span class="cyc" id="cyc">Capability</span><span class="cl-fixed">Layer</span></h2>
+              <h2 class="cl"><span class="cyc" id="cyc">Capability</span> <span class="cl-fixed">Layer</span></h2>
             </div>
             <div class="vcol out">
               <div class="opair">
@@ -365,9 +331,28 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
         </div>
       </section>
 
-      <!-- 8 · CONTACT -->
+      <!-- 8 · BUILT, NOT PITCHED (lineage) -->
+      <section class="sec col" id="lineage">
+        <h2 class="sec-h2 rev">Built, not pitched.</h2>
+        <p class="sec-p rev" style="transition-delay:.05s">Proofworks is the third iteration of a thesis I've been testing by building — not the first draft of a pitch.</p>
+        <div class="lineage rev" style="transition-delay:.1s">
+          <div class="lin-item">
+            <span class="lin-name">GTM Radar V1</span>
+            <p class="lin-body">An autonomous market-intelligence agent that detected hiring signals before roles were posted. Proved the demand signal exists upstream of the job board.</p>
+          </div>
+          <div class="lin-item">
+            <span class="lin-name">GTM Radar V2</span>
+            <p class="lin-body">Rebuilt around who should be hired, not just when. Proved that mapping work-in-motion matters more than tracking openings.</p>
+          </div>
+          <div class="lin-item">
+            <span class="lin-name">Proofworks</span>
+            <p class="lin-body">The full thesis: if job titles are lagging indicators, capability proof has to replace them. The Workforce Transformation Index above is its first working artifact.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 · CONTACT -->
       <section class="sec col" id="contact">
-        <p class="founder-line rev">Proofworks is built by <a href="/">Kyle Findlay</a> — the third iteration of this thesis, after GTM Radar V1 and V2.</p>
         <h2 class="talk-h rev">Let’s talk.</h2>
         <p class="talk-p rev" style="transition-delay:.05s">I want to hear from candidates ready to prove what they can build, recruiters and companies facing capability gaps, and technical people who think proof-of-work talent infrastructure should exist.</p>
         <div class="pw-cta talk-cta rev" style="transition-delay:.08s">

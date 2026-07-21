@@ -1,0 +1,36 @@
+---
+// GTM Radar V1/V2 version toggle — slim secondary row shown ONLY on the two radar
+// pages, directly beneath the global nav. Pill styling reused from the prior
+// SiteHeader build. Active version highlighted from the current path.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const v2 = path === '/radar-v2';
+const v1 = !v2; // /radar-v1 (and its /gtm-radar redirect)
+---
+<div class="rtog">
+  <div class="rtog-in">
+    <span class="rtog-label">GTM Radar</span>
+    <span class="rtog-pills">
+      <a href="/radar-v1" class:list={['rtog-v', v1 && 'on']} aria-current={v1 ? 'page' : undefined}>V1</a>
+      <a href="/radar-v2" class:list={['rtog-v', v2 && 'on']} aria-current={v2 ? 'page' : undefined}>V2</a>
+    </span>
+  </div>
+</div>
+
+<style>
+  .rtog {
+    --rbg: #efece3; --rink: #26241f; --rmut: #77726a; --rrule: #e4e0d5; --racc: #b5542f; --raccbg: rgba(181,84,47,0.12);
+    --rmono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'IBM Plex Mono', Menlo, monospace;
+    --rsans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    position: sticky; top: 58px; z-index: 99;
+    background: var(--rbg); border-bottom: 1px solid var(--rrule);
+  }
+  .rtog *, .rtog *::before, .rtog *::after { box-sizing: border-box; }
+  .rtog-in { max-width: 1180px; margin: 0 auto; padding: 8px 24px; display: flex; align-items: center; gap: 12px; }
+  .rtog-label { font-family: var(--rsans); font-size: 13px; font-weight: 600; color: var(--rmut); }
+  .rtog-pills { display: inline-flex; align-items: center; gap: 4px; }
+  .rtog-v { font-family: var(--rmono); font-size: 11.5px; font-weight: 600; letter-spacing: .02em; color: var(--rmut);
+    padding: 3px 9px; border-radius: 6px; line-height: 1; text-decoration: none; transition: color .15s ease, background-color .15s ease; }
+  .rtog-v:hover { color: var(--rink); background: rgba(38,36,31,0.06); }
+  .rtog-v.on { color: var(--racc); background: var(--raccbg); }
+  .rtog :focus-visible { outline: 2px solid var(--racc); outline-offset: 3px; border-radius: 6px; }
+</style>

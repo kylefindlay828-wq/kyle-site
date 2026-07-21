@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import AboutNav from '../components/AboutNav.astro';
+import GlobalNav from '../components/GlobalNav.astro';
 import About from '../components/About.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -32,7 +32,7 @@ const description = 'Kyle Findlay is an operator moving deeper into early-stage 
     <Analytics />
   </head>
   <body class="bg-paper text-ink min-h-screen">
-    <AboutNav />
+    <GlobalNav />
     <main class="max-w-content mx-auto px-6">
       <About />
       <FinalCta />

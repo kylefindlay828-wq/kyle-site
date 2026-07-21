@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   redirects: {
     '/proofworks-v2': '/proofworks',
+    '/gtm-radar': '/radar-v1',
   },
   vite: {
     plugins: [tailwindcss()]

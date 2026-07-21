@@ -1,0 +1,97 @@
+---
+// Global site nav — ONE shared component, IDENTICAL on every page (no per-page
+// active state, so it renders pixel-identically everywhere and cannot drift).
+// Self-contained: hardcoded warm-light palette + own font stacks, so it renders
+// the same on the Tailwind pages and the standalone pages that don't load global.css.
+const links = [
+  { href: '/proofworks', label: 'Proofworks' },
+  { href: '/radar-v2', label: 'GTM Radar' },
+  { href: '/#about', label: 'About' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+<header class="gnav">
+  <div class="gnav-in">
+    <a href="/" class="gnav-brand">Kyle Findlay</a>
+    <nav class="gnav-links" aria-label="Primary">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <button id="gnav-burger" class="gnav-burger" type="button" aria-expanded="false" aria-controls="gnav-menu" aria-label="Open menu">
+      <span class="gnav-bars"></span>
+    </button>
+  </div>
+  <div id="gnav-menu" class="gnav-menu" hidden>
+    <a class="gnav-mi" href="/">Kyle Findlay</a>
+    {links.map((l) => <a class="gnav-mi" href={l.href}>{l.label}</a>)}
+  </div>
+</header>
+
+<style>
+  .gnav {
+    --gbg: #f4f1ea; --gink: #26241f; --gmut: #77726a; --grule: #e4e0d5; --gacc: #b5542f;
+    --gsans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    position: sticky; top: 0; z-index: 100;
+    background: var(--gbg); border-bottom: 1px solid var(--grule);
+  }
+  .gnav *, .gnav *::before, .gnav *::after { box-sizing: border-box; }
+  .gnav a { text-decoration: none; }
+  .gnav :focus-visible { outline: 2px solid var(--gacc); outline-offset: 3px; border-radius: 4px; }
+
+  .gnav-in { max-width: 1180px; margin: 0 auto; padding: 0 24px; min-height: 58px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+  .gnav-brand { font-family: var(--gsans); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; color: var(--gink);
+    white-space: nowrap; padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease; }
+  .gnav-brand:hover { color: var(--gacc); }
+
+  .gnav-links { display: flex; align-items: center; gap: 22px; }
+  .gnav-links a { font-family: var(--gsans); font-weight: 500; font-size: 15px; color: var(--gink);
+    padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease; white-space: nowrap; }
+  .gnav-links a:hover { color: var(--gacc); border-bottom-color: var(--gacc); }
+
+  .gnav-burger { display: none; width: 42px; height: 42px; border: 1px solid #d8d3c6; border-radius: 10px;
+    background: #fbfaf6; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+  .gnav-bars, .gnav-bars::before, .gnav-bars::after { content: ''; display: block; width: 18px; height: 2px;
+    background: var(--gink); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .gnav-bars { position: relative; }
+  .gnav-bars::before { position: absolute; top: -6px; }
+  .gnav-bars::after { position: absolute; top: 6px; }
+  .gnav-burger[aria-expanded='true'] .gnav-bars { background: transparent; }
+  .gnav-burger[aria-expanded='true'] .gnav-bars::before { top: 0; transform: rotate(45deg); }
+  .gnav-burger[aria-expanded='true'] .gnav-bars::after { top: 0; transform: rotate(-45deg); }
+
+  .gnav-menu { position: fixed; left: 0; right: 0; top: 58px; bottom: 0; z-index: 99;
+    background: var(--gbg); padding: 8px 24px 40px; overflow-y: auto; overscroll-behavior: contain; }
+  .gnav-menu[hidden] { display: none; }
+  .gnav-mi { display: block; font-family: var(--gsans); font-size: 18px; font-weight: 500; color: var(--gink);
+    padding: 16px 6px; border-bottom: 1px solid var(--grule); }
+  .gnav-mi:hover { color: var(--gacc); }
+
+  @media (max-width: 640px) {
+    .gnav-links { display: none; }
+    .gnav-burger { display: inline-flex; }
+  }
+  @media (min-width: 641px) { .gnav-menu { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    .gnav-brand, .gnav-links a, .gnav-bars, .gnav-bars::before, .gnav-bars::after { transition: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const burger = document.getElementById('gnav-burger');
+    const menu = document.getElementById('gnav-menu');
+    if (!burger || !menu) return;
+    let open = false;
+    function setOpen(o) {
+      open = o; menu.hidden = !o;
+      burger.setAttribute('aria-expanded', o ? 'true' : 'false');
+      burger.setAttribute('aria-label', o ? 'Close menu' : 'Open menu');
+      document.documentElement.style.overflow = o ? 'hidden' : '';
+    }
+    burger.addEventListener('click', () => setOpen(!open));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) setOpen(false); });
+    window.addEventListener('resize', () => { if (open && window.innerWidth > 640) setOpen(false); });
+  })();
+</script>
