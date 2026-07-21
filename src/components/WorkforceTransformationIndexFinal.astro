@@ -146,6 +146,13 @@ const bubbles = base.map((c) => {
       <span class="wti-deep-open">See the full market map <span aria-hidden="true">→</span></span>
     </button>
 
+    <a class="wti-deep" href="/gtm-migration" data-reveal aria-label="See the GTM role migration map">
+      <span class="wti-deep-tag">Deep dive · live now</span>
+      <span class="wti-deep-title">Go-to-market roles</span>
+      <span class="wti-deep-hook">AI isn't deleting GTM jobs — it's moving the work. This map shows which seats are compressing, which are absorbing, and what it takes to cross.</span>
+      <span class="wti-deep-open">See the migration map <span aria-hidden="true">→</span></span>
+    </a>
+
   </div>
 
   <div class="wti-backdrop" hidden></div>
@@ -293,7 +300,7 @@ const bubbles = base.map((c) => {
         el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(el.dataset.id, el); } });
       });
       // "Deep dive" teaser: opens the logistics market map; hovering it highlights its bubble.
-      const deep = root.querySelector('.wti-deep');
+      const deep = root.querySelector('button.wti-deep');
       if (deep) {
         deep.addEventListener('click', () => openPanel('logistics-coordination', deep));
         deep.addEventListener('mouseenter', () => setActive('logistics-coordination'));
@@ -376,6 +383,7 @@ const bubbles = base.map((c) => {
        Reuses the board's existing stone bg / line colour / blue accent. */
     .wti-deep { display: block; width: 100%; text-align: left; cursor: pointer; margin: 18px 0 0;
       background: #edece6; border: 1px solid #dcd9cf; border-radius: 16px; padding: 20px 22px;
+      text-decoration: none; color: inherit;
       transition: border-color .18s ease, transform .15s ease, box-shadow .2s ease; }
     .wti-deep:hover { border-color: #2f6fd0; transform: translateY(-1px); box-shadow: 0 24px 50px -34px rgba(20,30,50,0.55); }
     .wti-deep:focus-visible { outline: 2px solid #1f5aa6; outline-offset: 3px; }
