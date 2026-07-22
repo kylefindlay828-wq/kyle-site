@@ -1,5 +1,11 @@
 # kyle-site — CLAUDE.md
 
+## Design rules
+
+No explainer paragraphs anywhere on the site. Trust, method, and how-it-works
+content renders as chips, legends, or short labeled lines — never prose blocks.
+If a section needs a paragraph to explain itself, redesign the section.
+
 ## Post-deploy check-URLs
 
 After every deploy, print a "Check URLs" block for me to copy-paste. One URL

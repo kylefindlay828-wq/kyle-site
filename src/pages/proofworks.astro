@@ -110,6 +110,18 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .hero-copy .b { font-size: var(--pw-body); line-height: 1.5; font-weight: 500; color: #46506e; margin: 14px 0 0; max-width: 58ch; }
       .hero-copy .pw-cta { margin-top: 26px; }
 
+      /* Why-now evidence strip + graded badges (matches /gtm-migration) */
+      .pw-whynow { padding: 46px 0 6px; }
+      .pw-whynow-h { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin: 0 0 18px; }
+      .pw-whynow-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .pw-chip { display: block; text-decoration: none; color: var(--ink); background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-size: 14px; line-height: 1.5; transition: border-color .18s ease, transform .15s ease; }
+      .pw-chip:hover { border-color: rgba(76,126,245,0.5); transform: translateY(-1px); }
+      .pw-chip b { color: var(--navy); font-weight: 700; }
+      .pw-whynow-line { font-size: var(--pw-body); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 18px 0 0; max-width: 66ch; }
+      .pw-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
+      .pw-badge--solid { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
+      @media (max-width: 760px) { .pw-whynow-chips { grid-template-columns: 1fr; } }
+
       /* ── generic sections ── */
       .sec { position: relative; padding: 122px 0; overflow-x: clip; }
       .ey { font-family: 'JetBrains Mono', monospace; font-size: var(--pw-small); letter-spacing: .2em; text-transform: uppercase; color: var(--blue); margin: 0 0 40px; }
@@ -280,6 +292,17 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
           </div>
         </div>
       </header>
+
+      <!-- 1b · WHY NOW (evidence strip) -->
+      <section class="col pw-whynow">
+        <p class="pw-whynow-h">Why now.</p>
+        <div class="pw-whynow-chips">
+          <a href="/gtm-migration" class="pw-chip"><b>−3.8%/yr</b> — entry-level employment, AI-exposed jobs (22–25) · Stanford ADP <span class="pw-badge pw-badge--solid">UNIVERSITY</span></a>
+          <a href="/gtm-migration" class="pw-chip">Displaced workers rarely cross sectors on their own · OECD Employment Outlook 2026 <span class="pw-badge pw-badge--solid">INTL ORG</span></a>
+          <a href="/gtm-migration" class="pw-chip"><b>18% → 22%</b> — firm AI adoption, next six months · Census BTOS <span class="pw-badge pw-badge--solid">FEDERAL</span></a>
+        </div>
+        <p class="pw-whynow-line">The routing layer between compressing seats and absorbing seats doesn’t build itself. That’s the company.</p>
+      </section>
 
       <!-- 2 · WORKFORCE TRANSFORMATION INDEX (contained dark card) -->
       <section class="sec col" id="index-intro">

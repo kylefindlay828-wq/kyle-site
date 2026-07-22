@@ -5,7 +5,6 @@ import GlobalNav from '../components/GlobalNav.astro';
 const title = 'Where GTM work is going — Kyle Findlay';
 const description = 'A verified-source map of where go-to-market work is going, across three waves: documented, in motion, and predicted. Federal, university, and industry data; every claim dated and graded. Second deep-dive cluster of the Workforce Transformation Index.';
 
-// ── source badge grading ──
 const badgeClass = (k: string) => (({
   'FEDERAL': 'solid', 'UNIVERSITY': 'solid', 'INTL ORG': 'solid',
   'INDUSTRY': 'outline', 'PRESS': 'outline',
@@ -15,10 +14,11 @@ const badgeClass = (k: string) => (({
 const leftNodes = ['SDR / BDR', 'Junior demand gen', 'Sales ops (reporting)', 'Reactive customer success'];
 const rightNodes = ['GTM Engineer', 'Account Executive', 'RevOps architect', 'Forward deployed / implementation', 'AI-enablement marketing'];
 
-// ══ WAVE 1 · 2024–26 · Documented ══
+// ══ WAVE 1 · Documented ══
 const wave1 = [
-  {
-    id: 1, from: 'SDR', to: 'GTM Engineer', li: 0, ri: 0, w: 1.0,
+  { id: 1, from: 'SDR', to: 'GTM Engineer', li: 0, ri: 0, w: 1.0,
+    takeaway: 'Junior sending compresses; system-builders absorb.',
+    chip: { num: '−3.8%/yr', cap: '22–25 in AI-exposed jobs · Stanford ADP' },
     why: `ADP payroll data covering millions of records, analyzed by Stanford's Digital Economy Lab, shows workers 22–25 in the most AI-exposed occupations shrinking at 3.8% per year as of April 2026 — while the least-exposed jobs for the same age group grow at 2% annually. Across all ages, the most-exposed occupations contracted just 0.2%: the org reshapes more than it shrinks. Indeed's postings data shows the same shape from a different angle — 71% of the past year's growth in software-development postings came from senior roles, and 37% from jobs with AI in the title. And in Emergence Capital's survey of 560+ B2B software companies, 36% cut SDR/BDR headcount in the past year — the highest reduction of any sales role — while only 19% grew.`,
     caveat: `Not all of it is AI: industry analyses note the SDR cuts concentrated where teams overbuilt in 2021–22, and Indeed notes exposed-occupation posting declines began before ChatGPT.`,
     crossing: `Proof you can build the machine, not just work inside it: a working Clay table, an agent, an automated pipeline with real output.`,
@@ -28,60 +28,56 @@ const wave1 = [
       { text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' },
       { text: 'Emergence Capital survey of 560+ B2B software companies', badge: 'INDUSTRY' },
     ],
-    /* RESTORE (pending verification): append to sources — { text: 'Forrester — AI SDR adoption >55% at 500+ employee firms', badge: 'INDUSTRY' } */
-  },
-  {
-    id: 2, from: 'SDR', to: 'Account Executive', li: 0, ri: 1, w: 0.34,
+    /* RESTORE (pending verification): append to sources — { text: 'Forrester — AI SDR adoption >55% at 500+ employee firms', badge: 'INDUSTRY' } */ },
+  { id: 2, from: 'SDR', to: 'Account Executive', li: 0, ri: 1, w: 0.34,
+    takeaway: 'The path narrows; seniority wins the backfills.',
+    chip: { num: '71%', cap: 'of posting growth is senior · Indeed' },
     why: `Still real, but narrowing. As AI absorbs top-of-funnel volume, fewer AE backfills open up, and the seniority shift shows up in the hiring data: where postings are growing again, senior roles are doing almost all of the work.`,
     crossing: `Consecutive quarters at quota and documented pipeline dollars, not activity counts.`,
     read: `Tenure and quota history predict AE success better than interview polish — screen on the record, not the performance.`,
     sources: [{ text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' }],
-    /* RESTORE (pending Bridge Group verification): append to why — Bridge Group promotion-timeline statistics (18–24 month median; sub-11-month promotions fail 55%); add source { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' } */
-  },
-  {
-    id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.22,
+    /* RESTORE (pending Bridge Group verification): append to why — Bridge Group promotion-timeline statistics (18–24 month median; sub-11-month promotions fail 55%) + source { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' } */ },
+  { id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.22,
+    takeaway: 'Reporting fades; system design pays.',
     why: `The remaining work is designing the revenue system: routing, territories, comp logic, tool selection. The same seniority shift visible in postings data — senior and system-design roles growing while junior execution roles compress — is the RevOps story in miniature.`,
     crossing: `Evidence of system design — a workflow you architected end to end, not reports you maintained.`,
     read: `RevOps searches are rising while the candidate pool with real system-design proof stays thin — a seller's market for whoever sources it.`,
-    sources: [
-      { text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' },
-      { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' },
-    ],
-  },
-  {
-    id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.42,
+    sources: [{ text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' }, { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
+  { id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.42,
+    takeaway: 'Generation is cheap; judgment gets paid.',
+    chip: { num: '14–26%', cap: 'productivity gains, support & software · Stanford Index' },
     why: `Generation is cheap; judgment is not. Stanford's 2026 AI Index finds measured productivity gains of 14–26% concentrate in exactly the functions where entry-level employment is declining — the returns go to whoever directs the machine, not whoever it replaced.`,
     crossing: `A campaign where you directed AI production and can show the decisions you made.`,
     read: `Marketing leaders will pay for judgment layered on AI production — screen for candidates who can show the decisions, not the output.`,
     sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }],
-    /* RESTORE (pending mckinsey.com verification): append to why — " McKinsey's Global AI Survey puts AI content drafting at roughly 3.2x ROI — the highest-returning use case in the marketing stack — but returns concentrate where AI accelerates a human-led editorial process."; add source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' } */
-  },
-  {
-    id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
+    /* RESTORE (pending mckinsey.com verification): append to why — " McKinsey's Global AI Survey puts AI content drafting at roughly 3.2x ROI — the highest-returning use case in the marketing stack — but returns concentrate where AI accelerates a human-led editorial process."; add source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' } */ },
+  { id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
+    takeaway: 'The routine layer moved; the human seat went upstream.',
+    chip: { num: '2.3M', cap: 'AI conversations, month one · company-reported' },
     whyHtml: `Klarna's AI assistant handled 2.3 million conversations in its first month — work the company said was equivalent to roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Its workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream.`,
     crossing: `An implementation you owned — a customer whose workflow you personally rebuilt.`,
     read: `Post-AI support orgs need forward-deployed hires that classic CS resumes don't surface — screen for owned implementations.`,
-    sources: [
-      { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' },
-      { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' },
-    ],
-  },
+    sources: [{ text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }] },
 ];
 const w1Disagreement = `Yale's Budget Lab, tracking CPS data through June 2026, finds no clear economy-wide AI footprint in the labor market. The Economic Innovation Group finds unemployment rose LESS for the most AI-exposed workers (+0.30pp) than the least (+0.94pp) from 2022 to early 2025. The surgical entry-level effect and the flat aggregate are both true — which is why this page maps seats, not the economy.`;
 const w1DisagreementBadges = ['UNIVERSITY', 'INDUSTRY'];
 
-// ══ WAVE 2 · 2026–28 · In motion ══
+// ══ WAVE 2 · In motion ══
+const wave2MapL = ['Support & CS pools', 'SDR / junior GTM pools', 'Junior software', 'Marketing execution'];
+const wave2MapR = ['Forward deployed / implementation', 'GTM Engineer / agent operations', 'Senior + AI-fluent engineering', 'AI-enablement marketing'];
 const wave2 = [
-  { id: 'm1', title: 'Agent capability crossing the line',
+  { id: 'm1', title: 'Agent capability crossing the line', takeaway: 'Agents crossed the capability line.',
+    chip: { num: '66%', cap: 'of real-world computer tasks · Stanford Index' },
     body: `18 months ago, AI agents failed 88% of real-world computer tasks. As of March 2026, the best models complete 66% — within six points of human performance. The work that compresses next is whatever those agents can now finish.`,
     sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
-  { id: 'm2', title: 'Firm adoption and stated intent',
+  { id: 'm2', title: 'Firm adoption and stated intent', takeaway: 'Adoption is real, narrow, and accelerating.',
+    chip: { num: '18%→22%', cap: 'firm AI use, next six months · Census BTOS' },
     body: `Census Bureau surveys of ~1.2 million businesses put AI use at 18% of firms in the Nov 2025–Feb 2026 supplement — 32% employment-weighted — with adoption expected to reach 22% within six months. Stanford's Index adds that executives expect entry-level headcount reductions to accelerate, with planned cuts outpacing recent ones.`,
     sources: [{ text: 'Census Bureau BTOS AI supplement, 2026', badge: 'FEDERAL' }, { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
-  { id: 'm3', title: 'Transitions don’t happen on their own',
+  { id: 'm3', title: 'Transitions don’t happen on their own', takeaway: 'Transitions don’t happen on their own.',
     body: `OECD's Employment Outlook 2026 finds that when technology shocks hit local labor markets, adjustment happens mostly through transitions into joblessness and openings filled by newcomers — not workers moving across sectors — leaving lasting scars for the displaced. The routing layer between compressing seats and absorbing seats does not build itself.`,
     sources: [{ text: 'OECD Employment Outlook 2026, July 2026', badge: 'INTL ORG' }] },
-  { id: 'm4', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement',
+  { id: 'm4', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement', takeaway: 'The signal shows up before the job post.',
     whatMoved: `Nothing yet — these seats are appearing, not absorbing.`,
     why: `Deploying agents inside a customer's workflow is high-touch work no existing title covers.`,
     crossing: `An owned implementation — a workflow you personally wired into a real organization.`,
@@ -92,56 +88,73 @@ const wave2 = [
 const w2Disagreement = `Census data cuts both ways: most AI-adopting businesses report no change in worker numbers, and adoption remains narrow — 17–20% of firms through May 2026. The migration is real where it's real, and absent where it isn't.`;
 const w2DisagreementBadges = ['FEDERAL'];
 
-// ══ WAVE 3 · 2028–30 · Predicted (ghost cards) ══
-const seats = ['GTM Engineer', 'Mid-funnel seller', 'Agency recruiter', 'Account Executive'];
+// ══ WAVE 3 · Predicted (ghost cards) ══
+const seats = ['GTM Engineer', 'Mid-funnel seller', 'Account Executive', 'Agency recruiter', 'Support & CS pools', 'Junior software pools'];
 const ghosts = [
-  { id: 'g1', name: 'Revenue-systems owner?',
+  { id: 'g1', name: 'Revenue-systems owner?', takeaway: 'The seats that absorbed Wave 1 compress next.',
     why: `The seats that absorbed Wave 1 compress next. As agent fleets spread, the scarce hire becomes whoever makes them actually produce — the constraint won't be tools, it will be org design.`,
     crossing: `Run a fleet: own an agent system's output end to end, with numbers.`,
     change: `If by end of 2028, postings for GTM-engineering and agent-operations roles at AI-native startups aren't outnumbering SDR postings, this call was wrong.` },
-  { id: 'g2', name: 'Agent-facing GTM?',
+  { id: 'g2', name: 'Agent-facing GTM?', takeaway: 'As buying agents proliferate, machine-legibility becomes a funded function.',
     why: `As buying agents proliferate, making your company legible to machines — machine-readable pricing, agent-ready product data, citation authority — becomes a funded function. Selling to machines becomes a job.`,
     crossing: `Ship one agent-legible surface for a real company and measure what changed.`,
     change: `If by 2028 no funded companies are posting agent-facing GTM or machine-readable-sales roles, kill this card.` },
-  { id: 'g3', name: 'Proof-based placement?',
+  { id: 'g3', name: 'Proof-based placement?', takeaway: 'Referral networks hold the executive layer, where trust is the product.',
     why: `Referral networks hold the executive layer, where trust is the product. The volume layer shifts to whoever can verify capability — matching proof portfolios to problems, not titles to titles.`,
     crossing: `A portfolio of shipped work a recruiter can check in five minutes.`,
     change: `If title-based postings still dominate hiring volume through 2028 and proof-portfolio screening stays niche, this was my bias, not a trend.`,
     conflict: `Full disclosure: this is also Proofworks' bet. I'm talking my book — and saying so.` },
-  { id: 'g4', name: 'Trust & accountability seats?',
+  { id: 'g4', name: 'Trust & accountability seats?', takeaway: 'The seats that stay human are the ones buyers already reserve for humans.',
     why: `The seats that stay human are the ones buyers already reserve for humans: accountability, trust, and system design. Klarna's reversal was the early sketch of this boundary.`,
     crossing: `A track record of owning outcomes a company would not hand to a machine.`,
     change: `If AE headcount at AI-native companies shrinks 2026–28 at the rate SDR headcount did in 2024–26, the human-seat thesis fails.` },
+  { id: 'g5', name: 'Forward-deployed / AI implementation?', takeaway: 'Every AI-adopting company needs someone who rebuilds real workflows around the tools.',
+    why: `Every AI-adopting company — in every industry, not just tech — needs someone who rebuilds real workflows around the tools. The Klarna pattern generalizes: the routine layer automates, and a human implementation seat opens upstream of it.`,
+    crossing: `Owned implementations with before/after numbers, at companies that aren't software companies.`,
+    change: `If by 2028 AI-implementation and forward-deployed roles aren't a standard posting category at non-tech companies adopting AI, this generalization failed.` },
+  { id: 'g6', name: 'Agent operations?', takeaway: 'Stanford’s 2026 Index has agents completing 66% of real-world computer tasks.',
+    why: `Stanford's 2026 Index has agents completing 66% of real-world computer tasks, within six points of human performance. Fleets of near-human agents create a new seat: the person who runs them — QA, escalation, throughput, cost — across support, sales, and back office at once.`,
+    crossing: `Run an agent system in production and own its numbers.`,
+    change: `If agent-operations / AI-operations titles aren't appearing across support, sales, AND back-office postings by 2028, the seat stayed hypothetical.` },
 ];
 const w3Disagreement = `The counter-case: Apollo's Torsten Slok and Google economists attribute entry-level weakness to interest rates and a low-hire, low-fire market, not AI. If they're right, several of these ghosts never materialize. The data will decide, and this page will update either way.`;
 
-/* ═══════════════════════════════════════════════════════════════════
-   RESTORE BLOCK — pending Kyle's primary-source verification.
-   Each returns with a one-line edit once its source is checked:
-   • Card 4 (Junior demand gen) `why`, append: " McKinsey's Global AI Survey puts AI
-     content drafting at roughly 3.2x ROI — the highest-returning use case in the
-     marketing stack — but returns concentrate where AI accelerates a human-led
-     editorial process." + source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' }
-     (verify on mckinsey.com)
-   • Card 2 (SDR → AE) `why`, append: Bridge Group promotion-timeline statistics
-     (18–24 month median; sub-11-month promotions fail 55%) + source
-     { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' }
-     (verify in the Bridge Group report)
-   • Card 1 (SDR → GTM Engineer) `sources`, append: Forrester — AI SDR adoption >55%
-     at 500+ employee firms, badge INDUSTRY (pending verification)
-   • Wave 3 — optional "What the field forecasts" sub-block with Gartner / Forrester
-     items (each pending Kyle's verification).
-   ═══════════════════════════════════════════════════════════════════ */
+// methodology legend
+const legendChips = [
+  { badge: 'FEDERAL', label: 'Census Bureau data' },
+  { badge: 'UNIVERSITY', label: 'Stanford, Yale' },
+  { badge: 'INTL ORG', label: 'OECD' },
+  { badge: 'INDUSTRY', label: 'surveys & postings' },
+  { badge: 'COMPANY-REPORTED', label: 'their numbers, flagged' },
+];
+const legendLines = [
+  '2+ independent sources per claim, on different data types.',
+  'Every claim dated. Every source named.',
+  'Disagreement displayed, not buried.',
+  'Predictions carry the condition that would kill them.',
+];
 
-// ── desktop map geometry ──
+// hero emitter / destination sets
+const heroEmit = ['SDR / BDR', 'Junior demand gen', 'Sales ops', 'Reactive CS', 'Junior software'];
+const heroDest = ['GTM Engineer', 'RevOps architect', 'Forward deployed', 'AI-enablement marketing'];
+
+/* ═══ RESTORE BLOCK — pending Kyle's primary-source verification (source-only, non-rendering) ═══
+   • Card 4 `why` append McKinsey 3.2x ROI + source McKinsey Global AI Survey [INDUSTRY]
+   • Card 2 `why` append Bridge Group promotion-timeline (18–24mo median; sub-11-mo fail 55%) + source [INDUSTRY]
+   • Card 1 `sources` append Forrester AI SDR adoption >55% [INDUSTRY]
+   • Wave 3 optional "What the field forecasts" sub-block (Gartner / Forrester items), each pending verification
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+// map geometry
 const VB = { w: 1000, h: 520 };
 const LX = 330, RX = 670, MIDX = 500;
 const leftY = (i: number) => +(120 + i * ((VB.h - 170) / (leftNodes.length - 1))).toFixed(1);
 const rightY = (j: number) => +(110 + j * ((VB.h - 170) / (rightNodes.length - 1))).toFixed(1);
 const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MIDX},${leftY(f.li)} ${MIDX},${rightY(f.ri)} ${RX},${rightY(f.ri)}`;
-// ghost map (4 left → 4 right)
-const gY = (i: number) => +(130 + i * ((VB.h - 200) / 3)).toFixed(1);
-const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i)} ${RX},${gY(i)}`;
+const y4 = (i: number) => +(130 + i * ((VB.h - 200) / 3)).toFixed(1);        // 4 nodes (wave 2 map)
+const p4 = (i: number) => `M ${LX},${y4(i)} C ${MIDX},${y4(i)} ${MIDX},${y4(i)} ${RX},${y4(i)}`;
+const y6 = (i: number) => +(100 + i * ((VB.h - 150) / 5)).toFixed(1);        // 6 nodes (wave 3 ghost map)
+const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} ${RX},${y6(i)}`;
 ---
 <!doctype html>
 <html lang="en">
@@ -157,7 +170,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
     <meta property="og:url" content="https://kylefindlay.xyz/gtm-migration" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       * { box-sizing: border-box; }
       :root { --ink: #17223f; --navy: #0f1834; --mut: #58637f; --line: rgba(24,40,88,0.12); --blue: #4c7ef5; }
@@ -168,21 +181,38 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
       h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.03em; margin: 0; color: var(--navy); }
       .col { max-width: 1000px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-      .mig-top { padding: 60px 0 8px; }
-      .mig-h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; }
-      .mig-stamp { font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1.2vw, 12.5px); line-height: 1.55; color: var(--mut); margin: 14px 0 0; max-width: 70ch; }
-      .mig-sub { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 16px 0 0; max-width: 46ch; }
+      .mig-top { padding: 48px 0 4px; }
+      .mig-h1 { font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.05; }
+      .mig-stamp { font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1.2vw, 12.5px); line-height: 1.5; color: var(--mut); margin: 12px 0 0; max-width: 70ch; }
+      .mig-sub { font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.45; color: var(--mut); font-weight: 500; margin: 12px 0 0; max-width: 46ch; }
       .mig { padding-bottom: 90px; }
 
+      /* ── HERO: the migration current ── */
+      .mig-hero { position: relative; height: clamp(200px, 26vh, 248px); margin: 20px 0 0; border-radius: 16px; overflow: hidden;
+        background: radial-gradient(60% 90% at 50% 40%, rgba(123,108,240,0.10), transparent 72%); border: 1px solid var(--line); }
+      #mig-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+      .mig-hero-grid { position: relative; z-index: 1; height: 100%; padding: 14px 18px; display: grid; grid-template-columns: minmax(84px, 0.9fr) 1fr minmax(96px, 0.9fr); align-items: center; }
+      .mig-emit { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+      .mig-emit li { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink); white-space: nowrap; }
+      .mig-zones { display: flex; justify-content: space-between; align-items: center; height: 100%; pointer-events: none; }
+      .mig-zone { font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, 1vw, 11px); letter-spacing: .06em; color: rgba(88,99,127,0.5); }
+      .mig-dest { display: flex; flex-direction: column; gap: 7px; align-items: flex-end; text-align: right; }
+      .mig-dest span { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--navy); white-space: nowrap; }
+      .mig-dest .gh { color: rgba(88,99,127,0.55); font-weight: 500; }
+      .mig-stall { position: absolute; right: 14px; bottom: 8px; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.95vw, 10px); color: rgba(88,99,127,0.7); max-width: 60%; text-align: right; line-height: 1.35; }
+      @media (max-width: 620px) {
+        .mig-hero-grid { grid-template-columns: minmax(72px, 0.9fr) 1fr minmax(78px, 0.8fr); }
+        .mig-emit li.mig-emit-hide, .mig-dest span.mig-dest-hide { display: none; }
+      }
+
       /* ── source badges ── */
-      .mig-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em;
-        text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
+      .mig-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
       .mig-badge--solid { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
       .mig-badge--outline { background: transparent; color: var(--navy); border: 1px solid rgba(24,40,88,0.38); }
       .mig-badge--dashed { background: transparent; color: var(--mut); border: 1px dashed rgba(24,40,88,0.42); }
 
-      /* ── wave toggle ── */
-      .mig-tabs { display: flex; gap: 6px; margin: 30px 0 0; }
+      /* ── tabs ── */
+      .mig-tabs { display: flex; gap: 6px; margin: 24px 0 0; }
       .mig-tab { flex: 1 1 0; min-width: 0; cursor: pointer; font: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px;
         background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px; transition: border-color .16s ease, background-color .16s ease; }
       .mig-tab-yr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(13px, 1.7vw, 15.5px); letter-spacing: -0.01em; color: var(--navy); white-space: nowrap; }
@@ -193,7 +223,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
 
       .mig-wave[hidden] { display: none; }
       .mig-wave-h { font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.08; margin: 34px 0 0; }
-      .mig-wave-intro { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 14px 0 0; max-width: 62ch; }
+      .mig-wave-intro { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--ink); font-weight: 500; margin: 14px 0 0; max-width: 62ch; }
 
       /* ── node map ── */
       .mig-map { display: none; margin: 30px 0 8px; }
@@ -205,48 +235,51 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
       .mig-dot { fill: #7ea0f5; } .mig-dot.r { fill: #8b6cf0; }
       .mig-node { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 15px; fill: var(--ink); }
       .mig-node.ghost { fill: var(--mut); }
-      .mig-ghostlink { fill: none; stroke: rgba(88,99,127,0.55); stroke-width: 2; stroke-dasharray: 5 6; stroke-linecap: round; }
+      .mig-w2dash { fill: none; stroke: rgba(76,126,245,0.5); stroke-width: 3; stroke-dasharray: 5 6; stroke-linecap: round; }
+      .mig-w2solid { fill: none; stroke: rgba(76,126,245,0.85); stroke-width: 3; stroke-linecap: round; }
+      .mig-ghostlink { fill: none; stroke: rgba(88,99,127,0.5); stroke-width: 2; stroke-dasharray: 5 6; stroke-linecap: round; }
       .mig-dot.g { fill: none; stroke: var(--mut); stroke-width: 1.4; stroke-dasharray: 3 3; }
       .mig-maphint { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--mut); text-align: center; margin: 10px 0 0; }
-      .mig-mapcap { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.55; color: var(--mut); text-align: center; margin: 10px auto 0; max-width: 60ch; }
+      .mig-mapcap { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.55; color: var(--mut); text-align: center; margin: 10px auto 0; max-width: 66ch; }
 
-      /* ── cards ── */
-      .mig-list { margin: 30px 0 0; display: flex; flex-direction: column; gap: 12px; }
-      .mig-flow { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.55); overflow: hidden; }
+      /* ── cards (scannable collapsed state) ── */
+      .mig-recruit { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(14px, 1.5vw, 16px); color: var(--navy); margin: 26px 0 0; max-width: 68ch; }
+      .mig-list { margin: 22px 0 0; display: flex; flex-direction: column; gap: 12px; }
+      .mig-flow { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.58); overflow: hidden; }
       .mig-flow.open { border-color: rgba(76,126,245,0.5); }
-      .mig-flow.ghost { border-style: dashed; border-color: rgba(88,99,127,0.45); background: rgba(255,255,255,0.35); }
+      .mig-flow.ghost { border-style: dashed; border-color: rgba(88,99,127,0.45); background: rgba(255,255,255,0.4); }
       .mig-flow.ghost.open { border-color: rgba(88,99,127,0.7); }
-      .mig-head { display: flex; align-items: center; gap: 14px; width: 100%; background: none; border: 0; cursor: pointer; text-align: left; padding: 16px 20px; font: inherit; color: var(--ink); }
-      .mig-head-l { flex: 1 1 auto; min-width: 0; }
-      .mig-ft { font-family: 'Space Grotesk', sans-serif; font-size: clamp(15px, 2.1vw, 18px); letter-spacing: -0.01em; }
-      .mig-ft b { font-weight: 600; }
-      .mig-arw { color: var(--blue); margin: 0 4px; }
+      .mig-head { display: block; width: 100%; background: none; border: 0; cursor: pointer; text-align: left; padding: 16px 20px; font: inherit; color: var(--ink); }
+      .mig-head-top { display: flex; align-items: center; gap: 14px; }
+      .mig-ft { flex: 1 1 auto; min-width: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(15px, 2.1vw, 18px); letter-spacing: -0.01em; color: var(--navy); }
+      .mig-ft .mig-arw { color: var(--blue); margin: 0 4px; font-weight: 500; }
       .mig-ghost .mig-ft { color: var(--mut); }
       .mig-wt { flex: 0 0 auto; width: clamp(48px, 16vw, 110px); height: 6px; border-radius: 999px; background: rgba(24,40,88,0.09); overflow: hidden; }
       .mig-wt-bar { display: block; height: 100%; width: calc(var(--w) * 1%); border-radius: 999px; background: var(--blue); }
       .mig-chev { flex: 0 0 auto; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 22px; line-height: 1; color: var(--mut); transition: transform .2s ease; }
       .mig-flow.open .mig-chev { transform: rotate(45deg); }
-      .mig-detail { padding: 0 20px 22px; }
+      .mig-takeaway { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(15px, 1.6vw, 17px); line-height: 1.35; color: var(--navy); margin: 8px 0 0; max-width: 56ch; }
+      .mig-chip { display: inline-flex; flex-direction: column; margin: 12px 0 0; }
+      .mig-chip-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(22px, 3vw, 30px); line-height: 1; letter-spacing: -0.02em; color: var(--navy); }
+      .mig-chip-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .02em; color: var(--mut); margin-top: 5px; }
+      .mig-detail { padding: 4px 20px 22px; }
       .mig-detail[hidden] { display: none; }
       .mig-field { margin: 16px 0 0; }
-      .mig-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin: 0 0 5px; }
+      .mig-lbl { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); margin: 0 0 5px; }
       .mig-txt { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 66ch; }
-      .mig-read { font-weight: 500; color: var(--navy); }
-      .mig-caveat-line { font-size: 13.5px; line-height: 1.5; color: var(--mut); margin: 8px 0 0; max-width: 66ch; }
+      .mig-read { font-weight: 600; color: var(--navy); }
+      .mig-caveat-line { font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0.9; margin: 8px 0 0; max-width: 66ch; }
       .mig-txt a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
-      .mig-conflict { font-size: 13.5px; line-height: 1.5; color: var(--mut); font-style: normal; margin: 14px 0 0; max-width: 66ch; padding-left: 12px; border-left: 2px solid rgba(88,99,127,0.4); }
+      .mig-conflict { font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0.9; margin: 14px 0 0; max-width: 66ch; padding-left: 12px; border-left: 2px solid rgba(88,99,127,0.45); }
       .mig-cred { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .04em; color: var(--mut); margin: 16px 0 0; }
-      /* sources line with badges */
-      .mig-src { font-size: 12px; line-height: 1.9; color: var(--mut); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
-      .mig-src .mig-src-lbl { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .1em; font-size: 10.5px; color: var(--mut); margin-right: 4px; }
+      .mig-src { font-size: 12px; line-height: 1.9; color: var(--ink); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+      .mig-src .mig-src-lbl { font-family: 'JetBrains Mono', monospace; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; font-size: 10.5px; color: var(--navy); margin-right: 4px; }
       .mig-src a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
       .mig-src-sep { color: rgba(24,40,88,0.3); }
 
-      /* advance link */
       .mig-advance { display: inline-block; margin: 28px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
       .mig-advance:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-      /* dissent strip */
       .mig-dissent { margin: 26px 0 0; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.4); }
       .mig-dissent > summary { list-style: none; cursor: pointer; padding: 14px 18px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--navy); display: flex; align-items: center; gap: 8px; }
       .mig-dissent > summary::-webkit-details-marker { display: none; }
@@ -254,14 +287,21 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
       .mig-dissent[open] > summary::before { content: '–'; }
       .mig-dissent-body { padding: 0 18px 18px; font-size: 14.5px; line-height: 1.55; color: var(--ink); max-width: 70ch; }
 
-      /* flow-weight caveat (inside Wave 1) */
       .mig-weightcap { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); margin: 24px 0 0; }
 
-      /* methodology + footer (always visible, outside toggle) */
-      .mig-method { margin: 54px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
+      /* ── methodology legend + stamp ── */
+      .mig-method { margin: 54px 0 0; padding-top: 40px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 34px; align-items: start; }
       .mig-method-h { font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.1; }
-      .mig-method-b { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.6; color: var(--mut); margin: 14px 0 0; max-width: 72ch; }
-      .mig-foot { margin: 26px 0 0; font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
+      .mig-legend-chips { display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 18px 0 0; }
+      .mig-legend-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink); }
+      .mig-legend-lines { margin: 20px 0 0; display: flex; flex-direction: column; gap: 8px; }
+      .mig-legend-line { display: flex; align-items: baseline; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(14px, 1.4vw, 15.5px); color: var(--navy); }
+      .mig-legend-line::before { content: '·'; color: var(--blue); font-weight: 700; }
+      .mig-stampmark { justify-self: end; align-self: center; transform: rotate(-4.5deg); border: 2px solid var(--navy); border-radius: 8px; padding: 10px 16px; text-align: center; color: var(--navy); }
+      .mig-stampmark-1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(20px, 2.6vw, 30px); letter-spacing: .02em; line-height: 1; }
+      .mig-stampmark-2 { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .04em; color: var(--mut); margin-top: 6px; }
+      .mig-foot { grid-column: 1 / -1; margin: 30px 0 0; font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
+      @media (max-width: 720px) { .mig-method { grid-template-columns: 1fr; gap: 24px; } .mig-stampmark { justify-self: start; } }
 
       @media (min-width: 760px) { .mig-map { display: block; } }
       @media (prefers-reduced-motion: reduce) { .mig-chev, .mig-link, .mig-tab { transition: none; } html { scroll-behavior: auto; } }
@@ -275,10 +315,26 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
       <header class="mig-top col">
         <h1 class="mig-h1">Where GTM work is going.</h1>
         <p class="mig-stamp">Updated July 2026 · Federal, university, and industry sources · every claim dated and graded · human-verified before publish</p>
-        <p class="mig-sub">Job titles are lagging indicators — twice. This map tracks where GTM work went, where it’s going as the new seats compress, and what’s left for humans when it does.</p>
+        <p class="mig-sub">Job titles are lagging indicators — twice. Where GTM work went, where it’s going, and what’s left for humans when it does.</p>
       </header>
 
       <div class="col">
+        <!-- HERO: the migration current -->
+        <div class="mig-hero">
+          <canvas id="mig-field"></canvas>
+          <div class="mig-hero-grid">
+            <ul class="mig-emit">
+              {heroEmit.map((w, i) => (<li class={i === 1 || i === 2 ? 'mig-emit-hide' : ''}>{w}</li>))}
+            </ul>
+            <div class="mig-zones"><span class="mig-zone">2024–26</span><span class="mig-zone">2026–28</span><span class="mig-zone">2028–30</span></div>
+            <div class="mig-dest">
+              {heroDest.map((d, i) => (<span class={i >= 2 ? 'mig-dest-hide' : ''}>{d}</span>))}
+              <span class="gh">?</span><span class="gh mig-dest-hide">?</span>
+            </div>
+          </div>
+          <p class="mig-stall">stalled — transitions don’t happen on their own · OECD 2026</p>
+        </div>
+
         <!-- WAVE TOGGLE -->
         <div class="mig-tabs" role="tablist" aria-label="Migration waves">
           <button class="mig-tab" role="tab" data-wave="w1" aria-selected="true"><span class="mig-tab-yr">2024–26</span><span class="mig-tab-ep">· Documented</span></button>
@@ -307,9 +363,13 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
             {wave1.map((f) => (
               <article class="mig-flow" data-flow={f.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w1-${f.id}`}>
-                  <span class="mig-head-l"><span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span></span>
-                  <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
-                  <span class="mig-chev" aria-hidden="true">+</span>
+                  <span class="mig-head-top">
+                    <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span>
+                    <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
+                    <span class="mig-chev" aria-hidden="true">+</span>
+                  </span>
+                  <span class="mig-takeaway">{f.takeaway}</span>
+                  {f.chip && <span class="mig-chip"><span class="mig-chip-num">{f.chip.num}</span><span class="mig-chip-cap">{f.chip.cap}</span></span>}
                 </button>
                 <div class="mig-detail" id={`w1-${f.id}`} hidden>
                   <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <p class="mig-txt" set:html={f.whyHtml} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
@@ -321,11 +381,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
             ))}
           </div>
 
-          <details class="mig-dissent">
-            <summary>Read the disagreement</summary>
-            <div class="mig-dissent-body">{w1Disagreement} {w1DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div>
-          </details>
-
+          <details class="mig-dissent"><summary>Read the disagreement</summary><div class="mig-dissent-body">{w1Disagreement} {w1DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div></details>
           <p class="mig-weightcap">Flow weight = sourced judgment about magnitude and direction — not measured headcount.</p>
           <a class="mig-advance" href="#" data-goto="w2">What compresses next →</a>
         </section>
@@ -335,24 +391,33 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
           <h2 class="mig-wave-h">2026–28 · In motion</h2>
           <p class="mig-wave-intro">The absorbing seats compress next. Agent platforms productize the GTM Engineer build; agentic selling absorbs SMB deal work. Judgment concentrates in fewer, more senior seats.</p>
 
+          <div class="mig-map">
+            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="In-motion flows, solid at origin dissolving to dashed">
+              <text class="mig-colh" x={LX - 16} y="60" text-anchor="end">Compressing next</text>
+              <text class="mig-colh" x={RX + 16} y="60" text-anchor="start">Absorbing</text>
+              {wave2.map((c, i) => (<><path class="mig-w2dash" d={p4(i)} /><path class="mig-w2solid" d={p4(i)} pathLength="100" style="stroke-dasharray: 50 100" /></>))}
+              {wave2.map((c, i) => (<path class="mig-hit" data-flow={c.id} d={p4(i)} />))}
+              {wave2MapL.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y4(i)} r="4" /><text class="mig-node" x={LX - 14} y={y4(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {wave2MapR.map((n, i) => (<><circle class="mig-dot r" cx={RX} cy={y4(i)} r="4" /><text class="mig-node" x={RX + 14} y={y4(i)} text-anchor="start" dominant-baseline="central">{n}</text></>))}
+            </svg>
+            <p class="mig-mapcap">In motion: solid where it starts, dashed where it’s heading. No weights — direction is documented, magnitude isn’t yet.</p>
+          </div>
+
           <div class="mig-list">
             {wave2.map((c) => (
               <article class="mig-flow" data-flow={c.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w2-${c.id}`}>
-                  <span class="mig-head-l"><span class="mig-ft">{c.title}</span></span>
-                  <span class="mig-chev" aria-hidden="true">+</span>
+                  <span class="mig-head-top"><span class="mig-ft">{c.title}</span><span class="mig-chev" aria-hidden="true">+</span></span>
+                  <span class="mig-takeaway">{c.takeaway}</span>
+                  {c.chip && <span class="mig-chip"><span class="mig-chip-num">{c.chip.num}</span><span class="mig-chip-cap">{c.chip.cap}</span></span>}
                 </button>
                 <div class="mig-detail" id={`w2-${c.id}`} hidden>
-                  {c.body ? (
-                    <p class="mig-txt">{c.body}</p>
-                  ) : (
-                    <>
-                      <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
-                      <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
-                      <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
-                      <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
-                    </>
-                  )}
+                  {c.body ? (<p class="mig-txt">{c.body}</p>) : (<>
+                    <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
+                    <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
+                    <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
+                    <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
+                  </>)}
                   {c.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{c.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
                   {c.sourceHtml && <p class="mig-src"><span class="mig-src-lbl">Sources:</span><span set:html={c.sourceHtml} /> <span class={`mig-badge mig-badge--${badgeClass(c.sourceBadge)}`}>{c.sourceBadge}</span></p>}
                 </div>
@@ -360,11 +425,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
             ))}
           </div>
 
-          <details class="mig-dissent">
-            <summary>Read the disagreement</summary>
-            <div class="mig-dissent-body">{w2Disagreement} {w2DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div>
-          </details>
-
+          <details class="mig-dissent"><summary>Read the disagreement</summary><div class="mig-dissent-body">{w2Disagreement} {w2DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div></details>
           <a class="mig-advance" href="#" data-goto="w3">Where it ends up →</a>
         </section>
 
@@ -374,21 +435,23 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
 
           <div class="mig-map">
             <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Predicted destinations for today's seats">
-              <text class="mig-colh" x={LX - 16} y="60" text-anchor="end">Today’s seats</text>
-              <text class="mig-colh" x={RX + 16} y="60" text-anchor="start">Where they go?</text>
-              {ghosts.map((g, i) => (<path class="mig-ghostlink" d={gPath(i)} />))}
-              {seats.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={gY(i)} r="4" /><text class="mig-node" x={LX - 14} y={gY(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
-              {ghosts.map((g, i) => (<><circle class="mig-dot g" cx={RX} cy={gY(i)} r="4.5" /><text class="mig-node ghost" x={RX + 14} y={gY(i)} text-anchor="start" dominant-baseline="central">{g.name}</text></>))}
+              <text class="mig-colh" x={LX - 16} y="62" text-anchor="end">Today’s seats</text>
+              <text class="mig-colh" x={RX + 16} y="62" text-anchor="start">Where they go?</text>
+              {ghosts.map((g, i) => (<path class="mig-ghostlink" d={p6(i)} />))}
+              {seats.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y6(i)} r="4" /><text class="mig-node" x={LX - 14} y={y6(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {ghosts.map((g, i) => (<><circle class="mig-dot g" cx={RX} cy={y6(i)} r="4.5" /><text class="mig-node ghost" x={RX + 14} y={y6(i)} text-anchor="start" dominant-baseline="central">{g.name}</text></>))}
             </svg>
             <p class="mig-mapcap">Direction, not magnitude. The compressing seats are known. The destinations are categories, not titles.</p>
           </div>
+
+          <p class="mig-recruit">For a recruiting firm, every ghost card is a future placement category — this is a map of where the fees migrate.</p>
 
           <div class="mig-list">
             {ghosts.map((g) => (
               <article class="mig-flow ghost" data-flow={g.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w3-${g.id}`}>
-                  <span class="mig-head-l"><span class="mig-ft">{g.name}</span></span>
-                  <span class="mig-chev" aria-hidden="true">+</span>
+                  <span class="mig-head-top"><span class="mig-ft">{g.name}</span><span class="mig-chev" aria-hidden="true">+</span></span>
+                  <span class="mig-takeaway">{g.takeaway}</span>
                 </button>
                 <div class="mig-detail" id={`w3-${g.id}`} hidden>
                   <div class="mig-field"><p class="mig-lbl">Why I expect this</p><p class="mig-txt">{g.why}</p></div>
@@ -401,18 +464,25 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
             ))}
           </div>
 
-          <details class="mig-dissent">
-            <summary>Read the disagreement</summary>
-            <div class="mig-dissent-body">{w3Disagreement}</div>
-          </details>
-
+          <details class="mig-dissent"><summary>Read the disagreement</summary><div class="mig-dissent-body">{w3Disagreement}</div></details>
           <a class="mig-advance" href="#" data-goto="w1">Back to what’s documented →</a>
         </section>
 
-        <!-- ALWAYS VISIBLE (outside the toggle) -->
+        <!-- ALWAYS VISIBLE — methodology legend + slop-free stamp -->
         <section class="mig-method">
-          <h2 class="mig-method-h">How this page is sourced.</h2>
-          <p class="mig-method-b">Every load-bearing claim carries at least two independent sources on different data types — payroll, survey, postings, usage. Sources are graded: federal and university data solid, industry surveys outlined, company-reported figures dashed. Disagreement is displayed, not buried. Nothing ships without a named, dated source a reader can check, and every citation is human-verified before publish. Predictions carry the condition that would falsify them.</p>
+          <div>
+            <h2 class="mig-method-h">Sourced. Graded. Checkable.</h2>
+            <div class="mig-legend-chips">
+              {legendChips.map((c) => (<span class="mig-legend-chip"><span class={`mig-badge mig-badge--${badgeClass(c.badge)}`}>{c.badge}</span>{c.label}</span>))}
+            </div>
+            <div class="mig-legend-lines">
+              {legendLines.map((l) => (<span class="mig-legend-line">{l}</span>))}
+            </div>
+          </div>
+          <div class="mig-stampmark" aria-hidden="true">
+            <div class="mig-stampmark-1">AI-SLOP-FREE</div>
+            <div class="mig-stampmark-2">every claim named, dated, human-checked</div>
+          </div>
           <p class="mig-foot">This map is the second deep-dive cluster of the Workforce Transformation Index. The method: public signals, sourced claims, human judgment — the same way I'd run it for a client.</p>
         </section>
       </div>
@@ -422,6 +492,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
       (() => {
         const root = document.querySelector('.mig');
         if (!root) return;
+        // ── wave toggle ──
         const tabs = [...root.querySelectorAll('.mig-tab')];
         const waves = [...root.querySelectorAll('.mig-wave')];
         function showWave(id) {
@@ -430,7 +501,7 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
         }
         tabs.forEach((t) => t.addEventListener('click', () => showWave(t.dataset.wave)));
         root.querySelectorAll('.mig-advance').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showWave(a.dataset.goto); }));
-
+        // ── card expand + map click ──
         const cards = [...root.querySelectorAll('.mig-flow')];
         const links = [...root.querySelectorAll('.mig-link')];
         const setActive = (id) => links.forEach((l) => l.classList.toggle('on', l.dataset.flow === String(id)));
@@ -444,16 +515,88 @@ const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i
           if (open) setActive(card.dataset.flow);
         }
         cards.forEach((card) => card.querySelector('.mig-head').addEventListener('click', () => toggle(card)));
-
         [...root.querySelectorAll('.mig-hit')].forEach((h) => {
           h.addEventListener('mouseenter', () => setActive(h.dataset.flow));
           h.addEventListener('click', () => {
             const card = cards.find((c) => c.dataset.flow === h.dataset.flow);
-            if (!card) return;
-            toggle(card, true);
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (!card) return; toggle(card, true); card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           });
         });
+      })();
+
+      // ── HERO: "the migration current" (word-anchored emitters → zones → destinations + stall pool) ──
+      (() => {
+        const cv = document.getElementById('mig-field');
+        if (!(cv instanceof HTMLCanvasElement)) return;
+        const ctx = cv.getContext('2d');
+        if (!ctx) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let W = 0, H = 0, DPR = 1, emit = [], dest = [], stall = { x: 0, y: 0 }, zoneX = [0, 0], parts = [], t0 = performance.now(), raf = 0;
+        function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { x: r.right - h.left, y: r.top + r.height / 2 - h.top, l: r.left - h.left }; }
+        function measure() {
+          const es = [...document.querySelectorAll('.mig-emit li')].filter((e) => e.offsetParent !== null);
+          emit = es.map((e) => { const b = rectIn(e); return { x: b.x + 4, y: b.y }; });
+          if (!emit.length) emit = [{ x: W * 0.14, y: H * 0.4 }];
+          const ds = [...document.querySelectorAll('.mig-dest span:not(.gh)')].filter((e) => e.offsetParent !== null);
+          dest = ds.map((e) => { const b = rectIn(e); return { x: b.l - 6, y: b.y }; });
+          if (!dest.length) dest = [{ x: W * 0.82, y: H * 0.4 }];
+          const st = document.querySelector('.mig-stall'); if (st) { const b = rectIn(st); stall = { x: b.l + 20, y: b.y }; } else stall = { x: W * 0.82, y: H * 0.9 };
+          zoneX = [W * 0.42, W * 0.66];
+        }
+        function reset(p, seed) {
+          const e = emit[(Math.random() * emit.length) | 0];
+          p.x = e.x + (Math.random() - 0.5) * 6;
+          p.y = e.y + (Math.random() - 0.5) * 10;
+          const d = dest[(Math.random() * dest.length) | 0];
+          p.tx = d.x; p.ty = d.y;
+          p.sp = 0.5 + Math.random() * 0.7;
+          p.s = 1.4 + Math.random() * 1.6;
+          p.stall = Math.random() < 0.2;
+          p.stalled = false;
+          p.a = 0;
+          if (seed) p.x = e.x + Math.random() * (d.x - e.x);
+        }
+        function build() {
+          const total = W < 620 ? 90 : 150;
+          parts = [];
+          for (let i = 0; i < total; i++) { const p = {}; reset(p, true); parts.push(p); }
+        }
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          for (const p of parts) {
+            if (!reduce) {
+              if (p.stall && !p.stalled && p.x > zoneX[0] + Math.random() * 40) p.stalled = true;
+              if (p.stalled) {
+                p.x += (stall.x - p.x) * 0.03; p.y += (stall.y - p.y) * 0.05 + 0.3;
+                p.a += 0.02;
+                if (p.a > 1.3) reset(p, false);
+              } else {
+                p.x += p.sp; p.y += (p.ty - p.y) * 0.03;
+                if (p.x > p.tx + 6) reset(p, false);
+              }
+            }
+            // degrade by zone
+            let mode = p.x < zoneX[0] ? 0 : p.x < zoneX[1] ? 1 : 2;
+            if (p.stalled) mode = 3;
+            const base = 0.16 + (p.s - 1.4) * 0.14;
+            if (mode === 0) { ctx.fillStyle = `rgba(60,112,236,${Math.min(0.7, 0.42 + base)})`; ctx.fillRect(p.x, p.y, p.s, p.s); }
+            else if (mode === 1) { ctx.strokeStyle = `rgba(82,84,228,0.5)`; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
+            else if (mode === 2) { ctx.strokeStyle = `rgba(140,106,243,0.32)`; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
+            else { ctx.fillStyle = `rgba(88,99,127,${Math.max(0, 0.35 * (1 - p.a / 1.3))})`; ctx.fillRect(p.x, p.y, p.s, p.s); }
+          }
+          if (!reduce) raf = requestAnimationFrame(draw);
+        }
+        function resize() {
+          DPR = Math.min(window.devicePixelRatio || 1, 2);
+          W = cv.clientWidth; H = cv.clientHeight;
+          cv.width = Math.max(1, W * DPR); cv.height = Math.max(1, H * DPR);
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          measure(); build();
+        }
+        resize();
+        window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); if (!reduce) raf = requestAnimationFrame(draw); });
+        window.addEventListener('load', () => { measure(); build(); });
+        if (reduce) draw(); else raf = requestAnimationFrame(draw);
       })();
     </script>
   </body>
