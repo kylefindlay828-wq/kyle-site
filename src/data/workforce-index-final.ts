@@ -217,7 +217,7 @@ export const clusters: Cluster[] = [
     },
   },
   {
-    id: 'ai-labs-technical-talent', label: 'AI labs / technical talent', x: 9.3, y: 8.0, r: 22, dir: 'E',
+    id: 'ai-labs-technical-talent', label: 'AI labs / technical talent', x: 9.7, y: 9.2, r: 22, dir: 'W',
     zone: 'ai', zoneLabel: 'AI labs', color: '#9b7ff0', opportunity: 'large',
     industries: ['Frontier AI labs', 'AI infrastructure', 'Software', 'Cybersecurity', 'Specialized technical services'],
     roles: ['Software engineer', 'ML engineer', 'Research engineer', 'Technical product manager', 'AI-infrastructure engineer', 'Applied-AI operator', 'Data engineer', 'Research scientist', 'Solutions engineer', 'Evaluation specialist'],
