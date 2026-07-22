@@ -3,12 +3,13 @@ import Analytics from '@vercel/analytics/astro';
 import GlobalNav from '../components/GlobalNav.astro';
 
 const title = 'Where GTM work is going — Kyle Findlay';
-const description = 'A migration map of go-to-market roles: which seats AI is compressing, which are absorbing the judgment that remains, and what it takes to cross. Second deep-dive cluster of the Workforce Transformation Index.';
+const description = 'A migration map of go-to-market roles across three waves: what is documented, what is in motion, and what is predicted — which seats AI compresses and what is left for humans. Second deep-dive cluster of the Workforce Transformation Index.';
 
 const leftNodes = ['SDR / BDR', 'Junior demand gen', 'Sales ops (reporting)', 'Reactive customer success'];
 const rightNodes = ['GTM Engineer', 'Account Executive', 'RevOps architect', 'Forward deployed / implementation', 'AI-enablement marketing'];
 
-const flows = [
+// ── WAVE 1 · 2024–26 · Documented (weights hold a ≥4:1 ratio: heaviest F1 vs lightest F3) ──
+const wave1 = [
   {
     id: 1, from: 'SDR', to: 'GTM Engineer', li: 0, ri: 0, w: 1.0,
     whatMoved: 'List building, enrichment, sequencing, and first-touch personalization — now run by AI outbound tooling.',
@@ -18,7 +19,7 @@ const flows = [
     sourced: '[CITE — Bridge Group SDR Metrics 2026 (18% / 31% figures); Emergence Capital survey of 560+ B2B software companies (36% cut SDR/BDR headcount, only 19% grew); Forrester B2B Sales Automation Landscape Q1 2026 (AI SDR adoption past 55% at 500+ employee companies)]',
   },
   {
-    id: 2, from: 'SDR', to: 'Account Executive', li: 0, ri: 1, w: 0.55,
+    id: 2, from: 'SDR', to: 'Account Executive', li: 0, ri: 1, w: 0.34,
     whatMoved: 'The classic promotion path. Qualification and discovery skills carry over; closing is learned in-seat.',
     why: 'Still real, but narrowing — fewer AE backfills and more external AE candidates have stretched the median timeline toward 18 months. Promotions before 11 months of tenure fail over half the time; internal moves outperform external jumps.',
     crossing: 'Consecutive quarters at quota and documented pipeline dollars, not activity counts.',
@@ -26,7 +27,7 @@ const flows = [
     sourced: '[CITE — Bridge Group promotion-timeline data (18–24 month median, 12–15 top quartile) and Bridge Group study of ~205 promoted reps (26% internal vs 41% external failure; sub-11-month promotions fail 55%)]',
   },
   {
-    id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.5,
+    id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.22,
     whatMoved: 'Dashboarding, forecast roll-ups, and CRM hygiene — increasingly automated at AI-adopting companies. Look at what they post instead.',
     why: 'The remaining work is designing the revenue system: routing, territories, comp logic, tool selection. The same headcount data that shows junior SDR roles shrinking shows RevOps and sender-ops roles growing.',
     crossing: 'Evidence of system design — a workflow you architected end to end, not reports you maintained.',
@@ -34,7 +35,7 @@ const flows = [
     sourced: '[CITE — Bridge Group SDR Metrics 2026 (RevOps/sender-ops role growth); 2–3 live job postings for GTM-operations / agent-development-type roles, quoted and linked — I will supply these]',
   },
   {
-    id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.62,
+    id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.42,
     whatMoved: 'Copy variants, A/B execution, campaign assembly — the production layer.',
     why: 'Generation is cheap; judgment is not. 87% of marketers now use generative AI in at least one workflow, and content creation is the top use case — but returns concentrate where AI accelerates a human-led editorial process, and platforms down-rank pure AI production.',
     crossing: 'A campaign where you directed AI production and can show the decisions you made.',
@@ -42,7 +43,7 @@ const flows = [
     sourced: '[CITE — Salesforce State of Marketing 2026 (87%, up from 51% in 2024); McKinsey Global AI Survey (≈3.2x ROI on AI content drafting within human-led process)]',
   },
   {
-    id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.82,
+    id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
     whatMoved: 'Ticket triage and first-line answers — absorbed by AI support at scale.',
     why: 'Klarna reported its AI assistant handled 2.3M conversations in its first month — two-thirds of support chats, the equivalent of ~700 agents by its own estimate. Fifteen months later its CEO said the cost-cutting went too far and rehired humans for what requires judgment. The routine layer moved; the human seat went upstream.',
     crossing: 'An implementation you owned — a customer whose workflow you personally rebuilt.',
@@ -51,10 +52,38 @@ const flows = [
   },
 ];
 
-const predictions = [
-  'By mid-2027, the median seed-stage B2B company will run outbound with two or fewer humans in the loop.',
-  'By end of 2027, GTM Engineer and RevOps-architect postings will outnumber SDR postings at AI-native startups.',
-  'The fastest-promoted GTM hires of 2026–27 won’t be the best callers — they’ll be the ones who arrive with a working system as their resume.',
+// ── WAVE 2 · 2026–28 · In motion (Basis instead of Sourced; no [CITE]) ──
+const wave2 = [
+  {
+    id: 'm1', title: 'GTM Engineer → Revenue systems owner',
+    whatMoved: 'The build itself. Clay tables, enrichment flows, and outbound agents become platform templates — assembly stops being the scarce skill.',
+    why: 'Every tooling wave commoditizes its own operators. The seat that survives owns the architecture: which systems exist, how they connect, what the humans in the loop are for.',
+    crossing: 'A track record of designing revenue systems, not just assembling them — decisions you can defend, not workflows you can demo.',
+    read: 'Today\'s GTM Engineers are tomorrow\'s revenue-systems bench — but only the ones who can explain why, not just how.',
+    basis: 'Pattern from the documented wave: the same compression that hit SDR execution hits system assembly one platform generation later.',
+  },
+  {
+    id: 'm2', title: 'SMB Account Executive → Upmarket human selling',
+    whatMoved: 'Discovery, demo, and proposal for small, fast deals — absorbed by agentic selling below a deal-size line that rises each year.',
+    why: 'Where trust, accountability, and multi-stakeholder judgment price in, humans hold. Where they don\'t, agents close.',
+    crossing: 'Enterprise motion: multi-threading, executive presence, and deals where someone has to be accountable by name.',
+    read: 'SMB AE benches shrink; enterprise AE standards rise. The candidates who cross early set the new bar.',
+    basis: 'Follows the documented wave\'s logic applied to the deal itself instead of the pipeline: routine volume automates first, judgment retreats upmarket.',
+  },
+  {
+    id: 'm3', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement',
+    whatMoved: 'Nothing yet — these seats are appearing, not absorbing.',
+    why: 'Deploying agents inside a customer\'s workflow is high-touch work no existing title covers.',
+    crossing: 'An owned implementation — a workflow you personally wired into a real organization.',
+    read: 'These roles have no LinkedIn title history to source against. Screen for owned implementations, not titles.',
+    basisHtml: 'Surfaced by <a href="/radar-v2">GTM Radar v2</a> before they were posted: AI Agent Deployment Lead (Glean), Forward-Deployed Engineer EMEA (Sierra), Detection-to-GTM Liaison (Abnormal Security). Detected by the agent, dated, published.',
+  },
+];
+
+// ── WAVE 3 · 2028–30 · Predicted — sub-block A "What the field forecasts" (A1, A2; A3 + sub-block B pending) ──
+const forecasts = [
+  { claim: 'Gartner: by 2028, 90% of B2B purchases will be AI-agent intermediated — over $15 trillion in spend — with machine-to-machine negotiation compressing sales cycles.', cite: '[CITE — Gartner Symposium predictions, Oct–Nov 2025]' },
+  { claim: 'Gartner: by 2028, AI agents will outnumber human sellers 10 to 1 — yet fewer than 40% of sellers will report that agents improved their productivity.', cite: '[CITE — Gartner press release, Nov 18 2025, ‘Predicts 2026: Leading Sales in the Age of AI Contradictions’]' },
 ];
 
 // ── desktop map geometry (fixed viewBox; scales as a unit) ──
@@ -86,39 +115,55 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       body { margin: 0; color: var(--ink); font-family: 'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
         background: linear-gradient(180deg, #eef4fd 0%, #e9eefb 60%, #ecebf9 100%); overflow-x: hidden; }
       a { color: inherit; }
-      h1, h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.03em; margin: 0; color: var(--navy); }
+      h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.03em; margin: 0; color: var(--navy); }
       .col { max-width: 1000px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
       .mig-top { padding: 60px 0 8px; }
       .mig-h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; }
-      .mig-sub { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 18px 0 0; max-width: 40ch; }
-
+      .mig-sub { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 18px 0 0; max-width: 46ch; }
       .mig { padding-bottom: 90px; }
 
+      /* ── wave toggle (segmented control) ── */
+      .mig-tabs { display: flex; gap: 6px; margin: 30px 0 0; }
+      .mig-tab { flex: 1 1 0; min-width: 0; cursor: pointer; font: inherit; text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px;
+        transition: border-color .16s ease, background-color .16s ease; }
+      .mig-tab-yr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(13px, 1.7vw, 15.5px); letter-spacing: -0.01em; color: var(--navy); white-space: nowrap; }
+      .mig-tab-ep { font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, 1.3vw, 12px); letter-spacing: .02em; color: var(--mut); line-height: 1.25; }
+      .mig-tab[aria-selected='true'] { border-color: var(--blue); background: rgba(76,126,245,0.10); }
+      .mig-tab[aria-selected='true'] .mig-tab-ep { color: var(--blue); }
+      .mig-tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+      .mig-wave[hidden] { display: none; }
+      .mig-wave-h { font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.08; margin: 34px 0 0; }
+      .mig-wave-intro { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 14px 0 0; max-width: 60ch; }
+
       /* ── desktop node map (hidden on mobile) ── */
-      .mig-map { display: none; margin: 44px 0 8px; }
+      .mig-map { display: none; margin: 30px 0 8px; }
       .mig-svg { width: 100%; max-width: 940px; height: auto; display: block; margin: 0 auto; overflow: visible; }
       .mig-colh { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; fill: var(--mut); }
-      .mig-link { fill: none; stroke: rgba(76,126,245,0.26); stroke-width: var(--sw); stroke-linecap: round; transition: stroke .18s ease; }
+      .mig-link { fill: none; stroke: rgba(76,126,245,0.30); stroke-width: var(--sw); stroke-linecap: round; transition: stroke .18s ease; }
       .mig-link.on { stroke: rgba(76,126,245,0.9); }
       .mig-hit { fill: none; stroke: transparent; stroke-width: 26; cursor: pointer; }
-      .mig-dot { fill: #7ea0f5; }
-      .mig-dot.r { fill: #8b6cf0; }
+      .mig-dot { fill: #7ea0f5; } .mig-dot.r { fill: #8b6cf0; }
       .mig-node { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 15px; fill: var(--ink); }
       .mig-maphint { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--mut); text-align: center; margin: 10px 0 0; }
 
-      /* ── flow cards (mobile-first; also the detail area on desktop) ── */
-      .mig-list { margin: 40px 0 0; display: flex; flex-direction: column; gap: 12px; }
+      /* ── flow / motion cards ── */
+      .mig-list { margin: 30px 0 0; display: flex; flex-direction: column; gap: 12px; }
       .mig-flow { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.55); overflow: hidden; }
       .mig-flow.open { border-color: rgba(76,126,245,0.5); }
-      .mig-head { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; width: 100%;
-        background: none; border: 0; cursor: pointer; text-align: left; padding: 18px 20px; font: inherit; color: var(--ink); }
-      .mig-ft { font-family: 'Space Grotesk', sans-serif; font-size: clamp(15px, 2.2vw, 18px); letter-spacing: -0.01em; }
+      .mig-head { display: flex; align-items: center; gap: 14px; width: 100%; background: none; border: 0; cursor: pointer; text-align: left; padding: 16px 20px; font: inherit; color: var(--ink); }
+      .mig-head-l { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+      .mig-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--mut); }
+      .mig-status.motion { color: #8b6cf0; }
+      .mig-ft { font-family: 'Space Grotesk', sans-serif; font-size: clamp(15px, 2.1vw, 18px); letter-spacing: -0.01em; }
       .mig-ft b { font-weight: 600; }
       .mig-arw { color: var(--blue); margin: 0 4px; }
-      .mig-wt { width: clamp(56px, 18vw, 120px); height: 6px; border-radius: 999px; background: rgba(24,40,88,0.09); overflow: hidden; }
+      .mig-wt { flex: 0 0 auto; width: clamp(48px, 16vw, 110px); height: 6px; border-radius: 999px; background: rgba(24,40,88,0.09); overflow: hidden; }
       .mig-wt-bar { display: block; height: 100%; width: calc(var(--w) * 1%); border-radius: 999px; background: var(--blue); }
-      .mig-chev { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 22px; line-height: 1; color: var(--mut); transition: transform .2s ease; }
+      .mig-chev { flex: 0 0 auto; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 22px; line-height: 1; color: var(--mut); transition: transform .2s ease; }
       .mig-flow.open .mig-chev { transform: rotate(45deg); }
       .mig-detail { padding: 0 20px 22px; }
       .mig-detail[hidden] { display: none; }
@@ -126,28 +171,28 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       .mig-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin: 0 0 5px; }
       .mig-txt { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 66ch; }
       .mig-read { font-weight: 500; color: var(--navy); }
-      .mig-sourced { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; color: var(--mut); margin: 18px 0 0;
-        padding-top: 14px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+      .mig-txt a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+      .mig-sourced { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; color: var(--mut); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
 
-      /* ── on the record ── */
-      .mig-otr { margin: 66px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
-      .mig-h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.06; }
-      .mig-otr-intro { font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 16px 0 0; max-width: 52ch; }
-      .mig-preds { margin: 30px 0 0; display: flex; flex-direction: column; gap: 22px; }
-      .mig-pred { border-left: 2px solid var(--blue); padding-left: 18px; }
-      .mig-pred-t { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.28; letter-spacing: -0.02em; color: var(--navy); margin: 0; max-width: 40ch; }
-      .mig-cred { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .04em; color: var(--mut); margin: 8px 0 0; }
+      /* advance link */
+      .mig-advance { display: inline-block; margin: 26px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
+      .mig-advance:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-      .mig-foot { margin: 60px 0 0; padding-top: 26px; border-top: 1px solid var(--line);
+      /* wave 3 forecasts */
+      .mig-subh { font-size: clamp(1.15rem, 1.9vw, 1.45rem); line-height: 1.1; margin: 30px 0 0; }
+      .mig-forecasts { margin: 18px 0 0; display: flex; flex-direction: column; gap: 16px; }
+      .mig-fc { border-left: 2px solid var(--line); padding-left: 16px; }
+      .mig-fc-claim { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.5; color: var(--ink); margin: 0; max-width: 66ch; }
+      .mig-fc-cite { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; color: var(--mut); margin: 6px 0 0; overflow-wrap: anywhere; }
+      .mig-pending { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); margin: 18px 0 0; opacity: 0.75; }
+
+      /* always-visible (outside the toggle) */
+      .mig-caveat { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); margin: 40px 0 0; }
+      .mig-foot { margin: 22px 0 0; padding-top: 24px; border-top: 1px solid var(--line);
         font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
 
-      @media (min-width: 760px) {
-        .mig-map { display: block; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .mig-chev, .mig-link { transition: none; }
-        html { scroll-behavior: auto; }
-      }
+      @media (min-width: 760px) { .mig-map { display: block; } }
+      @media (prefers-reduced-motion: reduce) { .mig-chev, .mig-link, .mig-tab { transition: none; } html { scroll-behavior: auto; } }
     </style>
     <Analytics />
   </head>
@@ -157,67 +202,107 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
     <main class="mig">
       <header class="mig-top col">
         <h1 class="mig-h1">Where GTM work is going.</h1>
-        <p class="mig-sub">Job titles are lagging indicators. This is the work in motion — which seats AI is compressing, and which seats are absorbing the judgment that remains.</p>
+        <p class="mig-sub">Job titles are lagging indicators — twice. This map tracks where GTM work went, where it’s going as the new seats compress, and what’s left for humans when it does.</p>
       </header>
 
       <div class="col">
-        <!-- DESKTOP MAP -->
-        <div class="mig-map">
-          <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Migration flows from compressing roles to absorbing roles">
-            <text class="mig-colh" x={LX - 16} y="44" text-anchor="end">Compressing</text>
-            <text class="mig-colh" x={RX + 16} y="44" text-anchor="start">Absorbing</text>
-            {flows.map((f) => (<path class="mig-link" data-flow={f.id} style={`--sw:${(2 + f.w * 9).toFixed(1)}`} d={pathOf(f)} />))}
-            {flows.map((f) => (<path class="mig-hit" data-flow={f.id} d={pathOf(f)} aria-label={`${f.from} to ${f.to}`} />))}
-            {leftNodes.map((n, i) => (
-              <>
-                <circle class="mig-dot" cx={LX} cy={leftY(i)} r="4" />
-                <text class="mig-node" x={LX - 14} y={leftY(i)} text-anchor="end" dominant-baseline="central">{n}</text>
-              </>
-            ))}
-            {rightNodes.map((n, j) => (
-              <>
-                <circle class="mig-dot r" cx={RX} cy={rightY(j)} r="4" />
-                <text class="mig-node" x={RX + 14} y={rightY(j)} text-anchor="start" dominant-baseline="central">{n}</text>
-              </>
-            ))}
-          </svg>
-          <p class="mig-maphint">Click a flow to open its detail below · thicker line = bigger shift</p>
+        <!-- WAVE TOGGLE -->
+        <div class="mig-tabs" role="tablist" aria-label="Migration waves">
+          <button class="mig-tab" role="tab" data-wave="w1" aria-selected="true"><span class="mig-tab-yr">2024–26</span><span class="mig-tab-ep">· Documented</span></button>
+          <button class="mig-tab" role="tab" data-wave="w2" aria-selected="false"><span class="mig-tab-yr">2026–28</span><span class="mig-tab-ep">· In motion</span></button>
+          <button class="mig-tab" role="tab" data-wave="w3" aria-selected="false"><span class="mig-tab-yr">2028–30</span><span class="mig-tab-ep">· Predicted</span></button>
         </div>
 
-        <!-- FLOW CARDS -->
-        <div class="mig-list">
-          {flows.map((f) => (
-            <article class="mig-flow" data-flow={f.id}>
-              <button class="mig-head" type="button" aria-expanded="false" aria-controls={`mig-d-${f.id}`}>
-                <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span>
-                <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
-                <span class="mig-chev" aria-hidden="true">+</span>
-              </button>
-              <div class="mig-detail" id={`mig-d-${f.id}`} hidden>
-                <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{f.whatMoved}</p></div>
-                <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{f.why}</p></div>
-                <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
-                <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
-                <p class="mig-sourced">{f.sourced}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+        <!-- ══ WAVE 1 · 2024–26 · Documented ══ -->
+        <section class="mig-wave" data-wave="w1" role="tabpanel">
+          <h2 class="mig-wave-h">2024–26 · Documented</h2>
+          <p class="mig-wave-intro">This wave already happened. It’s documented here because a map you can check is the only kind worth trusting forward.</p>
 
-        <!-- ON THE RECORD -->
-        <section class="mig-otr">
-          <h2 class="mig-h2">On the record.</h2>
-          <p class="mig-otr-intro">Maps age. So here are three dated predictions this map implies — check me.</p>
-          <div class="mig-preds">
-            {predictions.map((p) => (
-              <div class="mig-pred">
-                <p class="mig-pred-t">{p}</p>
-                <p class="mig-cred">Prediction · Kyle Findlay · July 2026</p>
+          <div class="mig-map">
+            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Migration flows from compressing roles to absorbing roles">
+              <text class="mig-colh" x={LX - 16} y="44" text-anchor="end">Compressing</text>
+              <text class="mig-colh" x={RX + 16} y="44" text-anchor="start">Absorbing</text>
+              {wave1.map((f) => (<path class="mig-link" data-flow={f.id} style={`--sw:${(f.w * 16).toFixed(1)}`} d={pathOf(f)} />))}
+              {wave1.map((f) => (<path class="mig-hit" data-flow={f.id} d={pathOf(f)} aria-label={`${f.from} to ${f.to}`} />))}
+              {leftNodes.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={leftY(i)} r="4" /><text class="mig-node" x={LX - 14} y={leftY(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {rightNodes.map((n, j) => (<><circle class="mig-dot r" cx={RX} cy={rightY(j)} r="4" /><text class="mig-node" x={RX + 14} y={rightY(j)} text-anchor="start" dominant-baseline="central">{n}</text></>))}
+            </svg>
+            <p class="mig-maphint">Click a flow to open its detail below · thicker line = bigger shift</p>
+          </div>
+
+          <div class="mig-list">
+            {wave1.map((f) => (
+              <article class="mig-flow" data-flow={f.id}>
+                <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w1-${f.id}`}>
+                  <span class="mig-head-l">
+                    <span class="mig-status">Sourced</span>
+                    <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span>
+                  </span>
+                  <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
+                  <span class="mig-chev" aria-hidden="true">+</span>
+                </button>
+                <div class="mig-detail" id={`w1-${f.id}`} hidden>
+                  <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{f.whatMoved}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{f.why}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
+                  <p class="mig-sourced">{f.sourced}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <a class="mig-advance" href="#" data-goto="w2">What compresses next →</a>
+        </section>
+
+        <!-- ══ WAVE 2 · 2026–28 · In motion ══ -->
+        <section class="mig-wave" data-wave="w2" role="tabpanel" hidden>
+          <h2 class="mig-wave-h">2026–28 · In motion</h2>
+          <p class="mig-wave-intro">The absorbing seats compress next. Agent platforms productize the GTM Engineer build; agentic selling absorbs SMB deal work. Judgment concentrates in fewer, more senior seats.</p>
+
+          <div class="mig-list">
+            {wave2.map((c) => (
+              <article class="mig-flow" data-flow={c.id}>
+                <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w2-${c.id}`}>
+                  <span class="mig-head-l">
+                    <span class="mig-status motion">In motion</span>
+                    <span class="mig-ft">{c.title}</span>
+                  </span>
+                  <span class="mig-chev" aria-hidden="true">+</span>
+                </button>
+                <div class="mig-detail" id={`w2-${c.id}`} hidden>
+                  <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Basis</p>{c.basisHtml ? <p class="mig-txt" set:html={c.basisHtml} /> : <p class="mig-txt">{c.basis}</p>}</div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <a class="mig-advance" href="#" data-goto="w3">Where it ends up →</a>
+        </section>
+
+        <!-- ══ WAVE 3 · 2028–30 · Predicted ══ -->
+        <section class="mig-wave" data-wave="w3" role="tabpanel" hidden>
+          <h2 class="mig-wave-h">2028–30 · Predicted</h2>
+
+          <h3 class="mig-subh">What the field forecasts</h3>
+          <div class="mig-forecasts">
+            {forecasts.map((fc) => (
+              <div class="mig-fc">
+                <p class="mig-fc-claim">{fc.claim}</p>
+                <p class="mig-fc-cite">{fc.cite}</p>
               </div>
             ))}
           </div>
+
+          <a class="mig-advance" href="#" data-goto="w1">Back to what’s documented →</a>
         </section>
 
+        <!-- OUTSIDE THE TOGGLE — always visible -->
+        <p class="mig-caveat">Flow weight = sourced judgment about magnitude and direction — not measured headcount.</p>
         <p class="mig-foot">This map is the second deep-dive cluster of the Workforce Transformation Index. The method: public signals, sourced claims, human judgment — the same way I'd run it for a client.</p>
       </div>
     </main>
@@ -226,9 +311,19 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       (() => {
         const root = document.querySelector('.mig');
         if (!root) return;
+        // ── wave toggle (render-all, show/hide; no scroll jump) ──
+        const tabs = [...root.querySelectorAll('.mig-tab')];
+        const waves = [...root.querySelectorAll('.mig-wave')];
+        function showWave(id) {
+          tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.wave === id ? 'true' : 'false'));
+          waves.forEach((w) => { w.hidden = w.dataset.wave !== id; });
+        }
+        tabs.forEach((t) => t.addEventListener('click', () => showWave(t.dataset.wave)));
+        root.querySelectorAll('.mig-advance').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showWave(a.dataset.goto); }));
+
+        // ── card expand / collapse ──
         const cards = [...root.querySelectorAll('.mig-flow')];
         const links = [...root.querySelectorAll('.mig-link')];
-        const hits = [...root.querySelectorAll('.mig-hit')];
         const setActive = (id) => links.forEach((l) => l.classList.toggle('on', l.dataset.flow === String(id)));
         function toggle(card, force) {
           const head = card.querySelector('.mig-head');
@@ -240,7 +335,9 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
           if (open) setActive(card.dataset.flow);
         }
         cards.forEach((card) => card.querySelector('.mig-head').addEventListener('click', () => toggle(card)));
-        hits.forEach((h) => {
+
+        // ── desktop map: hover / click a flow opens its Wave 1 card ──
+        [...root.querySelectorAll('.mig-hit')].forEach((h) => {
           h.addEventListener('mouseenter', () => setActive(h.dataset.flow));
           h.addEventListener('click', () => {
             const card = cards.find((c) => c.dataset.flow === h.dataset.flow);
