@@ -6,7 +6,7 @@
 const links = [
   { href: '/proofworks', label: 'Proofworks' },
   { href: '/radar-v2', label: 'GTM Radar' },
-  { href: '/gtm-migration', label: 'GTM Migration' },
+  { href: '/gtm-migration', label: 'GTM Migration', isNew: true },
   { href: '/#about', label: 'About' },
   { href: '/#contact', label: 'Contact' },
 ];
@@ -15,7 +15,7 @@ const links = [
   <div class="gnav-in">
     <a href="/" class="gnav-brand">Kyle Findlay</a>
     <nav class="gnav-links" aria-label="Primary">
-      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      {links.map((l) => <a href={l.href}>{l.label}{l.isNew && <span class="gnav-new">New</span>}</a>)}
     </nav>
     <button id="gnav-burger" class="gnav-burger" type="button" aria-expanded="false" aria-controls="gnav-menu" aria-label="Open menu">
       <span class="gnav-bars"></span>
@@ -23,7 +23,7 @@ const links = [
   </div>
   <div id="gnav-menu" class="gnav-menu" hidden>
     <a class="gnav-mi" href="/">Kyle Findlay</a>
-    {links.map((l) => <a class="gnav-mi" href={l.href}>{l.label}</a>)}
+    {links.map((l) => <a class="gnav-mi" href={l.href}>{l.label}{l.isNew && <span class="gnav-new">New</span>}</a>)}
   </div>
 </header>
 
@@ -49,6 +49,8 @@ const links = [
   .gnav-links a { font-family: var(--gsans); font-weight: 500; font-size: 15px; color: var(--gink);
     padding-bottom: 2px; border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease; white-space: nowrap; }
   .gnav-links a:hover { color: var(--gacc); border-bottom-color: var(--gacc); }
+  .gnav-new { display: inline-block; margin-left: 6px; font-family: var(--gsans); font-weight: 700; font-size: 9px;
+    letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--gacc); border-radius: 5px; padding: 2px 5px; vertical-align: 2px; }
 
   .gnav-burger { display: none; width: 42px; height: 42px; border: 1px solid #d8d3c6; border-radius: 10px;
     background: #fbfaf6; align-items: center; justify-content: center; cursor: pointer; padding: 0; }

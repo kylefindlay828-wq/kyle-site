@@ -3,95 +3,145 @@ import Analytics from '@vercel/analytics/astro';
 import GlobalNav from '../components/GlobalNav.astro';
 
 const title = 'Where GTM work is going — Kyle Findlay';
-const description = 'A migration map of go-to-market roles across three waves: what is documented, what is in motion, and what is predicted — which seats AI compresses and what is left for humans. Second deep-dive cluster of the Workforce Transformation Index.';
+const description = 'A verified-source map of where go-to-market work is going, across three waves: documented, in motion, and predicted. Federal, university, and industry data; every claim dated and graded. Second deep-dive cluster of the Workforce Transformation Index.';
+
+// ── source badge grading ──
+const badgeClass = (k: string) => (({
+  'FEDERAL': 'solid', 'UNIVERSITY': 'solid', 'INTL ORG': 'solid',
+  'INDUSTRY': 'outline', 'PRESS': 'outline',
+  'COMPANY-REPORTED': 'dashed', 'OWN-AGENT DATA': 'dashed',
+} as Record<string, string>)[k] || 'outline');
 
 const leftNodes = ['SDR / BDR', 'Junior demand gen', 'Sales ops (reporting)', 'Reactive customer success'];
 const rightNodes = ['GTM Engineer', 'Account Executive', 'RevOps architect', 'Forward deployed / implementation', 'AI-enablement marketing'];
 
-// ── WAVE 1 · 2024–26 · Documented (weights hold a ≥4:1 ratio: heaviest F1 vs lightest F3) ──
+// ══ WAVE 1 · 2024–26 · Documented ══
 const wave1 = [
   {
     id: 1, from: 'SDR', to: 'GTM Engineer', li: 0, ri: 0, w: 1.0,
-    whatMoved: 'List building, enrichment, sequencing, and first-touch personalization — now run by AI outbound tooling.',
-    why: 'Companies deploying AI outbound need fewer people sending and more people designing, tuning, and QA-ing the system. Net SDR headcount in US B2B SaaS fell 18% year over year — but junior roles fell 31% while senior and sender-ops roles grew. The org reshapes more than it shrinks.',
-    crossing: 'Proof you can build the machine, not just work inside it: a working Clay table, an agent, an automated pipeline with real output.',
-    read: 'Your future GTM Engineer bench is sitting in today\'s SDR pools — the firms that build it first own the fees.',
-    sourced: '[CITE — Bridge Group SDR Metrics 2026 (18% / 31% figures); Emergence Capital survey of 560+ B2B software companies (36% cut SDR/BDR headcount, only 19% grew); Forrester B2B Sales Automation Landscape Q1 2026 (AI SDR adoption past 55% at 500+ employee companies)]',
+    why: `ADP payroll data covering millions of records, analyzed by Stanford's Digital Economy Lab, shows workers 22–25 in the most AI-exposed occupations shrinking at 3.8% per year as of April 2026 — while the least-exposed jobs for the same age group grow at 2% annually. Across all ages, the most-exposed occupations contracted just 0.2%: the org reshapes more than it shrinks. Indeed's postings data shows the same shape from a different angle — 71% of the past year's growth in software-development postings came from senior roles, and 37% from jobs with AI in the title. And in Emergence Capital's survey of 560+ B2B software companies, 36% cut SDR/BDR headcount in the past year — the highest reduction of any sales role — while only 19% grew.`,
+    caveat: `Not all of it is AI: industry analyses note the SDR cuts concentrated where teams overbuilt in 2021–22, and Indeed notes exposed-occupation posting declines began before ChatGPT.`,
+    crossing: `Proof you can build the machine, not just work inside it: a working Clay table, an agent, an automated pipeline with real output.`,
+    read: `Your future GTM Engineer bench is sitting in today's SDR pools — the firms that build it first own the fees.`,
+    sources: [
+      { text: 'Stanford Digital Economy Lab, ADP payroll series (2026 update)', badge: 'UNIVERSITY' },
+      { text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' },
+      { text: 'Emergence Capital survey of 560+ B2B software companies', badge: 'INDUSTRY' },
+    ],
+    /* RESTORE (pending verification): append to sources — { text: 'Forrester — AI SDR adoption >55% at 500+ employee firms', badge: 'INDUSTRY' } */
   },
   {
     id: 2, from: 'SDR', to: 'Account Executive', li: 0, ri: 1, w: 0.34,
-    whatMoved: 'The classic promotion path. Qualification and discovery skills carry over; closing is learned in-seat.',
-    why: 'Still real, but narrowing — fewer AE backfills and more external AE candidates have stretched the median timeline toward 18 months. Promotions before 11 months of tenure fail over half the time; internal moves outperform external jumps.',
-    crossing: 'Consecutive quarters at quota and documented pipeline dollars, not activity counts.',
-    read: 'The internal-promotion data is a screening tool: tenure and quota history predict AE success better than interview polish.',
-    sourced: '[CITE — Bridge Group promotion-timeline data (18–24 month median, 12–15 top quartile) and Bridge Group study of ~205 promoted reps (26% internal vs 41% external failure; sub-11-month promotions fail 55%)]',
+    why: `Still real, but narrowing. As AI absorbs top-of-funnel volume, fewer AE backfills open up, and the seniority shift shows up in the hiring data: where postings are growing again, senior roles are doing almost all of the work.`,
+    crossing: `Consecutive quarters at quota and documented pipeline dollars, not activity counts.`,
+    read: `Tenure and quota history predict AE success better than interview polish — screen on the record, not the performance.`,
+    sources: [{ text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' }],
+    /* RESTORE (pending Bridge Group verification): append to why — Bridge Group promotion-timeline statistics (18–24 month median; sub-11-month promotions fail 55%); add source { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' } */
   },
   {
     id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.22,
-    whatMoved: 'Dashboarding, forecast roll-ups, and CRM hygiene — increasingly automated at AI-adopting companies. Look at what they post instead.',
-    why: 'The remaining work is designing the revenue system: routing, territories, comp logic, tool selection. The same headcount data that shows junior SDR roles shrinking shows RevOps and sender-ops roles growing.',
-    crossing: 'Evidence of system design — a workflow you architected end to end, not reports you maintained.',
-    read: 'RevOps searches are rising while the candidate pool with real system-design proof stays thin — a seller\'s market for whoever sources it.',
-    sourced: '[CITE — Bridge Group SDR Metrics 2026 (RevOps/sender-ops role growth); 2–3 live job postings for GTM-operations / agent-development-type roles, quoted and linked — I will supply these]',
+    why: `The remaining work is designing the revenue system: routing, territories, comp logic, tool selection. The same seniority shift visible in postings data — senior and system-design roles growing while junior execution roles compress — is the RevOps story in miniature.`,
+    crossing: `Evidence of system design — a workflow you architected end to end, not reports you maintained.`,
+    read: `RevOps searches are rising while the candidate pool with real system-design proof stays thin — a seller's market for whoever sources it.`,
+    sources: [
+      { text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' },
+      { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' },
+    ],
   },
   {
     id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.42,
-    whatMoved: 'Copy variants, A/B execution, campaign assembly — the production layer.',
-    why: 'Generation is cheap; judgment is not. 87% of marketers now use generative AI in at least one workflow, and content creation is the top use case — but returns concentrate where AI accelerates a human-led editorial process, and platforms down-rank pure AI production.',
-    crossing: 'A campaign where you directed AI production and can show the decisions you made.',
-    read: 'Marketing leaders will pay for judgment layered on AI production — screen for candidates who can show the decisions, not the output.',
-    sourced: '[CITE — Salesforce State of Marketing 2026 (87%, up from 51% in 2024); McKinsey Global AI Survey (≈3.2x ROI on AI content drafting within human-led process)]',
+    why: `Generation is cheap; judgment is not. Stanford's 2026 AI Index finds measured productivity gains of 14–26% concentrate in exactly the functions where entry-level employment is declining — the returns go to whoever directs the machine, not whoever it replaced.`,
+    crossing: `A campaign where you directed AI production and can show the decisions you made.`,
+    read: `Marketing leaders will pay for judgment layered on AI production — screen for candidates who can show the decisions, not the output.`,
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }],
+    /* RESTORE (pending mckinsey.com verification): append to why — " McKinsey's Global AI Survey puts AI content drafting at roughly 3.2x ROI — the highest-returning use case in the marketing stack — but returns concentrate where AI accelerates a human-led editorial process."; add source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' } */
   },
   {
     id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
-    whatMoved: 'Ticket triage and first-line answers — absorbed by AI support at scale.',
-    why: 'Klarna reported its AI assistant handled 2.3M conversations in its first month — two-thirds of support chats, the equivalent of ~700 agents by its own estimate. Fifteen months later its CEO said the cost-cutting went too far and rehired humans for what requires judgment. The routine layer moved; the human seat went upstream.',
-    crossing: 'An implementation you owned — a customer whose workflow you personally rebuilt.',
-    read: 'Post-AI support orgs need forward-deployed hires that classic CS resumes don\'t surface — screen for owned implementations.',
-    sourced: '[CITE — Klarna / OpenAI announcement, February 2024; Siemiatkowski interview, Bloomberg, May 2025. Note in citation: the 700-agent figure is company-reported, and headcount decline came largely through attrition]',
+    whyHtml: `Klarna's AI assistant handled 2.3 million conversations in its first month — work the company said was equivalent to roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Its workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream.`,
+    crossing: `An implementation you owned — a customer whose workflow you personally rebuilt.`,
+    read: `Post-AI support orgs need forward-deployed hires that classic CS resumes don't surface — screen for owned implementations.`,
+    sources: [
+      { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' },
+      { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' },
+    ],
   },
 ];
+const w1Disagreement = `Yale's Budget Lab, tracking CPS data through June 2026, finds no clear economy-wide AI footprint in the labor market. The Economic Innovation Group finds unemployment rose LESS for the most AI-exposed workers (+0.30pp) than the least (+0.94pp) from 2022 to early 2025. The surgical entry-level effect and the flat aggregate are both true — which is why this page maps seats, not the economy.`;
+const w1DisagreementBadges = ['UNIVERSITY', 'INDUSTRY'];
 
-// ── WAVE 2 · 2026–28 · In motion (Basis instead of Sourced; no [CITE]) ──
+// ══ WAVE 2 · 2026–28 · In motion ══
 const wave2 = [
-  {
-    id: 'm1', title: 'GTM Engineer → Revenue systems owner',
-    whatMoved: 'The build itself. Clay tables, enrichment flows, and outbound agents become platform templates — assembly stops being the scarce skill.',
-    why: 'Every tooling wave commoditizes its own operators. The seat that survives owns the architecture: which systems exist, how they connect, what the humans in the loop are for.',
-    crossing: 'A track record of designing revenue systems, not just assembling them — decisions you can defend, not workflows you can demo.',
-    read: 'Today\'s GTM Engineers are tomorrow\'s revenue-systems bench — but only the ones who can explain why, not just how.',
-    basis: 'Pattern from the documented wave: the same compression that hit SDR execution hits system assembly one platform generation later.',
-  },
-  {
-    id: 'm2', title: 'SMB Account Executive → Upmarket human selling',
-    whatMoved: 'Discovery, demo, and proposal for small, fast deals — absorbed by agentic selling below a deal-size line that rises each year.',
-    why: 'Where trust, accountability, and multi-stakeholder judgment price in, humans hold. Where they don\'t, agents close.',
-    crossing: 'Enterprise motion: multi-threading, executive presence, and deals where someone has to be accountable by name.',
-    read: 'SMB AE benches shrink; enterprise AE standards rise. The candidates who cross early set the new bar.',
-    basis: 'Follows the documented wave\'s logic applied to the deal itself instead of the pipeline: routine volume automates first, judgment retreats upmarket.',
-  },
-  {
-    id: 'm3', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement',
-    whatMoved: 'Nothing yet — these seats are appearing, not absorbing.',
-    why: 'Deploying agents inside a customer\'s workflow is high-touch work no existing title covers.',
-    crossing: 'An owned implementation — a workflow you personally wired into a real organization.',
-    read: 'These roles have no LinkedIn title history to source against. Screen for owned implementations, not titles.',
-    basisHtml: 'Surfaced by <a href="/radar-v2">GTM Radar v2</a> before they were posted: AI Agent Deployment Lead (Glean), Forward-Deployed Engineer EMEA (Sierra), Detection-to-GTM Liaison (Abnormal Security). Detected by the agent, dated, published.',
-  },
+  { id: 'm1', title: 'Agent capability crossing the line',
+    body: `18 months ago, AI agents failed 88% of real-world computer tasks. As of March 2026, the best models complete 66% — within six points of human performance. The work that compresses next is whatever those agents can now finish.`,
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
+  { id: 'm2', title: 'Firm adoption and stated intent',
+    body: `Census Bureau surveys of ~1.2 million businesses put AI use at 18% of firms in the Nov 2025–Feb 2026 supplement — 32% employment-weighted — with adoption expected to reach 22% within six months. Stanford's Index adds that executives expect entry-level headcount reductions to accelerate, with planned cuts outpacing recent ones.`,
+    sources: [{ text: 'Census Bureau BTOS AI supplement, 2026', badge: 'FEDERAL' }, { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
+  { id: 'm3', title: 'Transitions don’t happen on their own',
+    body: `OECD's Employment Outlook 2026 finds that when technology shocks hit local labor markets, adjustment happens mostly through transitions into joblessness and openings filled by newcomers — not workers moving across sectors — leaving lasting scars for the displaced. The routing layer between compressing seats and absorbing seats does not build itself.`,
+    sources: [{ text: 'OECD Employment Outlook 2026, July 2026', badge: 'INTL ORG' }] },
+  { id: 'm4', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement',
+    whatMoved: `Nothing yet — these seats are appearing, not absorbing.`,
+    why: `Deploying agents inside a customer's workflow is high-touch work no existing title covers.`,
+    crossing: `An owned implementation — a workflow you personally wired into a real organization.`,
+    read: `These roles have no LinkedIn title history to source against. Screen for owned implementations, not titles.`,
+    sourceHtml: `Surfaced by <a href="/radar-v2">GTM Radar v2</a> before they were posted: AI Agent Deployment Lead (Glean), Forward-Deployed Engineer EMEA (Sierra), Detection-to-GTM Liaison (Abnormal Security). Detected by the agent, dated, published.`,
+    sourceBadge: 'OWN-AGENT DATA' },
 ];
+const w2Disagreement = `Census data cuts both ways: most AI-adopting businesses report no change in worker numbers, and adoption remains narrow — 17–20% of firms through May 2026. The migration is real where it's real, and absent where it isn't.`;
+const w2DisagreementBadges = ['FEDERAL'];
 
-// ── WAVE 3 · 2028–30 · Predicted — sub-block A "What the field forecasts" (A1, A2; A3 + sub-block B pending) ──
-const forecasts = [
-  { claim: 'Gartner: by 2028, 90% of B2B purchases will be AI-agent intermediated — over $15 trillion in spend — with machine-to-machine negotiation compressing sales cycles.', cite: '[CITE — Gartner Symposium predictions, Oct–Nov 2025]' },
-  { claim: 'Gartner: by 2028, AI agents will outnumber human sellers 10 to 1 — yet fewer than 40% of sellers will report that agents improved their productivity.', cite: '[CITE — Gartner press release, Nov 18 2025, ‘Predicts 2026: Leading Sales in the Age of AI Contradictions’]' },
+// ══ WAVE 3 · 2028–30 · Predicted (ghost cards) ══
+const seats = ['GTM Engineer', 'Mid-funnel seller', 'Agency recruiter', 'Account Executive'];
+const ghosts = [
+  { id: 'g1', name: 'Revenue-systems owner?',
+    why: `The seats that absorbed Wave 1 compress next. As agent fleets spread, the scarce hire becomes whoever makes them actually produce — the constraint won't be tools, it will be org design.`,
+    crossing: `Run a fleet: own an agent system's output end to end, with numbers.`,
+    change: `If by end of 2028, postings for GTM-engineering and agent-operations roles at AI-native startups aren't outnumbering SDR postings, this call was wrong.` },
+  { id: 'g2', name: 'Agent-facing GTM?',
+    why: `As buying agents proliferate, making your company legible to machines — machine-readable pricing, agent-ready product data, citation authority — becomes a funded function. Selling to machines becomes a job.`,
+    crossing: `Ship one agent-legible surface for a real company and measure what changed.`,
+    change: `If by 2028 no funded companies are posting agent-facing GTM or machine-readable-sales roles, kill this card.` },
+  { id: 'g3', name: 'Proof-based placement?',
+    why: `Referral networks hold the executive layer, where trust is the product. The volume layer shifts to whoever can verify capability — matching proof portfolios to problems, not titles to titles.`,
+    crossing: `A portfolio of shipped work a recruiter can check in five minutes.`,
+    change: `If title-based postings still dominate hiring volume through 2028 and proof-portfolio screening stays niche, this was my bias, not a trend.`,
+    conflict: `Full disclosure: this is also Proofworks' bet. I'm talking my book — and saying so.` },
+  { id: 'g4', name: 'Trust & accountability seats?',
+    why: `The seats that stay human are the ones buyers already reserve for humans: accountability, trust, and system design. Klarna's reversal was the early sketch of this boundary.`,
+    crossing: `A track record of owning outcomes a company would not hand to a machine.`,
+    change: `If AE headcount at AI-native companies shrinks 2026–28 at the rate SDR headcount did in 2024–26, the human-seat thesis fails.` },
 ];
+const w3Disagreement = `The counter-case: Apollo's Torsten Slok and Google economists attribute entry-level weakness to interest rates and a low-hire, low-fire market, not AI. If they're right, several of these ghosts never materialize. The data will decide, and this page will update either way.`;
 
-// ── desktop map geometry (fixed viewBox; scales as a unit) ──
+/* ═══════════════════════════════════════════════════════════════════
+   RESTORE BLOCK — pending Kyle's primary-source verification.
+   Each returns with a one-line edit once its source is checked:
+   • Card 4 (Junior demand gen) `why`, append: " McKinsey's Global AI Survey puts AI
+     content drafting at roughly 3.2x ROI — the highest-returning use case in the
+     marketing stack — but returns concentrate where AI accelerates a human-led
+     editorial process." + source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' }
+     (verify on mckinsey.com)
+   • Card 2 (SDR → AE) `why`, append: Bridge Group promotion-timeline statistics
+     (18–24 month median; sub-11-month promotions fail 55%) + source
+     { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' }
+     (verify in the Bridge Group report)
+   • Card 1 (SDR → GTM Engineer) `sources`, append: Forrester — AI SDR adoption >55%
+     at 500+ employee firms, badge INDUSTRY (pending verification)
+   • Wave 3 — optional "What the field forecasts" sub-block with Gartner / Forrester
+     items (each pending Kyle's verification).
+   ═══════════════════════════════════════════════════════════════════ */
+
+// ── desktop map geometry ──
 const VB = { w: 1000, h: 520 };
 const LX = 330, RX = 670, MIDX = 500;
 const leftY = (i: number) => +(120 + i * ((VB.h - 170) / (leftNodes.length - 1))).toFixed(1);
 const rightY = (j: number) => +(110 + j * ((VB.h - 170) / (rightNodes.length - 1))).toFixed(1);
 const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MIDX},${leftY(f.li)} ${MIDX},${rightY(f.ri)} ${RX},${rightY(f.ri)}`;
+// ghost map (4 left → 4 right)
+const gY = (i: number) => +(130 + i * ((VB.h - 200) / 3)).toFixed(1);
+const gPath = (i: number) => `M ${LX},${gY(i)} C ${MIDX},${gY(i)} ${MIDX},${gY(i)} ${RX},${gY(i)}`;
 ---
 <!doctype html>
 <html lang="en">
@@ -120,15 +170,21 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
 
       .mig-top { padding: 60px 0 8px; }
       .mig-h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; }
-      .mig-sub { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 18px 0 0; max-width: 46ch; }
+      .mig-stamp { font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1.2vw, 12.5px); line-height: 1.55; color: var(--mut); margin: 14px 0 0; max-width: 70ch; }
+      .mig-sub { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 16px 0 0; max-width: 46ch; }
       .mig { padding-bottom: 90px; }
 
-      /* ── wave toggle (segmented control) ── */
+      /* ── source badges ── */
+      .mig-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em;
+        text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
+      .mig-badge--solid { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
+      .mig-badge--outline { background: transparent; color: var(--navy); border: 1px solid rgba(24,40,88,0.38); }
+      .mig-badge--dashed { background: transparent; color: var(--mut); border: 1px dashed rgba(24,40,88,0.42); }
+
+      /* ── wave toggle ── */
       .mig-tabs { display: flex; gap: 6px; margin: 30px 0 0; }
-      .mig-tab { flex: 1 1 0; min-width: 0; cursor: pointer; font: inherit; text-align: center;
-        display: flex; flex-direction: column; align-items: center; gap: 2px;
-        background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px;
-        transition: border-color .16s ease, background-color .16s ease; }
+      .mig-tab { flex: 1 1 0; min-width: 0; cursor: pointer; font: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px;
+        background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px; transition: border-color .16s ease, background-color .16s ease; }
       .mig-tab-yr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(13px, 1.7vw, 15.5px); letter-spacing: -0.01em; color: var(--navy); white-space: nowrap; }
       .mig-tab-ep { font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, 1.3vw, 12px); letter-spacing: .02em; color: var(--mut); line-height: 1.25; }
       .mig-tab[aria-selected='true'] { border-color: var(--blue); background: rgba(76,126,245,0.10); }
@@ -137,9 +193,9 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
 
       .mig-wave[hidden] { display: none; }
       .mig-wave-h { font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.08; margin: 34px 0 0; }
-      .mig-wave-intro { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 14px 0 0; max-width: 60ch; }
+      .mig-wave-intro { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.5; color: var(--mut); font-weight: 500; margin: 14px 0 0; max-width: 62ch; }
 
-      /* ── desktop node map (hidden on mobile) ── */
+      /* ── node map ── */
       .mig-map { display: none; margin: 30px 0 8px; }
       .mig-svg { width: 100%; max-width: 940px; height: auto; display: block; margin: 0 auto; overflow: visible; }
       .mig-colh { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; fill: var(--mut); }
@@ -148,19 +204,24 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       .mig-hit { fill: none; stroke: transparent; stroke-width: 26; cursor: pointer; }
       .mig-dot { fill: #7ea0f5; } .mig-dot.r { fill: #8b6cf0; }
       .mig-node { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 15px; fill: var(--ink); }
+      .mig-node.ghost { fill: var(--mut); }
+      .mig-ghostlink { fill: none; stroke: rgba(88,99,127,0.55); stroke-width: 2; stroke-dasharray: 5 6; stroke-linecap: round; }
+      .mig-dot.g { fill: none; stroke: var(--mut); stroke-width: 1.4; stroke-dasharray: 3 3; }
       .mig-maphint { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--mut); text-align: center; margin: 10px 0 0; }
+      .mig-mapcap { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.55; color: var(--mut); text-align: center; margin: 10px auto 0; max-width: 60ch; }
 
-      /* ── flow / motion cards ── */
+      /* ── cards ── */
       .mig-list { margin: 30px 0 0; display: flex; flex-direction: column; gap: 12px; }
       .mig-flow { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.55); overflow: hidden; }
       .mig-flow.open { border-color: rgba(76,126,245,0.5); }
+      .mig-flow.ghost { border-style: dashed; border-color: rgba(88,99,127,0.45); background: rgba(255,255,255,0.35); }
+      .mig-flow.ghost.open { border-color: rgba(88,99,127,0.7); }
       .mig-head { display: flex; align-items: center; gap: 14px; width: 100%; background: none; border: 0; cursor: pointer; text-align: left; padding: 16px 20px; font: inherit; color: var(--ink); }
-      .mig-head-l { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
-      .mig-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--mut); }
-      .mig-status.motion { color: #8b6cf0; }
+      .mig-head-l { flex: 1 1 auto; min-width: 0; }
       .mig-ft { font-family: 'Space Grotesk', sans-serif; font-size: clamp(15px, 2.1vw, 18px); letter-spacing: -0.01em; }
       .mig-ft b { font-weight: 600; }
       .mig-arw { color: var(--blue); margin: 0 4px; }
+      .mig-ghost .mig-ft { color: var(--mut); }
       .mig-wt { flex: 0 0 auto; width: clamp(48px, 16vw, 110px); height: 6px; border-radius: 999px; background: rgba(24,40,88,0.09); overflow: hidden; }
       .mig-wt-bar { display: block; height: 100%; width: calc(var(--w) * 1%); border-radius: 999px; background: var(--blue); }
       .mig-chev { flex: 0 0 auto; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 22px; line-height: 1; color: var(--mut); transition: transform .2s ease; }
@@ -171,25 +232,36 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       .mig-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin: 0 0 5px; }
       .mig-txt { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 66ch; }
       .mig-read { font-weight: 500; color: var(--navy); }
+      .mig-caveat-line { font-size: 13.5px; line-height: 1.5; color: var(--mut); margin: 8px 0 0; max-width: 66ch; }
       .mig-txt a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
-      .mig-sourced { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; color: var(--mut); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+      .mig-conflict { font-size: 13.5px; line-height: 1.5; color: var(--mut); font-style: normal; margin: 14px 0 0; max-width: 66ch; padding-left: 12px; border-left: 2px solid rgba(88,99,127,0.4); }
+      .mig-cred { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .04em; color: var(--mut); margin: 16px 0 0; }
+      /* sources line with badges */
+      .mig-src { font-size: 12px; line-height: 1.9; color: var(--mut); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+      .mig-src .mig-src-lbl { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .1em; font-size: 10.5px; color: var(--mut); margin-right: 4px; }
+      .mig-src a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+      .mig-src-sep { color: rgba(24,40,88,0.3); }
 
       /* advance link */
-      .mig-advance { display: inline-block; margin: 26px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
+      .mig-advance { display: inline-block; margin: 28px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
       .mig-advance:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-      /* wave 3 forecasts */
-      .mig-subh { font-size: clamp(1.15rem, 1.9vw, 1.45rem); line-height: 1.1; margin: 30px 0 0; }
-      .mig-forecasts { margin: 18px 0 0; display: flex; flex-direction: column; gap: 16px; }
-      .mig-fc { border-left: 2px solid var(--line); padding-left: 16px; }
-      .mig-fc-claim { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.5; color: var(--ink); margin: 0; max-width: 66ch; }
-      .mig-fc-cite { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; color: var(--mut); margin: 6px 0 0; overflow-wrap: anywhere; }
-      .mig-pending { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); margin: 18px 0 0; opacity: 0.75; }
+      /* dissent strip */
+      .mig-dissent { margin: 26px 0 0; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.4); }
+      .mig-dissent > summary { list-style: none; cursor: pointer; padding: 14px 18px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--navy); display: flex; align-items: center; gap: 8px; }
+      .mig-dissent > summary::-webkit-details-marker { display: none; }
+      .mig-dissent > summary::before { content: '+'; color: var(--mut); font-size: 18px; line-height: 1; }
+      .mig-dissent[open] > summary::before { content: '–'; }
+      .mig-dissent-body { padding: 0 18px 18px; font-size: 14.5px; line-height: 1.55; color: var(--ink); max-width: 70ch; }
 
-      /* always-visible (outside the toggle) */
-      .mig-caveat { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); margin: 40px 0 0; }
-      .mig-foot { margin: 22px 0 0; padding-top: 24px; border-top: 1px solid var(--line);
-        font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
+      /* flow-weight caveat (inside Wave 1) */
+      .mig-weightcap { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); margin: 24px 0 0; }
+
+      /* methodology + footer (always visible, outside toggle) */
+      .mig-method { margin: 54px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
+      .mig-method-h { font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.1; }
+      .mig-method-b { font-size: clamp(15px, 1.4vw, 16.5px); line-height: 1.6; color: var(--mut); margin: 14px 0 0; max-width: 72ch; }
+      .mig-foot { margin: 26px 0 0; font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
 
       @media (min-width: 760px) { .mig-map { display: block; } }
       @media (prefers-reduced-motion: reduce) { .mig-chev, .mig-link, .mig-tab { transition: none; } html { scroll-behavior: auto; } }
@@ -202,6 +274,7 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
     <main class="mig">
       <header class="mig-top col">
         <h1 class="mig-h1">Where GTM work is going.</h1>
+        <p class="mig-stamp">Updated July 2026 · Federal, university, and industry sources · every claim dated and graded · human-verified before publish</p>
         <p class="mig-sub">Job titles are lagging indicators — twice. This map tracks where GTM work went, where it’s going as the new seats compress, and what’s left for humans when it does.</p>
       </header>
 
@@ -213,7 +286,7 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
           <button class="mig-tab" role="tab" data-wave="w3" aria-selected="false"><span class="mig-tab-yr">2028–30</span><span class="mig-tab-ep">· Predicted</span></button>
         </div>
 
-        <!-- ══ WAVE 1 · 2024–26 · Documented ══ -->
+        <!-- ══ WAVE 1 ══ -->
         <section class="mig-wave" data-wave="w1" role="tabpanel">
           <h2 class="mig-wave-h">2024–26 · Documented</h2>
           <p class="mig-wave-intro">This wave already happened. It’s documented here because a map you can check is the only kind worth trusting forward.</p>
@@ -234,28 +307,30 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
             {wave1.map((f) => (
               <article class="mig-flow" data-flow={f.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w1-${f.id}`}>
-                  <span class="mig-head-l">
-                    <span class="mig-status">Sourced</span>
-                    <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span>
-                  </span>
+                  <span class="mig-head-l"><span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span></span>
                   <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
                   <span class="mig-chev" aria-hidden="true">+</span>
                 </button>
                 <div class="mig-detail" id={`w1-${f.id}`} hidden>
-                  <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{f.whatMoved}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{f.why}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <p class="mig-txt" set:html={f.whyHtml} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
                   <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
-                  <p class="mig-sourced">{f.sourced}</p>
+                  <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>
                 </div>
               </article>
             ))}
           </div>
 
+          <details class="mig-dissent">
+            <summary>Read the disagreement</summary>
+            <div class="mig-dissent-body">{w1Disagreement} {w1DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div>
+          </details>
+
+          <p class="mig-weightcap">Flow weight = sourced judgment about magnitude and direction — not measured headcount.</p>
           <a class="mig-advance" href="#" data-goto="w2">What compresses next →</a>
         </section>
 
-        <!-- ══ WAVE 2 · 2026–28 · In motion ══ -->
+        <!-- ══ WAVE 2 ══ -->
         <section class="mig-wave" data-wave="w2" role="tabpanel" hidden>
           <h2 class="mig-wave-h">2026–28 · In motion</h2>
           <p class="mig-wave-intro">The absorbing seats compress next. Agent platforms productize the GTM Engineer build; agentic selling absorbs SMB deal work. Judgment concentrates in fewer, more senior seats.</p>
@@ -264,46 +339,82 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
             {wave2.map((c) => (
               <article class="mig-flow" data-flow={c.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w2-${c.id}`}>
-                  <span class="mig-head-l">
-                    <span class="mig-status motion">In motion</span>
-                    <span class="mig-ft">{c.title}</span>
-                  </span>
+                  <span class="mig-head-l"><span class="mig-ft">{c.title}</span></span>
                   <span class="mig-chev" aria-hidden="true">+</span>
                 </button>
                 <div class="mig-detail" id={`w2-${c.id}`} hidden>
-                  <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">Basis</p>{c.basisHtml ? <p class="mig-txt" set:html={c.basisHtml} /> : <p class="mig-txt">{c.basis}</p>}</div>
+                  {c.body ? (
+                    <p class="mig-txt">{c.body}</p>
+                  ) : (
+                    <>
+                      <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
+                      <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
+                      <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
+                      <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
+                    </>
+                  )}
+                  {c.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{c.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
+                  {c.sourceHtml && <p class="mig-src"><span class="mig-src-lbl">Sources:</span><span set:html={c.sourceHtml} /> <span class={`mig-badge mig-badge--${badgeClass(c.sourceBadge)}`}>{c.sourceBadge}</span></p>}
                 </div>
               </article>
             ))}
           </div>
 
+          <details class="mig-dissent">
+            <summary>Read the disagreement</summary>
+            <div class="mig-dissent-body">{w2Disagreement} {w2DisagreementBadges.map((b) => (<span class={`mig-badge mig-badge--${badgeClass(b)}`}>{b}</span>))}</div>
+          </details>
+
           <a class="mig-advance" href="#" data-goto="w3">Where it ends up →</a>
         </section>
 
-        <!-- ══ WAVE 3 · 2028–30 · Predicted ══ -->
+        <!-- ══ WAVE 3 · ghost cards ══ -->
         <section class="mig-wave" data-wave="w3" role="tabpanel" hidden>
           <h2 class="mig-wave-h">2028–30 · Predicted</h2>
 
-          <h3 class="mig-subh">What the field forecasts</h3>
-          <div class="mig-forecasts">
-            {forecasts.map((fc) => (
-              <div class="mig-fc">
-                <p class="mig-fc-claim">{fc.claim}</p>
-                <p class="mig-fc-cite">{fc.cite}</p>
-              </div>
+          <div class="mig-map">
+            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Predicted destinations for today's seats">
+              <text class="mig-colh" x={LX - 16} y="60" text-anchor="end">Today’s seats</text>
+              <text class="mig-colh" x={RX + 16} y="60" text-anchor="start">Where they go?</text>
+              {ghosts.map((g, i) => (<path class="mig-ghostlink" d={gPath(i)} />))}
+              {seats.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={gY(i)} r="4" /><text class="mig-node" x={LX - 14} y={gY(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {ghosts.map((g, i) => (<><circle class="mig-dot g" cx={RX} cy={gY(i)} r="4.5" /><text class="mig-node ghost" x={RX + 14} y={gY(i)} text-anchor="start" dominant-baseline="central">{g.name}</text></>))}
+            </svg>
+            <p class="mig-mapcap">Direction, not magnitude. The compressing seats are known. The destinations are categories, not titles.</p>
+          </div>
+
+          <div class="mig-list">
+            {ghosts.map((g) => (
+              <article class="mig-flow ghost" data-flow={g.id}>
+                <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w3-${g.id}`}>
+                  <span class="mig-head-l"><span class="mig-ft">{g.name}</span></span>
+                  <span class="mig-chev" aria-hidden="true">+</span>
+                </button>
+                <div class="mig-detail" id={`w3-${g.id}`} hidden>
+                  <div class="mig-field"><p class="mig-lbl">Why I expect this</p><p class="mig-txt">{g.why}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{g.crossing}</p></div>
+                  <div class="mig-field"><p class="mig-lbl">What would change my mind</p><p class="mig-txt">{g.change}</p></div>
+                  {g.conflict && <p class="mig-conflict">{g.conflict}</p>}
+                  <p class="mig-cred">Prediction · Kyle Findlay · July 2026</p>
+                </div>
+              </article>
             ))}
           </div>
+
+          <details class="mig-dissent">
+            <summary>Read the disagreement</summary>
+            <div class="mig-dissent-body">{w3Disagreement}</div>
+          </details>
 
           <a class="mig-advance" href="#" data-goto="w1">Back to what’s documented →</a>
         </section>
 
-        <!-- OUTSIDE THE TOGGLE — always visible -->
-        <p class="mig-caveat">Flow weight = sourced judgment about magnitude and direction — not measured headcount.</p>
-        <p class="mig-foot">This map is the second deep-dive cluster of the Workforce Transformation Index. The method: public signals, sourced claims, human judgment — the same way I'd run it for a client.</p>
+        <!-- ALWAYS VISIBLE (outside the toggle) -->
+        <section class="mig-method">
+          <h2 class="mig-method-h">How this page is sourced.</h2>
+          <p class="mig-method-b">Every load-bearing claim carries at least two independent sources on different data types — payroll, survey, postings, usage. Sources are graded: federal and university data solid, industry surveys outlined, company-reported figures dashed. Disagreement is displayed, not buried. Nothing ships without a named, dated source a reader can check, and every citation is human-verified before publish. Predictions carry the condition that would falsify them.</p>
+          <p class="mig-foot">This map is the second deep-dive cluster of the Workforce Transformation Index. The method: public signals, sourced claims, human judgment — the same way I'd run it for a client.</p>
+        </section>
       </div>
     </main>
 
@@ -311,7 +422,6 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
       (() => {
         const root = document.querySelector('.mig');
         if (!root) return;
-        // ── wave toggle (render-all, show/hide; no scroll jump) ──
         const tabs = [...root.querySelectorAll('.mig-tab')];
         const waves = [...root.querySelectorAll('.mig-wave')];
         function showWave(id) {
@@ -321,7 +431,6 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
         tabs.forEach((t) => t.addEventListener('click', () => showWave(t.dataset.wave)));
         root.querySelectorAll('.mig-advance').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showWave(a.dataset.goto); }));
 
-        // ── card expand / collapse ──
         const cards = [...root.querySelectorAll('.mig-flow')];
         const links = [...root.querySelectorAll('.mig-link')];
         const setActive = (id) => links.forEach((l) => l.classList.toggle('on', l.dataset.flow === String(id)));
@@ -336,7 +445,6 @@ const pathOf = (f: { li: number; ri: number }) => `M ${LX},${leftY(f.li)} C ${MI
         }
         cards.forEach((card) => card.querySelector('.mig-head').addEventListener('click', () => toggle(card)));
 
-        // ── desktop map: hover / click a flow opens its Wave 1 card ──
         [...root.querySelectorAll('.mig-hit')].forEach((h) => {
           h.addEventListener('mouseenter', () => setActive(h.dataset.flow));
           h.addEventListener('click', () => {

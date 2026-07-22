@@ -175,6 +175,8 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
       .lineage::before { content: ''; position: absolute; left: 16px; top: 4px; bottom: 4px; width: 1px; background: rgba(76,126,245,0.4); }
       .lin-item + .lin-item { margin-top: 26px; }
       .lin-name { display: block; font-size: var(--pw-body); font-weight: 500; color: var(--navy); }
+      .lin-name a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(76,126,245,0.4); transition: color .18s ease, border-color .18s ease; }
+      .lin-name a:hover { color: var(--navy); border-color: var(--navy); }
       .lin-body { font-size: var(--pw-body); line-height: 1.5; color: var(--mut); margin: 5px 0 0; max-width: 64ch; }
       .talk-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: var(--pw-section-secondary); line-height: 1.06; letter-spacing: -0.03em; color: var(--navy); }
       .talk-p { font-size: var(--pw-emphasis-copy); line-height: 1.5; color: #46506e; font-weight: 500; max-width: 60ch; margin: 24px 0 0; }
@@ -347,6 +349,10 @@ const industries = ['Home & field services', 'Logistics', 'Healthcare', 'Insuran
           <div class="lin-item">
             <span class="lin-name">Proofworks</span>
             <p class="lin-body">The full thesis: if job titles are lagging indicators, capability proof has to replace them. The Workforce Transformation Index above is its first working artifact.</p>
+          </div>
+          <div class="lin-item">
+            <span class="lin-name"><a href="/gtm-migration">GTM Migration</a> — July 2026</span>
+            <p class="lin-body">A sourced map of where GTM work is going: the Index’s second deep-dive, built on federal, university, and industry data.</p>
           </div>
         </div>
       </section>
