@@ -52,12 +52,13 @@ const wave1 = [
     sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }],
     /* RESTORE (pending mckinsey.com verification): append to why — " McKinsey's Global AI Survey puts AI content drafting at roughly 3.2x ROI — the highest-returning use case in the marketing stack — but returns concentrate where AI accelerates a human-led editorial process."; add source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' } */ },
   { id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
+    caseChip: 'CASE STUDY · 2024→2025',
     takeaway: 'The routine layer moved; the human seat went upstream.',
     chip: { num: '2.3M', cap: 'AI conversations, month one · company-reported' },
-    whyHtml: `Klarna's AI assistant handled 2.3 million conversations in its first month — work the company said was equivalent to roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Its workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream.`,
+    whyHtml: `Stanford's 2026 AI Index shows the customer-service pattern directly: entry-level employment falling while senior headcount grows. Klarna is the named arc inside that data. Its AI assistant handled 2.3 million conversations in its first month — work the company said equaled roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream.`,
     crossing: `An implementation you owned — a customer whose workflow you personally rebuilt.`,
     read: `Post-AI support orgs need forward-deployed hires that classic CS resumes don't surface — screen for owned implementations.`,
-    sources: [{ text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }] },
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }] },
 ];
 const w1Disagreement = `Yale's Budget Lab, tracking CPS data through June 2026, finds no clear economy-wide AI footprint in the labor market. The Economic Innovation Group finds unemployment rose LESS for the most AI-exposed workers (+0.30pp) than the least (+0.94pp) from 2022 to early 2025. The surgical entry-level effect and the flat aggregate are both true — which is why this page maps seats, not the economy.`;
 const w1DisagreementBadges = ['UNIVERSITY', 'INDUSTRY'];
@@ -187,29 +188,26 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-sub { font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.45; color: var(--mut); font-weight: 500; margin: 12px 0 0; max-width: 46ch; }
       .mig { padding-bottom: 90px; }
 
-      /* ── HERO: the migration current ── */
-      .mig-hero { position: relative; height: clamp(200px, 26vh, 248px); margin: 20px 0 0; border-radius: 16px; overflow: hidden;
-        background: radial-gradient(60% 90% at 50% 40%, rgba(123,108,240,0.10), transparent 72%); border: 1px solid var(--line); }
+      /* ── HERO: the migration current (emitters/destinations live INSIDE the canvas box) ── */
+      .mig-hero { position: relative; height: clamp(212px, 27vh, 262px); margin: 20px 0 0; border-radius: 16px; overflow: hidden;
+        background: radial-gradient(60% 90% at 50% 46%, rgba(123,108,240,0.09), transparent 72%); border: 1px solid var(--line); }
       #mig-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-      .mig-hero-grid { position: relative; z-index: 1; height: 100%; padding: 14px 18px; display: grid; grid-template-columns: minmax(84px, 0.9fr) 1fr minmax(96px, 0.9fr); align-items: center; }
-      .mig-emit { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-      .mig-emit li { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink); white-space: nowrap; }
-      .mig-zones { display: flex; justify-content: space-between; align-items: center; height: 100%; pointer-events: none; }
-      .mig-zone { font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, 1vw, 11px); letter-spacing: .06em; color: rgba(88,99,127,0.5); }
-      .mig-dest { display: flex; flex-direction: column; gap: 7px; align-items: flex-end; text-align: right; }
+      .mig-ruler { position: absolute; top: 8px; left: 15%; right: 15%; z-index: 1; display: flex; pointer-events: none; }
+      .mig-ruler-seg { flex: 1; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 1.05vw, 11.5px); letter-spacing: .1em; color: rgba(15,24,52,0.72); }
+      .mig-emit { position: absolute; left: 16px; top: 34px; bottom: 26px; z-index: 1; display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; }
+      .mig-emit span { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink); white-space: nowrap; }
+      .mig-dest { position: absolute; right: 16px; top: 34px; bottom: 26px; z-index: 1; display: flex; flex-direction: column; justify-content: space-around; align-items: flex-end; text-align: right; }
       .mig-dest span { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--navy); white-space: nowrap; }
       .mig-dest .gh { color: rgba(88,99,127,0.55); font-weight: 500; }
-      .mig-stall { position: absolute; right: 14px; bottom: 8px; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.95vw, 10px); color: rgba(88,99,127,0.7); max-width: 60%; text-align: right; line-height: 1.35; }
-      @media (max-width: 620px) {
-        .mig-hero-grid { grid-template-columns: minmax(72px, 0.9fr) 1fr minmax(78px, 0.8fr); }
-        .mig-emit li.mig-emit-hide, .mig-dest span.mig-dest-hide { display: none; }
-      }
+      .mig-stall { position: absolute; right: 16px; bottom: 6px; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.95vw, 10px); color: rgba(88,99,127,0.72); max-width: 58%; text-align: right; line-height: 1.3; }
+      @media (max-width: 620px) { .mig-emit span.mig-emit-hide, .mig-dest span.mig-dest-hide { display: none; } }
 
       /* ── source badges ── */
       .mig-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
       .mig-badge--solid { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
       .mig-badge--outline { background: transparent; color: var(--navy); border: 1px solid rgba(24,40,88,0.38); }
       .mig-badge--dashed { background: transparent; color: var(--mut); border: 1px dashed rgba(24,40,88,0.42); }
+      .mig-casechip { margin-left: 10px; vertical-align: 2px; }
 
       /* ── tabs ── */
       .mig-tabs { display: flex; gap: 6px; margin: 24px 0 0; }
@@ -322,15 +320,17 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
         <!-- HERO: the migration current -->
         <div class="mig-hero">
           <canvas id="mig-field"></canvas>
-          <div class="mig-hero-grid">
-            <ul class="mig-emit">
-              {heroEmit.map((w, i) => (<li class={i === 1 || i === 2 ? 'mig-emit-hide' : ''}>{w}</li>))}
-            </ul>
-            <div class="mig-zones"><span class="mig-zone">2024–26</span><span class="mig-zone">2026–28</span><span class="mig-zone">2028–30</span></div>
-            <div class="mig-dest">
-              {heroDest.map((d, i) => (<span class={i >= 2 ? 'mig-dest-hide' : ''}>{d}</span>))}
-              <span class="gh">?</span><span class="gh mig-dest-hide">?</span>
-            </div>
+          <div class="mig-ruler" aria-hidden="true">
+            <span class="mig-ruler-seg">2024–26</span>
+            <span class="mig-ruler-seg">2026–28</span>
+            <span class="mig-ruler-seg">2028–30</span>
+          </div>
+          <div class="mig-emit">
+            {heroEmit.map((w, i) => (<span class={i === 1 || i === 2 ? 'mig-emit-hide' : ''}>{w}</span>))}
+          </div>
+          <div class="mig-dest">
+            {heroDest.map((d, i) => (<span class={i >= 2 ? 'mig-dest-hide' : ''}>{d}</span>))}
+            <span class="gh">?</span><span class="gh mig-dest-hide">?</span>
           </div>
           <p class="mig-stall">stalled — transitions don’t happen on their own · OECD 2026</p>
         </div>
@@ -364,7 +364,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
               <article class="mig-flow" data-flow={f.id}>
                 <button class="mig-head" type="button" aria-expanded="false" aria-controls={`w1-${f.id}`}>
                   <span class="mig-head-top">
-                    <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b></span>
+                    <span class="mig-ft"><b>{f.from}</b> <span class="mig-arw" aria-hidden="true">→</span> <b>{f.to}</b>{f.caseChip && <span class="mig-badge mig-badge--outline mig-casechip">{f.caseChip}</span>}</span>
                     <span class="mig-wt" aria-hidden="true"><span class="mig-wt-bar" style={`--w:${Math.round(f.w * 100)}`}></span></span>
                     <span class="mig-chev" aria-hidden="true">+</span>
                   </span>
@@ -531,57 +531,65 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
         const ctx = cv.getContext('2d');
         if (!ctx) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let W = 0, H = 0, DPR = 1, emit = [], dest = [], stall = { x: 0, y: 0 }, zoneX = [0, 0], parts = [], t0 = performance.now(), raf = 0;
+        let W = 0, H = 0, DPR = 1, emit = [], dest = [], stall = { x: 0, y: 0 }, zoneX = [0, 0], fieldTop = 30, fieldBot = 0, parts = [], raf = 0;
         function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { x: r.right - h.left, y: r.top + r.height / 2 - h.top, l: r.left - h.left }; }
         function measure() {
-          const es = [...document.querySelectorAll('.mig-emit li')].filter((e) => e.offsetParent !== null);
-          emit = es.map((e) => { const b = rectIn(e); return { x: b.x + 4, y: b.y }; });
-          if (!emit.length) emit = [{ x: W * 0.14, y: H * 0.4 }];
-          const ds = [...document.querySelectorAll('.mig-dest span:not(.gh)')].filter((e) => e.offsetParent !== null);
-          dest = ds.map((e) => { const b = rectIn(e); return { x: b.l - 6, y: b.y }; });
-          if (!dest.length) dest = [{ x: W * 0.82, y: H * 0.4 }];
-          const st = document.querySelector('.mig-stall'); if (st) { const b = rectIn(st); stall = { x: b.l + 20, y: b.y }; } else stall = { x: W * 0.82, y: H * 0.9 };
-          zoneX = [W * 0.42, W * 0.66];
+          // emitter origin = the RIGHT EDGE of each role word (words live inside the hero box)
+          const es = [...document.querySelectorAll('.mig-emit span')].filter((e) => e.offsetParent !== null);
+          emit = es.map((e) => { const b = rectIn(e); return { x: b.x + 3, y: b.y }; });
+          if (!emit.length) emit = [{ x: W * 0.14, y: H * 0.45 }];
+          // destinations = LEFT edge of each destination + ghost mark
+          const ds = [...document.querySelectorAll('.mig-dest span')].filter((e) => e.offsetParent !== null);
+          dest = ds.map((e) => { const b = rectIn(e); return { x: b.l - 4, y: b.y, ghost: e.classList.contains('gh') }; });
+          if (!dest.length) dest = [{ x: W * 0.82, y: H * 0.45, ghost: false }];
+          const st = document.querySelector('.mig-stall'); if (st) { const b = rectIn(st); stall = { x: b.l + 24, y: b.y }; } else stall = { x: W * 0.82, y: H * 0.9 };
+          // zone boundaries align with the top ruler (15%…85%, thirds)
+          zoneX = [W * 0.15 + (W * 0.70) / 3, W * 0.15 + (W * 0.70) * 2 / 3];
+          fieldTop = 30; fieldBot = H - 20;
         }
         function reset(p, seed) {
           const e = emit[(Math.random() * emit.length) | 0];
-          p.x = e.x + (Math.random() - 0.5) * 6;
-          p.y = e.y + (Math.random() - 0.5) * 10;
+          p.x = e.x + Math.random() * 2;
+          p.y = e.y + (Math.random() - 0.5) * 8;
           const d = dest[(Math.random() * dest.length) | 0];
           p.tx = d.x; p.ty = d.y;
           p.sp = 0.5 + Math.random() * 0.7;
           p.s = 1.4 + Math.random() * 1.6;
           p.stall = Math.random() < 0.2;
-          p.stalled = false;
-          p.a = 0;
-          if (seed) p.x = e.x + Math.random() * (d.x - e.x);
+          p.stalled = false; p.molt = 0; p.slow = 0; p.a = 0;
+          if (seed) { p.x = e.x + Math.random() * (d.x - e.x); p.molt = p.x >= zoneX[1] ? 2 : p.x >= zoneX[0] ? 1 : 0; }
         }
         function build() {
           const total = W < 620 ? 90 : 150;
           parts = [];
           for (let i = 0; i < total; i++) { const p = {}; reset(p, true); parts.push(p); }
         }
-        function draw() {
+        function draw(now) {
+          now = now || performance.now();
           ctx.clearRect(0, 0, W, H);
+          // zone tick lines dropping through the field
+          ctx.strokeStyle = 'rgba(15,24,52,0.10)'; ctx.lineWidth = 1;
+          for (const zx of zoneX) { ctx.beginPath(); ctx.moveTo(zx, fieldTop); ctx.lineTo(zx, fieldBot); ctx.stroke(); }
           for (const p of parts) {
             if (!reduce) {
-              if (p.stall && !p.stalled && p.x > zoneX[0] + Math.random() * 40) p.stalled = true;
+              // molt at each tick boundary with a ~300ms drift-slowdown (not a hard stop)
+              if (p.molt === 0 && p.x >= zoneX[0]) { p.molt = 1; p.slow = now + 300; }
+              else if (p.molt === 1 && p.x >= zoneX[1]) { p.molt = 2; p.slow = now + 300; }
+              const slowF = now < p.slow ? 0.28 : 1;
+              if (p.stall && !p.stalled && p.x > zoneX[0] + Math.random() * 30) p.stalled = true;
               if (p.stalled) {
-                p.x += (stall.x - p.x) * 0.03; p.y += (stall.y - p.y) * 0.05 + 0.3;
-                p.a += 0.02;
+                p.x += (stall.x - p.x) * 0.03; p.y += (stall.y - p.y) * 0.05 + 0.3; p.a += 0.02;
                 if (p.a > 1.3) reset(p, false);
               } else {
-                p.x += p.sp; p.y += (p.ty - p.y) * 0.03;
+                p.x += p.sp * slowF; p.y += (p.ty - p.y) * 0.03;
                 if (p.x > p.tx + 6) reset(p, false);
               }
             }
-            // degrade by zone
-            let mode = p.x < zoneX[0] ? 0 : p.x < zoneX[1] ? 1 : 2;
-            if (p.stalled) mode = 3;
+            const mode = p.stalled ? 3 : p.molt;
             const base = 0.16 + (p.s - 1.4) * 0.14;
-            if (mode === 0) { ctx.fillStyle = `rgba(60,112,236,${Math.min(0.7, 0.42 + base)})`; ctx.fillRect(p.x, p.y, p.s, p.s); }
-            else if (mode === 1) { ctx.strokeStyle = `rgba(82,84,228,0.5)`; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
-            else if (mode === 2) { ctx.strokeStyle = `rgba(140,106,243,0.32)`; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
+            if (mode === 0) { ctx.fillStyle = `rgba(60,112,236,${Math.min(0.72, 0.44 + base)})`; ctx.fillRect(p.x, p.y, p.s, p.s); }
+            else if (mode === 1) { ctx.strokeStyle = 'rgba(82,84,228,0.5)'; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
+            else if (mode === 2) { ctx.strokeStyle = 'rgba(140,106,243,0.3)'; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.s + 0.5, p.s + 0.5); }
             else { ctx.fillStyle = `rgba(88,99,127,${Math.max(0, 0.35 * (1 - p.a / 1.3))})`; ctx.fillRect(p.x, p.y, p.s, p.s); }
           }
           if (!reduce) raf = requestAnimationFrame(draw);
