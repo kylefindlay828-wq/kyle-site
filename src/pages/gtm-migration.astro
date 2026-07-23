@@ -30,6 +30,38 @@ const SRC_URLS: Record<string, string> = {
   'Siemiatkowski, Bloomberg, May 2025': 'https://www.bloomberg.com/news/articles/2025-05-08/klarna-turns-from-ai-to-real-person-customer-service',
 };
 
+// Skimmable "Why": split plain source text into per-source paragraphs at the given
+// sentence-start markers, and bold the given exact substrings. Only inserts <p>/<strong>
+// tags — never alters, adds, removes, or reorders any word. A marker/bold that doesn't
+// match the source verbatim simply no-ops; it can never change the text.
+function skimHTML(text: string, split: string[], bold: string[]) {
+  let paras = [text.trim()];
+  for (const s of split) {
+    for (let i = 0; i < paras.length; i++) {
+      const idx = paras[i].indexOf(s);
+      if (idx > 0) { paras.splice(i, 1, paras[i].slice(0, idx).trimEnd(), paras[i].slice(idx)); break; }
+    }
+  }
+  return paras.map((p) => {
+    for (const b of bold) p = p.replace(b, `<strong>${b}</strong>`);
+    return `<p>${p}</p>`;
+  }).join('');
+}
+const SKIM: Record<string, { split: string[]; bold: string[] }> = {
+  '1': { split: ["Indeed's postings data shows", "And in Emergence Capital's survey"],
+    bold: ['shrinking at 3.8% per year', 'grow at 2% annually', 'contracted just 0.2%', 'the org reshapes more than it shrinks', "71% of the past year's growth in software-development postings came from senior roles", '37% from jobs with AI in the title', '36% cut SDR/BDR headcount', 'only 19% grew'] },
+  '2': { split: [], bold: ['fewer AE backfills', 'senior roles are doing almost all of the work'] },
+  '3': { split: [], bold: ['designing the revenue system', 'senior and system-design roles growing while junior execution roles compress'] },
+  '4': { split: ["Microsoft's 2026 Work Trend Index"],
+    bold: ['Generation is cheap; judgment is not', '14–26%', 'active AI agents grew 15x year over year', 'setting intent and applying judgment'] },
+  'm1': { split: ["METR's task-horizon series"],
+    bold: ['failed 88%', 'complete 66%', 'doubled roughly every seven months since 2019', 'a full working day by early 2026'] },
+  'm2': { split: ["Stanford's Index adds"],
+    bold: ['18% of firms', '32% employment-weighted', '22% within six months', 'planned cuts outpacing recent ones'] },
+  'm3': { split: ["The World Economic Forum's Future of Jobs Report 2026"],
+    bold: ['transitions into joblessness', 'leaving lasting scars', '92 million roles displaced and 170 million created by 2030', 'the distance between those two groups is the routing problem'] },
+};
+
 const leftNodes = ['SDR / BDR', 'Junior demand gen', 'Sales ops (reporting)', 'Reactive customer success'];
 const rightNodes = ['GTM Engineer', 'Account Executive', 'RevOps architect', 'Forward deployed / implementation', 'AI-enablement marketing'];
 
@@ -75,7 +107,7 @@ const wave1 = [
     caseChip: 'CASE STUDY · 2024→2025',
     takeaway: 'The routine layer moved; the human seat went upstream.',
     chip: { num: '2.3M', cap: 'AI conversations, month one · company-reported' },
-    whyHtml: `Stanford's 2026 AI Index shows the customer-service pattern directly: entry-level employment falling while senior headcount grows. Klarna is the named arc inside that data. Its AI assistant handled 2.3 million conversations in its first month — work the company said equaled roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream. The destination seat is now measurable: LinkedIn's 2026 Labor Market Report counts at least 1.3 million AI-related job opportunities created in the past two years — a category that explicitly includes forward-deployed engineers, a title that didn't exist five years ago.`,
+    whyHtml: `<p>Stanford's 2026 AI Index shows the customer-service pattern directly: <strong>entry-level employment falling while senior headcount grows</strong>.</p><p>Klarna is the named arc inside that data. Its AI assistant handled <strong>2.3 million conversations</strong> in its first month — work the company said equaled <strong>roughly 700 full-time agents</strong> <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — <strong>“We focused too much on cost. The result was lower quality”</strong> — and began <strong>rehiring humans in a hybrid model</strong>. The routine layer moved; the human seat went upstream.</p><p>The destination seat is now measurable: LinkedIn's 2026 Labor Market Report counts at least <strong>1.3 million AI-related job opportunities</strong> created in the past two years — a category that explicitly includes <strong>forward-deployed engineers</strong>, a title that didn't exist five years ago.</p>`,
     crossing: `An implementation you owned — a customer whose workflow you personally rebuilt.`,
     read: `Post-AI support orgs need forward-deployed hires that classic CS resumes don't surface — screen for owned implementations.`,
     sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }, { text: 'LinkedIn 2026 Labor Market Report (via Microsoft WTI)', badge: 'INDUSTRY' }] },
@@ -158,8 +190,18 @@ const legendLines = [
 ];
 
 // hero emitter / destination sets
-const heroEmit = ['SDR / BDR', 'Junior demand gen', 'Sales ops', 'Reactive CS', 'Junior software'];
-const heroDest = ['GTM Engineer', 'RevOps architect', 'Forward deployed', 'AI-enablement marketing'];
+// hero v2 — three time bands. `m: true` = shown on mobile too (others hide on ≤620px)
+const heroBand1 = [
+  { t: 'SDR / BDR', m: true }, { t: 'Junior demand gen', m: true }, { t: 'Sales ops', m: true },
+  { t: 'Reactive CS', m: true }, { t: 'Junior software', m: true }, { t: 'Mid-funnel sales', m: true }, { t: 'Agency recruiting', m: true },
+];
+const heroBand2 = [
+  { t: 'GTM Engineer', m: true }, { t: 'RevOps architect', m: true }, { t: 'Forward deployed', m: true }, { t: 'AI-enablement marketing' },
+];
+const heroBand3 = [
+  { t: 'Revenue-systems owner?', m: true }, { t: 'Agent-facing GTM?', m: true }, { t: 'Proof-based placement?', m: true },
+  { t: 'Trust & accountability seats?' }, { t: 'Forward-deployed / AI implementation?' }, { t: 'Agent operations?', m: true },
+];
 
 /* ═══ RESTORE BLOCK — pending Kyle's primary-source verification (source-only, non-rendering) ═══
    • Card 4 `why` append McKinsey 3.2x ROI + source McKinsey Global AI Survey [INDUSTRY]
@@ -218,19 +260,22 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-sub { font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.45; color: var(--mut); font-weight: 500; margin: 12px 0 0; max-width: 46ch; }
       .mig { padding-bottom: 90px; }
 
-      /* ── HERO: the migration current (emitters/destinations live INSIDE the canvas box) ── */
-      .mig-hero { position: relative; height: clamp(212px, 27vh, 262px); margin: 20px 0 0; border-radius: 16px; overflow: hidden;
+      /* ── HERO v2: three time bands, two chained emitter stages (labels live INSIDE the canvas box) ── */
+      .mig-hero { position: relative; height: clamp(380px, 52vh, 520px); margin: 20px 0 0; border-radius: 16px; overflow: hidden;
         background: radial-gradient(60% 90% at 50% 46%, rgba(123,108,240,0.09), transparent 72%); border: 1px solid var(--line); }
       #mig-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-      .mig-ruler { position: absolute; top: 8px; left: 15%; right: 15%; z-index: 1; display: flex; pointer-events: none; }
-      .mig-ruler-seg { flex: 1; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 1.05vw, 11.5px); letter-spacing: .1em; color: rgba(15,24,52,0.72); }
-      .mig-emit { position: absolute; left: 16px; top: 34px; bottom: 26px; z-index: 1; display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; }
-      .mig-emit span { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink); white-space: nowrap; }
-      .mig-dest { position: absolute; right: 16px; top: 34px; bottom: 26px; z-index: 1; display: flex; flex-direction: column; justify-content: space-around; align-items: flex-end; text-align: right; }
-      .mig-dest span { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(10px, 1.1vw, 12.5px); color: var(--navy); white-space: nowrap; }
-      .mig-dest .gh { color: rgba(88,99,127,0.55); font-weight: 500; }
-      .mig-stall { position: absolute; right: 16px; bottom: 6px; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.95vw, 10px); color: rgba(88,99,127,0.72); max-width: 58%; text-align: right; line-height: 1.3; }
-      @media (max-width: 620px) { .mig-emit span.mig-emit-hide, .mig-dest span.mig-dest-hide { display: none; } }
+      .mig-ruler { position: absolute; top: 12px; left: 8%; right: 8%; z-index: 1; display: flex; pointer-events: none; }
+      .mig-ruler-seg { flex: 1; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: clamp(14px, 1.6vw, 17px); font-weight: 500; letter-spacing: .16em; color: rgba(15,24,52,0.9); }
+      .mig-band { position: absolute; top: 54px; bottom: 40px; z-index: 1; display: flex; flex-direction: column; justify-content: space-around; }
+      .mig-band span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(10px, 1.1vw, 12.5px); white-space: nowrap; line-height: 1.5; }
+      .mig-b1 { left: 16px; align-items: flex-start; }
+      .mig-b1 span { font-weight: 500; color: var(--ink); }
+      .mig-b2 { left: 50%; transform: translateX(-50%); align-items: center; text-align: center; }
+      .mig-b2 span { font-weight: 600; color: var(--navy); }
+      .mig-b3 { right: 16px; align-items: flex-end; text-align: right; }
+      .mig-b3 span.gh { font-weight: 500; color: rgba(88,99,127,0.62); }
+      .mig-stall { position: absolute; right: 16px; bottom: 8px; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.95vw, 10px); color: rgba(88,99,127,0.72); max-width: 42%; text-align: right; line-height: 1.3; }
+      @media (max-width: 620px) { .mig-band span.mig-hide-m { display: none; } .mig-b2 { left: 46%; } }
 
       /* ── source badges ── */
       .mig-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 2px 6px; border-radius: 5px; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
@@ -239,10 +284,15 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-badge--dashed { background: transparent; color: var(--mut); border: 1px dashed rgba(24,40,88,0.42); }
       .mig-casechip { margin-left: 10px; vertical-align: 2px; }
 
-      /* ── tabs ── */
-      .mig-tabs { display: flex; gap: 6px; margin: 24px 0 0; }
+      /* ── tabs (sticky) ── */
+      .mig-sticky-sentinel { height: 1px; margin: 0; padding: 0; }
+      .mig-tabs { display: flex; gap: 6px; margin: 24px 0 0; padding: 8px 0; position: sticky; top: 58px; z-index: 90;
+        background: rgba(238,244,253,0.9); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+        transition: box-shadow .2s ease, padding .2s ease; }
+      .mig-tabs.stuck { box-shadow: 0 8px 20px -14px rgba(15,24,52,0.55); border-bottom: 1px solid var(--line); padding: 6px 0; }
+      .mig-tabs.stuck .mig-tab { padding: 7px 8px; }
       .mig-tab { flex: 1 1 0; min-width: 0; cursor: pointer; font: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px;
-        background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px; transition: border-color .16s ease, background-color .16s ease; }
+        background: rgba(255,255,255,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 11px 8px; transition: border-color .16s ease, background-color .16s ease, padding .2s ease; }
       .mig-tab-yr { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(13px, 1.7vw, 15.5px); letter-spacing: -0.01em; color: var(--navy); white-space: nowrap; }
       .mig-tab-ep { font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, 1.3vw, 12px); letter-spacing: .02em; color: var(--mut); line-height: 1.25; }
       .mig-tab[aria-selected='true'] { border-color: var(--blue); background: rgba(76,126,245,0.10); }
@@ -255,6 +305,13 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
 
       /* ── node map ── */
       .mig-map { display: none; margin: 30px 0 8px; }
+      /* persistent map: three states stacked, crossfading on tab switch (desktop only) */
+      .mig-mapstack { display: none; position: relative; margin: 30px 0 8px; }
+      @media (min-width: 760px) { .mig-mapstack { display: block; } }
+      .mig-mapstate { transition: opacity .55s ease; }
+      .mig-mapstate[data-on="false"] { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      .mig-mapstate[data-on="true"] { position: relative; opacity: 1; }
+      @media (prefers-reduced-motion: reduce) { .mig-mapstate { transition: none; } }
       .mig-svg { width: 100%; max-width: 940px; height: auto; display: block; margin: 0 auto; overflow: visible; }
       .mig-colh { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; fill: var(--mut); }
       .mig-link { fill: none; stroke: rgba(76,126,245,0.30); stroke-width: var(--sw); stroke-linecap: round; transition: stroke .18s ease; }
@@ -298,6 +355,10 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-read { font-weight: 600; color: var(--navy); }
       .mig-caveat-line { font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0.9; margin: 8px 0 0; max-width: 66ch; }
       .mig-txt a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+      .mig-txt p { margin: 0; }
+      .mig-txt p + p { margin-top: 0.72em; }
+      .mig-txt strong { font-weight: 700; color: var(--navy); }
+      .mig-lbl--kill { font-weight: 700; color: var(--blue); }
       .mig-conflict { font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0.9; margin: 14px 0 0; max-width: 66ch; padding-left: 12px; border-left: 2px solid rgba(88,99,127,0.45); }
       .mig-cred { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .04em; color: var(--mut); margin: 16px 0 0; }
       .mig-src { font-size: 12px; line-height: 1.9; color: var(--ink); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -373,29 +434,29 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
             <span class="mig-ruler-seg">2026–28</span>
             <span class="mig-ruler-seg">2028–30</span>
           </div>
-          <div class="mig-emit">
-            {heroEmit.map((w, i) => (<span class={i === 1 || i === 2 ? 'mig-emit-hide' : ''}>{w}</span>))}
+          <div class="mig-band mig-b1">
+            {heroBand1.map((n) => (<span class={n.m ? '' : 'mig-hide-m'}>{n.t}</span>))}
           </div>
-          <div class="mig-dest">
-            {heroDest.map((d, i) => (<span class={i >= 2 ? 'mig-dest-hide' : ''}>{d}</span>))}
-            <span class="gh">?</span><span class="gh mig-dest-hide">?</span>
+          <div class="mig-band mig-b2">
+            {heroBand2.map((n) => (<span class={n.m ? '' : 'mig-hide-m'}>{n.t}</span>))}
+          </div>
+          <div class="mig-band mig-b3">
+            {heroBand3.map((n) => (<span class={`gh ${n.m ? '' : 'mig-hide-m'}`}>{n.t}</span>))}
           </div>
           <p class="mig-stall">stalled — transitions don’t happen on their own · OECD 2026</p>
         </div>
 
-        <!-- WAVE TOGGLE -->
+        <!-- WAVE TOGGLE (sticky) -->
+        <div class="mig-sticky-sentinel" aria-hidden="true"></div>
         <div class="mig-tabs" role="tablist" aria-label="Migration waves">
           <button class="mig-tab" role="tab" data-wave="w1" aria-selected="true"><span class="mig-tab-yr">2024–26</span><span class="mig-tab-ep">· Documented</span></button>
           <button class="mig-tab" role="tab" data-wave="w2" aria-selected="false"><span class="mig-tab-yr">2026–28</span><span class="mig-tab-ep">· In motion</span></button>
           <button class="mig-tab" role="tab" data-wave="w3" aria-selected="false"><span class="mig-tab-yr">2028–30</span><span class="mig-tab-ep">· Predicted</span></button>
         </div>
 
-        <!-- ══ WAVE 1 ══ -->
-        <section class="mig-wave" data-wave="w1" role="tabpanel">
-          <h2 class="mig-wave-h">2024–26 · Documented</h2>
-          <p class="mig-wave-intro">This wave already happened. It’s documented here because a map you can check is the only kind worth trusting forward.</p>
-
-          <div class="mig-map">
+        <!-- PERSISTENT WAVE MAP — one component, three states that crossfade on tab switch (desktop) -->
+        <div class="mig-mapstack">
+          <div class="mig-mapstate" data-wave="w1" data-on="true">
             <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Migration flows from compressing roles to absorbing roles">
               <text class="mig-colh" x={LX - 16} y="44" text-anchor="end">Compressing</text>
               <text class="mig-colh" x={RX + 16} y="44" text-anchor="start">Absorbing</text>
@@ -406,6 +467,33 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
             </svg>
             <p class="mig-maphint">Click a flow to open its detail below · thicker line = bigger shift</p>
           </div>
+          <div class="mig-mapstate" data-wave="w2" data-on="false">
+            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="In-motion flows, solid at origin dissolving to dashed">
+              <text class="mig-colh" x={LX - 16} y="60" text-anchor="end">Compressing next</text>
+              <text class="mig-colh" x={RX + 16} y="60" text-anchor="start">Absorbing</text>
+              {wave2.map((c, i) => (<><path class="mig-w2dash" d={p4(i)} /><path class="mig-w2solid" d={p4(i)} pathLength="100" style="stroke-dasharray: 50 100" /></>))}
+              {wave2.map((c, i) => (<path class="mig-hit" data-flow={c.id} d={p4(i)} />))}
+              {wave2MapL.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y4(i)} r="4" /><text class="mig-node" x={LX - 14} y={y4(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {wave2MapR.map((n, i) => (<><circle class="mig-dot r" cx={RX} cy={y4(i)} r="4" /><text class="mig-node" x={RX + 14} y={y4(i)} text-anchor="start" dominant-baseline="central">{n}</text></>))}
+            </svg>
+            <p class="mig-mapcap">In motion: solid where it starts, dashed where it’s heading. No weights — direction is documented, magnitude isn’t yet.</p>
+          </div>
+          <div class="mig-mapstate" data-wave="w3" data-on="false">
+            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Predicted destinations for today's seats">
+              <text class="mig-colh" x={LX - 16} y="62" text-anchor="end">Today’s seats</text>
+              <text class="mig-colh" x={RX + 16} y="62" text-anchor="start">Where they go?</text>
+              {ghosts.map((g, i) => (<path class="mig-ghostlink" d={p6(i)} />))}
+              {seats.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y6(i)} r="4" /><text class="mig-node" x={LX - 14} y={y6(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
+              {ghosts.map((g, i) => (<><circle class="mig-dot g" cx={RX} cy={y6(i)} r="4.5" /><text class="mig-node ghost" x={RX + 14} y={y6(i)} text-anchor="start" dominant-baseline="central">{g.name}</text></>))}
+            </svg>
+            <p class="mig-mapcap">Direction, not magnitude. The compressing seats are known. The destinations are categories, not titles.</p>
+          </div>
+        </div>
+
+        <!-- ══ WAVE 1 ══ -->
+        <section class="mig-wave" data-wave="w1" role="tabpanel">
+          <h2 class="mig-wave-h">2024–26 · Documented</h2>
+          <p class="mig-wave-intro">This wave already happened. It’s documented here because a map you can check is the only kind worth trusting forward.</p>
 
           <div class="mig-list">
             {wave1.map((f) => (
@@ -420,7 +508,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                   {f.chip && <span class="mig-chip"><span class="mig-chip-num">{f.chip.num}</span><span class="mig-chip-cap">{f.chip.cap}</span></span>}
                 </button>
                 <div class="mig-detail" id={`w1-${f.id}`} hidden>
-                  <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <p class="mig-txt" set:html={f.whyHtml} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
+                  <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <div class="mig-txt" set:html={f.whyHtml} /> : SKIM[String(f.id)] ? <div class="mig-txt" set:html={skimHTML(f.why, SKIM[String(f.id)].split, SKIM[String(f.id)].bold)} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
                   <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
                   <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}{f.srcNote && <><span class="mig-src-sep"> · </span><span class="mig-src-note">{f.srcNote}</span></>}</p>
@@ -439,18 +527,6 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
           <h2 class="mig-wave-h">2026–28 · In motion</h2>
           <p class="mig-wave-intro">The absorbing seats compress next. Agent platforms productize the GTM Engineer build; agentic selling absorbs SMB deal work. Judgment concentrates in fewer, more senior seats.</p>
 
-          <div class="mig-map">
-            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="In-motion flows, solid at origin dissolving to dashed">
-              <text class="mig-colh" x={LX - 16} y="60" text-anchor="end">Compressing next</text>
-              <text class="mig-colh" x={RX + 16} y="60" text-anchor="start">Absorbing</text>
-              {wave2.map((c, i) => (<><path class="mig-w2dash" d={p4(i)} /><path class="mig-w2solid" d={p4(i)} pathLength="100" style="stroke-dasharray: 50 100" /></>))}
-              {wave2.map((c, i) => (<path class="mig-hit" data-flow={c.id} d={p4(i)} />))}
-              {wave2MapL.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y4(i)} r="4" /><text class="mig-node" x={LX - 14} y={y4(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
-              {wave2MapR.map((n, i) => (<><circle class="mig-dot r" cx={RX} cy={y4(i)} r="4" /><text class="mig-node" x={RX + 14} y={y4(i)} text-anchor="start" dominant-baseline="central">{n}</text></>))}
-            </svg>
-            <p class="mig-mapcap">In motion: solid where it starts, dashed where it’s heading. No weights — direction is documented, magnitude isn’t yet.</p>
-          </div>
-
           <div class="mig-list">
             {wave2.map((c) => (
               <article class="mig-flow" data-flow={c.id}>
@@ -460,7 +536,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                   {c.chip && <span class="mig-chip"><span class="mig-chip-num">{c.chip.num}</span><span class="mig-chip-cap">{c.chip.cap}</span></span>}
                 </button>
                 <div class="mig-detail" id={`w2-${c.id}`} hidden>
-                  {c.body ? (<p class="mig-txt">{c.body}</p>) : (<>
+                  {c.body ? (SKIM[c.id] ? <div class="mig-txt" set:html={skimHTML(c.body, SKIM[c.id].split, SKIM[c.id].bold)} /> : <p class="mig-txt">{c.body}</p>) : (<>
                     <div class="mig-field"><p class="mig-lbl">What moved</p><p class="mig-txt">{c.whatMoved}</p></div>
                     <div class="mig-field"><p class="mig-lbl">Why</p><p class="mig-txt">{c.why}</p></div>
                     <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
@@ -481,17 +557,6 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
         <section class="mig-wave" data-wave="w3" role="tabpanel" hidden>
           <h2 class="mig-wave-h">2028–30 · Predicted</h2>
 
-          <div class="mig-map">
-            <svg class="mig-svg" viewBox={`0 0 ${VB.w} ${VB.h}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="Predicted destinations for today's seats">
-              <text class="mig-colh" x={LX - 16} y="62" text-anchor="end">Today’s seats</text>
-              <text class="mig-colh" x={RX + 16} y="62" text-anchor="start">Where they go?</text>
-              {ghosts.map((g, i) => (<path class="mig-ghostlink" d={p6(i)} />))}
-              {seats.map((n, i) => (<><circle class="mig-dot" cx={LX} cy={y6(i)} r="4" /><text class="mig-node" x={LX - 14} y={y6(i)} text-anchor="end" dominant-baseline="central">{n}</text></>))}
-              {ghosts.map((g, i) => (<><circle class="mig-dot g" cx={RX} cy={y6(i)} r="4.5" /><text class="mig-node ghost" x={RX + 14} y={y6(i)} text-anchor="start" dominant-baseline="central">{g.name}</text></>))}
-            </svg>
-            <p class="mig-mapcap">Direction, not magnitude. The compressing seats are known. The destinations are categories, not titles.</p>
-          </div>
-
           <p class="mig-recruit">For a recruiting firm, every ghost card is a future placement category — this is a map of where the fees migrate.</p>
 
           <div class="mig-list">
@@ -504,7 +569,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                 <div class="mig-detail" id={`w3-${g.id}`} hidden>
                   <div class="mig-field"><p class="mig-lbl">Why I expect this</p><p class="mig-txt">{g.why}</p></div>
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{g.crossing}</p></div>
-                  <div class="mig-field"><p class="mig-lbl">What would change my mind</p><p class="mig-txt">{g.change}</p></div>
+                  <div class="mig-field"><p class="mig-lbl mig-lbl--kill">What would change my mind</p><p class="mig-txt">{g.change}</p></div>
                   {g.conflict && <p class="mig-conflict">{g.conflict}</p>}
                   {g.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{g.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
                   <p class="mig-cred">Prediction · Kyle Findlay · July 2026</p>
@@ -540,6 +605,8 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
             <span class="mig-author-sep" aria-hidden="true">·</span>
             <a class="mig-author-link" href="mailto:kylefindlay828@gmail.com?subject=GTM%20Migration">Email</a>
             <span class="mig-author-sep" aria-hidden="true">·</span>
+            <a class="mig-author-link" href="https://www.linkedin.com/in/kylefindlay828" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="mig-author-sep" aria-hidden="true">·</span>
             <a class="mig-author-link" href="/">About →</a>
           </div>
         </section>
@@ -553,12 +620,27 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
         // ── wave toggle ──
         const tabs = [...root.querySelectorAll('.mig-tab')];
         const waves = [...root.querySelectorAll('.mig-wave')];
+        const mapStates = [...root.querySelectorAll('.mig-mapstate')];
+        const tabsEl = root.querySelector('.mig-tabs');
+        const sentinel = root.querySelector('.mig-sticky-sentinel');
+        const NAV = 58;
         function showWave(id) {
           tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.wave === id ? 'true' : 'false'));
           waves.forEach((w) => { w.hidden = w.dataset.wave !== id; });
+          mapStates.forEach((m) => m.setAttribute('data-on', m.dataset.wave === id ? 'true' : 'false'));
         }
-        tabs.forEach((t) => t.addEventListener('click', () => showWave(t.dataset.wave)));
-        root.querySelectorAll('.mig-advance').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showWave(a.dataset.goto); }));
+        function docTop(el) { let y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; }
+        function goWave(id) {
+          showWave(id);
+          // pin the sticky tabs just under the nav → the top of the wave content sits right below
+          window.scrollTo({ top: Math.max(0, docTop(tabsEl) - NAV), behavior: 'smooth' });
+        }
+        tabs.forEach((t) => t.addEventListener('click', () => goWave(t.dataset.wave)));
+        root.querySelectorAll('.mig-advance').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); goWave(a.dataset.goto); }));
+        // compact "stuck" bar once the tabs pin under the nav
+        if (sentinel && tabsEl && 'IntersectionObserver' in window) {
+          new IntersectionObserver(([e]) => tabsEl.classList.toggle('stuck', !e.isIntersecting), { rootMargin: `-${NAV}px 0px 0px 0px`, threshold: 0 }).observe(sentinel);
+        }
         // ── card expand + map click ──
         const cards = [...root.querySelectorAll('.mig-flow')];
         const links = [...root.querySelectorAll('.mig-link')];
@@ -582,43 +664,56 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
         });
       })();
 
-      // ── HERO: "the migration current" (word-anchored emitters → zones → destinations + stall pool) ──
+      // ── HERO v2: two chained emitter stages across three time bands (+ stall pool) ──
+      // Stage 1: left band → middle band (solid → dashed). Stage 2: middle band → right band
+      // (dashed → ghost). Middle labels are both destination and origin — two independent
+      // particle sets that read as one continuous current. No per-dot end-to-end routing.
       (() => {
         const cv = document.getElementById('mig-field');
         if (!(cv instanceof HTMLCanvasElement)) return;
         const ctx = cv.getContext('2d');
         if (!ctx) return;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let W = 0, H = 0, DPR = 1, emit = [], dest = [], stall = { x: 0, y: 0 }, zoneX = [0, 0], fieldTop = 30, fieldBot = 0, parts = [], raf = 0;
+        let W = 0, H = 0, DPR = 1, e1 = [], d1 = [], e2 = [], d2 = [], stall = { x: 0, y: 0 }, zoneX = [0, 0], fieldTop = 30, fieldBot = 0, parts = [], raf = 0;
         function rectIn(el) { const r = el.getBoundingClientRect(), h = cv.getBoundingClientRect(); return { x: r.right - h.left, y: r.top + r.height / 2 - h.top, l: r.left - h.left }; }
+        function edges(sel, side) {
+          return [...document.querySelectorAll(sel)].filter((e) => e.offsetParent !== null)
+            .map((e) => { const b = rectIn(e); return { x: side === 'r' ? b.x + 3 : b.l - 4, y: b.y }; });
+        }
         function measure() {
-          // emitter origin = the RIGHT EDGE of each role word (words live inside the hero box)
-          const es = [...document.querySelectorAll('.mig-emit span')].filter((e) => e.offsetParent !== null);
-          emit = es.map((e) => { const b = rectIn(e); return { x: b.x + 3, y: b.y }; });
-          if (!emit.length) emit = [{ x: W * 0.14, y: H * 0.45 }];
-          // destinations = LEFT edge of each destination + ghost mark
-          const ds = [...document.querySelectorAll('.mig-dest span')].filter((e) => e.offsetParent !== null);
-          dest = ds.map((e) => { const b = rectIn(e); return { x: b.l - 4, y: b.y, ghost: e.classList.contains('gh') }; });
-          if (!dest.length) dest = [{ x: W * 0.82, y: H * 0.45, ghost: false }];
-          const st = document.querySelector('.mig-stall'); if (st) { const b = rectIn(st); stall = { x: b.l + 24, y: b.y }; } else stall = { x: W * 0.82, y: H * 0.9 };
-          // zone boundaries align with the top ruler (15%…85%, thirds)
-          zoneX = [W * 0.15 + (W * 0.70) / 3, W * 0.15 + (W * 0.70) * 2 / 3];
+          // origins born within a few px of each label edge (acceptance rule holds for all bands)
+          e1 = edges('.mig-b1 span', 'r');   // stage 1 origins: left band, right edge
+          d1 = edges('.mig-b2 span', 'l');   // stage 1 targets: middle band, left edge
+          e2 = edges('.mig-b2 span', 'r');   // stage 2 origins: middle band, right edge
+          d2 = edges('.mig-b3 span', 'l');   // stage 2 targets: right band, left edge
+          if (!e1.length) e1 = [{ x: W * 0.10, y: H * 0.5 }];
+          if (!d1.length) d1 = [{ x: W * 0.48, y: H * 0.5 }];
+          if (!e2.length) e2 = [{ x: W * 0.52, y: H * 0.5 }];
+          if (!d2.length) d2 = [{ x: W * 0.88, y: H * 0.5 }];
+          const st = document.querySelector('.mig-stall'); if (st) { const b = rectIn(st); stall = { x: b.l + 20, y: b.y }; } else stall = { x: W * 0.82, y: H * 0.92 };
+          // zone boundaries align with the ruler (8%…92%, thirds)
+          zoneX = [W * 0.08 + (W * 0.84) / 3, W * 0.08 + (W * 0.84) * 2 / 3];
           fieldTop = 30; fieldBot = H - 20;
         }
         function reset(p, seed) {
-          const e = emit[(Math.random() * emit.length) | 0];
+          p.stage = Math.random() < 0.5 ? 1 : 2;
+          const E = p.stage === 1 ? e1 : e2, D = p.stage === 1 ? d1 : d2;
+          const e = E[(Math.random() * E.length) | 0], d = D[(Math.random() * D.length) | 0];
           p.x = e.x + Math.random() * 2;
           p.y = e.y + (Math.random() - 0.5) * 8;
-          const d = dest[(Math.random() * dest.length) | 0];
           p.tx = d.x; p.ty = d.y;
           p.sp = 0.5 + Math.random() * 0.7;
           p.s = 1.4 + Math.random() * 1.6;
-          p.stall = Math.random() < 0.2;
-          p.stalled = false; p.molt = 0; p.slow = 0; p.a = 0;
-          if (seed) { p.x = e.x + Math.random() * (d.x - e.x); p.molt = p.x >= zoneX[1] ? 2 : p.x >= zoneX[0] ? 1 : 0; }
+          p.stall = Math.random() < 0.16;
+          p.stalled = false; p.slow = 0; p.a = 0;
+          p.molt = p.stage === 1 ? 0 : 1;   // stage1 begins solid; stage2 begins dashed
+          if (seed) {
+            p.x = e.x + Math.random() * (d.x - e.x);
+            p.molt = p.stage === 1 ? (p.x >= zoneX[0] ? 1 : 0) : (p.x >= zoneX[1] ? 2 : 1);
+          }
         }
         function build() {
-          const total = W < 620 ? 90 : 150;
+          const total = W < 620 ? 130 : 160;
           parts = [];
           for (let i = 0; i < total; i++) { const p = {}; reset(p, true); parts.push(p); }
         }
@@ -630,9 +725,9 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
           for (const zx of zoneX) { ctx.beginPath(); ctx.moveTo(zx, fieldTop); ctx.lineTo(zx, fieldBot); ctx.stroke(); }
           for (const p of parts) {
             if (!reduce) {
-              // molt at each tick boundary with a ~300ms drift-slowdown (not a hard stop)
-              if (p.molt === 0 && p.x >= zoneX[0]) { p.molt = 1; p.slow = now + 300; }
-              else if (p.molt === 1 && p.x >= zoneX[1]) { p.molt = 2; p.slow = now + 300; }
+              // molt across this stage's boundary with a ~300ms drift-slowdown (not a hard stop)
+              if (p.stage === 1) { if (p.molt === 0 && p.x >= zoneX[0]) { p.molt = 1; p.slow = now + 300; } }
+              else { if (p.molt === 1 && p.x >= zoneX[1]) { p.molt = 2; p.slow = now + 300; } }
               const slowF = now < p.slow ? 0.28 : 1;
               if (p.stall && !p.stalled && p.x > zoneX[0] + Math.random() * 30) p.stalled = true;
               if (p.stalled) {
