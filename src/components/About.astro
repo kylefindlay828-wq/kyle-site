@@ -41,10 +41,21 @@ const evidence = [
       <div class="rounded-xl overflow-hidden border border-rule w-full h-[290px] md:h-[350px]">
         <Image src={headshot} alt="Kyle Findlay" width={600} height={750} class="w-full h-full object-cover object-top scale-[1.35] origin-top -translate-y-[12%]" />
       </div>
-      <a href="https://www.linkedin.com/in/kylefindlay828" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-serif text-accent hover:underline underline-offset-2" style="font-size:clamp(14px,1vw,15px);">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
-        linkedin.com/in/kylefindlay828
-      </a>
+      <div class="flex flex-col gap-2 items-start">
+        <a href="https://www.linkedin.com/in/kylefindlay828" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-serif text-accent hover:underline underline-offset-2" style="font-size:clamp(14px,1vw,15px);">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          linkedin.com/in/kylefindlay828
+        </a>
+        <div class="flex items-center gap-1.5 font-serif text-accent" style="font-size:clamp(14px,1vw,15px);">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span class="select-all">kylefindlay828@gmail.com</span>
+          <button type="button" class="email-copy inline-flex items-center justify-center rounded-md p-1 -my-1 text-accent/75 hover:text-accent hover:bg-accent/10 transition" data-email="kylefindlay828@gmail.com" aria-label="Copy email address">
+            <svg class="ec-copy" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="ec-done hidden" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </button>
+          <span class="ec-toast hidden text-xs text-accent/80">Copied!</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -142,3 +153,37 @@ const evidence = [
     Especially interested in ambitious, in-person teams building new categories in San Francisco.
   </p>
 </section>
+
+<span class="sr-only" aria-live="polite" data-copy-live></span>
+
+<script>
+  document.querySelectorAll('.email-copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const email = btn.getAttribute('data-email') || '';
+      try {
+        await navigator.clipboard.writeText(email);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = email; ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        ta.remove();
+      }
+      const copy = btn.querySelector('.ec-copy');
+      const done = btn.querySelector('.ec-done');
+      const toast = btn.parentElement?.querySelector('.ec-toast');
+      const live = document.querySelector('[data-copy-live]');
+      copy?.classList.add('hidden');
+      done?.classList.remove('hidden');
+      toast?.classList.remove('hidden');
+      if (live) live.textContent = 'Email address copied to clipboard';
+      window.clearTimeout(btn._t);
+      btn._t = window.setTimeout(() => {
+        copy?.classList.remove('hidden');
+        done?.classList.add('hidden');
+        toast?.classList.add('hidden');
+      }, 1600);
+    });
+  });
+</script>
