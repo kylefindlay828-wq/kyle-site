@@ -1,0 +1,66 @@
+---
+// OG share image for /gtm-migration (link previews). Light theme, indigo ink,
+// matches the migration page. Rendered at 2x (1200×630 → 2400×1260) to
+// /public/og-migration.png. Unlisted route.
+const CX = [800, 940, 1080];          // three era columns (right panel)
+const rows = [258, 322, 386, 450];    // four flow rows
+const eras = ['2024–26', '2026–28', '2028–30'];
+const RULY = 176;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { background: #eef4fd; }
+      .og { position: relative; width: 1200px; height: 630px; overflow: hidden; font-family: 'Space Grotesk', sans-serif; color: #17223f;
+        background:
+          radial-gradient(60% 90% at 80% 46%, rgba(123,108,240,0.10), transparent 72%),
+          radial-gradient(50% 70% at 16% 26%, rgba(76,126,245,0.10), transparent 66%),
+          linear-gradient(180deg, #eef4fd 0%, #e9eefb 60%, #ecebf9 100%); }
+
+      /* left ~60% */
+      .h1 { position: absolute; left: 72px; top: 222px; max-width: 600px; font-weight: 700; font-size: 66px; line-height: 1.0; letter-spacing: -0.035em; color: #0f1834; }
+      .sub { position: absolute; left: 74px; top: 396px; font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: .02em; color: #58637f; }
+      .url { position: absolute; left: 74px; bottom: 46px; font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: .02em; color: #2f6fd0; }
+
+      /* right ~40% flow motif */
+      svg { position: absolute; inset: 0; }
+      .tick { stroke: rgba(15,24,52,0.08); stroke-width: 1; }
+      .conn { fill: none; stroke: rgba(88,99,127,0.5); stroke-width: 1.6; stroke-dasharray: 3 5; stroke-linecap: round; }
+      .solid { fill: #3c70ec; }
+      .dashA { fill: none; stroke: #5254e4; stroke-width: 1.8; stroke-dasharray: 3 3; }
+      .ghost { fill: none; stroke: #8c6af3; stroke-width: 1.6; stroke-dasharray: 3 3; opacity: 0.62; }
+      .rul { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .12em; fill: rgba(15,24,52,0.6); text-anchor: middle; }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <div class="h1">Where GTM work is&nbsp;going.</div>
+      <div class="sub">Sourced · Graded · Checkable — updated July 2026</div>
+      <div class="url">kylefindlay.xyz/gtm-migration</div>
+
+      <svg viewBox="0 0 1200 630" width="1200" height="630" aria-hidden="true">
+        <!-- faint era ruler -->
+        {eras.map((e, i) => (<text class="rul" x={CX[i]} y={RULY}>{e}</text>))}
+        <line class="tick" x1="740" y1={RULY + 14} x2="740" y2="490" />
+        <line class="tick" x1={(CX[0] + CX[1]) / 2} y1={RULY + 14} x2={(CX[0] + CX[1]) / 2} y2="490" />
+        <line class="tick" x1={(CX[1] + CX[2]) / 2} y1={RULY + 14} x2={(CX[1] + CX[2]) / 2} y2="490" />
+
+        {rows.map((y) => (
+          <>
+            <path class="conn" d={`M ${CX[0] + 11},${y} L ${CX[1] - 11},${y}`} />
+            <path class="conn" d={`M ${CX[1] + 11},${y} L ${CX[2] - 11},${y}`} />
+            <circle class="solid" cx={CX[0]} cy={y} r="8" />
+            <circle class="dashA" cx={CX[1]} cy={y} r="8" />
+            <circle class="ghost" cx={CX[2]} cy={y} r="8.5" />
+          </>
+        ))}
+      </svg>
+    </div>
+  </body>
+</html>

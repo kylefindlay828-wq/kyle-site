@@ -11,6 +11,17 @@ const badgeClass = (k: string) => (({
   'COMPANY-REPORTED': 'dashed', 'OWN-AGENT DATA': 'dashed',
 } as Record<string, string>)[k] || 'outline');
 
+// Primary-source URLs, keyed by the EXACT source `text` string. A source name
+// auto-links (target=_blank, rel=noopener, ↗) only when it appears here — so
+// adding a URL later is a one-line change. Never invent URLs; leave a source
+// out of this map to keep it plain text until its primary source is confirmed.
+const SRC_URLS: Record<string, string> = {
+  'METR Time Horizon 1.1, Jan 2026': 'https://metr.org/blog/2026-1-29-time-horizon-1-1/',
+  'Microsoft 2026 Work Trend Index': 'https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization',
+  'LinkedIn 2026 Labor Market Report (via Microsoft WTI)': 'https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization',
+  'WEF Future of Jobs Report 2026': 'https://www.weforum.org/publications/',
+};
+
 const leftNodes = ['SDR / BDR', 'Junior demand gen', 'Sales ops (reporting)', 'Reactive customer success'];
 const rightNodes = ['GTM Engineer', 'Account Executive', 'RevOps architect', 'Forward deployed / implementation', 'AI-enablement marketing'];
 
@@ -169,12 +180,12 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kylefindlay.xyz/gtm-migration" />
-    <meta property="og:image" content="https://kylefindlay.xyz/og-gtm-migration.png" />
+    <meta property="og:image" content="https://kylefindlay.xyz/og-migration.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GTM Migration — Today's seats → Where did they go? A predicted map of where go-to-market work is going." />
+    <meta property="og:image:alt" content="Where GTM work is going — a sourced, graded, checkable map of where go-to-market work is heading. kylefindlay.xyz/gtm-migration" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://kylefindlay.xyz/og-gtm-migration.png" />
+    <meta name="twitter:image" content="https://kylefindlay.xyz/og-migration.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -279,6 +290,9 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-src { font-size: 12px; line-height: 1.9; color: var(--ink); margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
       .mig-src .mig-src-lbl { font-family: 'JetBrains Mono', monospace; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; font-size: 10.5px; color: var(--navy); margin-right: 4px; }
       .mig-src a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+      .mig-src a.mig-src-link { text-decoration: none; }
+      .mig-src a.mig-src-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+      .mig-src-ext { font-size: 0.82em; vertical-align: 1px; }
       .mig-src-sep { color: rgba(24,40,88,0.3); }
 
       .mig-advance { display: inline-block; margin: 28px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
@@ -305,6 +319,20 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-stampmark-1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(20px, 2.6vw, 30px); letter-spacing: .02em; line-height: 1; }
       .mig-stampmark-2 { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .04em; color: var(--mut); margin-top: 6px; }
       .mig-foot { grid-column: 1 / -1; margin: 30px 0 0; font-size: clamp(1rem, 1.4vw, 1.1rem); line-height: 1.55; color: var(--mut); font-weight: 500; max-width: 62ch; }
+      /* ── author strip ── */
+      .mig-author { grid-column: 1 / -1; margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--line);
+        display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 11px;
+        font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 1.2vw, 12.5px); line-height: 1.5; color: var(--mut); }
+      .mig-author-name { color: var(--navy); font-weight: 600; }
+      .mig-author-sep { color: rgba(24,40,88,0.3); }
+      .mig-author-link { color: var(--blue); text-decoration: none; }
+      .mig-author-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+      /* mobile: name on its own line, meta on the second — two lines max */
+      @media (max-width: 560px) {
+        .mig-author { font-size: 10px; gap: 5px 8px; }
+        .mig-author-name { flex-basis: 100%; }
+        .mig-author .mig-author-sep { display: none; }
+      }
       @media (max-width: 720px) { .mig-method { grid-template-columns: 1fr; gap: 24px; } .mig-stampmark { justify-self: start; } }
 
       @media (min-width: 760px) { .mig-map { display: block; } }
@@ -381,7 +409,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                   <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <p class="mig-txt" set:html={f.whyHtml} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
                   <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
-                  <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>
+                  <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>
                 </div>
               </article>
             ))}
@@ -424,7 +452,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                     <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{c.crossing}</p></div>
                     <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{c.read}</p></div>
                   </>)}
-                  {c.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{c.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
+                  {c.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{c.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
                   {c.sourceHtml && <p class="mig-src"><span class="mig-src-lbl">Sources:</span><span set:html={c.sourceHtml} /> <span class={`mig-badge mig-badge--${badgeClass(c.sourceBadge)}`}>{c.sourceBadge}</span></p>}
                 </div>
               </article>
@@ -490,6 +518,15 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
             <div class="mig-stampmark-2">every claim named, dated, human-checked</div>
           </div>
           <p class="mig-foot">This map is the second deep-dive cluster of the Workforce Transformation Index. The method: public signals, sourced claims, human judgment — the same way I'd run it for a client.</p>
+          <div class="mig-author">
+            <span class="mig-author-name">Mapped and built by Kyle Findlay</span>
+            <span class="mig-author-sep" aria-hidden="true">·</span>
+            <span>Operator &amp; AI systems builder · SF / CA</span>
+            <span class="mig-author-sep" aria-hidden="true">·</span>
+            <a class="mig-author-link" href="mailto:kylefindlay828@gmail.com?subject=GTM%20Migration">Email</a>
+            <span class="mig-author-sep" aria-hidden="true">·</span>
+            <a class="mig-author-link" href="/">About →</a>
+          </div>
         </section>
       </div>
     </main>
