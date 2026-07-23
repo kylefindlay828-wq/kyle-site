@@ -6,7 +6,7 @@ const title = 'Where GTM work is going — Kyle Findlay';
 const description = 'A verified-source map of where go-to-market work is going, across three waves: documented, in motion, and predicted. Federal, university, and industry data; every claim dated and graded. Second deep-dive cluster of the Workforce Transformation Index.';
 
 const badgeClass = (k: string) => (({
-  'FEDERAL': 'solid', 'UNIVERSITY': 'solid', 'INTL ORG': 'solid',
+  'FEDERAL': 'solid', 'UNIVERSITY': 'solid', 'INTL ORG': 'solid', 'RESEARCH ORG': 'solid',
   'INDUSTRY': 'outline', 'PRESS': 'outline',
   'COMPANY-REPORTED': 'dashed', 'OWN-AGENT DATA': 'dashed',
 } as Record<string, string>)[k] || 'outline');
@@ -47,6 +47,7 @@ const wave1 = [
     crossing: `Consecutive quarters at quota and documented pipeline dollars, not activity counts.`,
     read: `Tenure and quota history predict AE success better than interview polish — screen on the record, not the performance.`,
     sources: [{ text: 'Indeed Hiring Lab, July 2026', badge: 'INDUSTRY' }],
+    srcNote: 'second source pending verification',
     /* RESTORE (pending Bridge Group verification): append to why — Bridge Group promotion-timeline statistics (18–24 month median; sub-11-month promotions fail 55%) + source { text: 'Bridge Group promotion-timeline report', badge: 'INDUSTRY' } */ },
   { id: 3, from: 'Sales ops (reporting)', to: 'RevOps architect', li: 2, ri: 2, w: 0.22,
     takeaway: 'Reporting fades; system design pays.',
@@ -57,19 +58,19 @@ const wave1 = [
   { id: 4, from: 'Junior demand gen', to: 'AI-enablement marketing', li: 1, ri: 4, w: 0.42,
     takeaway: 'Generation is cheap; judgment gets paid.',
     chip: { num: '14–26%', cap: 'productivity gains, support & software · Stanford Index' },
-    why: `Generation is cheap; judgment is not. Stanford's 2026 AI Index finds measured productivity gains of 14–26% concentrate in exactly the functions where entry-level employment is declining — the returns go to whoever directs the machine, not whoever it replaced.`,
+    why: `Generation is cheap; judgment is not. Stanford's 2026 AI Index finds measured productivity gains of 14–26% concentrate in exactly the functions where entry-level employment is declining — the returns go to whoever directs the machine, not whoever it replaced. Microsoft's 2026 Work Trend Index — trillions of Microsoft 365 usage signals plus 20,000 AI-using workers surveyed across 10 countries — lands on the same split: active AI agents grew 15x year over year, while the report's throughline is that value shifts to the humans setting intent and applying judgment over the output.`,
     crossing: `A campaign where you directed AI production and can show the decisions you made.`,
     read: `Marketing leaders will pay for judgment layered on AI production — screen for candidates who can show the decisions, not the output.`,
-    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }],
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'Microsoft 2026 Work Trend Index', badge: 'INDUSTRY' }],
     /* RESTORE (pending mckinsey.com verification): append to why — " McKinsey's Global AI Survey puts AI content drafting at roughly 3.2x ROI — the highest-returning use case in the marketing stack — but returns concentrate where AI accelerates a human-led editorial process."; add source { text: 'McKinsey Global AI Survey', badge: 'INDUSTRY' } */ },
   { id: 5, from: 'Reactive CS', to: 'Forward deployed / implementation', li: 3, ri: 3, w: 0.6,
     caseChip: 'CASE STUDY · 2024→2025',
     takeaway: 'The routine layer moved; the human seat went upstream.',
     chip: { num: '2.3M', cap: 'AI conversations, month one · company-reported' },
-    whyHtml: `Stanford's 2026 AI Index shows the customer-service pattern directly: entry-level employment falling while senior headcount grows. Klarna is the named arc inside that data. Its AI assistant handled 2.3 million conversations in its first month — work the company said equaled roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream.`,
+    whyHtml: `Stanford's 2026 AI Index shows the customer-service pattern directly: entry-level employment falling while senior headcount grows. Klarna is the named arc inside that data. Its AI assistant handled 2.3 million conversations in its first month — work the company said equaled roughly 700 full-time agents <span class="mig-badge mig-badge--dashed">COMPANY-REPORTED</span>. Workforce fell from about 5,000 to 3,500, largely through attrition. Fifteen months later, CEO Sebastian Siemiatkowski told Bloomberg the company went too far — “We focused too much on cost. The result was lower quality” — and began rehiring humans in a hybrid model. The routine layer moved; the human seat went upstream. The destination seat is now measurable: LinkedIn's 2026 Labor Market Report counts at least 1.3 million AI-related job opportunities created in the past two years — a category that explicitly includes forward-deployed engineers, a title that didn't exist five years ago.`,
     crossing: `An implementation you owned — a customer whose workflow you personally rebuilt.`,
     read: `Post-AI support orgs need forward-deployed hires that classic CS resumes don't surface — screen for owned implementations.`,
-    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }] },
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'Klarna announcement, Feb 2024', badge: 'COMPANY-REPORTED' }, { text: 'Siemiatkowski, Bloomberg, May 2025', badge: 'PRESS' }, { text: 'LinkedIn 2026 Labor Market Report (via Microsoft WTI)', badge: 'INDUSTRY' }] },
 ];
 const w1Disagreement = `Yale's Budget Lab, tracking CPS data through June 2026, finds no clear economy-wide AI footprint in the labor market. The Economic Innovation Group finds unemployment rose LESS for the most AI-exposed workers (+0.30pp) than the least (+0.94pp) from 2022 to early 2025. The surgical entry-level effect and the flat aggregate are both true — which is why this page maps seats, not the economy.`;
 const w1DisagreementBadges = ['UNIVERSITY', 'INDUSTRY'];
@@ -80,15 +81,15 @@ const wave2MapR = ['Forward deployed / implementation', 'GTM Engineer / agent op
 const wave2 = [
   { id: 'm1', title: 'Agent capability crossing the line', takeaway: 'Agents crossed the capability line.',
     chip: { num: '66%', cap: 'of real-world computer tasks · Stanford Index' },
-    body: `18 months ago, AI agents failed 88% of real-world computer tasks. As of March 2026, the best models complete 66% — within six points of human performance. The work that compresses next is whatever those agents can now finish.`,
-    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
+    body: `18 months ago, AI agents failed 88% of real-world computer tasks. As of March 2026, the best models complete 66% — within six points of human performance. The work that compresses next is whatever those agents can now finish. METR's task-horizon series shows the same trajectory from benchmark data: the length of software tasks frontier agents complete at 50% reliability has doubled roughly every seven months since 2019 — from a few seconds then to a full working day by early 2026.`,
+    sources: [{ text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }, { text: 'METR Time Horizon 1.1, Jan 2026', badge: 'RESEARCH ORG' }] },
   { id: 'm2', title: 'Firm adoption and stated intent', takeaway: 'Adoption is real, narrow, and accelerating.',
     chip: { num: '18%→22%', cap: 'firm AI use, next six months · Census BTOS' },
     body: `Census Bureau surveys of ~1.2 million businesses put AI use at 18% of firms in the Nov 2025–Feb 2026 supplement — 32% employment-weighted — with adoption expected to reach 22% within six months. Stanford's Index adds that executives expect entry-level headcount reductions to accelerate, with planned cuts outpacing recent ones.`,
     sources: [{ text: 'Census Bureau BTOS AI supplement, 2026', badge: 'FEDERAL' }, { text: 'Stanford 2026 AI Index', badge: 'UNIVERSITY' }] },
   { id: 'm3', title: 'Transitions don’t happen on their own', takeaway: 'Transitions don’t happen on their own.',
-    body: `OECD's Employment Outlook 2026 finds that when technology shocks hit local labor markets, adjustment happens mostly through transitions into joblessness and openings filled by newcomers — not workers moving across sectors — leaving lasting scars for the displaced. The routing layer between compressing seats and absorbing seats does not build itself.`,
-    sources: [{ text: 'OECD Employment Outlook 2026, July 2026', badge: 'INTL ORG' }] },
+    body: `OECD's Employment Outlook 2026 finds that when technology shocks hit local labor markets, adjustment happens mostly through transitions into joblessness and openings filled by newcomers — not workers moving across sectors — leaving lasting scars for the displaced. The routing layer between compressing seats and absorbing seats does not build itself. The World Economic Forum's Future of Jobs Report 2026 — a survey of global employers published this January — puts numbers on the gap: roughly 92 million roles displaced and 170 million created by 2030. The people displaced are not automatically the people hired; the distance between those two groups is the routing problem.`,
+    sources: [{ text: 'OECD Employment Outlook 2026, July 2026', badge: 'INTL ORG' }, { text: 'WEF Future of Jobs Report 2026', badge: 'INTL ORG' }] },
   { id: 'm4', title: 'Net-new seats: agent deployment, forward deployed, AI-enablement', takeaway: 'The signal shows up before the job post.',
     whatMoved: `Nothing yet — these seats are appearing, not absorbing.`,
     why: `Deploying agents inside a customer's workflow is high-touch work no existing title covers.`,
@@ -121,9 +122,10 @@ const ghosts = [
     crossing: `A track record of owning outcomes a company would not hand to a machine.`,
     change: `If AE headcount at AI-native companies shrinks 2026–28 at the rate SDR headcount did in 2024–26, the human-seat thesis fails.` },
   { id: 'g5', name: 'Forward-deployed / AI implementation?', takeaway: 'Every AI-adopting company needs someone who rebuilds real workflows around the tools.',
-    why: `Every AI-adopting company — in every industry, not just tech — needs someone who rebuilds real workflows around the tools. The Klarna pattern generalizes: the routine layer automates, and a human implementation seat opens upstream of it.`,
+    why: `Every AI-adopting company — in every industry, not just tech — needs someone who rebuilds real workflows around the tools. The Klarna pattern generalizes: the routine layer automates, and a human implementation seat opens upstream of it. The early count already exists: LinkedIn's 2026 Labor Market Report includes forward-deployed engineers among 1.3 million AI-related openings created in two years.`,
     crossing: `Owned implementations with before/after numbers, at companies that aren't software companies.`,
-    change: `If by 2028 AI-implementation and forward-deployed roles aren't a standard posting category at non-tech companies adopting AI, this generalization failed.` },
+    change: `If by 2028 AI-implementation and forward-deployed roles aren't a standard posting category at non-tech companies adopting AI, this generalization failed.`,
+    sources: [{ text: 'LinkedIn 2026 Labor Market Report (via Microsoft WTI)', badge: 'INDUSTRY' }] },
   { id: 'g6', name: 'Agent operations?', takeaway: 'Stanford’s 2026 Index has agents completing 66% of real-world computer tasks.',
     why: `Stanford's 2026 Index has agents completing 66% of real-world computer tasks, within six points of human performance. Fleets of near-human agents create a new seat: the person who runs them — QA, escalation, throughput, cost — across support, sales, and back office at once.`,
     crossing: `Run an agent system in production and own its numbers.`,
@@ -136,6 +138,7 @@ const legendChips = [
   { badge: 'FEDERAL', label: 'Census Bureau data' },
   { badge: 'UNIVERSITY', label: 'Stanford, Yale' },
   { badge: 'INTL ORG', label: 'OECD' },
+  { badge: 'RESEARCH ORG', label: 'METR' },
   { badge: 'INDUSTRY', label: 'surveys & postings' },
   { badge: 'COMPANY-REPORTED', label: 'their numbers, flagged' },
 ];
@@ -155,6 +158,8 @@ const heroDest = ['GTM Engineer', 'RevOps architect', 'Forward deployed', 'AI-en
    • Card 2 `why` append Bridge Group promotion-timeline (18–24mo median; sub-11-mo fail 55%) + source [INDUSTRY]
    • Card 1 `sources` append Forrester AI SDR adoption >55% [INDUSTRY]
    • Wave 3 optional "What the field forecasts" sub-block (Gartner / Forrester items), each pending verification
+   • PwC Global AI Jobs Barometer (56% wage premium for workers with AI skills) — pending Kyle's verification on pwc.com; if verified, appendable to the AI-enablement marketing card
+   • WEF exact displacement/creation figures — Kyle to click the primary at weforum.org (Future of Jobs Report 2026, published Jan 7, 2026) to confirm 92M/170M before treating them as untouchable
    ═══════════════════════════════════════════════════════════════════════════════════════════ */
 
 // map geometry
@@ -293,6 +298,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
       .mig-src a.mig-src-link { text-decoration: none; }
       .mig-src a.mig-src-link:hover { text-decoration: underline; text-underline-offset: 2px; }
       .mig-src-ext { font-size: 0.82em; vertical-align: 1px; }
+      .mig-src-note { color: var(--mut); font-style: italic; }
       .mig-src-sep { color: rgba(24,40,88,0.3); }
 
       .mig-advance { display: inline-block; margin: 28px 0 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: var(--blue); text-decoration: none; }
@@ -409,7 +415,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                   <div class="mig-field"><p class="mig-lbl">Why</p>{f.whyHtml ? <p class="mig-txt" set:html={f.whyHtml} /> : <p class="mig-txt">{f.why}</p>}{f.caveat && <p class="mig-caveat-line">{f.caveat}</p>}</div>
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{f.crossing}</p></div>
                   <div class="mig-field"><p class="mig-lbl">Recruiter read</p><p class="mig-txt mig-read">{f.read}</p></div>
-                  <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>
+                  <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{f.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}{f.srcNote && <><span class="mig-src-sep"> · </span><span class="mig-src-note">{f.srcNote}</span></>}</p>
                 </div>
               </article>
             ))}
@@ -492,6 +498,7 @@ const p6 = (i: number) => `M ${LX},${y6(i)} C ${MIDX},${y6(i)} ${MIDX},${y6(i)} 
                   <div class="mig-field"><p class="mig-lbl">What crossing takes</p><p class="mig-txt">{g.crossing}</p></div>
                   <div class="mig-field"><p class="mig-lbl">What would change my mind</p><p class="mig-txt">{g.change}</p></div>
                   {g.conflict && <p class="mig-conflict">{g.conflict}</p>}
+                  {g.sources && <p class="mig-src"><span class="mig-src-lbl">Sources:</span>{g.sources.map((s, i) => (<>{i > 0 && <span class="mig-src-sep"> · </span>}{SRC_URLS[s.text] ? <a class="mig-src-link" href={SRC_URLS[s.text]} target="_blank" rel="noopener">{s.text} <span class="mig-src-ext" aria-hidden="true">↗</span></a> : s.text} <span class={`mig-badge mig-badge--${badgeClass(s.badge)}`}>{s.badge}</span></>))}</p>}
                   <p class="mig-cred">Prediction · Kyle Findlay · July 2026</p>
                 </div>
               </article>
