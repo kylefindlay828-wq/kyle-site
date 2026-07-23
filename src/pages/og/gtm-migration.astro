@@ -1,0 +1,76 @@
+---
+// Thumbnail source for /gtm-migration (LinkedIn og:image), light theme. Rendered at 1200×630 to /public/og-gtm-migration.png. Unlisted route.
+const seats = ['GTM Engineer', 'Mid-funnel seller', 'Account Executive', 'Agency recruiter', 'Support & CS', 'Junior software'];
+const ghosts = ['Revenue-systems owner?', 'Agent-facing GTM?', 'Proof-based placement?', 'Trust & accountability?', 'Forward-deployed?', 'Agent operations?'];
+const rowY = (i: number) => 268 + i * 52;
+const LX = 470, RX = 730;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { background: #eef4fd; }
+      .og { position: relative; width: 1200px; height: 630px; overflow: hidden; font-family: 'Space Grotesk', sans-serif; color: #17223f;
+        background:
+          radial-gradient(58% 78% at 20% 26%, rgba(76,126,245,0.14), transparent 62%),
+          radial-gradient(52% 78% at 84% 76%, rgba(139,108,240,0.16), transparent 64%),
+          linear-gradient(135deg, #eef4fd 0%, #e9eefb 54%, #ecebf9 100%); }
+      .grid { position: absolute; inset: 0;
+        background-image: linear-gradient(rgba(24,40,88,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(24,40,88,0.045) 1px, transparent 1px);
+        background-size: 40px 40px; -webkit-mask-image: radial-gradient(120% 90% at 50% 40%, #000 30%, transparent 82%); mask-image: radial-gradient(120% 90% at 50% 40%, #000 30%, transparent 82%); }
+      .kick { position: absolute; top: 46px; left: 56px; right: 56px; display: flex; justify-content: space-between; align-items: baseline;
+        font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: .18em; text-transform: uppercase; }
+      .kick .a { color: #2f6fd0; }
+      .kick .b { color: rgba(88,99,127,0.7); }
+
+      .heads { position: absolute; top: 108px; left: 56px; right: 56px; display: flex; justify-content: space-between; align-items: flex-start; }
+      .head { font-weight: 700; font-size: 66px; line-height: 0.98; letter-spacing: -0.03em; color: #0f1834; }
+      .head.l { max-width: 46%; }
+      .head.r { text-align: right; max-width: 52%; }
+      .head.r .q { color: #7d5cf0; }
+
+      svg { position: absolute; inset: 0; }
+      .flow { fill: none; stroke: rgba(76,126,245,0.55); stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .dotL { fill: #4c7ef5; }
+      .dotR { fill: none; stroke: #8b6cf0; stroke-width: 1.6; stroke-dasharray: 3 3; }
+
+      .col { position: absolute; top: 250px; display: flex; flex-direction: column; }
+      .col.left { left: 56px; align-items: flex-start; }
+      .col.right { right: 56px; align-items: flex-end; text-align: right; }
+      .lab { height: 52px; display: flex; align-items: center; font-weight: 600; font-size: 21px; letter-spacing: -0.01em; white-space: nowrap; }
+      .col.left .lab { color: #17223f; }
+      .col.right .lab { color: rgba(88,99,127,0.9); font-weight: 500; }
+
+      .foot { position: absolute; left: 56px; right: 56px; bottom: 40px; display: flex; justify-content: space-between; align-items: center;
+        font-family: 'JetBrains Mono', monospace; font-size: 16px; }
+      .foot .u { color: #2f6fd0; letter-spacing: .02em; }
+      .foot .t { color: rgba(88,99,127,0.7); letter-spacing: .06em; text-transform: uppercase; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <div class="grid"></div>
+      <div class="kick"><span class="a">GTM Migration · 2028–30 · Predicted</span><span class="b">The Workforce Transformation Index</span></div>
+      <div class="heads">
+        <div class="head l">Today’s<br />seats</div>
+        <div class="head r">Where did<br />they <span class="q">go?</span></div>
+      </div>
+
+      <svg viewBox="0 0 1200 630" width="1200" height="630" aria-hidden="true">
+        {seats.map((_, i) => (<path class="flow" d={`M ${LX},${rowY(i)} C ${(LX + RX) / 2},${rowY(i)} ${(LX + RX) / 2},${rowY(i)} ${RX},${rowY(i)}`} />))}
+        {seats.map((_, i) => (<circle class="dotL" cx={LX} cy={rowY(i)} r="4.5" />))}
+        {ghosts.map((_, i) => (<circle class="dotR" cx={RX} cy={rowY(i)} r="5" />))}
+      </svg>
+
+      <div class="col left">{seats.map((s) => (<div class="lab">{s}</div>))}</div>
+      <div class="col right">{ghosts.map((g) => (<div class="lab">{g}</div>))}</div>
+
+      <div class="foot"><span class="u">kylefindlay.xyz/gtm-migration</span><span class="t">Sourced · Graded · Human-verified</span></div>
+    </div>
+  </body>
+</html>
