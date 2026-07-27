@@ -1,0 +1,505 @@
+---
+// UNLISTED market-map page. Not in nav, footer, or sitemap nav. Direct URL only.
+// Follows the gtm-migration design system (cool navy/blue, Space Grotesk / Hanken
+// Grotesk / JetBrains Mono). Every number carries a numbered source or an assumption.
+import Analytics from '@vercel/analytics/astro';
+import GlobalNav from '../components/GlobalNav.astro';
+
+const title = 'Where the next 400,000 experts are';
+const description = 'AI training-data companies are capped by expert supply, not demand. Their published benchmarks say which experts they need; public labor data says where those people are and what their time costs. Outside analysis from public sources.';
+
+// ── numbered sources (K). Every external fact links here. ──
+const sources = [
+  { id: 1, text: 'AfterQuery: research index', url: 'https://www.afterquery.com/research', date: 'accessed Jul 2026' },
+  { id: 2, text: 'AfterQuery: How AfterQuery Helped NVIDIA Hill-Climb GDPval', url: 'https://www.afterquery.com/blog/how-afterquery-helped-nvidia-hill-climb-gdpval', date: 'Jul 2, 2026' },
+  { id: 3, text: 'AfterQuery: On-policy distillation on GDPval (+21.4% net win-loss)', url: 'https://www.afterquery.com/blog/on-policy-distillation-gdpval', date: 'Jun 8, 2026' },
+  { id: 4, text: 'AfterQuery: Human expertise, reimagined (Series A)', url: 'https://www.afterquery.com/blog/human-expertise-reimagined', date: 'Apr 9, 2026' },
+  { id: 5, text: 'SpreadsheetBench 2: financial modeling, debugging, visualization in multi-sheet workbooks', url: 'https://spreadsheetbench.github.io/', date: 'accessed Jul 2026' },
+  { id: 6, text: 'IDE-Bench: AI IDE agents on real software-engineering tasks', url: 'https://arxiv.org/abs/2601.20886', date: '2026' },
+  { id: 7, text: 'Market-Bench: introductory quantitative trading', url: 'https://arxiv.org/abs/2512.12264', date: '2025' },
+  { id: 8, text: 'App-Bench: coding agents generating web apps', url: 'https://appbench.ai/', date: 'accessed Jul 2026' },
+  { id: 9, text: 'UI-Bench: user interface understanding', url: 'https://arxiv.org/abs/2508.20410', date: '2025' },
+  { id: 10, text: 'FinanceQA: assumption-based financial analysis', url: 'https://arxiv.org/abs/2501.18062', date: '2025' },
+  { id: 11, text: 'AfterQuery: Growth Associate job posting (expert-network size, "from 100K")', url: 'https://jobs.ashbyhq.com/AfterQuery/cddded26-a2ce-4840-a8d8-17b1ac0e3831', date: 'accessed Jul 2026' },
+  { id: 12, text: 'OpenAI: GDPval announcement', url: 'https://openai.com/index/gdpval/', date: 'Sep 2025' },
+  { id: 13, text: 'GDPval: paper', url: 'https://arxiv.org/abs/2510.04374', date: '2025' },
+  { id: 14, text: 'Epoch AI: GDPval summary', url: 'https://epoch.ai/benchmarks/gdpval', date: 'accessed Jul 2026' },
+  { id: 15, text: 'BLS: Occupational Employment and Wage Statistics (OEWS) home', url: 'https://www.bls.gov/oes/', date: 'May 2025' },
+  { id: 16, text: 'BLS OEWS: national occupation table (May 2025)', url: 'https://www.bls.gov/news.release/ocwage.t01.htm', date: 'May 2025' },
+  { id: 17, text: 'NSF NCSES: Survey of Earned Doctorates, field of doctorate', url: 'https://ncses.nsf.gov/pubs/nsf26315/report/field-of-doctorate', date: '2024 data' },
+  { id: 18, text: 'SiliconANGLE: AI training-data startup AfterQuery nabs $30M (independent Series A coverage)', url: 'https://siliconangle.com/2026/04/10/ai-training-data-startup-afterquery-nabs-30m-investment/', date: 'Apr 10, 2026' },
+  { id: 19, text: 'NSF NCSES: 2024 SED data tables, Table 7-3 (top doctorate-granting institutions by broad field)', url: 'https://ncses.nsf.gov/pubs/nsf25349/assets/nsf25349.pdf', date: 'Aug 2025' },
+];
+
+// ── assumptions (K). Every judgment call. ──
+const assumptions = [
+  { id: 'A1', text: 'Occupation inference. Where a benchmark names a task domain, I map it to the BLS occupation whose standard duties match that domain. This is my reading of public research output, not a statement from any company about who they hire.' },
+  { id: 'A2', text: 'Reach-difficulty rule. I label an occupation High if it employs fewer than 250,000 people or its day-job wage tops $80 an hour, Low if it employs more than 500,000 and pays under $60 an hour, and Medium otherwise. The rule uses only population size and day-job wage, both from BLS OEWS. The day-job wage is a floor, not the rate for expert data work, which is higher and not public.' },
+  { id: 'A3', text: 'The title figure "400,000" is illustrative, not sourced. It is the gap between the one public network figure (100,000, from a job posting) and the 500,000 target used only as a calculator default. It is not a claim about any company plan.' },
+  { id: 'A4', text: 'Cost per contact is a reader input in the model, not a published figure. Acquisition cost by channel is not disclosed by any company here, so I do not assert one. The model asks you to supply it.' },
+  { id: 'A5', text: 'Calculator defaults. Every default rate exists only so the widget renders. None is an industry benchmark or an estimate of any company’s real conversion.' },
+];
+
+const cite = (...ids: number[]) => ids;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://kylefindlay.xyz/supply" />
+    <meta property="og:image" content="https://kylefindlay.xyz/og-supply.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Where the next 400,000 experts are: a market map of expert supply for AI training-data companies, from public sources." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kylefindlay.xyz/og-supply.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; }
+      :root { --ink: #17223f; --navy: #0f1834; --mut: #58637f; --line: rgba(24,40,88,0.12); --blue: #4c7ef5; --card: rgba(255,255,255,0.55); }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+      body { margin: 0; color: var(--ink); font-family: 'Hanken Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+        background: linear-gradient(180deg, #eef4fd 0%, #e9eefb 60%, #ecebf9 100%); overflow-x: hidden; }
+      h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin: 0; color: var(--navy); }
+      a { color: var(--blue); }
+
+      .col { max-width: 1000px; margin: 0 auto; padding: 0 24px; width: 100%; }
+      .sup { padding-bottom: 88px; }
+      .prose { max-width: 720px; }
+      .wide { max-width: 900px; }
+
+      /* rhythm */
+      .sec { margin-top: 3rem; }
+      @media (max-width: 640px) { .sec { margin-top: 2rem; } }
+      .sec > h2 { font-size: 1.5rem; font-weight: 600; margin: 0 0 1rem; }
+      .sec > h2 + .lead { margin-top: -0.4rem; }
+
+      /* header */
+      .sup-top { padding: 40px 0 4px; }
+      .sup-h1 { font-size: 2.25rem; line-height: 1.1; font-weight: 700; }
+      @media (min-width: 768px) { .sup-h1 { font-size: 3rem; } }
+      .sup-deck { max-width: 720px; font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.5; color: var(--ink); font-weight: 500; margin: 16px 0 0; }
+      .sup-byline { max-width: 720px; margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line);
+        font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); }
+      .sup-byline b { color: var(--navy); font-weight: 600; }
+
+      /* body copy */
+      p.body { max-width: 720px; font-size: 17px; line-height: 1.6; color: var(--ink); margin: 0 0 1rem; }
+      @media (min-width: 768px) { p.body { font-size: 18px; } }
+      p.body:last-child { margin-bottom: 0; }
+      .lead { max-width: 720px; font-size: 17px; line-height: 1.6; color: var(--mut); font-weight: 500; }
+      h3.sub { font-size: 1.125rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+      .note { max-width: 720px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.55; color: var(--mut); margin: 0.5rem 0 0; }
+      ul.flat { max-width: 720px; margin: 0.5rem 0 0; padding: 0; list-style: none; }
+      ul.flat li { font-size: 17px; line-height: 1.55; color: var(--ink); padding: 7px 0 7px 18px; position: relative; border-bottom: 1px solid var(--line); }
+      ul.flat li::before { content: ''; position: absolute; left: 0; top: 15px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+      ul.flat li:last-child { border-bottom: 0; }
+      .mlabel { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+      p.body strong, ul.flat li strong, .lead strong, .rule-line strong { font-weight: 600; color: var(--navy); }
+      p.body em, .lead em, .rule-line em { font-style: italic; }
+
+      /* citation markers */
+      sup.c { font-size: 0.7em; line-height: 0; }
+      sup.c a { color: var(--blue); text-decoration: none; }
+      sup.c a:hover { text-decoration: underline; }
+
+      /* tables */
+      .tbl-wrap { max-width: 900px; margin: 1rem 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.45; min-width: 600px; }
+      thead th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--navy); padding: 0 14px 10px 0; border-bottom: 1.5px solid var(--line); vertical-align: bottom; }
+      tbody td { text-align: left; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: top; }
+      tbody tr:last-child td { border-bottom: 0; }
+      td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; padding-right: 18px; white-space: nowrap; }
+      .occ { font-weight: 600; color: var(--navy); }
+      .diff { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+      .diff-high { color: #b4443a; } .diff-med { color: #b5731f; } .diff-low { color: #3f7a4e; }
+      .tsrc { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); white-space: nowrap; }
+      .rule-line { max-width: 900px; font-size: 14.5px; line-height: 1.5; color: var(--mut); margin: 0.75rem 0 0; }
+      .rule-line b { color: var(--navy); font-weight: 600; }
+
+      /* calculator */
+      .calc { max-width: 900px; margin: 1.25rem 0 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 22px; }
+      @media (min-width: 768px) { .calc { padding: 26px 28px; } }
+      .calc-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+      @media (min-width: 768px) { .calc-grid { grid-template-columns: 1fr 1fr; gap: 34px; } }
+      .calc-group h3 { font-size: 0.95rem; font-weight: 600; margin: 0 0 10px; }
+      .sl { margin: 0 0 14px; }
+      .sl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+      .sl-lab { font-size: 14px; color: var(--ink); }
+      .sl-yi { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--line); border-radius: 4px; padding: 1px 4px; margin-left: 6px; vertical-align: 1px; }
+      .sl-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+      .sl input[type=range] { width: 100%; margin: 8px 0 0; accent-color: var(--blue); height: 22px; }
+      .sl input[type=range]:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+      .sl-note { font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.4; color: var(--mut); margin: 4px 0 0; }
+
+      .calc-out { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 4px 0 20px; }
+      @media (min-width: 560px) { .calc-out { grid-template-columns: repeat(3, 1fr); } }
+      .out { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: rgba(255,255,255,0.5); }
+      .out-n { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.05; color: var(--blue); letter-spacing: -0.02em; }
+      .out-l { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--mut); margin-top: 6px; line-height: 1.4; }
+      .calc-chart { margin: 4px 0 0; }
+      .calc-chart svg { width: 100%; height: auto; display: block; }
+      .chart-cap { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mut); margin: 8px 0 0; }
+      .calc-frame { max-width: 720px; }
+
+      /* sources + assumptions */
+      .refs { max-width: 900px; margin: 1rem 0 0; display: grid; grid-template-columns: 1fr; gap: 30px; }
+      @media (min-width: 768px) { .refs { grid-template-columns: 1fr 1fr; gap: 40px; } }
+      .refs h3 { font-size: 1rem; font-weight: 600; margin: 0 0 12px; }
+      ol.reflist { margin: 0; padding: 0; list-style: none; counter-reset: r; }
+      ol.reflist li { font-size: 13px; line-height: 1.5; color: var(--ink); padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; gap: 8px; }
+      ol.reflist li:last-child { border-bottom: 0; }
+      .rn { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--blue); flex: 0 0 auto; min-width: 26px; }
+      .refs a { color: var(--blue); text-decoration: none; word-break: break-word; }
+      .refs a:hover { text-decoration: underline; }
+      .refd { color: var(--mut); }
+      .aslist li .rn { color: var(--navy); }
+
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    </style>
+    <Analytics />
+  </head>
+  <body>
+    <GlobalNav />
+
+    <main class="sup col">
+      <!-- A. HEADER -->
+      <header class="sup-top">
+        <h1 class="sup-h1">Where the next 400,000 experts are</h1>
+        <p class="sup-deck">AI training-data companies are capped by expert supply, not demand. Their published benchmarks say which experts they need. Public labor data says where those people are and what their time costs.</p>
+        <p class="sup-byline"><b>Kyle Findlay</b> · July 2026<br />Outside analysis from public sources. No affiliation with any company named here.</p>
+      </header>
+
+      <!-- B. THE PREMISE -->
+      <section class="sec">
+        <h2>The premise</h2>
+        <p class="body">The customers are frontier AI labs. AfterQuery <strong>builds and sells expert-generated reasoning data</strong> used to train and evaluate frontier models.<sup class="c"><a href="#s1">1</a><a href="#s2">2</a></sup></p>
+        <p class="body">Each task is written and checked by someone who does that work for a living. So the <strong>network of vetted experts is the inventory</strong>, not a support cost.<sup class="c"><a href="#s4">4</a></sup></p>
+        <p class="body">A <strong>$100 million run rate and a $30 million Series A</strong> show demand is funded.<sup class="c"><a href="#s4">4</a><a href="#s18">18</a></sup> Output is bounded by how many experts the network can field. <strong>Once demand is covered, expert supply is the constraint.</strong></p>
+      </section>
+
+      <!-- C. METHOD -->
+      <section class="sec">
+        <h2>Method</h2>
+        <p class="body">I read demand from public research. Benchmarks name the occupations, GDPval maps them to BLS codes,<sup class="c"><a href="#s12">12</a><a href="#s13">13</a></sup> BLS gives population and wage,<sup class="c"><a href="#s16">16</a></sup> and NSF gives the doctoral pipeline.<sup class="c"><a href="#s17">17</a></sup> <strong>I use no private company data.</strong> Where a benchmark implies an occupation, I mark it as my inference.</p>
+      </section>
+
+      <!-- D. DEMAND -->
+      <section class="sec">
+        <h2>Demand: which experts their research implies</h2>
+        <p class="lead">One row per published benchmark. Occupations use BLS names so they join to the supply table. The mapping is my inference (A1).</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Benchmark or research area</th><th>Occupations implied (BLS)</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td class="occ">SpreadsheetBench 2</td><td>Financial and Investment Analysts; Accountants and Auditors</td><td class="tsrc"><a href="#s5">[5]</a></td></tr>
+              <tr><td class="occ">FinanceQA</td><td>Financial and Investment Analysts; Financial Managers</td><td class="tsrc"><a href="#s10">[10]</a></td></tr>
+              <tr><td class="occ">Market-Bench</td><td>Securities, Commodities, and Financial Services Sales Agents; Financial and Investment Analysts</td><td class="tsrc"><a href="#s7">[7]</a></td></tr>
+              <tr><td class="occ">IDE-Bench</td><td>Software Developers</td><td class="tsrc"><a href="#s6">[6]</a></td></tr>
+              <tr><td class="occ">App-Bench</td><td>Software Developers; Web and Digital Interface Designers</td><td class="tsrc"><a href="#s8">[8]</a></td></tr>
+              <tr><td class="occ">UI-Bench</td><td>Web and Digital Interface Designers</td><td class="tsrc"><a href="#s9">[9]</a></td></tr>
+              <tr><td class="occ">GDPval (44 occupations, 9 sectors)</td><td>Lawyers; Financial Managers; Software Developers; plus the highest-earning digital occupation in each sector</td><td class="tsrc"><a href="#s12">[12]</a><a href="#s13">[13]</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rule-line">The implied experts cluster in <strong>finance, software, and digital design</strong>: high-wage, credential-heavy fields where supply is thin.</p>
+      </section>
+
+      <!-- E. SUPPLY -->
+      <section class="sec">
+        <h2>Supply: how many of these experts exist</h2>
+        <p class="rule-line"><strong>Reach-difficulty rule (A2):</strong> High if the occupation employs fewer than 250,000 or the day-job wage tops $80 an hour, Low if it employs more than 500,000 and pays under $60, Medium otherwise. Pool size and wage only. Hardest first.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Occupation (BLS)</th><th class="num">U.S. employment, May 2025</th><th class="num">Day-job wage / hr</th><th>Reach difficulty</th></tr></thead>
+            <tbody>
+              <tr><td class="occ">Computer and Information Research Scientists</td><td class="num">37,200</td><td class="num">$74.00</td><td class="diff diff-high">High</td></tr>
+              <tr><td class="occ">Web and Digital Interface Designers</td><td class="num">113,330</td><td class="num">$56.49</td><td class="diff diff-high">High</td></tr>
+              <tr><td class="occ">Lawyers</td><td class="num">754,500</td><td class="num">$89.35</td><td class="diff diff-high">High</td></tr>
+              <tr><td class="occ">Financial Managers</td><td class="num">841,710</td><td class="num">$89.86</td><td class="diff diff-high">High</td></tr>
+              <tr><td class="occ">Financial and Investment Analysts</td><td class="num">361,980</td><td class="num">$56.15</td><td class="diff diff-med">Medium</td></tr>
+              <tr><td class="occ">Securities, Commodities, and Financial Services Sales Agents</td><td class="num">489,570</td><td class="num">$52.48</td><td class="diff diff-med">Medium</td></tr>
+              <tr><td class="occ">Software Developers</td><td class="num">1,687,890</td><td class="num">$71.20</td><td class="diff diff-med">Medium</td></tr>
+              <tr><td class="occ">Management Analysts</td><td class="num">898,280</td><td class="num">$54.71</td><td class="diff diff-low">Low</td></tr>
+              <tr><td class="occ">Accountants and Auditors</td><td class="num">1,449,500</td><td class="num">$45.56</td><td class="diff diff-low">Low</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rule-line">Employment and day-job wage: BLS OEWS, May 2025.<sup class="c"><a href="#s15">15</a><a href="#s16">16</a></sup> Reach difficulty from rule A2.</p>
+        <p class="body" style="margin-top:1rem;">The wage column is the <strong>day-job rate, not the price of expert data</strong>. It is only a floor, the opportunity cost of an expert’s hour. Real rates for frontier data work are a <strong>premium, plausibly hundreds of dollars an hour</strong> in the scarcest fields, and no company here discloses them (A4). <strong>Scarcity sets the price, not the day job.</strong></p>
+      </section>
+
+      <!-- F. PIPELINE -->
+      <section class="sec">
+        <h2>Pipeline: where new supply is minted</h2>
+        <p class="body">New supply at the top of these fields is minted slowly. U.S. institutions awarded <strong>58,131 research doctorates in 2024</strong>, and 79 percent were in science and engineering.<sup class="c"><a href="#s17">17</a></sup> The fields that feed this map each produce <strong>a few thousand a year</strong>, which caps how fast the rarest expertise grows.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Field (NSF SED)</th><th class="num">Doctorates awarded, 2024</th><th>Trend</th></tr></thead>
+            <tbody>
+              <tr><td class="occ">Engineering</td><td class="num">11,169</td><td>Declining (−2% from 2023)</td></tr>
+              <tr><td class="occ">Social sciences (includes economics)</td><td class="num">5,285</td><td>Rising</td></tr>
+              <tr><td class="occ">Computer and information sciences</td><td class="num">2,982</td><td>Rising (+11% from 2023)</td></tr>
+              <tr><td class="occ">Mathematics and statistics</td><td class="num">2,093</td><td>Declining (−3% from 2023)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rule-line">Doctorates awarded and trend: NSF NCSES Survey of Earned Doctorates, 2024.<sup class="c"><a href="#s17">17</a></sup></p>
+        <p class="body" style="margin-top:1rem;">Law and accounting enter through the <strong>JD and CPA</strong>, not doctorates, so NSF does not track them. In computer and information sciences, the top 2024 producers were <strong>MIT (85), Illinois (80), and Carnegie Mellon (77)</strong>,<sup class="c"><a href="#s19">19</a></sup> the first targets for a campus program.</p>
+      </section>
+
+      <!-- G. CHANNELS -->
+      <section class="sec">
+        <h2>Channels: where supply can be reached</h2>
+        <p class="lead">The middle two columns are the point: what public data supports, and what it does not.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Channel</th><th>Verifiable reach</th><th>Not knowable from outside</th><th>Ramp</th><th>Failure mode</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="occ">Automated outbound</td>
+                <td>Occupation populations are public (supply table). The addressable pool is bounded and known.</td>
+                <td>Reply and trust rates for cold outreach to high-wage professionals are not publicly available.</td>
+                <td>Fast</td>
+                <td>High-wage experts ignore cold contact, so volume rises while quality falls.</td>
+              </tr>
+              <tr>
+                <td class="occ">Campus partnerships</td>
+                <td>NSF names annual doctorate output by field and institution (pipeline table). Targets are concrete.</td>
+                <td>Whether a department will route students to paid data work is not publicly available.</td>
+                <td>Slow</td>
+                <td>Long institutional cycles mean pilots take terms, not weeks, to yield experts.</td>
+              </tr>
+              <tr>
+                <td class="occ">Conferences</td>
+                <td>Many professional conferences publish attendance and attendee makeup.</td>
+                <td>On-site conversion from a booth or talk to a vetted expert is not publicly available.</td>
+                <td>Medium</td>
+                <td>High spend per event with yield that only shows up months later.</td>
+              </tr>
+              <tr>
+                <td class="occ">Expert referrals</td>
+                <td>The active network is the referral base; its size compounds referrals (see the model).</td>
+                <td>Referral rates in scarce, high-wage fields are not publicly available (see J).</td>
+                <td>Medium</td>
+                <td>In finite-work fields, experts decline to refer competitors, so the loop stalls.</td>
+              </tr>
+              <tr>
+                <td class="occ">Associations and licensing bodies</td>
+                <td>Bar, CPA, and CFA bodies publish membership and credential-holder counts.</td>
+                <td>Whether a body will permit outreach to its members is not publicly available.</td>
+                <td>Slow</td>
+                <td>Access is gated by the body, which can refuse or restrict contact entirely.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- H. THE MODEL (calculator) -->
+      <section class="sec">
+        <h2>The model</h2>
+        <div class="calc-frame">
+          <p class="body">The conversion rates below are unknown from outside. <em>This is an instrument, not an estimate.</em> You supply the inputs. <strong>The defaults only make the widget render.</strong> Do not read any default as realistic, or as anyone’s real performance (A4, A5).</p>
+        </div>
+
+        <div class="calc" id="calc">
+          <div class="calc-out">
+            <div class="out"><div class="out-n" id="o-months">…</div><div class="out-l">Months to target</div></div>
+            <div class="out"><div class="out-n" id="o-m12">…</div><div class="out-l">Net new active experts / month at month 12</div></div>
+            <div class="out"><div class="out-n" id="o-cost">…</div><div class="out-l">Blended cost per activated expert</div></div>
+          </div>
+
+          <div class="calc-chart">
+            <svg id="chart" viewBox="0 0 900 260" role="img" aria-label="Active experts over time with a target line">
+              <g id="chart-g"></g>
+            </svg>
+            <p class="chart-cap">Active experts over 60 months. Horizontal line is the target.</p>
+          </div>
+
+          <div class="calc-grid" style="margin-top:22px;">
+            <div class="calc-group">
+              <h3>Network</h3>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Starting network size<span class="sl-yi">your input</span></span><span class="sl-val" id="v-start">100,000</span></div><input type="range" id="i-start" min="0" max="500000" step="10000" value="100000" aria-label="Starting network size" /><p class="sl-note">The only public figure is 100,000, from a job posting (11). Everything else here is yours.</p></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Target network size<span class="sl-yi">your input</span></span><span class="sl-val" id="v-target">500,000</span></div><input type="range" id="i-target" min="200000" max="1000000" step="50000" value="500000" aria-label="Target network size" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Monthly churn of active experts<span class="sl-yi">your input</span></span><span class="sl-val" id="v-churn">3.0%</span></div><input type="range" id="i-churn" min="0" max="10" step="0.5" value="3" aria-label="Monthly churn of active experts" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Referral invites per active expert / month<span class="sl-yi">your input</span></span><span class="sl-val" id="v-ref">0.3</span></div><input type="range" id="i-ref" min="0" max="2" step="0.1" value="0.3" aria-label="Referral invites per active expert per month" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Cost per contact, blended<span class="sl-yi">your input</span></span><span class="sl-val" id="v-cost">$5</span></div><input type="range" id="i-cost" min="0" max="50" step="1" value="5" aria-label="Cost per contact, blended dollars" /><p class="sl-note">Acquisition cost by channel is not disclosed (A4). You supply it.</p></div>
+            </div>
+
+            <div class="calc-group">
+              <h3>Monthly contact volume, per channel</h3>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Automated outbound<span class="sl-yi">your input</span></span><span class="sl-val" id="v-ch0">5,000</span></div><input type="range" class="i-ch" data-i="0" min="0" max="50000" step="500" value="5000" aria-label="Automated outbound monthly contacts" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Campus partnerships<span class="sl-yi">your input</span></span><span class="sl-val" id="v-ch1">5,000</span></div><input type="range" class="i-ch" data-i="1" min="0" max="50000" step="500" value="5000" aria-label="Campus partnerships monthly contacts" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Conferences<span class="sl-yi">your input</span></span><span class="sl-val" id="v-ch2">5,000</span></div><input type="range" class="i-ch" data-i="2" min="0" max="50000" step="500" value="5000" aria-label="Conferences monthly contacts" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Associations and licensing bodies<span class="sl-yi">your input</span></span><span class="sl-val" id="v-ch3">5,000</span></div><input type="range" class="i-ch" data-i="3" min="0" max="50000" step="500" value="5000" aria-label="Associations monthly contacts" /></div>
+
+              <h3 style="margin-top:20px;">Funnel conversion</h3>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Contacted to applied<span class="sl-yi">your input</span></span><span class="sl-val" id="v-applied">4.0%</span></div><input type="range" id="i-applied" min="0.5" max="15" step="0.5" value="4" aria-label="Contacted to applied rate" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Applied to vetted<span class="sl-yi">your input</span></span><span class="sl-val" id="v-vetted">25%</span></div><input type="range" id="i-vetted" min="5" max="60" step="5" value="25" aria-label="Applied to vetted rate" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Vetted to onboarded<span class="sl-yi">your input</span></span><span class="sl-val" id="v-onb">70%</span></div><input type="range" id="i-onb" min="20" max="95" step="5" value="70" aria-label="Vetted to onboarded rate" /></div>
+              <div class="sl"><div class="sl-top"><span class="sl-lab">Onboarded to active<span class="sl-yi">your input</span></span><span class="sl-val" id="v-act">60%</span></div><input type="range" id="i-act" min="20" max="95" step="5" value="60" aria-label="Onboarded to active rate" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- I. FIRST 90 DAYS -->
+      <section class="sec">
+        <h2>First 90 days</h2>
+        <ul class="flat">
+          <li><span class="mlabel">Month 1</span> &nbsp;Instrument every stage of the funnel from contact to active expert.</li>
+          <li><span class="mlabel">Month 1</span> &nbsp;Find the single largest drop-off and size it against the supply table.</li>
+          <li><span class="mlabel">Month 1</span> &nbsp;Baseline current network against the one public figure and set the target.</li>
+          <li><span class="mlabel">Month 2</span> &nbsp;Ship one automated outbound channel with tracked reply and vetting rates.</li>
+          <li><span class="mlabel">Month 2</span> &nbsp;Run one campus or association pilot against a named field and body.</li>
+          <li><span class="mlabel">Month 2</span> &nbsp;Compare the two channels on cost per activated expert, not on volume.</li>
+          <li><span class="mlabel">Month 3</span> &nbsp;Build the referral loop and measure invites per active expert.</li>
+          <li><span class="mlabel">Month 3</span> &nbsp;Draft a conference calendar with an expected yield per event.</li>
+          <li><span class="mlabel">Month 3</span> &nbsp;Kill the weakest channel and move its budget to the best one.</li>
+        </ul>
+      </section>
+
+      <!-- J. WHERE I AM PROBABLY WRONG -->
+      <section class="sec">
+        <h2>Where I am probably wrong</h2>
+        <ul class="flat">
+          <li><strong>Referrals may not compound at all.</strong> In scarce, high-wage fields, experts compete for finite work and may refuse to refer peers, which breaks the model’s central loop.</li>
+          <li><strong>Benchmarks may not map cleanly to single BLS occupations.</strong> Real tasks often span two or three codes, so my occupation inference (A1) can misassign supply.</li>
+          <li><strong>The reachable pool is smaller than it looks.</strong> Employment counts everyone in a code, not the small share qualified and willing to do frontier data work.</li>
+          <li><strong>My difficulty rule is coarse.</strong> It uses only pool size and day-job wage, so it can rank the wrong occupations as hardest to reach.</li>
+        </ul>
+        <p class="body" style="margin-top:1rem;">If you can correct any of these with a public source, I want it. Email me at <a href="mailto:kylefindlay828@gmail.com?subject=Supply%20map">kylefindlay828@gmail.com</a>.</p>
+      </section>
+
+      <!-- K. SOURCES + ASSUMPTIONS -->
+      <section class="sec">
+        <h2>Sources and assumptions</h2>
+        <div class="refs">
+          <div>
+            <h3>Sources</h3>
+            <ol class="reflist">
+              {sources.map((s) => (
+                <li id={`s${s.id}`}><span class="rn">[{s.id}]</span><span>{s.text}. <a href={s.url} target="_blank" rel="noopener">{s.url}</a> <span class="refd">({s.date})</span></span></li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <h3>Assumptions</h3>
+            <ol class="reflist aslist">
+              {assumptions.map((a) => (
+                <li id={a.id.toLowerCase()}><span class="rn">{a.id}</span><span>{a.text}</span></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const calc = $('calc');
+        if (!calc) return;
+        const fmt = (n) => Math.round(n).toLocaleString('en-US');
+
+        const inputs = {
+          start: $('i-start'), target: $('i-target'), churn: $('i-churn'), ref: $('i-ref'), cost: $('i-cost'),
+          applied: $('i-applied'), vetted: $('i-vetted'), onb: $('i-onb'), act: $('i-act'),
+        };
+        const chans = [...document.querySelectorAll('.i-ch')];
+
+        function readLabels() {
+          $('v-start').textContent = fmt(+inputs.start.value);
+          $('v-target').textContent = fmt(+inputs.target.value);
+          $('v-churn').textContent = (+inputs.churn.value).toFixed(1) + '%';
+          $('v-ref').textContent = (+inputs.ref.value).toFixed(1);
+          $('v-cost').textContent = '$' + fmt(+inputs.cost.value);
+          $('v-applied').textContent = (+inputs.applied.value).toFixed(1) + '%';
+          $('v-vetted').textContent = (+inputs.vetted.value) + '%';
+          $('v-onb').textContent = (+inputs.onb.value) + '%';
+          $('v-act').textContent = (+inputs.act.value) + '%';
+          chans.forEach((c) => { $('v-ch' + c.dataset.i).textContent = fmt(+c.value); });
+        }
+
+        function simulate() {
+          const startN = +inputs.start.value;
+          const target = +inputs.target.value;
+          const churnRate = +inputs.churn.value / 100;
+          const refPer = +inputs.ref.value;
+          const costPer = +inputs.cost.value;
+          const appliedRate = +inputs.applied.value / 100;
+          const vettedRate = +inputs.vetted.value / 100;
+          const onbRate = +inputs.onb.value / 100;
+          const actRate = +inputs.act.value / 100;
+          const channelSum = chans.reduce((s, c) => s + (+c.value), 0);
+          const totalConversion = appliedRate * vettedRate * onbRate * actRate;
+
+          let activeCount = startN;
+          const series = [activeCount];
+          let monthsToTarget = null;
+          let m12NewActive = 0;
+
+          for (let month = 1; month <= 60; month++) {
+            const referralVolume = activeCount * refPer;      // referrals scale off active count
+            const totalContacts = channelSum + referralVolume;
+            const newActive = totalContacts * totalConversion;
+            const churned = activeCount * churnRate;
+            activeCount = activeCount + newActive - churned;
+            series.push(activeCount);
+            if (month === 12) m12NewActive = newActive - churned;
+            if (monthsToTarget === null && activeCount >= target) monthsToTarget = month;
+          }
+
+          // month-1 spend and newActive for blended cost (paid channels only; referrals are free)
+          const firstContacts = channelSum + startN * refPer;
+          const firstNewActive = firstContacts * totalConversion;
+          const monthlyChannelSpend = channelSum * costPer;
+          const blendedCost = firstNewActive > 0 ? monthlyChannelSpend / firstNewActive : 0;
+
+          return { series, target, monthsToTarget, m12NewActive, blendedCost };
+        }
+
+        function render() {
+          readLabels();
+          const r = simulate();
+          $('o-months').textContent = r.monthsToTarget === null ? 'Not within 60' : r.monthsToTarget + (r.monthsToTarget === 1 ? ' month' : ' months');
+          $('o-m12').textContent = (r.m12NewActive >= 0 ? '+' : '') + fmt(r.m12NewActive);
+          $('o-cost').textContent = r.blendedCost > 0 ? '$' + fmt(r.blendedCost) : 'n/a';
+          drawChart(r.series, r.target);
+        }
+
+        function drawChart(series, target) {
+          const W = 900, H = 260, padL = 8, padR = 8, padT = 14, padB = 22;
+          const maxY = Math.max(target, ...series) * 1.08;
+          const n = series.length - 1;
+          const x = (i) => padL + (i / n) * (W - padL - padR);
+          const y = (v) => H - padB - (v / maxY) * (H - padT - padB);
+          const line = series.map((v, i) => `${i === 0 ? 'M' : 'L'} ${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+          const ty = y(target).toFixed(1);
+          const g = document.getElementById('chart-g');
+          g.innerHTML =
+            `<line x1="${padL}" y1="${ty}" x2="${W - padR}" y2="${ty}" stroke="var(--mut)" stroke-width="1" stroke-dasharray="5 5" opacity="0.7"></line>` +
+            `<text x="${W - padR}" y="${(+ty - 6)}" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="11" fill="var(--mut)">target ${fmt(target)}</text>` +
+            `<path d="${line}" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>` +
+            `<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="var(--line)" stroke-width="1"></line>` +
+            `<text x="${padL}" y="${H - 6}" font-family="'JetBrains Mono',monospace" font-size="10" fill="var(--mut)">month 0</text>` +
+            `<text x="${W - padR}" y="${H - 6}" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" fill="var(--mut)">month 60</text>`;
+        }
+
+        [...Object.values(inputs), ...chans].forEach((el) => el.addEventListener('input', render));
+        render();
+      })();
+    </script>
+  </body>
+</html>
