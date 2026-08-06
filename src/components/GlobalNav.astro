@@ -7,7 +7,6 @@ const links = [
   { href: '/proofworks', label: 'Proofworks' },
   { href: '/gtm-migration', label: 'GTM Migration', isNew: true },
   { href: '/radar-v2', label: 'GTM Radar' },
-  { href: '/supply', label: 'AfterQuery Analysis', isNew: true },
   { href: '/#about', label: 'About / Contact' },
 ];
 ---
@@ -70,11 +69,11 @@ const links = [
     padding: 16px 6px; border-bottom: 1px solid var(--grule); }
   .gnav-mi:hover { color: var(--gacc); }
 
-  @media (max-width: 640px) {
+  @media (max-width: 820px) {
     .gnav-links { display: none; }
     .gnav-burger { display: inline-flex; }
   }
-  @media (min-width: 641px) { .gnav-menu { display: none !important; } }
+  @media (min-width: 821px) { .gnav-menu { display: none !important; } }
   @media (prefers-reduced-motion: reduce) {
     .gnav-brand, .gnav-links a, .gnav-bars, .gnav-bars::before, .gnav-bars::after { transition: none; }
   }
