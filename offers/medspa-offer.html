@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper: oklch(96.5% 0.008 85);
+    --card: oklch(99.2% 0.005 90);
+    --ink: oklch(19% 0.006 55);
+    --accent: oklch(54% 0.158 37);
+    --muted: oklch(42% 0.013 75);
+    --rule: oklch(86% 0.008 82);
+  }
+  @page { size: Letter; margin: 0; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ width:816px; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:Inter, system-ui, sans-serif; font-size:13px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    border-top:9px solid var(--accent);
+    padding:40px 52px 34px;
+  }
+  .kicker{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11px;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); }
+  h1{ font-family:"Source Serif 4",Georgia,serif; font-weight:600; font-size:34px;
+    line-height:1.05; letter-spacing:-0.02em; margin-top:10px; max-width:660px; }
+  .lede{ font-size:14px; color:color-mix(in srgb,var(--ink) 75%,transparent); margin-top:10px; max-width:600px; }
+  .by{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted); margin-top:8px; }
+  .by b{ color:var(--ink); }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:24px; }
+  h2{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:10.5px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:9px; }
+  ul{ list-style:none; }
+  li{ position:relative; padding-left:16px; margin-bottom:6px; font-size:12.5px; color:color-mix(in srgb,var(--ink) 88%,transparent); }
+  li::before{ content:""; position:absolute; left:0; top:7px; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  li b{ color:var(--ink); }
+
+  .math{ margin-top:20px; border-left:3px solid var(--accent); padding:2px 0 2px 14px; max-width:640px; }
+  .math .big{ font-family:"Source Serif 4",serif; font-size:15px; color:var(--ink); }
+
+  .tiers{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:22px; }
+  .tier{ border:1px solid var(--rule); border-radius:9px; background:var(--card); padding:14px 14px 15px; }
+  .tier.hot{ border-color:var(--accent); border-width:1.5px; }
+  .tier .tag{ font-family:"IBM Plex Mono",monospace; font-size:8.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); }
+  .tier .name{ font-family:"Source Serif 4",serif; font-weight:600; font-size:16px; margin-top:3px; }
+  .tier .desc{ font-size:11px; color:var(--muted); margin-top:5px; min-height:30px; }
+  .tier .price{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink); margin-top:8px; padding-top:9px; border-top:1px solid var(--rule); }
+  .tier .price b{ color:var(--accent); }
+  .fine{ font-size:10.5px; color:var(--muted); margin-top:8px; }
+
+  .grid2b{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:22px; }
+  ol{ list-style:none; counter-reset:s; }
+  ol li{ padding-left:24px; }
+  ol li::before{ counter-increment:s; content:counter(s); top:0; width:auto; height:auto;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11px; color:var(--accent); background:none; }
+
+  .why{ font-size:12.5px; color:color-mix(in srgb,var(--ink) 85%,transparent); max-width:330px; }
+  .why b{ color:var(--ink); }
+
+  .cta{ margin-top:26px; border-top:1.5px solid var(--rule); padding-top:16px; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; }
+  .cta .pitch{ font-family:"Source Serif 4",serif; font-size:15px; color:var(--ink); max-width:470px; line-height:1.35; }
+  .cta .contact{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted); text-align:right; white-space:nowrap; }
+  .cta .contact b{ color:var(--accent); display:block; font-size:12px; margin-bottom:2px; }
+</style>
+</head>
+<body>
+  <div class="kicker">AI Workflows · Med Spas &amp; Aesthetics</div>
+  <h1>More booked treatments. Fewer no-shows. Less front-desk busywork.</h1>
+  <p class="lede">AI systems that capture every lead, kill no-shows, and rebook the clients you already have — built, run, and managed for you.</p>
+  <p class="by"><b>Kyle Findlay</b> · kylefindlay.xyz</p>
+
+  <div class="grid2">
+    <div>
+      <h2>Where the money leaks</h2>
+      <ul>
+        <li>New leads sit unanswered while they book somewhere else</li>
+        <li>No-shows and last-minute cancels burn your calendar</li>
+        <li>Clients finish a treatment and never get booked for the next</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What I build for you</h2>
+      <ul>
+        <li><b>Reply to every lead in minutes</b>, personalized, and book them in</li>
+        <li><b>Smart reminders + one-tap rebooking</b> that cut no-shows</li>
+        <li><b>"You're due" re-engagement</b> that fills the calendar from existing clients</li>
+        <li>Runs on the tools you already use. You don't lift a finger.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="math">
+    <p class="big">A client is worth thousands over repeat visits, and you pay to earn every lead. Recover a few no-shows and rebook a handful of clients a month and the system pays for itself many times over. You're not buying software — you're buying booked chairs.</p>
+  </div>
+
+  <div class="tiers">
+    <div class="tier">
+      <div class="tag">Lead Rescue</div>
+      <div class="name">Instant Response</div>
+      <div class="desc">Every lead answered and booked in minutes.</div>
+      <div class="price">Setup <b>$3,000</b> · <b>$1,200</b>/mo</div>
+    </div>
+    <div class="tier hot">
+      <div class="tag">Most popular</div>
+      <div class="name">Booked &amp; Rebooked</div>
+      <div class="desc">Lead response + no-show reminders + automatic rebooking.</div>
+      <div class="price">Setup <b>$7,500</b> · <b>$2,950</b>/mo</div>
+    </div>
+    <div class="tier">
+      <div class="tag">Front-Desk Autopilot</div>
+      <div class="name">The Full System</div>
+      <div class="desc">Everything, plus intake, reviews, reporting, and ongoing builds.</div>
+      <div class="price">Setup <b>$15,000</b> · <b>$4,500</b>/mo</div>
+    </div>
+  </div>
+  <p class="fine">Tools and hosting included. Month-to-month — no long contracts.</p>
+
+  <div class="grid2b">
+    <div>
+      <h2>How it works</h2>
+      <ol>
+        <li>15-minute call. I find your biggest leak.</li>
+        <li>I build it in 1–2 weeks and train your team.</li>
+        <li>It runs. I monitor and improve it every month.</li>
+      </ol>
+    </div>
+    <div>
+      <h2>Why me</h2>
+      <p class="why">I design, build, and ship real AI systems end to end — <b>not chatbot gimmicks.</b> See one I built solo at kylefindlay.xyz. Everything is accurate and human-reviewed: <b>no made-up data.</b></p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="pitch">See what this looks like for your spa. A free 15-minute call — I'll map your biggest leak and exactly what it takes to fix it. No pitch.</div>
+    <div class="contact">
+      <b>Book a call</b>
+      [email]<br>[phone]<br>kylefindlay.xyz
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: oklch(96.5% 0.008 85);
+    --ink: oklch(19% 0.006 55);
+    --accent: oklch(54% 0.158 37);
+    --muted: oklch(42% 0.013 75);
+    --rule: oklch(86% 0.008 82);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 1200px; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Inter, sans-serif;
+    position: relative;
+    overflow: hidden;
+    border-top: 12px solid var(--accent);
+  }
+  /* faint radar rings, top-right */
+  .rings { position: absolute; top: -260px; right: -260px; width: 760px; height: 760px; border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--accent) 16%, transparent); }
+  .rings::before, .rings::after { content: ""; position: absolute; border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--accent) 12%, transparent); }
+  .rings::before { inset: 130px; }
+  .rings::after { inset: 250px; border-color: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+  .wrap { position: relative; height: 100%; padding: 104px 104px 92px; display: flex; flex-direction: column; }
+
+  .kicker { display: flex; align-items: center; gap: 14px;
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 23px;
+    text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); }
+  .kicker .sq { width: 16px; height: 16px; background: var(--accent); border-radius: 3px; }
+
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600;
+    font-size: 118px; line-height: 1.0; letter-spacing: -0.02em; color: var(--ink);
+    margin-top: 56px; max-width: 1000px; }
+  h1 .accent { color: var(--accent); }
+
+  .sub { font-size: 31px; line-height: 1.45; color: color-mix(in srgb, var(--ink) 72%, transparent);
+    margin-top: 40px; max-width: 820px; }
+  .sub b { color: var(--ink); font-weight: 600; }
+
+  .spacer { flex: 1; }
+
+  .bars { display: flex; align-items: flex-end; gap: 5px; height: 92px; }
+  .bars i { width: 6px; border-radius: 3px; background: var(--rule); }
+
+  .foot { display: flex; align-items: baseline; justify-content: space-between; margin-top: 30px;
+    border-top: 1.5px solid var(--rule); padding-top: 26px; }
+  .foot .name { font-family: "Source Serif 4", serif; font-weight: 600; font-size: 30px; }
+  .foot .url { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 26px; color: var(--accent);
+    text-transform: lowercase; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="rings"></div>
+  <div class="wrap">
+    <div class="kicker"><span class="sq"></span> Proof of work · GTM Radar</div>
+    <h1>I built a <span class="accent">GTM</span> market intelligence tool.</h1>
+    <p class="sub">It turns messy company signals into the <b>roles likely to open next</b> and the <b>hidden hires an organization needs</b> — sourced, scored, and human-reviewed.</p>
+    <div class="spacer"></div>
+    <div class="bars" id="bars"></div>
+    <div class="foot">
+      <span class="name">Kyle Findlay</span>
+      <span class="url">kylefindlay.xyz</span>
+    </div>
+  </div>
+  <script>
+    // signal-bar motif — varying heights, accent pulse frozen mid-sweep
+    const bars = document.getElementById('bars');
+    const N = 84;
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+    const rule = getComputedStyle(document.documentElement).getPropertyValue('--rule');
+    for (let i = 0; i < N; i++) {
+      const b = document.createElement('i');
+      const h = 14 + Math.round(70 * (0.5 + 0.5 * Math.sin(i / 3.1)) * (0.55 + 0.45 * Math.sin(i / 11)));
+      b.style.height = h + 'px';
+      // a band of bars near the middle lit in accent, like a sweep caught in a still
+      const lit = i > 30 && i < 46;
+      b.style.background = lit
+        ? `color-mix(in srgb, ${accent} ${90 - Math.abs(38 - i) * 4}%, ${rule})`
+        : rule;
+      bars.appendChild(b);
+    }
+  </script>
+</body>
+</html>

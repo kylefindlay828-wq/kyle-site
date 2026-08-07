@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: #06070a; color: #eef1f4; position: relative; overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    --g: hsl(150 70% 60%);
+  }
+  /* aurora glows: green / blue / purple */
+  .glow { position: absolute; border-radius: 50%; filter: blur(10px); }
+  .g-green  { top: -120px; left: -80px;  width: 560px; height: 560px;
+    background: radial-gradient(circle, hsla(138,80%,55%,0.30), transparent 62%); }
+  .g-blue   { top: -60px;  right: -120px; width: 680px; height: 680px;
+    background: radial-gradient(circle, hsla(224,85%,60%,0.42), transparent 62%); }
+  .g-purple { bottom: -220px; left: 40%;  width: 620px; height: 620px;
+    background: radial-gradient(circle, hsla(280,70%,62%,0.34), transparent 62%); }
+  /* dot grid + constellation feel */
+  .dots { position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 45%, #000 35%, transparent 88%); }
+
+  .wrap { position: relative; height: 100%; padding: 66px 72px; display: flex; flex-direction: column; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 21px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #8b94a0; }
+  .eyebrow b { color: var(--g); }
+  h1 { font-weight: 700; font-size: 78px; line-height: 0.98; letter-spacing: -0.03em; margin-top: 30px; max-width: 1010px; }
+  h1 .g { color: var(--g); font-style: italic; }
+  .sub { font-size: 29px; line-height: 1.34; font-weight: 400; color: #cfd5dc; margin-top: 26px; max-width: 1000px; }
+  .sub .g { color: var(--g); font-weight: 600; }
+  .spacer { flex: 1; }
+  .foot { display: flex; align-items: baseline; justify-content: space-between;
+    border-top: 1.5px solid rgba(255,255,255,0.14); padding-top: 22px; }
+  .foot .name { font-weight: 600; font-size: 25px; }
+  .foot .url { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 22px; color: var(--g); letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="glow g-green"></div>
+  <div class="glow g-blue"></div>
+  <div class="glow g-purple"></div>
+  <div class="dots"></div>
+  <div class="wrap">
+    <p class="eyebrow"><b>◆</b> Kyle Findlay · Founder thesis</p>
+    <h1>Job titles are <span class="g">lagging indicators.</span></h1>
+    <p class="sub">Proofworks finds <span class="g">adaptive talent</span>, proves capability through real workflow projects, and routes proven operators into higher-value roles.</p>
+    <div class="spacer"></div>
+    <div class="foot">
+      <span class="name">Kyle Findlay</span>
+      <span class="url">kylefindlay.xyz/proofworks</span>
+    </div>
+  </div>
+</body>
+</html>

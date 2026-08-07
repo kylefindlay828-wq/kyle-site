@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: oklch(96.5% 0.008 85);
+    --ink: oklch(19% 0.006 55);
+    --accent: oklch(54% 0.158 37);
+    --green: oklch(74% 0.15 150);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: var(--ink); color: var(--paper); font-family: Inter, sans-serif;
+    position: relative; overflow: hidden; border-bottom: 12px solid var(--accent);
+  }
+  .glow { position: absolute; top: -260px; right: -220px; width: 620px; height: 620px; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent), transparent 62%); }
+
+  .wrap { position: relative; height: 100%; padding: 62px 72px 56px; display: flex; flex-direction: column; }
+
+  .run { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 20px;
+    letter-spacing: 0.06em; color: color-mix(in srgb, var(--paper) 62%, transparent); }
+  .run .live { color: var(--green); }
+
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700;
+    font-size: 96px; line-height: 1.0; letter-spacing: -0.02em; margin-top: 20px; }
+  h1 .accent { color: var(--accent); }
+
+  .sub { font-family: "Source Serif 4", serif; font-weight: 600; font-size: 30px; line-height: 1.32;
+    color: color-mix(in srgb, var(--paper) 90%, transparent); margin-top: 26px; max-width: 940px; }
+  .sub .dim { color: color-mix(in srgb, var(--paper) 62%, transparent); font-weight: 400; }
+
+  .spacer { flex: 1; }
+
+  .tally { display: flex; gap: 12px; margin-top: 20px; }
+  .tg { display: flex; gap: 4px; }
+  .tally i { width: 5px; height: 30px; border-radius: 2.5px;
+    background: color-mix(in srgb, var(--accent) 55%, var(--paper)); }
+
+  .foot { display: flex; align-items: baseline; justify-content: space-between; margin-top: 26px;
+    border-top: 1.5px solid color-mix(in srgb, var(--paper) 22%, transparent); padding-top: 22px; }
+  .foot .name { font-family: "Source Serif 4", serif; font-weight: 700; font-size: 26px; color: var(--paper); }
+  .foot .url { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 23px; color: var(--accent); letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="wrap">
+    <p class="run">◆ watchlist-agent · <span class="live">agentic hiring intelligence</span></p>
+    <h1>GTM Radar <span class="accent">v2</span></h1>
+    <p class="sub">
+      A self-running system that scans a watchlist, scores the signals, and drafts a recruiter
+      briefing — fee ceilings, roles, and hidden hires. <span class="dim">The agent does the legwork. I make the judgment calls.</span>
+    </p>
+    <div class="spacer"></div>
+    <div class="tally" id="tally"></div>
+    <div class="foot">
+      <span class="name">Kyle Findlay</span>
+      <span class="url">kylefindlay.xyz/radar-v2</span>
+    </div>
+  </div>
+  <script>
+    // 75 ticks in groups of ten, to echo the "companies tracked" tally
+    const t = document.getElementById('tally');
+    const groups = [10,10,10,10,10,10,10,5];
+    for (const n of groups) {
+      const g = document.createElement('span'); g.className = 'tg';
+      for (let i = 0; i < n; i++) g.appendChild(document.createElement('i'));
+      t.appendChild(g);
+    }
+  </script>
+</body>
+</html>

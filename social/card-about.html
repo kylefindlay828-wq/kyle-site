@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: oklch(96.5% 0.008 85);
+    --card: oklch(99.2% 0.005 90);
+    --ink: oklch(19% 0.006 55);
+    --accent: oklch(54% 0.158 37);
+    --rule: oklch(86% 0.008 82);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: var(--paper); color: var(--ink); font-family: Inter, sans-serif;
+    border-bottom: 12px solid var(--accent);
+  }
+  .wrap { height: 100%; padding: 60px 72px; display: flex; align-items: center; gap: 56px; }
+
+  .photo { flex: 0 0 328px; width: 328px; height: 420px; border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--rule); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: top;
+    transform: scale(1.32) translateY(-11%); transform-origin: top center; }
+
+  .text { flex: 1; display: flex; flex-direction: column; height: 100%; padding: 8px 0; }
+  .kicker { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 21px;
+    text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700;
+    font-size: 62px; line-height: 1.04; letter-spacing: -0.02em; margin-top: 22px; }
+  h1 .accent { color: var(--accent); }
+  .sub { font-family: "Source Serif 4", serif; font-weight: 400; font-size: 27px; line-height: 1.36;
+    color: color-mix(in srgb, var(--ink) 72%, transparent); margin-top: 22px; }
+  .spacer { flex: 1; }
+  .tags { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 20px;
+    letter-spacing: 0.02em; color: var(--ink); }
+  .foot { display: flex; align-items: baseline; justify-content: space-between; margin-top: 20px;
+    border-top: 1.5px solid var(--rule); padding-top: 20px; }
+  .foot .name { font-family: "Source Serif 4", serif; font-weight: 700; font-size: 25px; }
+  .foot .url { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 22px; color: var(--accent); letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="photo"><img src="file:///Users/kyfi/projects/kyle-site/src/assets/photos/headshot.png" alt="" /></div>
+    <div class="text">
+      <p class="kicker">◆ Kyle Findlay</p>
+      <h1>I build at the <span class="accent">application layer</span>.</h1>
+      <p class="sub">Models are becoming commodity cognition. The durable value is AI deployed into real workflows, inside your stack — where your data stays yours.</p>
+      <div class="spacer"></div>
+      <p class="tags">Enablement · GTM systems · Agentic workflows</p>
+      <div class="foot">
+        <span class="name">Kyle Findlay</span>
+        <span class="url">kylefindlay.xyz</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
